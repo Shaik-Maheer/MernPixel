@@ -12,6 +12,7 @@ const port = Number(process.env.PORT) || 10000
 const allowedOrigins = (process.env.FRONTEND_URL || '')
   .split(',')
   .map((item) => item.trim())
+  .filter((item) => item && !item.includes('<') && !item.includes('your-netlify-site'))
   .filter(Boolean)
 
 app.set('trust proxy', 1)
@@ -23,7 +24,15 @@ app.use(
         return callback(null, true)
       }
 
-      if (allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+      let isNetlify = false
+      try {
+        isNetlify = /\.netlify\.app$/i.test(new URL(origin).hostname)
+      } catch {
+        isNetlify = false
+      }
+      const isAllowedExact = allowedOrigins.includes(origin)
+
+      if (allowedOrigins.length === 0 || isAllowedExact || isNetlify) {
         return callback(null, true)
       }
 

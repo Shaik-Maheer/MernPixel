@@ -4,6 +4,20 @@ function stripTrailingSlash(value) {
 
 const DEFAULT_API_BASE_URL = 'https://mernpixel.onrender.com'
 
+function buildChatEndpoint(apiBase) {
+  const base = stripTrailingSlash(apiBase)
+
+  if (/\/api\/chat$/i.test(base)) {
+    return base
+  }
+
+  if (/\/api$/i.test(base)) {
+    return `${base}/chat`
+  }
+
+  return `${base}/api/chat`
+}
+
 function resolveApiBaseUrl() {
   const envBase = import.meta.env.VITE_API_BASE_URL?.trim()
   if (envBase) {
@@ -15,7 +29,7 @@ function resolveApiBaseUrl() {
 
 export async function sendChatMessage({ message, history = [] }) {
   const apiBase = resolveApiBaseUrl()
-  const endpoint = `${apiBase}/api/chat`
+  const endpoint = buildChatEndpoint(apiBase)
 
   const response = await fetch(endpoint, {
     method: 'POST',
