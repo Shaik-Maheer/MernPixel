@@ -8,6 +8,7 @@ export default function IntroSequence({ onDone }) {
   const MotionStage = motion.div
   const MotionLetter = motion.span
   const MotionPulse = motion.div
+  const MotionTagline = motion.p
 
   useEffect(() => {
     const toLetters = window.setTimeout(() => {
@@ -75,6 +76,15 @@ export default function IntroSequence({ onDone }) {
               </span>
             ))}
           </div>
+
+          <MotionTagline
+            className="intro-subtext"
+            initial={{ opacity: 0, y: 18, letterSpacing: '0.3em' }}
+            animate={{ opacity: 1, y: 0, letterSpacing: '0.24em' }}
+            transition={{ duration: 0.62, delay: 1.9, ease: [0.22, 1, 0.36, 1] }}
+          >
+            We Build What Matters
+          </MotionTagline>
         </MotionStage>
       )}
     </section>

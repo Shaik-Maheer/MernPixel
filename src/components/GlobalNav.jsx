@@ -19,7 +19,7 @@ const secondaryMenuItems = [
     label: 'Give Feedback',
     href: 'mailto:mernpixeldev@gmail.com?subject=Feedback%20for%20MernPixel',
   },
-  { label: 'Careers', path: '/careers', note: 'No openings for now' },
+  { label: 'Careers', path: '/careers' },
 ]
 
 export default function GlobalNav({ visible = true }) {

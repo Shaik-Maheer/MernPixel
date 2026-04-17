@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import CloudinaryVideo from '../components/CloudinaryVideo'
 import { business } from '../data/siteData'
 import { cloudinaryVideos } from '../data/cloudinaryVideos'
 import PageEndPromo from '../components/PageEndPromo'
@@ -77,33 +76,11 @@ export default function ContactPage() {
       <PageIntroHero
         title="CONTACT US"
         subtitle="Tell us your requirement and we'll shape a practical plan quickly."
-        videoSrc={cloudinaryVideos.contactMain}
+        videoSrc={cloudinaryVideos.gridRubikSoft}
         compact
       />
 
       <section ref={formSectionRef} className="section-shell relative pt-0">
-        <div className="contact-floating-media" aria-hidden>
-          <motion.div
-            className="contact-floating-clip clip-one"
-            initial={{ opacity: 0, x: 60, scale: 0.92 }}
-            whileInView={{ opacity: 1, x: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <CloudinaryVideo sources={cloudinaryVideos.contactClipA} />
-          </motion.div>
-
-          <motion.div
-            className="contact-floating-clip clip-two"
-            initial={{ opacity: 0, x: -60, scale: 0.92 }}
-            whileInView={{ opacity: 1, x: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.75, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <CloudinaryVideo sources={cloudinaryVideos.contactClipB} />
-          </motion.div>
-        </div>
-
         <div className="grid gap-7 xl:grid-cols-[0.95fr_1.05fr]">
           <MotionCard
             className="glass-card contact-info-card rounded-3xl p-7 md:p-9"
@@ -196,10 +173,14 @@ export default function ContactPage() {
       </section>
 
       <section ref={videoSectionRef} className="contact-video-shell">
-        <CloudinaryVideo
+        <video
           ref={videoElementRef}
           className="contact-video-bg"
-          sources={cloudinaryVideos.heroDark}
+          src={cloudinaryVideos.emberOceanDark}
+          autoPlay
+          muted
+          loop
+          playsInline
         />
         <div className="contact-video-overlay" />
 

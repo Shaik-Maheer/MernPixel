@@ -1,9 +1,15 @@
-import { forwardRef, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
-const CloudinaryVideo = forwardRef(function CloudinaryVideo(
-  { src, sources = [], className, autoPlay = true, muted = true, loop = true, playsInline = true, ...rest },
-  ref,
-) {
+export default function CloudinaryVideo({
+  src,
+  sources = [],
+  className,
+  autoPlay = true,
+  muted = true,
+  loop = true,
+  playsInline = true,
+  ...rest
+}) {
   const sourceList = useMemo(() => {
     if (Array.isArray(sources) && sources.length > 0) {
       return sources.filter(Boolean)
@@ -15,6 +21,12 @@ const CloudinaryVideo = forwardRef(function CloudinaryVideo(
   }, [sources, src])
 
   const [sourceIndex, setSourceIndex] = useState(0)
+  const [prevSourceList, setPrevSourceList] = useState(sourceList)
+
+  if (sourceList !== prevSourceList) {
+    setPrevSourceList(sourceList)
+    setSourceIndex(0)
+  }
 
   const activeSrc = sourceList[Math.min(sourceIndex, Math.max(sourceList.length - 1, 0))]
 
@@ -33,7 +45,6 @@ const CloudinaryVideo = forwardRef(function CloudinaryVideo(
 
   return (
     <video
-      ref={ref}
       className={className}
       src={activeSrc}
       autoPlay={autoPlay}
@@ -44,6 +55,4 @@ const CloudinaryVideo = forwardRef(function CloudinaryVideo(
       {...rest}
     />
   )
-})
-
-export default CloudinaryVideo
+}

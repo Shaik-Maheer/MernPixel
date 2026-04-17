@@ -1,6 +1,5 @@
 import { AnimatePresence, motion as Motion } from 'framer-motion'
 import { useMemo, useState } from 'react'
-import CloudinaryVideo from '../components/CloudinaryVideo'
 import PageEndPromo from '../components/PageEndPromo'
 import PageIntroHero from '../components/PageIntroHero'
 import { cloudinaryVideos } from '../data/cloudinaryVideos'
@@ -62,6 +61,8 @@ function TeamModal({ member, onClose }) {
 export default function TeamPage() {
   const MotionDiv = Motion.div
   const MotionArticle = Motion.article
+  const MotionVideo = Motion.video
+  const MotionSpan = Motion.span
   const [activeMember, setActiveMember] = useState(null)
   const linkedIn = useMemo(() => socialLinks.find((item) => item.label === 'LinkedIn')?.href, [])
   const instagram = useMemo(() => socialLinks.find((item) => item.label === 'Instagram')?.href, [])
@@ -71,21 +72,70 @@ export default function TeamPage() {
       <PageIntroHero
         title="OUR TEAM"
         subtitle="Four specialists. One execution engine for design, development, and growth."
-        videoSrc={cloudinaryVideos.gridSoft}
+        videoSrc={cloudinaryVideos.gridRubikSoft}
         compact
       />
 
-      <section className="section-shell relative">
+      <section className="section-shell relative pb-10 pt-6">
         <div className="team-cinema-wrap">
           <MotionDiv
             className="team-cinema-video"
-            initial={{ scale: 0.28, borderRadius: '999px' }}
-            whileInView={{ scale: 1, borderRadius: '26px' }}
+            initial={{ opacity: 0, y: 36, scale: 0.86, borderRadius: '999px' }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, borderRadius: '26px' }}
             viewport={{ once: true, amount: 0.55 }}
-            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.92, ease: [0.22, 1, 0.36, 1] }}
           >
-            <CloudinaryVideo sources={cloudinaryVideos.teamCinema} />
+            <MotionVideo
+              className="team-cinema-main-video"
+              src="/five.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              initial={{ clipPath: 'circle(6% at 50% 50%)', scale: 0.4, opacity: 0.32 }}
+              whileInView={{ clipPath: 'circle(140% at 50% 50%)', scale: 1, opacity: 1 }}
+              viewport={{ once: true, amount: 0.55 }}
+              transition={{ duration: 1.2, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
+            />
+            <MotionSpan
+              className="team-cinema-black-mask"
+              aria-hidden
+              initial={{ opacity: 1 }}
+              whileInView={{ opacity: 0 }}
+              viewport={{ once: true, amount: 0.55 }}
+              transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            />
+            <MotionSpan
+              className="team-cinema-core"
+              aria-hidden
+              initial={{ opacity: 1, scale: 1 }}
+              whileInView={{ opacity: 0, scale: 2.5 }}
+              viewport={{ once: true, amount: 0.55 }}
+              transition={{ duration: 1, delay: 0.26, ease: [0.22, 1, 0.36, 1] }}
+            />
             <div className="team-cinema-overlay" />
+            <MotionDiv
+              className="team-cinema-strip"
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.55 }}
+              transition={{ duration: 0.62, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {coreCrew.map((member) => (
+                <button
+                  key={`cinema-${member.name}`}
+                  type="button"
+                  className="team-cinema-member cursor-target"
+                  onClick={() => setActiveMember(member)}
+                >
+                  <img src={member.photo} alt={member.name} className="team-cinema-avatar" />
+                  <span>
+                    <span className="team-cinema-name">{member.name}</span>
+                    <span className="team-cinema-role">{member.role}</span>
+                  </span>
+                </button>
+              ))}
+            </MotionDiv>
           </MotionDiv>
         </div>
 
@@ -142,7 +192,7 @@ export default function TeamPage() {
               <div className="team-profile-head">
                 <img src={member.photo} alt={member.name} className="team-profile-photo" />
                 <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/60">Crew {index + 1}</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/60">Core Team</p>
                   <h2 className="mt-2 font-['Cinzel'] text-3xl text-white">{member.name}</h2>
                   <p className="mt-2 text-sm uppercase tracking-[0.16em] text-[#ffc24a]">{member.role}</p>
                 </div>

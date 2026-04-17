@@ -17,8 +17,8 @@ import StudentsPage from './pages/StudentsPage'
 import TeamPage from './pages/TeamPage'
 
 function App() {
-  useSmoothScroll()
   const location = useLocation()
+  useSmoothScroll(location.pathname)
   const [introDone, setIntroDone] = useState(() => window.location.pathname !== '/')
 
   const showNav = location.pathname !== '/' || introDone
@@ -30,7 +30,7 @@ function App() {
       <CustomCursor />
       <WhatsAppFloat />
 
-      <Routes>
+      <Routes location={location} key={location.pathname}>
         <Route path="/" element={<HomePage showIntro={!introDone} onIntroComplete={() => setIntroDone(true)} />} />
         <Route path="/works" element={<PortfolioPage />} />
         <Route path="/services" element={<ITServicesPage />} />

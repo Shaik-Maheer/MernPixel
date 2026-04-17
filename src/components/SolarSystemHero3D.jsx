@@ -1,5 +1,7 @@
 import { Suspense, useMemo, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
+import { Stars, Sparkles } from '@react-three/drei'
+import * as THREE from 'three'
 
 const pseudoRandom = (index, seed) => {
   const value = Math.sin(index * 127.1 + seed * 311.7) * 43758.5453
@@ -11,43 +13,36 @@ function StarField() {
   const emberRef = useRef(null)
 
   const positions = useMemo(() => {
-    const total = 5600
+    const total = 90000 // IMMENSE amount of stars
     const coords = new Float32Array(total * 3)
-
     for (let i = 0; i < total; i += 1) {
-      coords[i * 3] = (pseudoRandom(i, 1) - 0.5) * 52
-      coords[i * 3 + 1] = (pseudoRandom(i, 2) - 0.5) * 30
-      coords[i * 3 + 2] = (pseudoRandom(i, 3) - 0.5) * 58
+      coords[i * 3] = (pseudoRandom(i, 1) - 0.5) * 200
+      coords[i * 3 + 1] = (pseudoRandom(i, 2) - 0.5) * 100
+      coords[i * 3 + 2] = (pseudoRandom(i, 3) - 0.5) * 150
     }
-
     return coords
   }, [])
 
   const emberPositions = useMemo(() => {
-    const total = 1300
+    const total = 45000 // MASSIVE embers
     const coords = new Float32Array(total * 3)
-
     for (let i = 0; i < total; i += 1) {
-      coords[i * 3] = (pseudoRandom(i, 11) - 0.5) * 30
-      coords[i * 3 + 1] = (pseudoRandom(i, 12) - 0.5) * 16
-      coords[i * 3 + 2] = (pseudoRandom(i, 13) - 0.5) * 26
+      coords[i * 3] = (pseudoRandom(i, 11) - 0.5) * 60
+      coords[i * 3 + 1] = (pseudoRandom(i, 12) - 0.5) * 30
+      coords[i * 3 + 2] = (pseudoRandom(i, 13) - 0.5) * 60
     }
-
     return coords
   }, [])
 
   useFrame(({ clock }) => {
-    if (!pointsRef.current) {
-      return
-    }
-
-    pointsRef.current.rotation.y = clock.elapsedTime * 0.006
-    pointsRef.current.rotation.x = Math.sin(clock.elapsedTime * 0.05) * 0.03
+    if (!pointsRef.current) return
+    pointsRef.current.rotation.y = clock.elapsedTime * 0.04
+    pointsRef.current.rotation.x = Math.sin(clock.elapsedTime * 0.05) * 0.08
 
     if (emberRef.current) {
-      emberRef.current.rotation.y = -clock.elapsedTime * 0.022
-      emberRef.current.rotation.x = Math.cos(clock.elapsedTime * 0.11) * 0.08
-      emberRef.current.position.y = Math.sin(clock.elapsedTime * 0.45) * 0.35
+      emberRef.current.rotation.y = -clock.elapsedTime * 0.15
+      emberRef.current.rotation.x = Math.cos(clock.elapsedTime * 0.11) * 0.15
+      emberRef.current.position.y = Math.sin(clock.elapsedTime * 0.8) * 0.8
     }
   })
 
@@ -55,131 +50,105 @@ function StarField() {
     <>
       <points ref={pointsRef}>
         <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            array={positions}
-            count={positions.length / 3}
-            itemSize={3}
-          />
+          <bufferAttribute attach="attributes-position" array={positions} count={positions.length / 3} itemSize={3} />
         </bufferGeometry>
-        <pointsMaterial color="#f4f4f4" size={0.028} opacity={0.86} transparent sizeAttenuation />
+        <pointsMaterial color="#ffffff" size={0.03} opacity={0.8} transparent sizeAttenuation blending={THREE.AdditiveBlending} />
       </points>
-
       <points ref={emberRef}>
         <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            array={emberPositions}
-            count={emberPositions.length / 3}
-            itemSize={3}
-          />
+          <bufferAttribute attach="attributes-position" array={emberPositions} count={emberPositions.length / 3} itemSize={3} />
         </bufferGeometry>
-        <pointsMaterial color="#E6501B" size={0.05} opacity={0.34} transparent sizeAttenuation />
+        <pointsMaterial color="#E6501B" size={0.15} opacity={0.4} transparent sizeAttenuation blending={THREE.AdditiveBlending} />
       </points>
+      {/* Drei built-in extras */}
+      <Stars radius={50} depth={50} count={12000} factor={8} saturation={1} fade speed={3} />
+      <Sparkles count={2000} scale={30} size={15} speed={0.4} opacity={0.6} color="#c3110c" />
     </>
   )
 }
 
-function EvolvingEarth() {
+function FireSun() {
   const groupRef = useRef(null)
-
   useFrame(({ clock }) => {
-    if (!groupRef.current) {
-      return
-    }
-
-    groupRef.current.rotation.y = clock.elapsedTime * 0.22
-    groupRef.current.rotation.x = Math.sin(clock.elapsedTime * 0.18) * 0.1
+    if (!groupRef.current) return
+    groupRef.current.rotation.y = clock.elapsedTime * 0.5
+    groupRef.current.rotation.x = Math.sin(clock.elapsedTime * 0.3) * 0.15
   })
-
   return (
     <group ref={groupRef}>
       <mesh>
-        <sphereGeometry args={[2.6, 56, 56]} />
-        <meshStandardMaterial color="#050505" roughness={0.86} metalness={0.18} emissive="#740A03" emissiveIntensity={0.32} />
+        <sphereGeometry args={[3.2, 64, 64]} />
+        <meshStandardMaterial color="#000000" emissive="#ffc24a" emissiveIntensity={4} wireframe={false} />
       </mesh>
-
       <mesh>
-        <sphereGeometry args={[2.63, 56, 56]} />
-        <meshBasicMaterial color="#f4f4f4" wireframe transparent opacity={0.2} />
+        <sphereGeometry args={[3.5, 32, 32]} />
+        <meshBasicMaterial color="#E6501B" wireframe transparent opacity={0.4} blending={THREE.AdditiveBlending} />
       </mesh>
-
       <mesh>
-        <sphereGeometry args={[2.95, 56, 56]} />
-        <meshBasicMaterial color="#E6501B" wireframe transparent opacity={0.09} />
+        <sphereGeometry args={[3.8, 48, 48]} />
+        <meshBasicMaterial color="#c3110c" wireframe transparent opacity={0.2} blending={THREE.AdditiveBlending} />
       </mesh>
     </group>
   )
 }
 
-function OrbitingPlanet({ radius, speed, size, color, offset, vertical = 0.5 }) {
+function ChaosPlanet({ radius, speed, size, color, offset }) {
   const ref = useRef(null)
-
   useFrame(({ clock }) => {
-    if (!ref.current) {
-      return
-    }
-
+    if (!ref.current) return
     const time = clock.elapsedTime * speed + offset
     ref.current.position.x = Math.cos(time) * radius
-    ref.current.position.y = Math.sin(time * 0.8) * vertical
-    ref.current.position.z = Math.sin(time) * radius * 0.2
-    ref.current.rotation.y += 0.01
+    ref.current.position.z = Math.sin(time) * radius
+    ref.current.position.y = Math.sin(time * 2.5) * 1.5
+    ref.current.rotation.y += 0.08
+    ref.current.rotation.x += 0.05
   })
-
   return (
     <mesh ref={ref}>
-      <sphereGeometry args={[size, 32, 32]} />
-      <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.36} roughness={0.52} metalness={0.24} />
+      <icosahedronGeometry args={[size, 1]} />
+      <meshStandardMaterial color={color} emissive={color} emissiveIntensity={2} wireframe />
     </mesh>
   )
 }
 
 function OrbitRings() {
-  const ringOne = useRef(null)
-  const ringTwo = useRef(null)
-
+  const ringGroup = useRef(null)
   useFrame(({ clock }) => {
-    if (ringOne.current) {
-      ringOne.current.rotation.z = clock.elapsedTime * 0.13
-    }
-
-    if (ringTwo.current) {
-      ringTwo.current.rotation.z = -clock.elapsedTime * 0.09
-      ringTwo.current.rotation.x = 0.35
+    if (ringGroup.current) {
+      ringGroup.current.rotation.x = clock.elapsedTime * 0.1
+      ringGroup.current.rotation.y = clock.elapsedTime * 0.2
     }
   })
-
   return (
-    <>
-      <mesh ref={ringOne} rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[4.7, 0.012, 12, 120]} />
-        <meshBasicMaterial color="#f4f4f4" transparent opacity={0.28} />
-      </mesh>
-
-      <mesh ref={ringTwo} rotation={[Math.PI / 2.5, 0, 0]}>
-        <torusGeometry args={[6.2, 0.01, 12, 120]} />
-        <meshBasicMaterial color="#E6501B" transparent opacity={0.22} />
-      </mesh>
-    </>
+    <group ref={ringGroup}>
+      {Array.from({length: 12}).map((_, i) => (
+        <mesh key={i} rotation={[Math.PI / 2 + (i*0.1), i*0.2, 0]}>
+          <torusGeometry args={[5 + i*0.8, 0.015, 12, 120]} />
+          <meshBasicMaterial color={i % 2 === 0 ? "#E6501B" : "#FFC24A"} transparent opacity={0.3} blending={THREE.AdditiveBlending} />
+        </mesh>
+      ))}
+    </group>
   )
 }
 
 function Scene() {
   return (
     <>
-      <ambientLight intensity={0.35} />
-      <pointLight position={[4, 3, 5]} intensity={1.1} color="#f4f4f4" />
-      <pointLight position={[-6, -2, 1]} intensity={1.5} color="#C3110C" />
-      <pointLight position={[0, 5, -4]} intensity={1.05} color="#E6501B" />
-
+      <ambientLight intensity={0.5} />
+      <pointLight position={[0, 0, 0]} intensity={10} color="#ffc24a" distance={30} />
       <StarField />
-      <EvolvingEarth />
+      <FireSun />
       <OrbitRings />
-
-      <OrbitingPlanet radius={4.7} speed={0.34} size={0.36} color="#FFC24A" offset={0.4} />
-      <OrbitingPlanet radius={6.1} speed={0.27} size={0.42} color="#E6501B" offset={1.8} vertical={0.8} />
-      <OrbitingPlanet radius={7.3} speed={0.22} size={0.5} color="#C3110C" offset={2.9} vertical={0.9} />
+      {[...Array(25)].map((_, i) => (
+        <ChaosPlanet 
+          key={i} 
+          radius={4.5 + i * 0.6} 
+          speed={0.1 + (pseudoRandom(i, 5) * 0.4)} 
+          size={0.1 + pseudoRandom(i, 6) * 0.3} 
+          color={pseudoRandom(i, 7) > 0.5 ? "#FFC24A" : "#C3110C"} 
+          offset={pseudoRandom(i, 8) * Math.PI * 2} 
+        />
+      ))}
     </>
   )
 }
@@ -187,7 +156,7 @@ function Scene() {
 export default function SolarSystemHero3D() {
   return (
     <div className="pointer-events-none absolute inset-0 -z-10">
-      <Canvas camera={{ position: [0, 0, 10.5], fov: 52 }} dpr={[1, 1.5]}>
+      <Canvas camera={{ position: [0, 2, 14], fov: 60 }} dpr={[1, 2]}>
         <Suspense fallback={null}>
           <Scene />
         </Suspense>

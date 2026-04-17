@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Link } from 'react-router-dom'
-import CloudinaryVideo from '../components/CloudinaryVideo'
 import PageEndPromo from '../components/PageEndPromo'
 import { cloudinaryVideos } from '../data/cloudinaryVideos'
 import { coreCrew } from '../data/siteData'
@@ -34,21 +33,25 @@ const storySteps = [
     title: 'Idea',
     icon: '💡',
     description: 'Understanding client vision and goals',
+    image: '/img3.png',
   },
   {
     title: 'Design',
     icon: '🎨',
     description: 'Crafting modern UI/UX experiences',
+    image: '/img5.png',
   },
   {
     title: 'Development',
     icon: '💻',
     description: 'Building scalable and high-performance solutions',
+    image: '/img2.png',
   },
   {
     title: 'Launch',
     icon: '🚀',
     description: 'Deploying and growing your digital presence',
+    image: '/img6.png',
   },
 ]
 
@@ -147,9 +150,6 @@ export default function AboutPage() {
   const [activeService, setActiveService] = useState(null)
   const heroRef = useRef(null)
   const heroVideoRef = useRef(null)
-  const blueprintSectionRef = useRef(null)
-  const blueprintTrackRef = useRef(null)
-  const blueprintSlidesRef = useRef([])
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -178,90 +178,9 @@ export default function AboutPage() {
           },
         })
       }
-
-      const slides = blueprintSlidesRef.current.filter(Boolean)
-      if (blueprintSectionRef.current && blueprintTrackRef.current && slides.length > 0) {
-        const horizontalTween = gsap.to(blueprintTrackRef.current, {
-          xPercent: -100 * (slides.length - 1),
-          ease: 'none',
-          scrollTrigger: {
-            trigger: blueprintSectionRef.current,
-            start: 'top top',
-            end: `+=${slides.length * 1050}`,
-            pin: true,
-            scrub: 1.05,
-            anticipatePin: 1,
-          },
-        })
-
-        slides.forEach((slide, index) => {
-          const card = slide.querySelector('.blueprint-card')
-          const textItems = slide.querySelectorAll('.blueprint-step, .blueprint-title, .blueprint-copy')
-          const orb = slide.querySelector('.blueprint-orb')
-
-          gsap.fromTo(
-            card,
-            { autoAlpha: 0.35, y: 30, scale: 0.92, x: index % 2 === 0 ? 64 : -64 },
-            {
-              autoAlpha: 1,
-              y: 0,
-              x: 0,
-              scale: 1,
-              duration: 0.78,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: slide,
-                containerAnimation: horizontalTween,
-                start: 'left center',
-                end: 'center center',
-                toggleActions: 'play reverse play reverse',
-              },
-            },
-          )
-
-          gsap.fromTo(
-            textItems,
-            { autoAlpha: 0, y: 22 },
-            {
-              autoAlpha: 1,
-              y: 0,
-              duration: 0.5,
-              ease: 'power2.out',
-              stagger: 0.09,
-              scrollTrigger: {
-                trigger: slide,
-                containerAnimation: horizontalTween,
-                start: 'left center+=80',
-                toggleActions: 'play reverse play reverse',
-              },
-            },
-          )
-
-          gsap.fromTo(
-            orb,
-            { xPercent: -16, yPercent: 8, scale: 0.92 },
-            {
-              xPercent: 14,
-              yPercent: -8,
-              scale: 1.07,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: slide,
-                containerAnimation: horizontalTween,
-                start: 'left right',
-                end: 'right left',
-                scrub: 0.9,
-              },
-            },
-          )
-        })
-      }
     })
 
-    return () => {
-      context.revert()
-      blueprintSlidesRef.current = []
-    }
+    return () => context.revert()
   }, [introComplete])
 
   return (
@@ -302,10 +221,14 @@ export default function AboutPage() {
       {introComplete && (
         <MotionMain initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
           <section ref={heroRef} className="relative min-h-screen overflow-hidden">
-            <CloudinaryVideo
+            <video
               ref={heroVideoRef}
               className="about-hero-video"
-              sources={cloudinaryVideos.aboutHero}
+              src={cloudinaryVideos.emberOcean}
+              autoPlay
+              muted
+              loop
+              playsInline
             />
             <div className="about-hero-overlay" />
 
@@ -367,9 +290,13 @@ export default function AboutPage() {
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
               >
-                <CloudinaryVideo
+                <video
                   className="about-reel-video"
-                  sources={cloudinaryVideos.aboutReel}
+                  src={cloudinaryVideos.gridRubikCrop}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
                 />
                 <div className="about-reel-overlay" />
               </motion.div>
@@ -430,7 +357,7 @@ export default function AboutPage() {
             </div>
           </section>
 
-          <section ref={blueprintSectionRef} className="blueprint-shell">
+          <section className="blueprint-shell">
             <div className="blueprint-head section-shell">
               <span className="section-kicker">Digital Blueprint</span>
               <h2 className="section-title">Digital Blueprint</h2>
@@ -453,33 +380,33 @@ export default function AboutPage() {
               ))}
             </div>
 
-            <div className="blueprint-scroll-wrap">
-              <div ref={blueprintTrackRef} className="blueprint-track">
+            <div className="section-shell pt-8 pb-20">
+              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
                 {storySteps.map((step, index) => (
-                  <article
+                  <MotionCard
                     key={step.title}
-                    ref={(element) => {
-                      blueprintSlidesRef.current[index] = element
-                    }}
-                    className="blueprint-slide"
+                    className="blueprint-card glass-card rounded-3xl p-8"
+                    initial={{ opacity: 0, y: 26 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.25 }}
+                    transition={{ duration: 0.58, delay: index * 0.08 }}
                   >
-                    <div className="blueprint-card glass-card rounded-3xl p-8 md:p-12">
-                      <div className="blueprint-media">
-                        <span className="blueprint-orb" />
-                      </div>
-
-                      <div className="blueprint-content">
-                        <p className="blueprint-step text-xs uppercase tracking-[0.22em] text-white/60">
-                          Slide {index + 1}
-                        </p>
-                        <h3 className="blueprint-title mt-4 flex items-center gap-3 font-['Cinzel'] text-5xl text-white md:text-7xl">
-                          <span>{step.title}</span>
-                          <span>{step.icon}</span>
-                        </h3>
-                        <p className="blueprint-copy mt-6 max-w-2xl text-white/75">{step.description}</p>
-                      </div>
+                    <div className="blueprint-media">
+                      <img className="blueprint-media-image" src={step.image} alt={`${step.title} step visual`} loading="lazy" />
+                      <span className="blueprint-media-glow" />
                     </div>
-                  </article>
+
+                    <div className="blueprint-content">
+                      <p className="blueprint-step text-xs uppercase tracking-[0.22em] text-white/60">
+                        Step {index + 1}
+                      </p>
+                      <h3 className="blueprint-title mt-4 flex items-center gap-3 font-['Cinzel'] text-4xl text-white">
+                        <span>{step.title}</span>
+                        <span>{step.icon}</span>
+                      </h3>
+                      <p className="blueprint-copy mt-6 text-white/75">{step.description}</p>
+                    </div>
+                  </MotionCard>
                 ))}
               </div>
             </div>
@@ -513,7 +440,7 @@ export default function AboutPage() {
           <PageEndPromo
             eyebrow="Next Section"
             title="Take A Tour Of Our Projects"
-            description="Walk through the PPT-style project story and see how each idea is executed."
+            description="Explore our project outcomes and see how each idea is executed with quality."
             to="/portfolio"
             buttonLabel="View Our Creations"
           />

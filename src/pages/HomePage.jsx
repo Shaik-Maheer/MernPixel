@@ -1,6 +1,5 @@
 import { Suspense, lazy, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import CloudinaryVideo from '../components/CloudinaryVideo'
 import IntroSequence from '../components/IntroSequence'
 import { cloudinaryVideos } from '../data/cloudinaryVideos'
 import { business } from '../data/siteData'
@@ -30,9 +29,13 @@ export default function HomePage({ showIntro, onIntroComplete }) {
 
       <main id="home" className="relative">
         <section className="relative flex min-h-screen items-center overflow-hidden">
-          <CloudinaryVideo
+          <video
             className="home-hero-video"
-            sources={cloudinaryVideos.heroDark}
+            src={cloudinaryVideos.emberOceanDeep}
+            autoPlay
+            muted
+            loop
+            playsInline
           />
           <div className="home-hero-overlay" />
 

@@ -1,6 +1,6 @@
 export const business = {
   name: 'MernPixel',
-  tagline: 'Digital experiences that drive business.',
+  tagline: 'We Build What Matters.',
   url: 'https://mernpixeldev.com',
   email: 'mernpixeldev@gmail.com',
   phone: '+91 95150 22680',
@@ -27,6 +27,7 @@ export const publicPages = [
 
 export const itServices = [
   'Web Development',
+  'E-commerce Web Application',
   'Application Development (Mobile + PWA + Enterprise Apps)',
   'Logo & Brand Identity',
   'Digital Marketing',
@@ -71,22 +72,42 @@ export const testimonials = [
 
 export const portfolioProjects = [
   {
-    name: 'EACE Student Tracker (Admin System)',
-    summary: 'Centralized admin workflow to monitor student records, attendance flow, and progress updates with role-based control.',
-    liveLink: 'https://mernpixeldev.com',
-    previewLabel: 'Admin Dashboard',
+    name: 'Indian Cricket Academy',
+    summary: 'Enrollment portal interface for academy workflows, student onboarding, and operational dashboard clarity.',
+    liveLink: 'https://indiancricketacademy.netlify.app/',
+    previewLabel: 'Academy Portal',
+    image: '/img2.png',
+    fullWidth: true,
   },
   {
-    name: 'Indian Cricket Academy Website',
-    summary: 'A performance-focused academy website experience designed for admissions, updates, and brand credibility.',
-    liveLink: 'https://mernpixeldev.com',
-    previewLabel: 'Academy Experience',
+    name: 'Malik Tea Stall',
+    summary: 'Brand-led tea commerce site with rich hero storytelling, warm visual tone, and product-first presentation.',
+    liveLink: 'https://malik-tea-stall.vercel.app/',
+    previewLabel: 'Academic Projects',
+    image: '/img4.png',
   },
   {
-    name: 'EACE Cricket Platform',
-    summary: 'Integrated cricket platform for player engagement, match visibility, and academy-centered digital growth.',
-    liveLink: 'https://mernpixeldev.com',
-    previewLabel: 'Sports Platform',
+    name: 'Stylistar E-Commerce',
+    summary: 'UI-first beauty e-commerce experience crafted as per customer requirements with premium visual hierarchy and conversion-focused flow.',
+    liveLink: 'https://beauty-orcin-three.vercel.app/',
+    previewLabel: 'Academic Projects',
+    image: '/img3.png',
+  },
+  {
+    name: 'eacecricket.com',
+    summary: 'Official academy website focused on admissions, coaching programs, and trust-building digital presence.',
+    liveLink: 'https://eacecricket.com',
+    previewLabel: 'Cricket Academy Website',
+    image: '/img6.png',
+    fullWidth: true,
+  },
+  {
+    name: 'Frontend Talent IQ',
+    summary: 'Secure interview platform frontend with OTP auth UX, login flows, and collaborative session entry points.',
+    liveLink: 'https://frontendtalentiq.netlify.app/',
+    previewLabel: 'Frontend Project',
+    image: '/img5.png',
+    fullWidth: true,
   },
 ]
 
@@ -109,6 +130,12 @@ export const servicePlanets = [
     color: '#C3110C',
     summary: 'Premium corporate and product websites with fast performance, SEO architecture, and conversion-first UI.',
     points: ['Responsive UI systems', 'SEO-ready pages', 'Speed and Core Web Vitals optimization'],
+  },
+  {
+    title: 'E-commerce Web Applications',
+    color: '#FF8B2A',
+    summary: 'Storefront platforms focused on conversion, smooth checkout journeys, and scalable product operations.',
+    points: ['Product catalog + checkout UX', 'Offer funnels and retention blocks', 'Order and inventory-friendly architecture'],
   },
   {
     title: 'Application Development',
