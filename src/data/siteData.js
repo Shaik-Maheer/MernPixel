@@ -58,7 +58,7 @@ export const stats = [
 export const testimonials = [
   {
     name: 'Akhil Varma',
-    quote: 'MERNpixel gave our product a premium look and real business clarity.',
+    quote: 'MernPixel gave our product a premium look and real business clarity.',
   },
   {
     name: 'Ritika Sharma',
@@ -185,14 +185,14 @@ export const coreCrew = [
     bio: 'Drives visual systems, interaction design, and brand language for premium digital experiences.',
   },
   {
-    name: 'Shaik Nishar basha',
+    name: 'Shaik Nishar Basha',
     role: 'Frontend Engineer',
     photo: 'https://ui-avatars.com/api/?name=Shaik+Nishar+Basha&background=280905&color=F4F4F4&size=512&bold=true',
     linkedin: 'https://www.linkedin.com/search/results/all/?keywords=Shaik%20Nishar%20Basha',
     bio: 'Builds fast, animated, and responsive interfaces with a focus on performance and polish.',
   },
   {
-    name: 'P. Sidda reddy',
+    name: 'P. Sidda Reddy',
     role: 'Growth & Consulting',
     photo: 'https://ui-avatars.com/api/?name=P+Sidda+Reddy&background=280905&color=E6501B&size=512&bold=true',
     linkedin: 'https://www.linkedin.com/search/results/all/?keywords=P%20Sidda%20Reddy',
