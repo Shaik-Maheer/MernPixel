@@ -1,40 +1,65 @@
-# MernPixel Frontend
+# MernPixel Full Stack
 
-Production frontend for the MernPixel website, built with React + Vite.
+This repository now includes:
 
-## Tech
+- Frontend (React + Vite) in project root
+- Backend (Express + MongoDB + OpenAI-compatible chatbot API) in `backend/`
 
-- React 19
-- Vite 8
-- Framer Motion
-- React Router
-- Tailwind CSS (with custom CSS)
-
-## Local Development
+## Frontend local
 
 ```bash
 npm install
+cp .env.example .env
 npm run dev
 ```
 
-## Quality Checks
+Frontend env:
+
+- `VITE_API_BASE_URL` (example: `http://localhost:10000` locally, Render backend URL in Netlify production)
+
+## Backend local
 
 ```bash
-npm run lint
-npm run build
+cd backend
+npm install
+cp .env.example .env
+npm run dev
 ```
 
-## Netlify Deployment (Frontend)
+Main backend routes:
 
-- Base directory: project root (`/`)
+- `GET /health`
+- `POST /api/chat`
+
+## Double checks
+
+```bash
+# frontend
+npm run lint
+npm run build
+
+# backend syntax checks
+node --check backend/src/server.js
+node --check backend/src/routes/chat.js
+```
+
+## Netlify deployment (frontend)
+
+- Base directory: `/`
 - Build command: `npm run build`
 - Publish directory: `dist`
-- SPA redirect is configured via `public/_redirects`
+- Set env var in Netlify:
+  - `VITE_API_BASE_URL=https://<your-render-service>.onrender.com`
 
-## Render Deployment (Backend)
+## Render deployment (backend)
 
-This repository currently contains frontend code only. Deploy your backend from a separate backend service/repository on Render (or add backend code here with its own service config).
-
-## Note About `mernpixel-site/`
-
-The `mernpixel-site/` folder is a separate starter/demo Vite app and not the main production frontend under `src/`.
+- Use `render.yaml` (Blueprint) or manual setup.
+- Service root directory: `backend`
+- Build command: `npm install`
+- Start command: `npm start`
+- Required env vars:
+  - `FRONTEND_URL=https://<your-netlify-domain>.netlify.app`
+  - `MONGODB_URI=...`
+  - `OPENAI_API_KEY=...`
+  - `OPENAI_BASE_URL=https://openrouter.ai/api/v1`
+  - `OPENAI_MODEL=openai/gpt-4o-mini`

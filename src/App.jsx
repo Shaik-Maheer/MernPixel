@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import CustomCursor from './components/CustomCursor'
+import ChatbotWidget from './components/ChatbotWidget'
 import GlobalNav from './components/GlobalNav'
 import WhatsAppFloat from './components/WhatsAppFloat'
 import useSmoothScroll from './hooks/useSmoothScroll'
@@ -28,6 +29,7 @@ function App() {
       <div className="cosmic-bg" />
       <GlobalNav visible={showNav} />
       <CustomCursor />
+      <ChatbotWidget />
       <WhatsAppFloat />
 
       <Routes location={location} key={location.pathname}>

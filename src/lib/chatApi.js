@@ -1,0 +1,42 @@
+function stripTrailingSlash(value) {
+  return value.replace(/\/+$/, '')
+}
+
+function resolveApiBaseUrl() {
+  const envBase = import.meta.env.VITE_API_BASE_URL?.trim()
+  if (envBase) {
+    return stripTrailingSlash(envBase)
+  }
+
+  const host = window.location.hostname
+  if (host === 'localhost' || host === '127.0.0.1') {
+    return 'http://localhost:10000'
+  }
+
+  return ''
+}
+
+export async function sendChatMessage({ message, history = [] }) {
+  const apiBase = resolveApiBaseUrl()
+  const endpoint = `${apiBase}/api/chat`
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ message, history }),
+  })
+
+  const payload = await response.json().catch(() => ({}))
+
+  if (!response.ok) {
+    throw new Error(payload.error || `Request failed with status ${response.status}`)
+  }
+
+  if (!payload.reply || typeof payload.reply !== 'string') {
+    throw new Error('Invalid chatbot response from server.')
+  }
+
+  return payload.reply
+}
