@@ -2,18 +2,15 @@ function stripTrailingSlash(value) {
   return value.replace(/\/+$/, '')
 }
 
+const DEFAULT_API_BASE_URL = 'https://mernpixel.onrender.com'
+
 function resolveApiBaseUrl() {
   const envBase = import.meta.env.VITE_API_BASE_URL?.trim()
   if (envBase) {
     return stripTrailingSlash(envBase)
   }
 
-  const host = window.location.hostname
-  if (host === 'localhost' || host === '127.0.0.1') {
-    return 'http://localhost:10000'
-  }
-
-  return ''
+  return DEFAULT_API_BASE_URL
 }
 
 export async function sendChatMessage({ message, history = [] }) {
