@@ -556,7 +556,7 @@ main > .section-shell:nth-of-type(even)::before {
 }
 
 .nav-logo-small {
-  width: clamp(84px, 10.4vw, 144px);
+  width: clamp(96px, 11.8vw, 172px);
   display: inline-flex;
   align-items: center;
 }
@@ -710,7 +710,7 @@ main > .section-shell:nth-of-type(even)::before {
 }
 
 .menu-mini-logo {
-  width: clamp(74px, 9.5vw, 122px);
+  width: clamp(84px, 10.4vw, 138px);
 }
 
 .menu-mini-logo img {
