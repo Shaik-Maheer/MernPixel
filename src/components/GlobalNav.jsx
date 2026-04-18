@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { Link, useLocation } from 'react-router-dom'
-import logo from '../assets/mernpixel-logo.svg'
+import logo from '../assets/logo.png'
 import { business, socialLinks } from '../data/siteData'
 
 const primaryMenuItems = [
