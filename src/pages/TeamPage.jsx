@@ -44,7 +44,7 @@ function TeamModal({ member, onClose }) {
             <div>
               <p className="text-xs uppercase tracking-[0.22em] text-white/56">Core Team</p>
               <h3 className="mt-3 font-['Cinzel'] text-4xl text-white">{member.name}</h3>
-              <p className="mt-3 text-sm uppercase tracking-[0.16em] text-[#ffc24a]">{member.role}</p>
+              <p className="mt-3 text-sm uppercase tracking-[0.16em] text-[#27B9FF]">{member.role}</p>
               <p className="mt-5 text-sm leading-relaxed text-white/75">{member.bio}</p>
 
               <a href={member.linkedin} target="_blank" rel="noreferrer" className="btn-primary mt-6 inline-flex cursor-target">
@@ -130,7 +130,7 @@ export default function TeamPage() {
                 <div>
                   <p className="text-xs uppercase tracking-[0.2em] text-white/60">Core Team</p>
                   <h2 className="mt-2 font-['Cinzel'] text-3xl text-white">{member.name}</h2>
-                  <p className="mt-2 text-sm uppercase tracking-[0.16em] text-[#ffc24a]">{member.role}</p>
+                  <p className="mt-2 text-sm uppercase tracking-[0.16em] text-[#27B9FF]">{member.role}</p>
                 </div>
               </div>
               <p className="mt-5 text-white/72">{member.bio}</p>

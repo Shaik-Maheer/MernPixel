@@ -4,11 +4,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        navy: '#280905',
-        hotpink: '#740A03',
-        blush: '#C3110C',
-        ember: '#E6501B',
-        cloud: '#F4F4F4',
+        navy: '#000000',
+        hotpink: '#0D8FDB',
+        blush: '#1299E6',
+        ember: '#16A4F0',
+        cloud: '#E6E6E6',
       },
       fontFamily: {
         display: ['Cormorant Garamond', 'serif'],
@@ -16,7 +16,7 @@ export default {
       },
       boxShadow: {
         glass: '0 20px 55px rgba(0, 0, 0, 0.52)',
-        soft: '0 10px 35px rgba(230, 80, 27, 0.35)',
+        soft: '0 10px 35px rgba(22, 164, 240, 0.35)',
       },
       keyframes: {
         float: {

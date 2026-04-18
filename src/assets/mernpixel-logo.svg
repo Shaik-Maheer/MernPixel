@@ -1,14 +1,14 @@
 <svg width="640" height="180" viewBox="0 0 640 180" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="mp_fire" x1="40" y1="20" x2="200" y2="160" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#FFC24A"/>
-      <stop offset="0.45" stop-color="#E6501B"/>
-      <stop offset="1" stop-color="#C3110C"/>
+      <stop offset="0" stop-color="#27B9FF"/>
+      <stop offset="0.45" stop-color="#16A4F0"/>
+      <stop offset="1" stop-color="#1299E6"/>
     </linearGradient>
     <linearGradient id="text_fire" x1="230" y1="55" x2="590" y2="138" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#F4F4F4"/>
-      <stop offset="0.5" stop-color="#FFC24A"/>
-      <stop offset="1" stop-color="#E6501B"/>
+      <stop offset="0" stop-color="#E6E6E6"/>
+      <stop offset="0.5" stop-color="#6ED6FF"/>
+      <stop offset="1" stop-color="#16A4F0"/>
     </linearGradient>
     <filter id="glow" x="0" y="0" width="260" height="180" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
       <feFlood flood-opacity="0" result="BackgroundImageFix"/>

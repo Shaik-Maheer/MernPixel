@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { Link, useLocation } from 'react-router-dom'
-import logo from '../assets/mernpixel-logo.svg'
+import logo from '../assets/logo.png'
 import { business, socialLinks } from '../data/siteData'
 
 const primaryMenuItems = [
@@ -197,7 +197,7 @@ export default function GlobalNav({ visible = true }) {
                           to={page.path}
                           className="menu-link cursor-target"
                           onClick={closeMenu}
-                          style={{ color: location.pathname === page.path ? '#E6501B' : undefined }}
+                          style={{ color: location.pathname === page.path ? '#16A4F0' : undefined }}
                         >
                           {page.label}
                         </Link>

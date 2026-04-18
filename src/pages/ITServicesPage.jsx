@@ -177,7 +177,7 @@ export default function ITServicesPage() {
 
               <h2 className="mt-5 font-['Cinzel'] text-3xl text-white">{service.title}</h2>
               <p className="mt-4 text-sm leading-relaxed text-white/74">{service.description}</p>
-              <p className="mt-5 text-xs uppercase tracking-[0.18em] text-[#ffc24a]">Click to view full scope</p>
+              <p className="mt-5 text-xs uppercase tracking-[0.18em] text-[#27B9FF]">Click to view full scope</p>
             </MotionCard>
           ))}
         </div>
@@ -240,7 +240,7 @@ export default function ITServicesPage() {
               <ul className="mt-6 space-y-3 text-sm text-white/75">
                 {activeService.details.map((item) => (
                   <li key={item} className="flex gap-3">
-                    <span className="mt-1 h-2 w-2 rounded-full bg-[#ffc24a]" />
+                    <span className="mt-1 h-2 w-2 rounded-full bg-[#27B9FF]" />
                     <span>{item}</span>
                   </li>
                 ))}
