@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { cloudinaryVideos } from '../data/cloudinaryVideos'
 import PageEndPromo from '../components/PageEndPromo'
 import PageIntroHero from '../components/PageIntroHero'
 import { clientHighlights, testimonials } from '../data/siteData'
@@ -12,7 +11,6 @@ export default function ClientsPage() {
       <PageIntroHero
         title="CLIENTS"
         subtitle="Trusted by growing brands for serious digital outcomes."
-        videoSrc={cloudinaryVideos.emberOceanDark}
         compact
       />
 

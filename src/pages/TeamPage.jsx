@@ -2,7 +2,6 @@ import { AnimatePresence, motion as Motion } from 'framer-motion'
 import { useState } from 'react'
 import PageEndPromo from '../components/PageEndPromo'
 import PageIntroHero from '../components/PageIntroHero'
-import { cloudinaryVideos } from '../data/cloudinaryVideos'
 import { coreCrew } from '../data/siteData'
 
 function TeamModal({ member, onClose }) {
@@ -69,7 +68,6 @@ export default function TeamPage() {
       <PageIntroHero
         title="OUR TEAM"
         subtitle="Four specialists. One execution engine for design, development, and growth."
-        videoSrc={cloudinaryVideos.gridRubikSoft}
         compact
       />
 

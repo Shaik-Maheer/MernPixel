@@ -2,36 +2,9 @@ import { useEffect } from 'react'
 import Lenis from 'lenis'
 
 const SECTION_FOCUS_SELECTOR = 'main .section-shell'
-const SECTION_VIDEO_SELECTOR = 'main section'
 const SECTION_ENTRY_DIRECTIONS = ['left', 'right', 'bottom']
 
-const SECTION_VIDEO_WORDS = [
-  'one',
-  'two',
-  'three',
-  'four',
-  'five',
-]
-
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max)
-const unique = (items) => [...new Set(items.filter(Boolean))]
-
-const resolveSectionVideoSources = (index) => {
-  const cycleIndex = index % SECTION_VIDEO_WORDS.length
-  const cycleWordName = SECTION_VIDEO_WORDS[cycleIndex]
-  const cycleNumber = cycleIndex + 1
-
-  return unique([
-    `/${cycleWordName}.mp4`,
-    `/${cycleNumber}.mp4`,
-    `/section-videos/${cycleWordName}.mp4`,
-    `/section-videos/${cycleNumber}.mp4`,
-    `/videos/${cycleWordName}.mp4`,
-    `/videos/${cycleNumber}.mp4`,
-    `/${cycleWordName}.mp4`,
-    `/${cycleNumber}.mp4`,
-  ])
-}
 
 export default function useSmoothScroll(routeKey) {
   useEffect(() => {
@@ -58,7 +31,6 @@ export default function useSmoothScroll(routeKey) {
 
   useEffect(() => {
     const targets = new Set()
-    const videoHosts = new Set()
     let rafId = null
     let registerRafId = null
 
@@ -116,86 +88,17 @@ export default function useSmoothScroll(routeKey) {
       element.setAttribute('data-enter-direction', direction)
     }
 
-    const sectionHasOwnVideo = (section) => {
-      return Boolean(
-        section.classList.contains('page-intro')
-          || section.classList.contains('intro-wrap')
-          || section.classList.contains('contact-video-shell')
-          || section.querySelector(':scope > video'),
-      )
-    }
-
-    const appendBackgroundVideo = (section, index) => {
-      if (section.querySelector(':scope > .section-video-bg')) {
-        return
-      }
-
-      const wrapper = document.createElement('div')
-      wrapper.className = 'section-video-bg'
-      wrapper.setAttribute('aria-hidden', 'true')
-
-      const video = document.createElement('video')
-      video.className = 'section-video-el'
-      video.autoplay = true
-      video.muted = true
-      video.loop = true
-      video.playsInline = true
-      video.preload = 'metadata'
-
-      const sources = resolveSectionVideoSources(index)
-      sources.forEach((src) => {
-        const source = document.createElement('source')
-        source.src = src
-        source.type = 'video/mp4'
-        video.appendChild(source)
-      })
-
-      wrapper.appendChild(video)
-      section.prepend(wrapper)
-    }
-
-    const registerSectionVideos = () => {
-      if (routeKey === '/') {
-        return
-      }
-
-      const sections = document.querySelectorAll(SECTION_VIDEO_SELECTOR)
-      let videoIndex = 0
-
-      sections.forEach((section) => {
-        if (sectionHasOwnVideo(section)) {
-          return
-        }
-
-        section.classList.add('section-video-host')
-        appendBackgroundVideo(section, videoIndex)
-        videoHosts.add(section)
-        videoIndex += 1
-      })
-    }
-
     const registerTargets = () => {
-      registerSectionVideos()
-
       const elements = document.querySelectorAll(SECTION_FOCUS_SELECTOR)
       elements.forEach((element) => {
         if (targets.has(element)) {
           return
         }
 
-        const parentSection = element.closest('section')
-        const hasVideo = Boolean(
-          parentSection
-            && (
-              parentSection.classList.contains('section-video-host')
-              || sectionHasOwnVideo(parentSection)
-            ),
-        )
-
         applyEntryDirection(element, targets.size)
         targets.add(element)
         element.classList.add('scroll-focus-item')
-        element.classList.toggle('scroll-focus-no-video', !hasVideo)
+        element.classList.add('scroll-focus-no-video')
       })
       scheduleUpdate()
     }
@@ -238,11 +141,6 @@ export default function useSmoothScroll(routeKey) {
         element.style.removeProperty('--section-enter-x')
         element.style.removeProperty('--section-enter-y')
         element.removeAttribute('data-enter-direction')
-      })
-
-      videoHosts.forEach((section) => {
-        section.classList.remove('section-video-host')
-        section.querySelector(':scope > .section-video-bg')?.remove()
       })
     }
   }, [routeKey])

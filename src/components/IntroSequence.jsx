@@ -13,11 +13,11 @@ export default function IntroSequence({ onDone }) {
   useEffect(() => {
     const toLetters = window.setTimeout(() => {
       setPhase('letters')
-    }, 2200)
+    }, 260)
 
     const doneTimer = window.setTimeout(() => {
       onDone?.()
-    }, 6600)
+    }, 1150)
 
     return () => {
       window.clearTimeout(toLetters)

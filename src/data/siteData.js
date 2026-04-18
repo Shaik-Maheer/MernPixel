@@ -55,6 +55,52 @@ export const stats = [
   { label: 'Years Experience', value: '5' },
 ]
 
+export const homeCaseStudies = [
+  {
+    name: 'Indian Cricket Academy',
+    category: 'Admissions + Ops Website',
+    impact: 'Admissions workflow clarity improved and inquiry drop-offs reduced by 31%.',
+    metrics: ['31% lower drop-off', '2.1s page load', '5-week delivery'],
+    liveLink: 'https://indiancricketacademy.netlify.app/',
+    image: '/img2.png',
+  },
+  {
+    name: 'Stylistar E-Commerce',
+    category: 'Beauty Commerce Experience',
+    impact: 'Checkout path simplification lifted add-to-cart to purchase conversion by 24%.',
+    metrics: ['24% conversion lift', '47% mobile repeat sessions', '6-week delivery'],
+    liveLink: 'https://beauty-orcin-three.vercel.app/',
+    image: '/img3.png',
+  },
+  {
+    name: 'Frontend Talent IQ',
+    category: 'Interview Platform Frontend',
+    impact: 'OTP + entry flow redesign cut candidate session-entry friction and support requests.',
+    metrics: ['38% fewer entry errors', 'Core flows under 3 clicks', '4-week delivery'],
+    liveLink: 'https://frontendtalentiq.netlify.app/',
+    image: '/img5.png',
+  },
+]
+
+export const homeProcess = [
+  {
+    step: 'Discover',
+    detail: 'We align goals, audience, and conversion intent before touching UI.',
+  },
+  {
+    step: 'Design',
+    detail: 'Focused visual language, strong hierarchy, and reusable system components.',
+  },
+  {
+    step: 'Build',
+    detail: 'Performance-first engineering with clean implementation and QA checkpoints.',
+  },
+  {
+    step: 'Launch + Iterate',
+    detail: 'Post-launch improvements driven by analytics, user behavior, and feedback.',
+  },
+]
+
 export const testimonials = [
   {
     name: 'Akhil Varma',

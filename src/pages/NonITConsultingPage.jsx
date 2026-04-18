@@ -1,18 +1,76 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { cloudinaryVideos } from '../data/cloudinaryVideos'
 import PageEndPromo from '../components/PageEndPromo'
 import PageIntroHero from '../components/PageIntroHero'
-import { nonItServices } from '../data/siteData'
+import { business, nonItServices } from '../data/siteData'
+import {
+  createMailtoLeadHref,
+  createWhatsAppLeadHref,
+  isValidEmail,
+  openLeadChannel,
+} from '../lib/leadForms'
+
+const initialForm = {
+  company: '',
+  email: '',
+  roleTitle: '',
+  positions: '',
+  location: '',
+  notes: '',
+}
 
 export default function NonITConsultingPage() {
   const MotionArticle = motion.article
+  const [form, setForm] = useState(initialForm)
+  const [formError, setFormError] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    if (
+      !form.company.trim()
+      || !isValidEmail(form.email)
+      || !form.roleTitle.trim()
+      || !form.positions.trim()
+      || !form.location.trim()
+      || !form.notes.trim()
+    ) {
+      setFormError('Please complete all fields with a valid email.')
+      return
+    }
+
+    const lines = [
+      'Hi Mern Pixel Team,',
+      '',
+      'Non-IT hiring requirement:',
+      `Company: ${form.company.trim()}`,
+      `Hiring Contact Email: ${form.email.trim()}`,
+      `Role Title: ${form.roleTitle.trim()}`,
+      `Positions Needed: ${form.positions.trim()}`,
+      `Location + Experience: ${form.location.trim()}`,
+      `Hiring Notes: ${form.notes.trim()}`,
+    ]
+
+    const waHref = createWhatsAppLeadHref(business.whatsapp, lines.join('\n'))
+    const mailHref = createMailtoLeadHref({
+      to: business.email,
+      subject: `Non-IT Hiring Requirement - ${form.roleTitle.trim()}`,
+      lines,
+    })
+
+    openLeadChannel(waHref)
+    setSubmitted(true)
+    setFormError('')
+    setForm(initialForm)
+    window.setTimeout(() => setSubmitted(false), 4500)
+    void mailHref
+  }
 
   return (
     <main className="pt-28">
       <PageIntroHero
         title="NON IT CONSULTING"
         subtitle="Sales, marketing, and business-role hiring support with quick turnaround."
-        videoSrc={cloudinaryVideos.gridRubikWarm}
         compact
       />
 
@@ -48,13 +106,47 @@ export default function NonITConsultingPage() {
         >
           <h2 className="font-['Cinzel'] text-3xl">Non-IT Hiring Requirement Form</h2>
           <p className="mt-3 text-sm uppercase tracking-[0.16em] text-white/60">Backend reply target: within 24 hours</p>
-          <form className="form-grid mt-6">
-            <input className="input-field" placeholder="Company name" />
-            <input className="input-field" placeholder="Hiring contact email" type="email" />
-            <input className="input-field" placeholder="Role title" />
-            <input className="input-field" placeholder="Positions needed" />
-            <input className="input-field md:col-span-2" placeholder="Location + experience range" />
-            <textarea className="input-field md:col-span-2" rows="4" placeholder="Hiring notes" />
+          {submitted && <p className="form-success mt-4">Requirement captured. WhatsApp draft opened.</p>}
+          {formError && <p className="form-error mt-4">{formError}</p>}
+          <form className="form-grid mt-6" onSubmit={handleSubmit} noValidate>
+            <input
+              className="input-field"
+              placeholder="Company name"
+              value={form.company}
+              onChange={(event) => setForm((prev) => ({ ...prev, company: event.target.value }))}
+            />
+            <input
+              className="input-field"
+              placeholder="Hiring contact email"
+              type="email"
+              value={form.email}
+              onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
+            />
+            <input
+              className="input-field"
+              placeholder="Role title"
+              value={form.roleTitle}
+              onChange={(event) => setForm((prev) => ({ ...prev, roleTitle: event.target.value }))}
+            />
+            <input
+              className="input-field"
+              placeholder="Positions needed"
+              value={form.positions}
+              onChange={(event) => setForm((prev) => ({ ...prev, positions: event.target.value }))}
+            />
+            <input
+              className="input-field md:col-span-2"
+              placeholder="Location + experience range"
+              value={form.location}
+              onChange={(event) => setForm((prev) => ({ ...prev, location: event.target.value }))}
+            />
+            <textarea
+              className="input-field md:col-span-2"
+              rows="4"
+              placeholder="Hiring notes"
+              value={form.notes}
+              onChange={(event) => setForm((prev) => ({ ...prev, notes: event.target.value }))}
+            />
             <button className="btn-primary md:col-span-2 md:w-fit" type="submit">Submit Hiring Requirement</button>
           </form>
         </motion.article>
@@ -70,3 +162,4 @@ export default function NonITConsultingPage() {
     </main>
   )
 }
+

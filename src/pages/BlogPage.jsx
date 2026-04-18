@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { cloudinaryVideos } from '../data/cloudinaryVideos'
 import PageEndPromo from '../components/PageEndPromo'
 import PageIntroHero from '../components/PageIntroHero'
 import { blogPosts } from '../data/siteData'
@@ -12,7 +11,6 @@ export default function BlogPage() {
       <PageIntroHero
         title="BLOG"
         subtitle="Growth playbooks, strategy notes, and execution insights."
-        videoSrc={cloudinaryVideos.emberOceanAlt}
         compact
       />
 

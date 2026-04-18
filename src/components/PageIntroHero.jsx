@@ -1,12 +1,11 @@
 import { motion } from 'framer-motion'
-import { cloudinaryVideos } from '../data/cloudinaryVideos'
 
 export default function PageIntroHero({
   kicker = 'MERNPIXEL',
   title,
   subtitle,
   scrollText = 'Scroll to feel the difference ↓',
-  videoSrc = cloudinaryVideos.emberOcean,
+  videoSrc = null,
   compact = false,
 }) {
   const MotionSpan = motion.span
@@ -14,9 +13,9 @@ export default function PageIntroHero({
   const letters = title.split('')
 
   return (
-    <section className={`page-intro ${compact ? 'page-intro-compact' : ''}`}>
-      <video className="page-intro-video" src={videoSrc} autoPlay muted loop playsInline />
-      <div className="page-intro-overlay" />
+    <section className={`page-intro ${compact ? 'page-intro-compact' : ''} ${videoSrc ? '' : 'page-intro-static'}`}>
+      {videoSrc && <video className="page-intro-video" src={videoSrc} autoPlay muted loop playsInline />}
+      <div className={`page-intro-overlay ${videoSrc ? '' : 'page-intro-overlay-static'}`} />
       <div className="page-intro-grid" />
 
       <div className="section-shell relative z-10 flex min-h-[66vh] flex-col items-center justify-center text-center">

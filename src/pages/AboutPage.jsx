@@ -154,7 +154,7 @@ export default function AboutPage() {
   useEffect(() => {
     const timer = window.setTimeout(() => {
       setIntroComplete(true)
-    }, 2600)
+    }, 900)
 
     return () => window.clearTimeout(timer)
   }, [])

@@ -1,7 +1,5 @@
 import { useState } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
-import CustomCursor from './components/CustomCursor'
-import ChatbotWidget from './components/ChatbotWidget'
 import GlobalNav from './components/GlobalNav'
 import WhatsAppFloat from './components/WhatsAppFloat'
 import useSmoothScroll from './hooks/useSmoothScroll'
@@ -17,23 +15,33 @@ import PortfolioPage from './pages/PortfolioPage'
 import StudentsPage from './pages/StudentsPage'
 import TeamPage from './pages/TeamPage'
 
+const INTRO_KEY = 'mp_intro_seen_v1'
+
 function App() {
   const location = useLocation()
   useSmoothScroll(location.pathname)
-  const [introDone, setIntroDone] = useState(() => window.location.pathname !== '/')
+  const [introDone, setIntroDone] = useState(() => {
+    if (window.location.pathname !== '/') {
+      return true
+    }
+    return window.localStorage.getItem(INTRO_KEY) === '1'
+  })
 
   const showNav = location.pathname !== '/' || introDone
+
+  const handleIntroComplete = () => {
+    window.localStorage.setItem(INTRO_KEY, '1')
+    setIntroDone(true)
+  }
 
   return (
     <div className="relative overflow-hidden">
       <div className="cosmic-bg" />
       <GlobalNav visible={showNav} />
-      <CustomCursor />
-      <ChatbotWidget />
       <WhatsAppFloat />
 
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<HomePage showIntro={!introDone} onIntroComplete={() => setIntroDone(true)} />} />
+        <Route path="/" element={<HomePage showIntro={!introDone} onIntroComplete={handleIntroComplete} />} />
         <Route path="/works" element={<PortfolioPage />} />
         <Route path="/services" element={<ITServicesPage />} />
         <Route path="/clients" element={<ClientsPage />} />

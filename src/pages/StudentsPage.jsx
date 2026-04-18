@@ -1,18 +1,108 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { cloudinaryVideos } from '../data/cloudinaryVideos'
 import PageEndPromo from '../components/PageEndPromo'
 import PageIntroHero from '../components/PageIntroHero'
-import { studentServices } from '../data/siteData'
+import { business, studentServices } from '../data/siteData'
+import {
+  createMailtoLeadHref,
+  createWhatsAppLeadHref,
+  isValidEmail,
+  openLeadChannel,
+} from '../lib/leadForms'
+
+const initialProjectForm = {
+  name: '',
+  college: '',
+  projectType: '',
+  idea: '',
+}
+
+const initialSessionForm = {
+  name: '',
+  email: '',
+  date: '',
+  time: '',
+  help: '',
+}
 
 export default function StudentsPage() {
   const MotionArticle = motion.article
+  const [projectForm, setProjectForm] = useState(initialProjectForm)
+  const [sessionForm, setSessionForm] = useState(initialSessionForm)
+  const [projectSent, setProjectSent] = useState(false)
+  const [sessionSent, setSessionSent] = useState(false)
+  const [projectError, setProjectError] = useState('')
+  const [sessionError, setSessionError] = useState('')
+
+  const handleProjectSubmit = (event) => {
+    event.preventDefault()
+    if (!projectForm.name.trim() || !projectForm.college.trim() || !projectForm.projectType || !projectForm.idea.trim()) {
+      setProjectError('Please complete all project fields.')
+      return
+    }
+
+    const lines = [
+      'Hi Mern Pixel Team,',
+      '',
+      'Student project request:',
+      `Name: ${projectForm.name.trim()}`,
+      `College: ${projectForm.college.trim()}`,
+      `Project Type: ${projectForm.projectType}`,
+      `Project Idea: ${projectForm.idea.trim()}`,
+    ]
+
+    const waHref = createWhatsAppLeadHref(business.whatsapp, lines.join('\n'))
+    const mailHref = createMailtoLeadHref({
+      to: business.email,
+      subject: `Student Project Request - ${projectForm.projectType}`,
+      lines,
+    })
+
+    openLeadChannel(waHref)
+    setProjectForm(initialProjectForm)
+    setProjectError('')
+    setProjectSent(true)
+    window.setTimeout(() => setProjectSent(false), 4000)
+    void mailHref
+  }
+
+  const handleSessionSubmit = (event) => {
+    event.preventDefault()
+    if (
+      !sessionForm.name.trim()
+      || !isValidEmail(sessionForm.email)
+      || !sessionForm.date
+      || !sessionForm.time
+      || !sessionForm.help.trim()
+    ) {
+      setSessionError('Please complete all booking fields with a valid email.')
+      return
+    }
+
+    const lines = [
+      'Hi Mern Pixel Team,',
+      '',
+      'Student mentoring session request:',
+      `Name: ${sessionForm.name.trim()}`,
+      `Email: ${sessionForm.email.trim()}`,
+      `Preferred Date: ${sessionForm.date}`,
+      `Preferred Time: ${sessionForm.time}`,
+      `Help Needed: ${sessionForm.help.trim()}`,
+    ]
+
+    const waHref = createWhatsAppLeadHref(business.whatsapp, lines.join('\n'))
+    openLeadChannel(waHref)
+    setSessionForm(initialSessionForm)
+    setSessionError('')
+    setSessionSent(true)
+    window.setTimeout(() => setSessionSent(false), 4000)
+  }
 
   return (
     <main className="pt-28">
       <PageIntroHero
         title="STUDENTS"
         subtitle="Major/minor support, mentoring sessions, and practical execution guidance."
-        videoSrc={cloudinaryVideos.emberOcean}
         compact
       />
 
@@ -47,17 +137,39 @@ export default function StudentsPage() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
             <h3 className="font-['Cinzel'] text-3xl">Student Project Request Form</h3>
-            <form className="form-grid mt-6">
-              <input className="input-field" placeholder="Student name" />
-              <input className="input-field" placeholder="College / University" />
-              <select className="input-field md:col-span-2" defaultValue="">
+            {projectSent && <p className="form-success mt-4">Request captured. WhatsApp draft opened.</p>}
+            {projectError && <p className="form-error mt-4">{projectError}</p>}
+            <form className="form-grid mt-6" onSubmit={handleProjectSubmit} noValidate>
+              <input
+                className="input-field"
+                placeholder="Student name"
+                value={projectForm.name}
+                onChange={(event) => setProjectForm((prev) => ({ ...prev, name: event.target.value }))}
+              />
+              <input
+                className="input-field"
+                placeholder="College / University"
+                value={projectForm.college}
+                onChange={(event) => setProjectForm((prev) => ({ ...prev, college: event.target.value }))}
+              />
+              <select
+                className="input-field md:col-span-2"
+                value={projectForm.projectType}
+                onChange={(event) => setProjectForm((prev) => ({ ...prev, projectType: event.target.value }))}
+              >
                 <option value="" disabled>
                   Project type
                 </option>
                 <option>Major Project</option>
                 <option>Minor Project</option>
               </select>
-              <textarea className="input-field md:col-span-2" rows="4" placeholder="Project idea / domain" />
+              <textarea
+                className="input-field md:col-span-2"
+                rows="4"
+                placeholder="Project idea / domain"
+                value={projectForm.idea}
+                onChange={(event) => setProjectForm((prev) => ({ ...prev, idea: event.target.value }))}
+              />
               <button className="btn-primary md:col-span-2 md:w-fit" type="submit">Submit Project Request</button>
             </form>
           </motion.article>
@@ -70,12 +182,41 @@ export default function StudentsPage() {
             transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           >
             <h3 className="font-['Cinzel'] text-3xl">Student Session Booking</h3>
-            <form className="form-grid mt-6">
-              <input className="input-field" placeholder="Student name" />
-              <input className="input-field" placeholder="Email" type="email" />
-              <input className="input-field" type="date" />
-              <input className="input-field" type="time" />
-              <textarea className="input-field md:col-span-2" rows="4" placeholder="What you need help with" />
+            {sessionSent && <p className="form-success mt-4">Booking request captured. WhatsApp draft opened.</p>}
+            {sessionError && <p className="form-error mt-4">{sessionError}</p>}
+            <form className="form-grid mt-6" onSubmit={handleSessionSubmit} noValidate>
+              <input
+                className="input-field"
+                placeholder="Student name"
+                value={sessionForm.name}
+                onChange={(event) => setSessionForm((prev) => ({ ...prev, name: event.target.value }))}
+              />
+              <input
+                className="input-field"
+                placeholder="Email"
+                type="email"
+                value={sessionForm.email}
+                onChange={(event) => setSessionForm((prev) => ({ ...prev, email: event.target.value }))}
+              />
+              <input
+                className="input-field"
+                type="date"
+                value={sessionForm.date}
+                onChange={(event) => setSessionForm((prev) => ({ ...prev, date: event.target.value }))}
+              />
+              <input
+                className="input-field"
+                type="time"
+                value={sessionForm.time}
+                onChange={(event) => setSessionForm((prev) => ({ ...prev, time: event.target.value }))}
+              />
+              <textarea
+                className="input-field md:col-span-2"
+                rows="4"
+                placeholder="What you need help with"
+                value={sessionForm.help}
+                onChange={(event) => setSessionForm((prev) => ({ ...prev, help: event.target.value }))}
+              />
               <button className="btn-primary md:col-span-2 md:w-fit" type="submit">Book Mentoring Session</button>
             </form>
           </motion.article>
@@ -92,3 +233,4 @@ export default function StudentsPage() {
     </main>
   )
 }
+
