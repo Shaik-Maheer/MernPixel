@@ -17,23 +17,17 @@ import PortfolioPage from './pages/PortfolioPage'
 import StudentsPage from './pages/StudentsPage'
 import TeamPage from './pages/TeamPage'
 
-const INTRO_KEY = 'mp_intro_seen_v1'
-
 function App() {
   const location = useLocation()
   useSmoothScroll(location.pathname)
-  const [introDone, setIntroDone] = useState(() => {
-    if (window.location.pathname !== '/') {
-      return true
-    }
-    return window.localStorage.getItem(INTRO_KEY) === '1'
-  })
+  const [completedIntroKey, setCompletedIntroKey] = useState('')
+  const isHome = location.pathname === '/'
+  const showIntro = isHome && completedIntroKey !== location.key
 
-  const showNav = location.pathname !== '/' || introDone
+  const showNav = !isHome || !showIntro
 
   const handleIntroComplete = () => {
-    window.localStorage.setItem(INTRO_KEY, '1')
-    setIntroDone(true)
+    setCompletedIntroKey(location.key)
   }
 
   return (
@@ -45,7 +39,7 @@ function App() {
       <WhatsAppFloat />
 
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<HomePage showIntro={!introDone} onIntroComplete={handleIntroComplete} />} />
+        <Route path="/" element={<HomePage showIntro={showIntro} onIntroComplete={handleIntroComplete} />} />
         <Route path="/works" element={<PortfolioPage />} />
         <Route path="/services" element={<ITServicesPage />} />
         <Route path="/clients" element={<ClientsPage />} />
