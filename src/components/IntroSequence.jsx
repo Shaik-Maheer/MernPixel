@@ -13,11 +13,11 @@ export default function IntroSequence({ onDone }) {
   useEffect(() => {
     const toLetters = window.setTimeout(() => {
       setPhase('letters')
-    }, 260)
+    }, 900)
 
     const doneTimer = window.setTimeout(() => {
       onDone?.()
-    }, 1150)
+    }, 4200)
 
     return () => {
       window.clearTimeout(toLetters)
@@ -60,7 +60,7 @@ export default function IntroSequence({ onDone }) {
                   className="intro-letter-base"
                   initial={{ opacity: 0, y: -100 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.66, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.72, delay: index * 0.18, ease: [0.22, 1, 0.36, 1] }}
                 >
                   {letter}
                 </MotionLetter>
@@ -69,7 +69,7 @@ export default function IntroSequence({ onDone }) {
                   className="intro-letter-fill fill-fire"
                   initial={{ clipPath: 'inset(100% 0 0 0)' }}
                   animate={{ clipPath: 'inset(0% 0 0 0)' }}
-                  transition={{ duration: 1, delay: 0.9 + index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 1.1, delay: 1.1 + index * 0.1, ease: [0.22, 1, 0.36, 1] }}
                 >
                   {letter}
                 </MotionLetter>
@@ -81,7 +81,7 @@ export default function IntroSequence({ onDone }) {
             className="intro-subtext"
             initial={{ opacity: 0, y: 18, letterSpacing: '0.3em' }}
             animate={{ opacity: 1, y: 0, letterSpacing: '0.24em' }}
-            transition={{ duration: 0.62, delay: 1.9, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.75, delay: 2.4, ease: [0.22, 1, 0.36, 1] }}
           >
             We Build What Matters
           </MotionTagline>
