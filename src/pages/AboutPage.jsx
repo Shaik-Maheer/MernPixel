@@ -197,14 +197,10 @@ export default function AboutPage() {
             <p className="section-copy">Speed, clarity, trust, and a smooth path to contact.</p>
 
             <div className="about-proof-grid">
-              {aboutProofStats.map((item, index) => (
+              {aboutProofStats.map((item) => (
                 <motion.article
                   key={item.label}
                   className="glass-card about-proof-card rounded-3xl p-7"
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.25 }}
-                  transition={{ duration: 0.58, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <p className="about-proof-value">
                     <CountUpNumber value={item.value} />
@@ -217,13 +213,7 @@ export default function AboutPage() {
 
           <section className="section-shell about-reel-shell">
             <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
-              <motion.div
-                className="about-reel-video-wrap"
-                initial={{ opacity: 0, scale: 0.32, borderRadius: '999px' }}
-                whileInView={{ opacity: 1, scale: 1, borderRadius: '30px' }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
-              >
+              <motion.div className="about-reel-video-wrap">
                 <video
                   className="about-reel-video"
                   src={cloudinaryVideos.gridRubikCrop}
@@ -236,13 +226,7 @@ export default function AboutPage() {
                 <p className="about-reel-tagline">We Don&apos;t Just Build. We Elevate.</p>
               </motion.div>
 
-              <motion.article
-                className="glass-card rounded-3xl p-7 md:p-9"
-                initial={{ opacity: 0, x: 38 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              >
+              <motion.article className="glass-card rounded-3xl p-7 md:p-9">
                 <p className="text-xs uppercase tracking-[0.22em] text-white/58">Studio Reel</p>
                 <h2 className="mt-3 font-['Cinzel'] text-4xl text-white md:text-5xl">How We Build</h2>
                 <p className="mt-5 text-white/76">
@@ -282,14 +266,10 @@ export default function AboutPage() {
             <p className="section-copy">Execution depth, visual precision, and business clarity at every stage.</p>
 
             <div className="mt-10 grid gap-5 md:grid-cols-2">
-              {differentiators.map((item, index) => (
+              {differentiators.map((item) => (
                 <MotionCard
                   key={item.title}
                   className="glass-card about-diff-card rounded-3xl p-7"
-                  initial={{ opacity: 0, y: 28 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.65, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
                   whileHover={{ y: -10, rotateX: 2.2, rotateY: -2 }}
                 >
                   <h3 className="font-['Cinzel'] text-3xl text-white">{item.title}</h3>
@@ -324,15 +304,8 @@ export default function AboutPage() {
 
             <div className="section-shell pt-8 pb-20">
               <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-                {storySteps.map((step, index) => (
-                  <MotionCard
-                    key={step.title}
-                    className="blueprint-card glass-card rounded-3xl p-8"
-                    initial={{ opacity: 0, y: 26 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.25 }}
-                    transition={{ duration: 0.58, delay: index * 0.08 }}
-                  >
+                {storySteps.map((step) => (
+                  <MotionCard key={step.title} className="blueprint-card glass-card rounded-3xl p-8">
                     <div className="blueprint-media">
                       <img className="blueprint-media-image" src={step.image} alt={`${step.title} step visual`} loading="lazy" />
                       <span className="blueprint-media-glow" />
@@ -352,13 +325,7 @@ export default function AboutPage() {
           </section>
 
           <section className="section-shell">
-            <motion.article
-              className="glass-card rounded-3xl p-7 text-center md:p-10"
-              initial={{ opacity: 0, y: 26 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
-            >
+            <motion.article className="glass-card rounded-3xl p-7 text-center md:p-10">
               <span className="section-kicker">Need Service Details?</span>
               <h2 className="section-title">Know More About Our Services</h2>
               <p className="section-copy mx-auto">
