@@ -4810,10 +4810,10 @@ main > .section-shell:nth-of-type(even)::before {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(39, 185, 255, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(39, 185, 255, 0.07) 1px, transparent 1px);
-  background-size: 58px 58px;
-  opacity: 0.38;
+    linear-gradient(rgba(39, 185, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(39, 185, 255, 0.08) 1px, transparent 1px);
+  background-size: 44px 44px;
+  opacity: 0.44;
   mask-image: radial-gradient(ellipse at center, black 34%, transparent 90%);
 }
 
@@ -4828,8 +4828,8 @@ main > .section-shell:nth-of-type(even)::before {
   box-shadow:
     0 0 10px rgba(122, 219, 239, 0.7),
     0 0 24px rgba(39, 185, 255, 0.3);
-  opacity: 0.2;
-  animation: hero-particle-float 6.5s ease-in-out infinite;
+  opacity: 0.28;
+  animation: hero-particle-float var(--hero-particle-duration) ease-in-out infinite;
   animation-delay: var(--hero-particle-delay);
 }
 
