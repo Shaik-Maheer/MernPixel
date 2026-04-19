@@ -8,71 +8,71 @@ const services = [
   {
     title: 'Web Development',
     icon: '◈',
-    description: 'High-performance websites and web apps engineered for speed, scalability, and business conversion.',
+    description: 'Fast websites and web apps.',
     details: [
-      'Custom websites and web apps with conversion-first architecture.',
-      'Performance optimization, Core Web Vitals tuning, and scalable deployment setup.',
-      'Clean code structure, admin-friendly management, and long-term maintenance support.',
+      'Custom build.',
+      'Performance tuned.',
+      'Maintainable code.',
     ],
   },
   {
     title: 'E-commerce Web Application',
     icon: '⬢',
-    description: 'Conversion-driven online store systems with smooth catalog flow, secure checkout logic, and admin-ready operations.',
+    description: 'Conversion-ready store systems.',
     details: [
-      'Custom e-commerce experiences for beauty, fashion, lifestyle, and niche products.',
-      'Product catalog, cart, checkout flow, and order lifecycle integration.',
-      'Performance-focused UI with offer modules, upsell blocks, and trust-first purchase journey.',
+      'Catalog + checkout.',
+      'Order flow integration.',
+      'Performance UI.',
     ],
   },
   {
     title: 'UI/UX Design',
     icon: '◍',
-    description: 'Premium interface systems focused on clarity, interaction quality, and consistent user journeys.',
+    description: 'Clear and conversion-focused UI.',
     details: [
-      'User-flow planning, wireframes, and high-fidelity visual systems.',
-      'Reusable UI component language for consistent product experience.',
-      'Interaction patterns optimized for usability, trust, and conversion.',
+      'Flow planning.',
+      'Reusable components.',
+      'Usability focused.',
     ],
   },
   {
     title: 'SEO & Digital Growth',
     icon: '⬈',
-    description: 'Search-ready structures and growth strategy execution that improve visibility and lead quality.',
+    description: 'Search and growth support.',
     details: [
-      'Technical SEO foundations: metadata, semantic structure, and crawl readiness.',
-      'Keyword-focused content structure aligned to business goals.',
-      'Growth roadmap tracking visibility, traffic quality, and lead outcomes.',
+      'Technical SEO.',
+      'Keyword structure.',
+      'Growth tracking.',
     ],
   },
   {
     title: 'Branding & Identity',
     icon: '✦',
-    description: 'Distinct brand systems across logo direction, typography behavior, and digital design language.',
+    description: 'Brand and identity systems.',
     details: [
-      'Logo and visual identity direction for digital-first brands.',
-      'Typography, color, and style system for consistent brand communication.',
-      'Brand assets and usage guidance for web, social, and campaigns.',
+      'Logo direction.',
+      'Typography and color.',
+      'Brand assets.',
     ],
   },
   {
     title: 'Academic & Project Solutions',
     icon: '▣',
-    description: 'Structured support for major and minor academic projects with mentoring and practical implementation.',
+    description: 'Major/minor project support.',
     details: [
-      'Major/minor project planning with clear delivery milestones.',
-      'Implementation support, architecture guidance, and code review.',
-      'Documentation and presentation readiness for final submission.',
+      'Planning support.',
+      'Implementation help.',
+      'Final submission prep.',
     ],
   },
   {
     title: 'Talent Bridge Program',
     icon: '⟐',
-    description: 'Connecting businesses with ready talent and helping candidates align skills with real opportunities.',
+    description: 'Hiring and candidate support.',
     details: [
-      'Role mapping and candidate screening aligned to business needs.',
-      'Interview-ready profile improvement for students and professionals.',
-      'Hiring support with faster turnaround and quality-fit filtering.',
+      'Role mapping.',
+      'Profile improvement.',
+      'Faster screening.',
     ],
   },
 ]
@@ -83,11 +83,6 @@ export default function ITServicesPage() {
   const MotionSection = motion.section
   const MotionCard = motion.article
   const [activeService, setActiveService] = useState(null)
-  const serviceSignals = [
-    { label: 'Delivery Model', value: 'Design + Build' },
-    { label: 'Execution Style', value: 'Fast Iteration' },
-    { label: 'Primary Goal', value: 'Business Growth' },
-  ]
 
   const { scrollYProgress } = useScroll()
   const bgShift = useTransform(scrollYProgress, [0, 1], [0, -120])
@@ -98,7 +93,7 @@ export default function ITServicesPage() {
     <MotionMain className="whatdo-page pt-28">
       <PageIntroHero
         title="WHAT WE DO"
-        subtitle="Complete digital solutions tailored to your needs"
+        subtitle="Digital services for design, build, and growth."
         compact
       />
 
@@ -116,29 +111,7 @@ export default function ITServicesPage() {
         <div className="whatdo-overview-grid">
           <article className="glass-card whatdo-overview-card rounded-3xl p-7 md:p-9">
             <span className="section-kicker">Service Promise</span>
-            <h1 className="section-title">From strategy to shipped product.</h1>
-            <p className="section-copy max-w-none">
-              We design, build, and launch digital products with clear goals, measurable outcomes, and
-              repeatable quality.
-            </p>
-            <div className="whatdo-overview-signals">
-              {serviceSignals.map((item) => (
-                <article key={item.label}>
-                  <p>{item.value}</p>
-                  <span>{item.label}</span>
-                </article>
-              ))}
-            </div>
-          </article>
-
-          <article className="glass-card whatdo-overview-list rounded-3xl p-7 md:p-9">
-            <p className="whatdo-overview-list-kicker">Included In Every Engagement</p>
-            <ul>
-              <li>Dedicated ownership and milestone tracking.</li>
-              <li>Responsive components and scalable structure.</li>
-              <li>Performance-first build with launch readiness.</li>
-              <li>Post-delivery support for iteration and improvements.</li>
-            </ul>
+            <h1 className="section-title">From idea to launch.</h1>
           </article>
         </div>
       </MotionSection>
@@ -146,7 +119,6 @@ export default function ITServicesPage() {
       <MotionSection className="section-shell relative z-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.55 }}>
         <span className="section-kicker">Services Grid</span>
         <h1 className="section-title">Premium Services Stack</h1>
-        <p className="section-copy max-w-3xl">Built for founders, businesses, and students who need execution with quality.</p>
 
         <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {services.map((service, index) => (
@@ -165,8 +137,7 @@ export default function ITServicesPage() {
               </div>
 
               <h2 className="mt-5 font-['Cinzel'] text-3xl text-white">{service.title}</h2>
-              <p className="mt-4 text-sm leading-relaxed text-white/74">{service.description}</p>
-              <p className="mt-5 text-xs uppercase tracking-[0.18em] text-[#27B9FF]">Click to view full scope</p>
+              <p className="mt-5 text-xs uppercase tracking-[0.18em] text-[#27B9FF]">View scope</p>
             </MotionCard>
           ))}
         </div>
@@ -191,7 +162,7 @@ export default function ITServicesPage() {
       <PageEndPromo
         eyebrow="Next Section"
         title="Explore Our Creations"
-        description="See how these capabilities are translated into real project outcomes."
+        description="See completed project outcomes."
         to="/portfolio"
         buttonLabel="View Projects"
       />
@@ -224,8 +195,6 @@ export default function ITServicesPage() {
 
               <p className="text-xs uppercase tracking-[0.22em] text-white/56">Premium Service</p>
               <h3 className="mt-3 font-['Cinzel'] text-4xl text-white">{activeService.title}</h3>
-              <p className="mt-4 text-white/78">{activeService.description}</p>
-
               <ul className="mt-6 space-y-3 text-sm text-white/75">
                 {activeService.details.map((item) => (
                   <li key={item} className="flex gap-3">

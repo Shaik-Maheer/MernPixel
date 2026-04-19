@@ -6,36 +6,8 @@ import { Link } from 'react-router-dom'
 import CountUpNumber from '../components/CountUpNumber'
 import PageEndPromo from '../components/PageEndPromo'
 import { cloudinaryVideos } from '../data/cloudinaryVideos'
-import { coreCrew } from '../data/siteData'
 
 gsap.registerPlugin(ScrollTrigger)
-
-const storySteps = [
-  {
-    stepId: '01',
-    title: 'Idea',
-    description: 'Understanding client vision and goals',
-    image: '/img3.png',
-  },
-  {
-    stepId: '02',
-    title: 'Design',
-    description: 'Crafting modern UI/UX experiences',
-    image: '/img5.png',
-  },
-  {
-    stepId: '03',
-    title: 'Development',
-    description: 'Building scalable and high-performance solutions',
-    image: '/img2.png',
-  },
-  {
-    stepId: '04',
-    title: 'Launch',
-    description: 'Deploying and growing your digital presence',
-    image: '/img6.png',
-  },
-]
 
 const aboutProofStats = [
   { value: '24+', label: 'Projects' },
@@ -43,14 +15,13 @@ const aboutProofStats = [
   { value: '4', label: 'Team Members' },
   { value: '5', label: 'Years Experience' },
 ]
-const reelStack = ['React', 'Performance UI', 'Conversion Copy', 'Animation Systems', 'Growth Loops', 'QA']
+const reelStack = ['React', 'Performance UI', 'QA']
 
 export default function AboutPage() {
   const MotionSection = motion.section
   const MotionMain = motion.main
   const MotionHeading = motion.h1
   const MotionParagraph = motion.p
-  const MotionCard = motion.article
 
   const [introComplete, setIntroComplete] = useState(false)
   const heroRef = useRef(null)
@@ -174,8 +145,7 @@ export default function AboutPage() {
 
           <section className="section-shell about-proof-shell">
             <span className="section-kicker">Proof</span>
-            <h2 className="section-title">WHAT USERS ACTUALLY CARE ABOUT</h2>
-            <p className="section-copy">Speed, clarity, trust, and a smooth path to contact.</p>
+            <h2 className="section-title">Proof Snapshot</h2>
 
             <div className="about-proof-grid">
               {aboutProofStats.map((item) => (
@@ -210,23 +180,10 @@ export default function AboutPage() {
               <motion.article className="glass-card rounded-3xl p-7 md:p-9">
                 <p className="text-xs uppercase tracking-[0.22em] text-white/58">Studio Reel</p>
                 <h2 className="mt-3 font-['Cinzel'] text-4xl text-white md:text-5xl">How We Build</h2>
-                <p className="mt-5 text-white/76">
-                  From first idea to launch, we combine design, engineering, and growth execution in one focused flow. This
-                  reel is delivered using Cloudinary video for smooth playback quality.
-                </p>
 
                 <div className="about-reel-stack">
                   {reelStack.map((item) => (
                     <span key={item}>{item}</span>
-                  ))}
-                </div>
-
-                <div className="mt-7 grid gap-3 sm:grid-cols-2">
-                  {coreCrew.map((member) => (
-                    <a key={member.name} href={member.linkedin} target="_blank" rel="noreferrer" className="about-crew-chip cursor-target">
-                      <span>{member.name}</span>
-                      <small>LinkedIn</small>
-                    </a>
                   ))}
                 </div>
 
@@ -237,58 +194,10 @@ export default function AboutPage() {
             </div>
           </section>
 
-          <section className="blueprint-shell">
-            <div className="blueprint-head section-shell">
-              <span className="section-kicker">Digital Blueprint</span>
-              <h2 className="section-title">Digital Blueprint</h2>
-              <p className="section-copy mt-4 max-w-3xl">
-                A step-by-step journey of how we transform ideas into real digital products
-              </p>
-            </div>
-
-            <div className="blueprint-fall-wrap" aria-hidden>
-              {Array.from({ length: 16 }).map((_, index) => (
-                <span
-                  key={`blueprint-fall-${index}`}
-                  className="blueprint-fall"
-                  style={{
-                    left: `${(index * 6.3) % 100}%`,
-                    animationDelay: `${(index % 5) * 0.46}s`,
-                    animationDuration: `${5.2 + (index % 6) * 0.45}s`,
-                  }}
-                />
-              ))}
-            </div>
-
-            <div className="section-shell pt-8 pb-20">
-              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-                {storySteps.map((step) => (
-                  <MotionCard key={step.title} className="blueprint-card glass-card rounded-3xl p-8">
-                    <div className="blueprint-media">
-                      <img className="blueprint-media-image" src={step.image} alt={`${step.title} step visual`} loading="lazy" />
-                      <span className="blueprint-media-glow" />
-                    </div>
-
-                    <div className="blueprint-content">
-                      <p className="blueprint-step text-xs uppercase tracking-[0.22em] text-white/60">
-                        Step {step.stepId}
-                      </p>
-                      <h3 className="blueprint-title mt-4 font-['Cinzel'] text-4xl text-white">{step.title}</h3>
-                      <p className="blueprint-copy mt-6 text-white/75">{step.description}</p>
-                    </div>
-                  </MotionCard>
-                ))}
-              </div>
-            </div>
-          </section>
-
           <section className="section-shell">
             <motion.article className="glass-card rounded-3xl p-7 text-center md:p-10">
               <span className="section-kicker">Need Service Details?</span>
               <h2 className="section-title">Know More About Our Services</h2>
-              <p className="section-copy mx-auto">
-                We kept About focused. For complete service details, flow, and offerings, open the Services page.
-              </p>
               <Link to="/services" className="btn-primary mt-8 inline-flex cursor-target">
                 Open Services Page
               </Link>
@@ -298,7 +207,7 @@ export default function AboutPage() {
           <PageEndPromo
             eyebrow="Next Section"
             title="Take A Tour Of Our Projects"
-            description="Explore our project outcomes and see how each idea is executed with quality."
+            description="Explore project outcomes."
             to="/portfolio"
             buttonLabel="View Our Creations"
           />

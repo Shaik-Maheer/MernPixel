@@ -4493,6 +4493,10 @@ main > .section-shell:nth-of-type(even)::before {
   gap: clamp(16px, 3vw, 30px);
 }
 
+.nonit-command-grid-single {
+  grid-template-columns: 1fr;
+}
+
 .nonit-command-card,
 .nonit-flow-card,
 .student-command-card,

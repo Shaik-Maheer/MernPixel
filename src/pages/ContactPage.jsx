@@ -21,18 +21,6 @@ const serviceOptions = [
   'Portfolio Building',
 ]
 
-const contactFlow = [
-  { title: 'Share Requirement', detail: 'Submit scope, service, and goal details.' },
-  { title: 'Quick Discovery', detail: 'We map priorities, timeline, and execution path.' },
-  { title: 'Execution Kickoff', detail: 'You receive a clear plan and we start delivery.' },
-]
-
-const responseSignals = [
-  { label: 'First Reply', value: '< 24 Hours' },
-  { label: 'Proposal Clarity', value: 'Scope + Milestones' },
-  { label: 'Communication', value: 'WhatsApp + Email' },
-]
-
 const initialForm = {
   name: '',
   email: '',
@@ -64,7 +52,6 @@ const validateContactForm = (values) => {
 export default function ContactPage() {
   const MotionCard = motion.article
   const MotionLink = motion.a
-  const MotionHeading = motion.h2
 
   const [formData, setFormData] = useState(initialForm)
   const [formErrors, setFormErrors] = useState({})
@@ -140,7 +127,7 @@ export default function ContactPage() {
     <main className="contact-page pt-24 md:pt-28">
       <PageIntroHero
         title="CONTACT US"
-        subtitle="Tell us your requirement and we'll shape a practical plan quickly."
+        subtitle="Share your requirement."
         compact
       />
 
@@ -148,31 +135,18 @@ export default function ContactPage() {
         <div className="contact-command-grid">
           <MotionCard
             className="glass-card contact-info-card contact-command-card rounded-3xl p-7 md:p-9"
-            initial={{ opacity: 0, x: -72, y: 20 }}
-            whileInView={{ opacity: 1, x: 0, y: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h2 className="font-['Cinzel'] text-3xl text-white md:text-4xl">Start a conversation that moves fast</h2>
-            <p className="mt-5 text-white/72">
-              Share your requirement and our team will connect with a practical execution plan. We keep communication clear,
-              timelines realistic, and delivery quality high.
-            </p>
-
-            <div className="contact-flow-list">
-              {contactFlow.map((step) => (
-                <article key={step.title}>
-                  <p>{step.title}</p>
-                  <span>{step.detail}</span>
-                </article>
-              ))}
-            </div>
+            <h2 className="font-['Cinzel'] text-3xl text-white md:text-4xl">Start a conversation</h2>
 
             <div className="mt-8 space-y-4">
               <MotionLink
                 href={`mailto:${business.email}`}
                 className="contact-channel cursor-target"
-                whileHover={{ x: 5, scale: 1.01 }}
+                whileHover={{ scale: 1.01 }}
               >
                 <span className="contact-channel-icon">@</span>
                 <span>
@@ -186,7 +160,7 @@ export default function ContactPage() {
                 target="_blank"
                 rel="noreferrer"
                 className="contact-channel cursor-target"
-                whileHover={{ x: 5, scale: 1.01 }}
+                whileHover={{ scale: 1.01 }}
               >
                 <span className="contact-channel-icon">WA</span>
                 <span>
@@ -195,31 +169,17 @@ export default function ContactPage() {
                 </span>
               </MotionLink>
             </div>
-
-            <div className="contact-response-strip">
-              {responseSignals.map((item) => (
-                <article key={item.label}>
-                  <p>{item.value}</p>
-                  <span>{item.label}</span>
-                </article>
-              ))}
-            </div>
           </MotionCard>
 
           <MotionCard
             className="glass-card contact-form-card rounded-3xl p-7 md:p-9"
-            initial={{ opacity: 0, x: 92, y: 22 }}
-            whileInView={{ opacity: 1, x: 0, y: 0 }}
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.65, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           >
             <h2 className="font-['Cinzel'] text-3xl text-white md:text-4xl">Project Contact Form</h2>
-            <p className="mt-4 text-sm text-white/70">Share your details. We route your inquiry directly in WhatsApp + email.</p>
-            <div className="contact-form-steps">
-              <span>Step 1: Fill Details</span>
-              <span>Step 2: Submit Inquiry</span>
-              <span>Step 3: We Reach Out</span>
-            </div>
+            <p className="mt-4 text-sm text-white/70">Share details and submit.</p>
 
             {submitted && (
               <div className="contact-submit-success mt-6 rounded-2xl border border-[#7ADBEF]/50 bg-[#7ADBEF]/10 p-4">
@@ -331,45 +291,10 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="section-shell pt-0">
-        <article className="glass-card contact-assurance-panel rounded-3xl p-8 md:p-12">
-          <MotionHeading
-            className="font-['Cinzel'] text-center text-4xl leading-tight text-white md:text-6xl"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-          >
-            What Happens After You Submit
-          </MotionHeading>
-          <p className="mx-auto mt-5 max-w-2xl text-center text-white/74">
-            We validate your scope, align priorities, and return with a practical execution plan.
-          </p>
-
-          <div className="contact-assurance-grid">
-            <article>
-              <p>01</p>
-              <span>Requirement Review</span>
-              <small>Your request is evaluated for scope and business goals.</small>
-            </article>
-            <article>
-              <p>02</p>
-              <span>Execution Blueprint</span>
-              <small>We share milestone flow, timeline, and delivery approach.</small>
-            </article>
-            <article>
-              <p>03</p>
-              <span>Launch-Focused Build</span>
-              <small>Design and development are executed with quality checkpoints.</small>
-            </article>
-          </div>
-        </article>
-      </section>
-
       <PageEndPromo
         eyebrow="Next Section"
         title="See Our Creations"
-        description="Browse the portfolio to see how strategy, design, and development come together."
+        description="Browse the portfolio."
         to="/works"
         buttonLabel="Open Projects"
       />

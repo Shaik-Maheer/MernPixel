@@ -5,40 +5,18 @@ import { testimonials } from '../data/siteData'
 
 export default function ClientsPage() {
   const MotionCard = motion.article
-  const trustSignals = [
-    { label: 'Delivery Satisfaction', value: '94%' },
-    { label: 'Repeat Engagement', value: '71%' },
-    { label: 'Avg. Launch Timeline', value: '4-6 Weeks' },
-  ]
 
   return (
     <main className="pt-24">
       <PageIntroHero
         title="CLIENTS"
-        subtitle="Trusted by growing brands for serious digital outcomes."
+        subtitle="Feedback from clients."
         compact
       />
 
       <section className="section-shell">
         <div className="clients-hero-grid">
-          <article className="glass-card clients-summary-card rounded-3xl p-7 md:p-9">
-            <span className="section-kicker">Clients</span>
-            <h1 className="section-title">Client trust and outcomes</h1>
-            <p className="section-copy max-w-none">
-              We focus on outcomes clients can feel: better usability, stronger conversion flow, and more
-              confidence in digital delivery.
-            </p>
-            <div className="clients-trust-signals">
-              {trustSignals.map((item) => (
-                <article key={item.label}>
-                  <p>{item.value}</p>
-                  <span>{item.label}</span>
-                </article>
-              ))}
-            </div>
-          </article>
-
-          <article className="glass-card clients-quote-card rounded-3xl p-7 md:p-9">
+          <article className="glass-card clients-quote-card rounded-3xl p-7 md:p-9 lg:col-span-2">
             <p className="clients-quote-kicker">Featured Feedback</p>
             <p className="clients-quote-text">"{testimonials[0].quote}"</p>
             <p className="clients-quote-name">{testimonials[0].name}</p>
@@ -65,7 +43,7 @@ export default function ClientsPage() {
       <PageEndPromo
         eyebrow="Next Section"
         title="Discover What We Do"
-        description="Explore our services and see how we can build for your business."
+        description="Explore our services."
         to="/services"
         buttonLabel="Explore Services"
       />

@@ -21,7 +21,7 @@ export default function PortfolioPage() {
     <main className="creation-page pt-24 md:pt-28">
       <PageIntroHero
         title="OUR CREATIONS"
-        subtitle="A selection of projects we've crafted with precision and passion"
+        subtitle="Selected projects."
         videoSrc={cloudinaryVideos.emberOceanDeep}
       />
 
@@ -30,10 +30,6 @@ export default function PortfolioPage() {
           <article className="glass-card portfolio-overview-card rounded-3xl p-7 md:p-9">
             <span className="section-kicker">Portfolio</span>
             <h1 className="section-title">Work that looks sharp and performs in market.</h1>
-            <p className="section-copy max-w-none">
-              Every project is built around the same core: strong first impression, clear user path, and
-              business-ready implementation.
-            </p>
             <div className="portfolio-overview-metrics">
               {portfolioStats.map((item) => (
                 <article key={item.label}>
@@ -51,7 +47,6 @@ export default function PortfolioPage() {
       <section className="section-shell">
         <span className="section-kicker">Project Showcase</span>
         <h2 className="section-title">Recent Projects</h2>
-        <p className="section-copy">Image-first showcase. Hover to reveal details and click to open each live project.</p>
 
         <div className="grid gap-8 md:grid-cols-2">
           {portfolioProjects.map((project, index) => {
@@ -107,7 +102,6 @@ export default function PortfolioPage() {
                     Visit Live
                   </a>
                 </div>
-                {project.summary && <p className="works-summary">{project.summary}</p>}
               </MotionArticle>
             )
           })}
@@ -117,7 +111,7 @@ export default function PortfolioPage() {
       <PageEndPromo
         eyebrow="Be Our Next Success Story"
         title="Your Brand Could Be Featured Here"
-        description="Bring your idea and we will craft a high-impact digital product that performs in the real market."
+        description="Bring your idea. We will build it."
         to="/contact"
         buttonLabel="Start Your Project 🚀"
       />

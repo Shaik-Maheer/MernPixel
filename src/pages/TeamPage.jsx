@@ -4,19 +4,6 @@ import PageEndPromo from '../components/PageEndPromo'
 import PageIntroHero from '../components/PageIntroHero'
 import { coreCrew } from '../data/siteData'
 
-const teamSignals = [
-  { label: 'Disciplines', value: 'Design + Engineering + Growth' },
-  { label: 'Collaboration', value: 'Single Workflow, Shared Ownership' },
-  { label: 'Delivery Pattern', value: 'Weekly Milestones + Review' },
-]
-
-const operatingPrinciples = [
-  'Decisions are grounded in user flow and business outcomes.',
-  'Visual systems stay consistent across screens and breakpoints.',
-  'Engineering choices prioritize performance and maintainability.',
-  'Feedback loops are fast, clear, and action oriented.',
-]
-
 function TeamModal({ member, onClose }) {
   const MotionDiv = Motion.div
   const MotionArticle = Motion.article
@@ -80,49 +67,22 @@ export default function TeamPage() {
     <main className="pt-24">
       <PageIntroHero
         title="OUR TEAM"
-        subtitle="Four specialists. One execution engine for design, development, and growth."
+        subtitle="Four specialists. One team."
         compact
       />
 
       <section className="section-shell team-command-shell">
         <div className="team-command-grid">
           <MotionArticle
-            className="glass-card team-command-card rounded-3xl p-7 md:p-9"
-            initial={{ opacity: 0, x: -40, y: 18 }}
-            whileInView={{ opacity: 1, x: 0, y: 0 }}
+            className="glass-card team-command-card rounded-3xl p-7 md:col-span-2 md:p-9"
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
             <span className="section-kicker">Team Engine</span>
             <h1 className="section-title">Small team. Serious execution capacity.</h1>
-            <p className="section-copy max-w-none">
-              Each member owns a core function, but we execute as one integrated unit to keep quality high
-              and delivery fast.
-            </p>
-
-            <div className="team-command-signals">
-              {teamSignals.map((item) => (
-                <article key={item.label}>
-                  <p>{item.label}</p>
-                  <span>{item.value}</span>
-                </article>
-              ))}
-            </div>
-          </MotionArticle>
-
-          <MotionArticle
-            className="glass-card team-principles-card rounded-3xl p-7 md:p-9"
-            initial={{ opacity: 0, x: 40, y: 18 }}
-            whileInView={{ opacity: 1, x: 0, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <p className="team-principles-kicker">Operating Principles</p>
-            <ul>
-              {operatingPrinciples.map((point) => (
-                <li key={point}>{point}</li>
-              ))}
-            </ul>
+            <p className="section-copy max-w-none">Design, development, and growth in one execution flow.</p>
           </MotionArticle>
         </div>
       </section>
@@ -187,7 +147,6 @@ export default function TeamPage() {
                   <p className="mt-2 text-sm uppercase tracking-[0.16em] text-[#27B9FF]">{member.role}</p>
                 </div>
               </div>
-              <p className="mt-5 text-white/72">{member.bio}</p>
 
               <div className="team-profile-actions">
                 <button type="button" className="btn-primary inline-flex">
@@ -211,7 +170,7 @@ export default function TeamPage() {
       <PageEndPromo
         eyebrow="Next Section"
         title="Read What Clients Say"
-        description="Explore reviews and trust stories from brands we have supported."
+        description="Explore client feedback."
         to="/clients"
         buttonLabel="Open Reviews"
       />
