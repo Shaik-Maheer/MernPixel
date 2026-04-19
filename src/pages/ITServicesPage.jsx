@@ -83,6 +83,11 @@ export default function ITServicesPage() {
   const MotionSection = motion.section
   const MotionCard = motion.article
   const [activeService, setActiveService] = useState(null)
+  const serviceSignals = [
+    { label: 'Delivery Model', value: 'Design + Build' },
+    { label: 'Execution Style', value: 'Fast Iteration' },
+    { label: 'Primary Goal', value: 'Business Growth' },
+  ]
 
   const { scrollYProgress } = useScroll()
   const bgShift = useTransform(scrollYProgress, [0, 1], [0, -120])
@@ -100,6 +105,43 @@ export default function ITServicesPage() {
       <MotionDiv className="whatdo-grid-bg" style={{ y: bgShift }} />
       <MotionDiv className="whatdo-orb whatdo-orb-a" style={{ y: orbShiftA }} />
       <MotionDiv className="whatdo-orb whatdo-orb-b" style={{ y: orbShiftB }} />
+
+      <MotionSection
+        className="section-shell relative z-10 whatdo-overview"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.55 }}
+      >
+        <div className="whatdo-overview-grid">
+          <article className="glass-card whatdo-overview-card rounded-3xl p-7 md:p-9">
+            <span className="section-kicker">Service Promise</span>
+            <h1 className="section-title">From strategy to shipped product.</h1>
+            <p className="section-copy max-w-none">
+              We design, build, and launch digital products with clear goals, measurable outcomes, and
+              repeatable quality.
+            </p>
+            <div className="whatdo-overview-signals">
+              {serviceSignals.map((item) => (
+                <article key={item.label}>
+                  <p>{item.value}</p>
+                  <span>{item.label}</span>
+                </article>
+              ))}
+            </div>
+          </article>
+
+          <article className="glass-card whatdo-overview-list rounded-3xl p-7 md:p-9">
+            <p className="whatdo-overview-list-kicker">Included In Every Engagement</p>
+            <ul>
+              <li>Dedicated ownership and milestone tracking.</li>
+              <li>Responsive components and scalable structure.</li>
+              <li>Performance-first build with launch readiness.</li>
+              <li>Post-delivery support for iteration and improvements.</li>
+            </ul>
+          </article>
+        </div>
+      </MotionSection>
 
       <MotionSection className="section-shell relative z-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.55 }}>
         <span className="section-kicker">Services Grid</span>

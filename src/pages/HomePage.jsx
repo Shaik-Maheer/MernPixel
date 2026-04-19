@@ -4,7 +4,15 @@ import { Link } from 'react-router-dom'
 import CountUpNumber from '../components/CountUpNumber'
 import IntroSequence from '../components/IntroSequence'
 import { cloudinaryVideos } from '../data/cloudinaryVideos'
-import { capabilityMarquee, developmentLab, homeCaseStudies, homeProcess, stats, testimonials } from '../data/siteData'
+import {
+  capabilityMarquee,
+  clientHighlights,
+  developmentLab,
+  homeCaseStudies,
+  homeProcess,
+  stats,
+  testimonials,
+} from '../data/siteData'
 
 export default function HomePage({ showIntro, onIntroComplete }) {
   const MotionHeading = motion.h1
@@ -38,47 +46,101 @@ export default function HomePage({ showIntro, onIntroComplete }) {
           />
           <div className="home-hero-overlay" />
 
-          <div className="section-shell relative text-center">
-            <MotionHeading
-              className="home-hero-title relative z-10 mx-auto max-w-5xl"
-              initial={{ opacity: 0, y: 34 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            >
-              Not Built To Impress.
-              <br />
-              Built To Perform.
-            </MotionHeading>
+          <div className="section-shell relative">
+            <div className="home-hero-layout">
+              <div className="home-hero-copy">
+                <motion.p
+                  className="home-hero-kicker"
+                  initial={{ opacity: 0, y: 22 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  MernPixel Studio
+                </motion.p>
 
-            <MotionParagraph
-              className="section-copy relative z-10 mx-auto max-w-3xl"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            >
-              We design and ship business-ready digital experiences with clear messaging, fast performance,
-              and conversion-focused flows.
-            </MotionParagraph>
+                <MotionHeading
+                  className="home-hero-title relative z-10"
+                  initial={{ opacity: 0, y: 34 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  Not Built To Impress.
+                  <br />
+                  Built To Perform.
+                </MotionHeading>
 
-            <motion.div
-              className="home-hero-actions mt-9 flex flex-wrap items-center justify-center gap-4"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <Link to="/contact" className="btn-primary cursor-target">
-                Start Your Project
-              </Link>
-              <Link to="/works" className="btn-secondary cursor-target">
-                See Live Work
-              </Link>
-            </motion.div>
+                <MotionParagraph
+                  className="home-hero-subtitle"
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.75, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  We design and ship business-ready digital experiences with clear messaging, fast performance,
+                  and conversion-focused flows.
+                </MotionParagraph>
+
+                <motion.div
+                  className="home-hero-actions mt-9 flex flex-wrap items-center gap-4"
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <Link to="/contact" className="btn-primary cursor-target">
+                    Start Your Project
+                  </Link>
+                  <Link to="/works" className="btn-secondary cursor-target">
+                    See Live Work
+                  </Link>
+                </motion.div>
+
+                <motion.div
+                  className="home-client-rail"
+                  initial={{ opacity: 0, y: 22 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <span>Recent Client Voices</span>
+                  <div>
+                    {clientHighlights.map((client) => (
+                      <p key={client}>{client}</p>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
+
+              <motion.aside
+                className="home-hero-panel glass-card"
+                initial={{ opacity: 0, x: 34, y: 18 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <p className="home-hero-panel-kicker">Experience Dashboard</p>
+                <h2>Layout, story, and conversion flow in one system.</h2>
+
+                <div className="home-hero-panel-stats">
+                  {stats.map((item) => (
+                    <article key={item.label}>
+                      <p>
+                        <CountUpNumber value={item.value} />
+                      </p>
+                      <span>{item.label}</span>
+                    </article>
+                  ))}
+                </div>
+
+                <ul className="home-hero-panel-points">
+                  <li>Clear section order for effortless browsing.</li>
+                  <li>Consistent card spacing and visual rhythm.</li>
+                  <li>Purpose-driven CTAs instead of random buttons.</li>
+                </ul>
+              </motion.aside>
+            </div>
 
             <motion.div
               className="home-capability-marquee"
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.7, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="home-capability-track">
                 {[...capabilityMarquee, ...capabilityMarquee].map((item, index) => (

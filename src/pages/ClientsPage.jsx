@@ -5,6 +5,11 @@ import { clientHighlights, testimonials } from '../data/siteData'
 
 export default function ClientsPage() {
   const MotionCard = motion.article
+  const trustSignals = [
+    { label: 'Delivery Satisfaction', value: '94%' },
+    { label: 'Repeat Engagement', value: '71%' },
+    { label: 'Avg. Launch Timeline', value: '4-6 Weeks' },
+  ]
 
   return (
     <main className="pt-24">
@@ -15,12 +20,39 @@ export default function ClientsPage() {
       />
 
       <section className="section-shell">
-        <span className="section-kicker">Clients</span>
-        <h1 className="section-title">Client trust and outcomes</h1>
+        <div className="clients-hero-grid">
+          <article className="glass-card clients-summary-card rounded-3xl p-7 md:p-9">
+            <span className="section-kicker">Clients</span>
+            <h1 className="section-title">Client trust and outcomes</h1>
+            <p className="section-copy max-w-none">
+              We focus on outcomes clients can feel: better usability, stronger conversion flow, and more
+              confidence in digital delivery.
+            </p>
+            <div className="clients-trust-signals">
+              {trustSignals.map((item) => (
+                <article key={item.label}>
+                  <p>{item.value}</p>
+                  <span>{item.label}</span>
+                </article>
+              ))}
+            </div>
+          </article>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <article className="glass-card clients-quote-card rounded-3xl p-7 md:p-9">
+            <p className="clients-quote-kicker">Featured Feedback</p>
+            <p className="clients-quote-text">"{testimonials[0].quote}"</p>
+            <p className="clients-quote-name">{testimonials[0].name}</p>
+            <div className="clients-chip-row">
+              {clientHighlights.map((client) => (
+                <span key={client}>{client}</span>
+              ))}
+            </div>
+          </article>
+        </div>
+
+        <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {clientHighlights.map((client) => (
-            <article key={client} className="glass-card rounded-2xl p-5 text-center">
+            <article key={client} className="glass-card clients-name-card rounded-2xl p-5 text-center">
               <p className="text-sm uppercase tracking-[0.2em] text-white/75">{client}</p>
             </article>
           ))}
