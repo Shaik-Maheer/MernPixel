@@ -109,112 +109,128 @@ export default function HomePage({ showIntro, onIntroComplete }) {
           </div>
         </MotionSection>
 
-        <section className="section-shell home-lab-section">
-          <div className="home-lab-grid">
-            <motion.article
-              className="home-lab-copy"
-              initial={{ opacity: 0, x: -34 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.68, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <span className="section-kicker">Development Lab</span>
-              <h2 className="section-title">Creative UI, Engineered Like Product Software</h2>
-              <p className="section-copy">
-                We do not just decorate screens. We build interaction systems: responsive layouts, reusable components,
-                animation rules, conversion paths, and launch-ready code.
-              </p>
-
-              <div className="home-lab-stack">
-                {developmentLab.stack.map((item) => (
-                  <span key={item}>{item}</span>
-                ))}
-              </div>
-            </motion.article>
-
-            <motion.article
-              className="home-lab-console"
-              initial={{ opacity: 0, y: 34, rotateX: 8 }}
-              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.78, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <div className="home-lab-window">
-                <div className="home-lab-topbar">
-                  <span />
-                  <span />
-                  <span />
-                  <p>mernpixel.build</p>
-                </div>
-
-                <div className="home-lab-code">
-                  {developmentLab.codeLines.map((line, index) => (
-                    <motion.p
-                      key={line}
-                      initial={{ opacity: 0, x: -12 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.45, delay: index * 0.12 }}
-                    >
-                      <span>{String(index + 1).padStart(2, '0')}</span>
-                      {line}
-                    </motion.p>
-                  ))}
-                </div>
-              </div>
-
-              <div className="home-device-preview" aria-hidden>
-                <div className="home-device-screen">
-                  <span className="home-device-orbit" />
-                  <span className="home-device-card home-device-card-a" />
-                  <span className="home-device-card home-device-card-b" />
-                  <span className="home-device-card home-device-card-c" />
-                </div>
-              </div>
-
-              <div className="home-lab-signals">
-                {developmentLab.signals.map((item) => (
-                  <div key={item.label}>
-                    <p>{item.value}</p>
-                    <span>{item.label}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.article>
-          </div>
-        </section>
-
-        <section className="section-shell">
-          <span className="section-kicker">Case Studies</span>
-          <h2 className="section-title">Recent Outcomes</h2>
-          <p className="section-copy">Real projects with measurable improvement, not just visual screens.</p>
-
-          <div className="mt-10 grid gap-7 lg:grid-cols-3">
-            {homeCaseStudies.map((project, index) => (
-              <motion.article
-                key={project.name}
-                className="glass-card home-case-card rounded-3xl p-5"
-                initial={{ opacity: 0, y: 26 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, delay: index * 0.08 }}
-              >
-                <a href={project.liveLink} target="_blank" rel="noreferrer" className="cursor-target">
-                  <div className="home-case-preview">
-                    <img src={project.image} alt={`${project.name} preview`} loading="lazy" />
-                  </div>
-                  <p className="home-case-category">{project.category}</p>
-                  <h3 className="home-case-title">{project.name}</h3>
-                  <p className="home-case-impact">{project.impact}</p>
-                  <ul className="home-case-metrics">
-                    {project.metrics.map((metric) => (
-                      <li key={metric}>{metric}</li>
-                    ))}
-                  </ul>
-                </a>
-              </motion.article>
+        <section className="home-black-band">
+          <div className="home-black-particles" aria-hidden>
+            {Array.from({ length: 34 }).map((_, index) => (
+              <span
+                key={`black-particle-${index}`}
+                style={{
+                  '--particle-left': `${(index * 17) % 100}%`,
+                  '--particle-top': `${(index * 29) % 100}%`,
+                  '--particle-delay': `${(index % 9) * 0.36}s`,
+                  '--particle-size': `${3 + (index % 4)}px`,
+                }}
+              />
             ))}
           </div>
+
+          <section className="section-shell home-lab-section">
+            <div className="home-lab-grid">
+              <motion.article
+                className="home-lab-copy"
+                initial={{ opacity: 0, x: -34 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.68, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <span className="section-kicker">Development Lab</span>
+                <h2 className="section-title">Creative UI, Engineered Like Product Software</h2>
+                <p className="section-copy">
+                  We do not just decorate screens. We build interaction systems: responsive layouts, reusable components,
+                  animation rules, conversion paths, and launch-ready code.
+                </p>
+
+                <div className="home-lab-stack">
+                  {developmentLab.stack.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+              </motion.article>
+
+              <motion.article
+                className="home-lab-console"
+                initial={{ opacity: 0, y: 34, rotateX: 8 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.78, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <div className="home-lab-window">
+                  <div className="home-lab-topbar">
+                    <span />
+                    <span />
+                    <span />
+                    <p>mernpixel.build</p>
+                  </div>
+
+                  <div className="home-lab-code">
+                    {developmentLab.codeLines.map((line, index) => (
+                      <motion.p
+                        key={line}
+                        initial={{ opacity: 0, x: -12 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.45, delay: index * 0.12 }}
+                      >
+                        <span>{String(index + 1).padStart(2, '0')}</span>
+                        {line}
+                      </motion.p>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="home-device-preview" aria-hidden>
+                  <div className="home-device-screen">
+                    <span className="home-device-orbit" />
+                    <span className="home-device-card home-device-card-a" />
+                    <span className="home-device-card home-device-card-b" />
+                    <span className="home-device-card home-device-card-c" />
+                  </div>
+                </div>
+
+                <div className="home-lab-signals">
+                  {developmentLab.signals.map((item) => (
+                    <div key={item.label}>
+                      <p>{item.value}</p>
+                      <span>{item.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.article>
+            </div>
+          </section>
+
+          <section className="section-shell">
+            <span className="section-kicker">Case Studies</span>
+            <h2 className="section-title">Recent Outcomes</h2>
+            <p className="section-copy">Real projects with measurable improvement, not just visual screens.</p>
+
+            <div className="mt-10 grid gap-7 lg:grid-cols-3">
+              {homeCaseStudies.map((project, index) => (
+                <motion.article
+                  key={project.name}
+                  className="glass-card home-case-card rounded-3xl p-5"
+                  initial={{ opacity: 0, y: 26 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.6, delay: index * 0.08 }}
+                >
+                  <a href={project.liveLink} target="_blank" rel="noreferrer" className="cursor-target">
+                    <div className="home-case-preview">
+                      <img src={project.image} alt={`${project.name} preview`} loading="lazy" />
+                    </div>
+                    <p className="home-case-category">{project.category}</p>
+                    <h3 className="home-case-title">{project.name}</h3>
+                    <p className="home-case-impact">{project.impact}</p>
+                    <ul className="home-case-metrics">
+                      {project.metrics.map((metric) => (
+                        <li key={metric}>{metric}</li>
+                      ))}
+                    </ul>
+                  </a>
+                </motion.article>
+              ))}
+            </div>
+          </section>
         </section>
 
         <section className="section-shell">
