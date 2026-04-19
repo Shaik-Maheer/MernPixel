@@ -25,14 +25,14 @@ export default function HomePage({ showIntro, onIntroComplete }) {
       <main id="home" className="relative">
         <section className="home-hero home-hero-minimal relative flex min-h-screen items-center overflow-hidden">
           <div className="home-hero-particles" aria-hidden>
-            {Array.from({ length: 44 }).map((_, index) => (
+            {Array.from({ length: 86 }).map((_, index) => (
               <span
                 key={`hero-particle-${index}`}
                 style={{
-                  '--hero-particle-left': `${(index * 11.7) % 100}%`,
-                  '--hero-particle-top': `${(index * 17.9) % 100}%`,
+                  '--hero-particle-left': `${(index * 8.7) % 100}%`,
+                  '--hero-particle-top': `${(index * 12.9) % 100}%`,
                   '--hero-particle-delay': `${(index % 11) * 0.36}s`,
-                  '--hero-particle-size': `${2 + (index % 4)}px`,
+                  '--hero-particle-size': `${1 + (index % 4)}px`,
                   '--hero-particle-drift': `${10 + (index % 6) * 2}px`,
                 }}
               />
