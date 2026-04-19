@@ -55,45 +55,6 @@ const storySteps = [
   },
 ]
 
-const servicesGrid = [
-  {
-    title: 'Web Development',
-    summary: 'Fast, scalable websites with premium interface quality.',
-    detail:
-      'Production-grade website and web app engineering with performance budgets, robust architecture, and maintainable code practices.',
-  },
-  {
-    title: 'UI/UX Design',
-    summary: 'Interfaces crafted for clarity, conversion, and delight.',
-    detail:
-      'Flows, component systems, and interaction principles crafted to improve usability while maintaining a premium visual standard.',
-  },
-  {
-    title: 'SEO',
-    summary: 'Search-ready architecture that supports long-term growth.',
-    detail:
-      'Technical SEO, semantic structure, and optimization strategy designed to improve discoverability and lead flow.',
-  },
-  {
-    title: 'Digital Marketing',
-    summary: 'Campaign and funnel execution focused on business outcomes.',
-    detail:
-      'Performance-led messaging, campaign structure, and optimization loops aligned with measurable growth goals.',
-  },
-  {
-    title: 'Academic Projects',
-    summary: 'Structured support for major and minor student projects.',
-    detail:
-      'Mentored planning, implementation guidance, and quality-focused project execution for academic outcomes.',
-  },
-  {
-    title: 'Portfolio Creation',
-    summary: 'Professional portfolio systems for students and founders.',
-    detail:
-      'Portfolio websites and case-study presentation structures to showcase skills, projects, and credibility effectively.',
-  },
-]
-
 const headlineWords = ['Not', 'Just', 'Websites.', 'We', 'Build', 'Experiences.']
 const studioMetrics = [
   { label: 'Core Team', value: '04', note: 'Specialists' },
@@ -108,47 +69,6 @@ const manifestPoints = [
 ]
 const reelStack = ['React', 'Performance UI', 'Conversion Copy', 'Animation Systems', 'Growth Loops', 'QA']
 
-function ServiceModal({ service, onClose }) {
-  const MotionOverlay = motion.div
-  const MotionCard = motion.article
-
-  return (
-    <AnimatePresence>
-      {service && (
-        <MotionOverlay
-          className="fixed inset-0 z-[130] flex items-center justify-center bg-black/80 px-4 py-8 backdrop-blur-sm"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-        >
-          <MotionCard
-            className="glass-card relative w-full max-w-2xl rounded-3xl p-8 md:p-10"
-            initial={{ opacity: 0, y: 24, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              type="button"
-              onClick={onClose}
-              className="cursor-target absolute right-4 top-4 h-10 w-10 rounded-full border border-white/30 bg-white/5 text-xl text-white transition hover:bg-white hover:text-black"
-              aria-label="Close details"
-            >
-              ×
-            </button>
-
-            <p className="text-xs uppercase tracking-[0.22em] text-white/55">Service Experience</p>
-            <h3 className="mt-3 font-['Cinzel'] text-4xl text-white">{service.title}</h3>
-            <p className="mt-4 text-sm text-white/75">{service.detail}</p>
-          </MotionCard>
-        </MotionOverlay>
-      )}
-    </AnimatePresence>
-  )
-}
-
 export default function AboutPage() {
   const MotionSection = motion.section
   const MotionMain = motion.main
@@ -156,10 +76,8 @@ export default function AboutPage() {
   const MotionParagraph = motion.p
   const MotionWord = motion.span
   const MotionCard = motion.article
-  const MotionButton = motion.button
 
   const [introComplete, setIntroComplete] = useState(false)
-  const [activeService, setActiveService] = useState(null)
   const heroRef = useRef(null)
   const heroVideoRef = useRef(null)
 
@@ -477,28 +395,22 @@ export default function AboutPage() {
           </section>
 
           <section className="section-shell">
-            <span className="section-kicker">Experience Grid</span>
-            <h2 className="section-title">Services Experience Grid</h2>
-
-            <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {servicesGrid.map((service, index) => (
-                <MotionButton
-                  key={service.title}
-                  type="button"
-                  onClick={() => setActiveService(service)}
-                  className="glass-card cursor-target services-grid-card rounded-3xl p-7 text-left"
-                  initial={{ opacity: 0, y: 26 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.64, delay: index * 0.08 }}
-                  whileHover={{ y: -10, scale: 1.02 }}
-                >
-                  <div className="services-grid-icon">✦</div>
-                  <h3 className="mt-4 font-['Cinzel'] text-3xl text-white">{service.title}</h3>
-                  <p className="mt-3 text-sm text-white/72">{service.summary}</p>
-                </MotionButton>
-              ))}
-            </div>
+            <motion.article
+              className="glass-card rounded-3xl p-7 text-center md:p-10"
+              initial={{ opacity: 0, y: 26 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className="section-kicker">Need Service Details?</span>
+              <h2 className="section-title">Know More About Our Services</h2>
+              <p className="section-copy mx-auto">
+                We kept About focused. For complete service details, flow, and offerings, open the Services page.
+              </p>
+              <Link to="/services" className="btn-primary mt-8 inline-flex cursor-target">
+                Open Services Page
+              </Link>
+            </motion.article>
           </section>
 
           <PageEndPromo
@@ -510,8 +422,6 @@ export default function AboutPage() {
           />
         </MotionMain>
       )}
-
-      <ServiceModal service={activeService} onClose={() => setActiveService(null)} />
     </>
   )
 }
