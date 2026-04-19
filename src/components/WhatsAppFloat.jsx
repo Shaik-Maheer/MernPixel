@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { business } from '../data/siteData'
+import { WhatsAppIcon } from './SocialIcons'
 
 export default function WhatsAppFloat() {
   const MotionAnchor = motion.a
@@ -17,7 +18,9 @@ export default function WhatsAppFloat() {
       whileHover={{ y: -4, scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
     >
-      <span className="wa-float-icon">✆</span>
+      <span className="wa-float-icon">
+        <WhatsAppIcon />
+      </span>
     </MotionAnchor>
   )
 }
