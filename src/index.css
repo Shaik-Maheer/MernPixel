@@ -4773,6 +4773,10 @@ main > .section-shell:nth-of-type(even)::before {
   z-index: 0;
 }
 
+.home-hero .section-shell {
+  z-index: 3;
+}
+
 .home-hero-video {
   position: absolute;
   inset: -6%;
@@ -4788,8 +4792,8 @@ main > .section-shell:nth-of-type(even)::before {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 18%, rgba(39, 185, 255, 0.14), transparent 42%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.82));
+    radial-gradient(circle at 50% 18%, rgba(39, 185, 255, 0.12), transparent 42%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.62));
   z-index: 1;
 }
 
@@ -4857,7 +4861,7 @@ main > .section-shell:nth-of-type(even)::before {
 
 .home-hero-minimal-wrap {
   position: relative;
-  z-index: 5;
+  z-index: 6;
   width: min(920px, 100%);
   margin: 0 auto;
   text-align: center;
@@ -4866,10 +4870,12 @@ main > .section-shell:nth-of-type(even)::before {
 .home-hero-brand-line {
   margin: 0;
   font-family: 'Cinzel', serif;
-  font-size: 0.7rem;
+  font-size: 0.82rem;
+  font-weight: 600;
   letter-spacing: 0.44em;
   text-transform: uppercase;
-  color: rgba(122, 219, 239, 0.8);
+  color: #9DE8FF;
+  text-shadow: 0 0 18px rgba(39, 185, 255, 0.3);
 }
 
 .home-hero-kicker {
@@ -4878,10 +4884,12 @@ main > .section-shell:nth-of-type(even)::before {
   align-items: center;
   justify-content: center;
   gap: 9px;
-  font-size: 0.67rem;
+  font-size: 0.74rem;
+  font-weight: 600;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: rgba(230, 230, 230, 0.72);
+  color: #E6E6E6;
+  text-shadow: 0 0 14px rgba(39, 185, 255, 0.22);
 }
 
 .home-hero-kicker::before {
@@ -4896,20 +4904,21 @@ main > .section-shell:nth-of-type(even)::before {
   font-size: clamp(2.4rem, 7vw, 6.6rem);
   line-height: 1.08;
   margin: 18px 0 0;
-  color: #E6E6E6;
+  color: #F4FAFF;
   text-align: center;
   text-shadow:
-    0 0 22px rgba(39, 185, 255, 0.14),
-    0 0 36px rgba(0, 0, 0, 0.5);
+    0 0 28px rgba(39, 185, 255, 0.2),
+    0 0 42px rgba(0, 0, 0, 0.5);
 }
 
 .home-hero-subtitle {
   margin: 22px auto 0;
   max-width: 760px;
-  color: rgba(230, 230, 230, 0.76);
+  color: rgba(244, 250, 255, 0.9);
   text-align: center;
   font-size: clamp(0.96rem, 2vw, 1.2rem);
   line-height: 1.75;
+  text-shadow: 0 0 16px rgba(0, 0, 0, 0.45);
 }
 
 .home-client-rail {
