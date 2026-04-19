@@ -25,6 +25,19 @@ const initialSessionForm = {
   help: '',
 }
 
+const studentSignals = [
+  { label: 'Project Tracks', value: 'Major + Minor' },
+  { label: 'Mentor Support', value: 'Planning to Demo' },
+  { label: 'Response Speed', value: '< 24h' },
+]
+
+const mentoringPath = [
+  { title: 'Problem Selection', detail: 'Choose project scope aligned to submission goals.' },
+  { title: 'Architecture Planning', detail: 'Define implementation structure and milestones.' },
+  { title: 'Execution Support', detail: 'Get guided coding help and review checkpoints.' },
+  { title: 'Final Presentation', detail: 'Prepare delivery narrative and demo confidence.' },
+]
+
 export default function StudentsPage() {
   const MotionArticle = motion.article
   const [projectForm, setProjectForm] = useState(initialProjectForm)
@@ -106,21 +119,69 @@ export default function StudentsPage() {
         compact
       />
 
+      <section className="section-shell student-command-shell">
+        <div className="student-command-grid">
+          <MotionArticle
+            className="glass-card student-command-card rounded-3xl p-7 md:p-9"
+            initial={{ opacity: 0, x: -52, y: 20 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="section-kicker">Student Command Center</span>
+            <h1 className="section-title">From project idea to confident final demo.</h1>
+            <p className="section-copy max-w-none">
+              We guide student teams through project planning, structured execution, and presentation readiness
+              so final submissions look polished and perform well.
+            </p>
+
+            <div className="student-signal-grid">
+              {studentSignals.map((item) => (
+                <article key={item.label}>
+                  <p>{item.value}</p>
+                  <span>{item.label}</span>
+                </article>
+              ))}
+            </div>
+          </MotionArticle>
+
+          <MotionArticle
+            className="glass-card student-path-card rounded-3xl p-7 md:p-9"
+            initial={{ opacity: 0, x: 52, y: 20 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.62, delay: 0.08 }}
+          >
+            <p className="student-path-kicker">Mentoring Path</p>
+            <div className="student-path-stack">
+              {mentoringPath.map((step, index) => (
+                <article key={step.title}>
+                  <small>{`0${index + 1}`}</small>
+                  <p>{step.title}</p>
+                  <span>{step.detail}</span>
+                </article>
+              ))}
+            </div>
+          </MotionArticle>
+        </div>
+      </section>
+
       <section className="section-shell">
         <span className="section-kicker">Students</span>
-        <h1 className="section-title">Major/minor support, mentoring, and sessions</h1>
+        <h2 className="section-title">Major/minor support, mentoring, and sessions</h2>
         <p className="section-copy">Guided delivery for college projects with practical architecture, coding support, and final review prep.</p>
 
         <div className="mt-10 grid gap-5 md:grid-cols-2">
           {studentServices.map((service, index) => (
             <MotionArticle
               key={service}
-              className="glass-card rounded-3xl p-7"
+              className="glass-card student-service-card rounded-3xl p-7"
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.62, delay: index * 0.08 }}
             >
+              <p className="text-xs uppercase tracking-[0.2em] text-white/60">{`Support 0${index + 1}`}</p>
               <h2 className="font-['Cinzel'] text-3xl">{service}</h2>
             </MotionArticle>
           ))}
@@ -128,15 +189,16 @@ export default function StudentsPage() {
       </section>
 
       <section className="section-shell pt-0">
-        <div className="grid gap-6 xl:grid-cols-2">
+        <div className="student-form-grid">
           <motion.article
-            className="glass-card rounded-3xl p-7"
+            className="glass-card student-form-card rounded-3xl p-7"
             initial={{ opacity: 0, x: -80, y: 18 }}
             whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
             <h3 className="font-['Cinzel'] text-3xl">Student Project Request Form</h3>
+            <p className="student-form-stepline">Step 1: Project Intent, Step 2: Scope, Step 3: Execution Plan</p>
             {projectSent && <p className="form-success mt-4">Request captured. WhatsApp draft opened.</p>}
             {projectError && <p className="form-error mt-4">{projectError}</p>}
             <form className="form-grid mt-6" onSubmit={handleProjectSubmit} noValidate>
@@ -175,13 +237,14 @@ export default function StudentsPage() {
           </motion.article>
 
           <motion.article
-            className="glass-card rounded-3xl p-7"
+            className="glass-card student-form-card rounded-3xl p-7"
             initial={{ opacity: 0, x: 80, y: 18 }}
             whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           >
             <h3 className="font-['Cinzel'] text-3xl">Student Session Booking</h3>
+            <p className="student-form-stepline">Step 1: Book Slot, Step 2: Share Blockers, Step 3: Guided Session</p>
             {sessionSent && <p className="form-success mt-4">Booking request captured. WhatsApp draft opened.</p>}
             {sessionError && <p className="form-error mt-4">{sessionError}</p>}
             <form className="form-grid mt-6" onSubmit={handleSessionSubmit} noValidate>
@@ -233,4 +296,3 @@ export default function StudentsPage() {
     </main>
   )
 }
-

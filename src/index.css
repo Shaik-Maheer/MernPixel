@@ -31,11 +31,9 @@ body {
   font-family: 'Space Grotesk', sans-serif;
   color: var(--white);
   background:
-    radial-gradient(ellipse at 50% -12%, rgba(230, 230, 230, 0.08) 0%, transparent 42%),
-    radial-gradient(circle at 18% 42%, rgba(39, 185, 255, 0.11) 0%, transparent 36%),
-    radial-gradient(circle at 78% 58%, rgba(13, 143, 219, 0.09) 0%, transparent 38%),
-    radial-gradient(circle at 50% 120%, rgba(0, 0, 0, 0.72) 0%, transparent 56%),
-    linear-gradient(160deg, #01060A 0%, #000000 52%, #031019 100%);
+    radial-gradient(circle at 18% 14%, rgba(122, 219, 239, 0.14) 0%, transparent 36%),
+    radial-gradient(circle at 82% 18%, rgba(39, 185, 255, 0.1) 0%, transparent 34%),
+    linear-gradient(168deg, #03080e 0%, #040b13 42%, #06111b 100%);
   overflow-x: hidden;
 }
 
@@ -61,9 +59,8 @@ a {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 20% 24%, rgba(230, 230, 230, 0.08), transparent 34%),
-    radial-gradient(circle at 78% 70%, rgba(18, 153, 230, 0.11), transparent 36%),
-    radial-gradient(circle at 52% 84%, rgba(0, 0, 0, 0.34), transparent 54%);
+    radial-gradient(circle at 14% 22%, rgba(122, 219, 239, 0.11), transparent 34%),
+    radial-gradient(circle at 84% 78%, rgba(39, 185, 255, 0.08), transparent 36%);
 }
 
 .cosmic-bg::before,
@@ -75,9 +72,9 @@ a {
 
 .cosmic-bg::before {
   background-image: radial-gradient(rgba(230, 230, 230, 0.34) 1px, transparent 1px);
-  background-size: 2px 2px;
-  opacity: 0.18;
-  animation: stars-drift 44s linear infinite, stars-flicker 5.6s ease-in-out infinite;
+  background-size: 3px 3px;
+  opacity: 0.05;
+  animation: none;
 }
 
 .cosmic-bg::after {
@@ -99,8 +96,8 @@ a {
     4px 6px,
     0 0,
     0 0;
-  opacity: 0.13;
-  animation: ember-drift 22s linear infinite;
+  opacity: 0.035;
+  animation: none;
 }
 
 @keyframes stars-drift {
@@ -138,10 +135,7 @@ main {
 }
 
 .pixel-signature {
-  position: fixed;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
+  display: none;
 }
 
 .pixel-signature-ring {
@@ -209,7 +203,7 @@ main {
 }
 
 .section-shell {
-  @apply mx-auto w-full max-w-7xl px-6 py-20 md:px-10 md:py-28;
+  @apply mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-24;
   position: relative;
   isolation: isolate;
 }
@@ -218,28 +212,27 @@ main > section:not(:first-of-type) > .section-shell::before,
 main > .section-shell::before {
   content: '';
   position: absolute;
-  inset: clamp(4px, 0.7vw, 12px) 0;
-  border-radius: clamp(18px, 2.4vw, 30px);
-  border: 1px solid rgba(230, 230, 230, 0.09);
-  box-shadow: 0 20px 52px rgba(0, 0, 0, 0.36);
+  inset: clamp(8px, 1vw, 14px) 0;
+  border-radius: clamp(16px, 2.2vw, 24px);
+  border: 1px solid rgba(230, 230, 230, 0.1);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.3);
   z-index: -1;
   pointer-events: none;
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
 }
 
 main > section:nth-of-type(odd):not(:first-of-type) > .section-shell::before,
 main > .section-shell:nth-of-type(odd)::before {
   background:
-    radial-gradient(circle at 15% 20%, rgba(230, 230, 230, 0.1), transparent 44%),
-    radial-gradient(circle at 78% 78%, rgba(39, 185, 255, 0.16), transparent 42%),
-    linear-gradient(146deg, rgba(4, 12, 20, 0.9), rgba(3, 10, 18, 0.74));
+    radial-gradient(circle at 18% 20%, rgba(122, 219, 239, 0.12), transparent 40%),
+    linear-gradient(155deg, rgba(8, 20, 30, 0.84), rgba(7, 18, 28, 0.78));
 }
 
 main > section:nth-of-type(even) > .section-shell::before,
 main > .section-shell:nth-of-type(even)::before {
   background:
-    radial-gradient(circle at 84% 14%, rgba(230, 230, 230, 0.08), transparent 42%),
-    radial-gradient(circle at 12% 76%, rgba(22, 164, 240, 0.14), transparent 40%),
-    linear-gradient(155deg, rgba(0, 0, 0, 0.94), rgba(5, 20, 30, 0.78));
+    radial-gradient(circle at 82% 20%, rgba(39, 185, 255, 0.12), transparent 40%),
+    linear-gradient(155deg, rgba(8, 20, 30, 0.86), rgba(6, 16, 26, 0.8));
 }
 
 .section-video-host {
@@ -366,16 +359,16 @@ main > .section-shell:nth-of-type(even)::before {
 }
 
 .section-kicker {
-  @apply mb-4 inline-flex rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.24em] text-white/70;
+  @apply mb-4 inline-flex rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.24em] text-white/75;
 }
 
 .section-title {
   font-family: 'Cinzel', serif;
-  @apply text-4xl font-semibold leading-tight text-white md:text-6xl;
+  @apply text-4xl font-semibold leading-tight text-white md:text-5xl;
 }
 
 .section-copy {
-  @apply mt-6 max-w-3xl text-base leading-relaxed text-white/75 md:text-lg;
+  @apply mt-5 max-w-3xl text-base leading-relaxed text-white/80 md:text-lg;
 }
 
 .page-intro {
@@ -391,9 +384,9 @@ main > .section-shell:nth-of-type(even)::before {
 
 .page-intro-static {
   background:
-    radial-gradient(circle at 20% 12%, rgba(39, 185, 255, 0.12), transparent 36%),
-    radial-gradient(circle at 78% 20%, rgba(18, 153, 230, 0.1), transparent 36%),
-    linear-gradient(180deg, rgba(3, 12, 20, 0.84), rgba(2, 8, 14, 0.94));
+    radial-gradient(circle at 20% 12%, rgba(122, 219, 239, 0.14), transparent 36%),
+    radial-gradient(circle at 78% 20%, rgba(39, 185, 255, 0.12), transparent 36%),
+    linear-gradient(180deg, rgba(5, 16, 25, 0.84), rgba(4, 12, 20, 0.94));
 }
 
 .page-intro-video {
@@ -411,9 +404,9 @@ main > .section-shell:nth-of-type(even)::before {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 18% 20%, rgba(22, 164, 240, 0.3), transparent 36%),
-    radial-gradient(circle at 82% 20%, rgba(18, 153, 230, 0.28), transparent 38%),
-    linear-gradient(180deg, rgba(2, 10, 16, 0.45), rgba(2, 10, 16, 0.88));
+    radial-gradient(circle at 18% 20%, rgba(122, 219, 239, 0.24), transparent 36%),
+    radial-gradient(circle at 82% 20%, rgba(39, 185, 255, 0.24), transparent 38%),
+    linear-gradient(180deg, rgba(4, 14, 22, 0.42), rgba(4, 14, 22, 0.82));
 }
 
 .page-intro-overlay-static {
@@ -427,7 +420,7 @@ main > .section-shell:nth-of-type(even)::before {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.18;
+  opacity: 0.08;
   background-image:
     linear-gradient(rgba(39, 185, 255, 0.12) 1px, transparent 1px),
     linear-gradient(90deg, rgba(39, 185, 255, 0.1) 1px, transparent 1px),
@@ -440,7 +433,7 @@ main > .section-shell:nth-of-type(even)::before {
     0 0,
     0 0,
     3px 4px;
-  animation: ember-drift 20s linear infinite;
+  animation: none;
 }
 
 .page-intro-kicker {
@@ -572,38 +565,34 @@ main > .section-shell:nth-of-type(even)::before {
 }
 
 .glass-card {
-  background: linear-gradient(140deg, rgba(4, 12, 20, 0.9), rgba(7, 26, 38, 0.74));
-  border: 1px solid rgba(230, 230, 230, 0.14);
-  box-shadow: 0 22px 65px rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(10px);
+  background: linear-gradient(145deg, rgba(10, 24, 35, 0.86), rgba(8, 20, 30, 0.78));
+  border: 1px solid rgba(230, 230, 230, 0.12);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(8px);
   transition: transform 280ms ease, box-shadow 280ms ease, border-color 280ms ease;
 }
 
 .glass-card:hover {
-  border-color: rgba(22, 164, 240, 0.56);
+  border-color: rgba(122, 219, 239, 0.56);
   box-shadow:
-    0 26px 70px rgba(0, 0, 0, 0.62),
-    0 0 28px rgba(22, 164, 240, 0.24);
+    0 20px 48px rgba(0, 0, 0, 0.42),
+    0 0 18px rgba(39, 185, 255, 0.16);
 }
 
 .grid .glass-card:nth-child(odd) {
-  background:
-    radial-gradient(circle at 80% 18%, rgba(39, 185, 255, 0.18), transparent 42%),
-    linear-gradient(142deg, rgba(5, 16, 25, 0.9), rgba(12, 44, 62, 0.72));
+  background: linear-gradient(145deg, rgba(10, 24, 35, 0.86), rgba(8, 20, 30, 0.78));
 }
 
 .grid .glass-card:nth-child(even) {
-  background:
-    radial-gradient(circle at 22% 22%, rgba(230, 230, 230, 0.11), transparent 40%),
-    linear-gradient(150deg, rgba(0, 0, 0, 0.93), rgba(8, 24, 34, 0.76));
-  border-color: rgba(230, 230, 230, 0.18);
+  background: linear-gradient(145deg, rgba(10, 24, 35, 0.86), rgba(8, 20, 30, 0.78));
+  border-color: rgba(230, 230, 230, 0.12);
 }
 
 .grid .glass-card:nth-child(even):hover {
-  border-color: rgba(230, 230, 230, 0.34);
+  border-color: rgba(122, 219, 239, 0.56);
   box-shadow:
-    0 26px 70px rgba(0, 0, 0, 0.62),
-    0 0 24px rgba(230, 230, 230, 0.16);
+    0 20px 48px rgba(0, 0, 0, 0.42),
+    0 0 18px rgba(39, 185, 255, 0.16);
 }
 
 .floating-orb {
@@ -4417,6 +4406,348 @@ main > .section-shell:nth-of-type(even)::before {
   border-radius: 18px;
   border: 1px solid rgba(39, 185, 255, 0.46);
   object-fit: cover;
+}
+
+/* Non-IT, Students, Blog, Careers */
+.nonit-command-shell,
+.student-command-shell,
+.blog-command-shell,
+.careers-command-shell {
+  padding-bottom: 0;
+}
+
+.nonit-command-grid,
+.student-command-grid,
+.blog-command-grid,
+.careers-command-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(16px, 3vw, 30px);
+}
+
+.nonit-command-card,
+.nonit-flow-card,
+.student-command-card,
+.student-path-card,
+.blog-command-card,
+.blog-flow-card,
+.careers-command-card,
+.careers-values-card,
+.nonit-form-note,
+.student-form-card,
+.careers-note-card,
+.careers-form-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.nonit-command-card::before,
+.nonit-flow-card::before,
+.student-command-card::before,
+.student-path-card::before,
+.blog-command-card::before,
+.blog-flow-card::before,
+.careers-command-card::before,
+.careers-values-card::before,
+.nonit-form-note::before,
+.student-form-card::before,
+.careers-note-card::before,
+.careers-form-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 16% 16%, rgba(39, 185, 255, 0.18), transparent 40%),
+    radial-gradient(circle at 88% 84%, rgba(122, 219, 239, 0.12), transparent 38%);
+}
+
+.nonit-command-card::after,
+.student-command-card::after,
+.blog-command-card::after,
+.careers-command-card::after {
+  content: '';
+  position: absolute;
+  left: -35%;
+  top: -140%;
+  width: 55%;
+  height: 360%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(122, 219, 239, 0.12) 45%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(18deg);
+  animation: command-scan 9s linear infinite;
+  pointer-events: none;
+}
+
+.nonit-command-card > *,
+.nonit-flow-card > *,
+.student-command-card > *,
+.student-path-card > *,
+.blog-command-card > *,
+.blog-flow-card > *,
+.careers-command-card > *,
+.careers-values-card > *,
+.nonit-form-note > *,
+.student-form-card > *,
+.careers-note-card > *,
+.careers-form-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.nonit-signal-grid,
+.student-signal-grid,
+.blog-signal-grid,
+.careers-signal-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.nonit-signal-grid article,
+.student-signal-grid article,
+.blog-signal-grid article,
+.careers-signal-grid article {
+  border-radius: 14px;
+  border: 1px solid rgba(230, 230, 230, 0.15);
+  background: rgba(2, 8, 14, 0.32);
+  padding: 11px 12px;
+}
+
+.nonit-signal-grid p,
+.student-signal-grid p,
+.blog-signal-grid p,
+.careers-signal-grid p {
+  margin: 0;
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(122, 219, 239, 0.88);
+}
+
+.nonit-signal-grid span,
+.student-signal-grid span,
+.blog-signal-grid span,
+.careers-signal-grid span {
+  display: block;
+  margin-top: 5px;
+  color: rgba(230, 230, 230, 0.76);
+  line-height: 1.45;
+}
+
+.nonit-flow-kicker,
+.student-path-kicker,
+.blog-flow-kicker,
+.careers-values-kicker,
+.nonit-form-kicker,
+.careers-note-kicker {
+  margin: 0;
+  font-size: 0.66rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(122, 219, 239, 0.9);
+}
+
+.nonit-flow-stack,
+.student-path-stack,
+.blog-flow-stack {
+  margin-top: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.nonit-flow-stack article,
+.student-path-stack article,
+.blog-flow-stack article {
+  border-radius: 16px;
+  border: 1px solid rgba(230, 230, 230, 0.14);
+  background: rgba(0, 0, 0, 0.26);
+  padding: 12px 14px;
+}
+
+.nonit-flow-stack small,
+.student-path-stack small,
+.blog-flow-stack small {
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(122, 219, 239, 0.9);
+}
+
+.nonit-flow-stack p,
+.student-path-stack p,
+.blog-flow-stack p {
+  margin: 8px 0 0;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(230, 230, 230, 0.94);
+}
+
+.nonit-flow-stack span,
+.student-path-stack span,
+.blog-flow-stack span {
+  display: block;
+  margin-top: 7px;
+  color: rgba(230, 230, 230, 0.7);
+  line-height: 1.5;
+}
+
+.nonit-capability-card,
+.student-service-card,
+.blog-post-card {
+  transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
+}
+
+.nonit-capability-card:hover,
+.student-service-card:hover,
+.blog-post-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(39, 185, 255, 0.56);
+  box-shadow:
+    0 18px 34px rgba(0, 0, 0, 0.42),
+    0 0 24px rgba(39, 185, 255, 0.2);
+}
+
+.student-service-card h2 {
+  margin-top: 10px;
+}
+
+.nonit-form-grid,
+.student-form-grid,
+.careers-form-grid {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 2.6vw, 26px);
+}
+
+.nonit-form-note ul,
+.careers-note-card ul,
+.careers-values-card ul {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.nonit-form-note li,
+.careers-note-card li,
+.careers-values-card li {
+  position: relative;
+  padding-left: 18px;
+  color: rgba(230, 230, 230, 0.76);
+  line-height: 1.5;
+}
+
+.nonit-form-note li::before,
+.careers-note-card li::before,
+.careers-values-card li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.52em;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #7ADBEF;
+  box-shadow: 0 0 12px rgba(39, 185, 255, 0.5);
+}
+
+.student-form-stepline,
+.careers-form-stepline {
+  margin: 12px 0 0;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(122, 219, 239, 0.86);
+}
+
+.blog-post-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.blog-post-meta p {
+  margin: 0;
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(122, 219, 239, 0.88);
+}
+
+.blog-post-meta span {
+  border-radius: 999px;
+  border: 1px solid rgba(230, 230, 230, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 5px 10px;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(230, 230, 230, 0.78);
+}
+
+.blog-post-footer {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.blog-post-footer span {
+  border-radius: 10px;
+  border: 1px solid rgba(230, 230, 230, 0.16);
+  background: rgba(0, 0, 0, 0.22);
+  padding: 6px 10px;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(230, 230, 230, 0.72);
+}
+
+@keyframes command-scan {
+  0% {
+    transform: translateX(-120%) rotate(18deg);
+  }
+
+  60%,
+  100% {
+    transform: translateX(360%) rotate(18deg);
+  }
+}
+
+@media (max-width: 980px) {
+  .nonit-command-grid,
+  .student-command-grid,
+  .blog-command-grid,
+  .careers-command-grid,
+  .nonit-form-grid,
+  .student-form-grid,
+  .careers-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nonit-signal-grid,
+  .student-signal-grid,
+  .blog-signal-grid,
+  .careers-signal-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .blog-post-meta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 640px) {

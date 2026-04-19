@@ -30,26 +30,26 @@ const differentiators = [
 
 const storySteps = [
   {
+    stepId: '01',
     title: 'Idea',
-    icon: '💡',
     description: 'Understanding client vision and goals',
     image: '/img3.png',
   },
   {
+    stepId: '02',
     title: 'Design',
-    icon: '🎨',
     description: 'Crafting modern UI/UX experiences',
     image: '/img5.png',
   },
   {
+    stepId: '03',
     title: 'Development',
-    icon: '💻',
     description: 'Building scalable and high-performance solutions',
     image: '/img2.png',
   },
   {
+    stepId: '04',
     title: 'Launch',
-    icon: '🚀',
     description: 'Deploying and growing your digital presence',
     image: '/img6.png',
   },
@@ -465,12 +465,9 @@ export default function AboutPage() {
 
                     <div className="blueprint-content">
                       <p className="blueprint-step text-xs uppercase tracking-[0.22em] text-white/60">
-                        Step {index + 1}
+                        Step {step.stepId}
                       </p>
-                      <h3 className="blueprint-title mt-4 flex items-center gap-3 font-['Cinzel'] text-4xl text-white">
-                        <span>{step.title}</span>
-                        <span>{step.icon}</span>
-                      </h3>
+                      <h3 className="blueprint-title mt-4 font-['Cinzel'] text-4xl text-white">{step.title}</h3>
                       <p className="blueprint-copy mt-6 text-white/75">{step.description}</p>
                     </div>
                   </MotionCard>
