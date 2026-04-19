@@ -49,10 +49,21 @@ export const studentServices = [
 ]
 
 export const stats = [
-  { label: 'Projects', value: '24+' },
-  { label: 'Clients', value: '18+' },
+  { label: 'Projects', value: '15+' },
+  { label: 'Clients', value: '10+' },
   { label: 'Team Members', value: '4' },
-  { label: 'Years Experience', value: '5' },
+  { label: 'Years Experience', value: '2+' },
+]
+
+export const capabilityMarquee = [
+  'Creative UI',
+  'Web Development',
+  'AI Chatbot',
+  'E-Commerce',
+  'Brand Identity',
+  'Student Projects',
+  'SEO Foundation',
+  'Fast Launch',
 ]
 
 export const homeCaseStudies = [

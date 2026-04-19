@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import ChatbotWidget from './components/ChatbotWidget'
 import GlobalNav from './components/GlobalNav'
+import PixelSignature from './components/PixelSignature'
 import WhatsAppFloat from './components/WhatsAppFloat'
 import useSmoothScroll from './hooks/useSmoothScroll'
 import AboutPage from './pages/AboutPage'
@@ -38,6 +39,7 @@ function App() {
   return (
     <div className="relative overflow-hidden">
       <div className="cosmic-bg" />
+      <PixelSignature />
       <GlobalNav visible={showNav} />
       <ChatbotWidget />
       <WhatsAppFloat />

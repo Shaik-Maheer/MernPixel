@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import IntroSequence from '../components/IntroSequence'
 import { cloudinaryVideos } from '../data/cloudinaryVideos'
-import { developmentLab, homeCaseStudies, homeProcess, stats, testimonials } from '../data/siteData'
+import { capabilityMarquee, developmentLab, homeCaseStudies, homeProcess, stats, testimonials } from '../data/siteData'
 
 export default function HomePage({ showIntro, onIntroComplete }) {
   const MotionHeading = motion.h1
@@ -71,6 +71,19 @@ export default function HomePage({ showIntro, onIntroComplete }) {
               <Link to="/works" className="btn-secondary cursor-target">
                 See Live Work
               </Link>
+            </motion.div>
+
+            <motion.div
+              className="home-capability-marquee"
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="home-capability-track">
+                {[...capabilityMarquee, ...capabilityMarquee].map((item, index) => (
+                  <span key={`${item}-${index}`}>{item}</span>
+                ))}
+              </div>
             </motion.div>
           </div>
         </section>
