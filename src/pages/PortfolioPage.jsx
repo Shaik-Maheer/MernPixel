@@ -16,12 +16,6 @@ export default function PortfolioPage() {
     { value: '5+', label: 'Clients' },
     { value: '2+', label: 'Experience' },
   ]
-  const revealVectors = [
-    { x: -96, y: 14, rotate: -1.4, scale: 0.96 },
-    { x: 96, y: 14, rotate: 1.4, scale: 0.96 },
-    { x: 0, y: 96, rotate: 0.2, scale: 0.95 },
-    { x: 0, y: -96, rotate: -0.2, scale: 0.95 },
-  ]
 
   return (
     <main className="creation-page pt-24 md:pt-28">
@@ -70,16 +64,11 @@ export default function PortfolioPage() {
                 return project.liveLink
               }
             })()
-            const revealVector = revealVectors[index % revealVectors.length]
 
             return (
               <MotionArticle
                 key={`${project.name}-card`}
                 className={`creation-card works-card glass-card rounded-3xl p-4 md:p-5 ${project.fullWidth ? 'md:col-span-2' : ''}`}
-                initial={{ opacity: 0, ...revealVector }}
-                whileInView={{ opacity: 1, x: 0, y: 0, rotate: 0, scale: 1 }}
-                viewport={{ once: false, amount: 0.35 }}
-                transition={{ type: 'spring', stiffness: 120, damping: 18, mass: 0.75, delay: (index % 3) * 0.04 }}
                 whileHover={{ y: -7 }}
               >
                 <a href={project.liveLink} target="_blank" rel="noreferrer" className="works-visual-link cursor-target">
