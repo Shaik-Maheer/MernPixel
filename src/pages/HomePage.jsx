@@ -6,7 +6,6 @@ import IntroSequence from '../components/IntroSequence'
 import { cloudinaryVideos } from '../data/cloudinaryVideos'
 import {
   capabilityMarquee,
-  clientHighlights,
   developmentLab,
   homeCaseStudies,
   homeProcess,
@@ -93,19 +92,6 @@ export default function HomePage({ showIntro, onIntroComplete }) {
                   </Link>
                 </motion.div>
 
-                <motion.div
-                  className="home-client-rail"
-                  initial={{ opacity: 0, y: 22 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <span>Recent Client Voices</span>
-                  <div>
-                    {clientHighlights.map((client) => (
-                      <p key={client}>{client}</p>
-                    ))}
-                  </div>
-                </motion.div>
               </div>
 
               <motion.aside

@@ -129,15 +129,15 @@ export const developmentLab = {
 
 export const testimonials = [
   {
-    name: 'Akhil Varma',
+    name: 'Verified Client 01',
     quote: 'MernPixel gave our product a premium look and real business clarity.',
   },
   {
-    name: 'Ritika Sharma',
+    name: 'Verified Client 02',
     quote: 'Their execution was smooth, fast, and exactly what our brand needed.',
   },
   {
-    name: 'Vineeth Reddy',
+    name: 'Verified Client 03',
     quote: 'Great blend of design quality and technical confidence end-to-end.',
   },
 ]
@@ -271,5 +271,3 @@ export const coreCrew = [
     bio: 'Owns client consulting, strategy alignment, and growth direction for business outcomes.',
   },
 ]
-
-export const clientHighlights = ['Akhil Varma', 'Ritika Sharma', 'Vineeth Reddy', 'Global Startup Teams']

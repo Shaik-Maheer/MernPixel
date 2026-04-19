@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import PageEndPromo from '../components/PageEndPromo'
 import PageIntroHero from '../components/PageIntroHero'
-import { clientHighlights, testimonials } from '../data/siteData'
+import { testimonials } from '../data/siteData'
 
 export default function ClientsPage() {
   const MotionCard = motion.article
@@ -42,20 +42,7 @@ export default function ClientsPage() {
             <p className="clients-quote-kicker">Featured Feedback</p>
             <p className="clients-quote-text">"{testimonials[0].quote}"</p>
             <p className="clients-quote-name">{testimonials[0].name}</p>
-            <div className="clients-chip-row">
-              {clientHighlights.map((client) => (
-                <span key={client}>{client}</span>
-              ))}
-            </div>
           </article>
-        </div>
-
-        <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {clientHighlights.map((client) => (
-            <article key={client} className="glass-card clients-name-card rounded-2xl p-5 text-center">
-              <p className="text-sm uppercase tracking-[0.2em] text-white/75">{client}</p>
-            </article>
-          ))}
         </div>
 
         <div className="mt-8 grid gap-5 lg:grid-cols-3">
