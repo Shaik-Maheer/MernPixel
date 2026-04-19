@@ -6,9 +6,9 @@ import { InstagramIcon, LinkedInIcon, WhatsAppIcon } from './SocialIcons'
 import { business, socialLinks } from '../data/siteData'
 
 const primaryMenuItems = [
-  { label: 'WORKS', path: '/works' },
-  { label: 'SERVICES', path: '/services' },
   { label: 'ABOUT', path: '/about' },
+  { label: 'SERVICES', path: '/services' },
+  { label: 'WORKS', path: '/works' },
   { label: 'CONTACT', path: '/contact' },
 ]
 

@@ -2852,6 +2852,10 @@ main > .section-shell:nth-of-type(even)::before {
   gap: clamp(16px, 3vw, 30px);
 }
 
+.portfolio-overview-grid-single {
+  grid-template-columns: 1fr;
+}
+
 .portfolio-overview-card,
 .portfolio-overview-notes {
   position: relative;

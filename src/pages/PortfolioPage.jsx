@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import CountUpNumber from '../components/CountUpNumber'
 import PageEndPromo from '../components/PageEndPromo'
 import PageIntroHero from '../components/PageIntroHero'
 import { cloudinaryVideos } from '../data/cloudinaryVideos'
@@ -10,9 +11,11 @@ export default function PortfolioPage() {
   const previewThemes = ['preview-theme-a', 'preview-theme-b', 'preview-theme-c']
   const [brokenImages, setBrokenImages] = useState({})
   const [loadedImages, setLoadedImages] = useState({})
-  const liveProjects = portfolioProjects.length
-  const showcaseTracks = [...new Set(portfolioProjects.map((project) => project.previewLabel || project.category || 'Project'))].length
-  const premiumBuilds = portfolioProjects.filter((project) => project.fullWidth).length
+  const portfolioStats = [
+    { value: '15+', label: 'Projects' },
+    { value: '5+', label: 'Clients' },
+    { value: '2+', label: 'Experience' },
+  ]
   const revealVectors = [
     { x: -96, y: 14, rotate: -1.4, scale: 0.96 },
     { x: 96, y: 14, rotate: 1.4, scale: 0.96 },
@@ -29,7 +32,7 @@ export default function PortfolioPage() {
       />
 
       <section className="section-shell portfolio-overview-wrap">
-        <div className="portfolio-overview-grid">
+        <div className="portfolio-overview-grid portfolio-overview-grid-single">
           <article className="glass-card portfolio-overview-card rounded-3xl p-7 md:p-9">
             <span className="section-kicker">Portfolio</span>
             <h1 className="section-title">Work that looks sharp and performs in market.</h1>
@@ -38,29 +41,15 @@ export default function PortfolioPage() {
               business-ready implementation.
             </p>
             <div className="portfolio-overview-metrics">
-              <article>
-                <p>{liveProjects}</p>
-                <span>Live Projects</span>
-              </article>
-              <article>
-                <p>{showcaseTracks}</p>
-                <span>Delivery Tracks</span>
-              </article>
-              <article>
-                <p>{premiumBuilds}</p>
-                <span>Flagship Builds</span>
-              </article>
+              {portfolioStats.map((item) => (
+                <article key={item.label}>
+                  <p>
+                    <CountUpNumber value={item.value} />
+                  </p>
+                  <span>{item.label}</span>
+                </article>
+              ))}
             </div>
-          </article>
-
-          <article className="glass-card portfolio-overview-notes rounded-3xl p-7 md:p-9">
-            <p className="portfolio-overview-kicker">Execution Standards</p>
-            <ul>
-              <li>Clean visual hierarchy tuned for mobile and desktop.</li>
-              <li>Performance-focused implementation and optimized assets.</li>
-              <li>Conversion-oriented flow with clear action points.</li>
-              <li>Real-world deployment and post-launch support readiness.</li>
-            </ul>
           </article>
         </div>
       </section>
