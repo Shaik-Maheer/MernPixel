@@ -4050,6 +4050,7 @@ main > .section-shell:nth-of-type(even)::before {
 }
 
 .about-reel-video-wrap {
+  position: relative;
   width: min(660px, 100%);
   aspect-ratio: 1 / 1;
   overflow: hidden;
@@ -4072,6 +4073,26 @@ main > .section-shell:nth-of-type(even)::before {
   background:
     radial-gradient(circle at 18% 16%, rgba(39, 185, 255, 0.18), transparent 34%),
     linear-gradient(180deg, rgba(2, 8, 14, 0.1), rgba(2, 8, 14, 0.52));
+}
+
+.about-reel-tagline {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(18px, 4vw, 34px);
+  transform: translateX(-50%);
+  z-index: 2;
+  margin: 0;
+  width: min(92%, 560px);
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1rem, 2.9vw, 2rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(244, 250, 255, 0.97);
+  text-shadow:
+    0 0 20px rgba(39, 185, 255, 0.24),
+    0 10px 34px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
 }
 
 .about-crew-chip {

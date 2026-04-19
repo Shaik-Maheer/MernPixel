@@ -277,6 +277,7 @@ export default function AboutPage() {
                   playsInline
                 />
                 <div className="about-reel-overlay" />
+                <p className="about-reel-tagline">We Don&apos;t Just Build. We Elevate.</p>
               </motion.div>
 
               <motion.article
