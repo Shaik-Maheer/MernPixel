@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import CountUpNumber from '../components/CountUpNumber'
 import IntroSequence from '../components/IntroSequence'
 import { cloudinaryVideos } from '../data/cloudinaryVideos'
 import { capabilityMarquee, developmentLab, homeCaseStudies, homeProcess, stats, testimonials } from '../data/siteData'
@@ -102,7 +103,9 @@ export default function HomePage({ showIntro, onIntroComplete }) {
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((item) => (
               <article key={item.label} className="glass-card home-proof-card rounded-2xl p-6">
-                <p className="home-proof-value">{item.value}</p>
+                <p className="home-proof-value">
+                  <CountUpNumber value={item.value} />
+                </p>
                 <p className="home-proof-label">{item.label}</p>
               </article>
             ))}
