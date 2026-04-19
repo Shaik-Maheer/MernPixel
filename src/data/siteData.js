@@ -1,6 +1,6 @@
 export const business = {
   name: 'MernPixel',
-  tagline: 'We Build What Matters.',
+  tagline: 'Design. Develop. Deploy. Grow.',
   url: 'https://mernpixeldev.com',
   email: 'mernpixeldev@gmail.com',
   phone: '+91 95150 22680',
@@ -100,6 +100,21 @@ export const homeProcess = [
     detail: 'Post-launch improvements driven by analytics, user behavior, and feedback.',
   },
 ]
+
+export const developmentLab = {
+  codeLines: [
+    'const brand = craftIdentity("MernPixel")',
+    'const ux = mapJourney({ goal: "conversion" })',
+    'const ui = composeInterface(brand, ux)',
+    'await ship({ ui, speed: "fast", polish: "premium" })',
+  ],
+  stack: ['React', 'Framer Motion', 'GSAP', 'Tailwind', 'Node', 'MongoDB'],
+  signals: [
+    { label: 'UI System', value: 'Atomic' },
+    { label: 'Load Target', value: '< 2.5s' },
+    { label: 'Motion', value: 'Purposeful' },
+  ],
+}
 
 export const testimonials = [
   {

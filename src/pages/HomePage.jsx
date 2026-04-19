@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import IntroSequence from '../components/IntroSequence'
 import { cloudinaryVideos } from '../data/cloudinaryVideos'
-import { business, homeCaseStudies, homeProcess, stats, testimonials } from '../data/siteData'
+import { business, developmentLab, homeCaseStudies, homeProcess, stats, testimonials } from '../data/siteData'
 
 export default function HomePage({ showIntro, onIntroComplete }) {
   const MotionHeading = motion.h1
@@ -95,6 +95,81 @@ export default function HomePage({ showIntro, onIntroComplete }) {
             ))}
           </div>
         </MotionSection>
+
+        <section className="section-shell home-lab-section">
+          <div className="home-lab-grid">
+            <motion.article
+              className="home-lab-copy"
+              initial={{ opacity: 0, x: -34 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.68, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className="section-kicker">Development Lab</span>
+              <h2 className="section-title">Creative UI, Engineered Like Product Software</h2>
+              <p className="section-copy">
+                We do not just decorate screens. We build interaction systems: responsive layouts, reusable components,
+                animation rules, conversion paths, and launch-ready code.
+              </p>
+
+              <div className="home-lab-stack">
+                {developmentLab.stack.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+            </motion.article>
+
+            <motion.article
+              className="home-lab-console"
+              initial={{ opacity: 0, y: 34, rotateX: 8 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.78, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="home-lab-window">
+                <div className="home-lab-topbar">
+                  <span />
+                  <span />
+                  <span />
+                  <p>mernpixel.build</p>
+                </div>
+
+                <div className="home-lab-code">
+                  {developmentLab.codeLines.map((line, index) => (
+                    <motion.p
+                      key={line}
+                      initial={{ opacity: 0, x: -12 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.45, delay: index * 0.12 }}
+                    >
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      {line}
+                    </motion.p>
+                  ))}
+                </div>
+              </div>
+
+              <div className="home-device-preview" aria-hidden>
+                <div className="home-device-screen">
+                  <span className="home-device-orbit" />
+                  <span className="home-device-card home-device-card-a" />
+                  <span className="home-device-card home-device-card-b" />
+                  <span className="home-device-card home-device-card-c" />
+                </div>
+              </div>
+
+              <div className="home-lab-signals">
+                {developmentLab.signals.map((item) => (
+                  <div key={item.label}>
+                    <p>{item.value}</p>
+                    <span>{item.label}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.article>
+          </div>
+        </section>
 
         <section className="section-shell">
           <span className="section-kicker">Case Studies</span>
