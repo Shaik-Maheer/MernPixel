@@ -1,19 +1,16 @@
 import { useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import CountUpNumber from '../components/CountUpNumber'
 import IntroSequence from '../components/IntroSequence'
 import { cloudinaryVideos } from '../data/cloudinaryVideos'
 import {
   capabilityMarquee,
-  homeCaseStudies,
   stats,
 } from '../data/siteData'
 
 export default function HomePage({ showIntro, onIntroComplete }) {
   const MotionHeading = motion.h1
   const MotionParagraph = motion.p
-  const MotionSection = motion.section
 
   const handleIntroDone = useCallback(() => {
     onIntroComplete?.()
@@ -74,20 +71,6 @@ export default function HomePage({ showIntro, onIntroComplete }) {
                   We design and ship business-ready digital experiences with clear messaging, fast performance,
                   and conversion-focused flows.
                 </MotionParagraph>
-
-                <motion.div
-                  className="home-hero-actions mt-9 flex flex-wrap items-center gap-4"
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <Link to="/works" className="btn-primary cursor-target">
-                    Explore Work
-                  </Link>
-                  <Link to="/about" className="btn-secondary cursor-target">
-                    About Studio
-                  </Link>
-                </motion.div>
               </div>
 
               <motion.aside
@@ -126,45 +109,6 @@ export default function HomePage({ showIntro, onIntroComplete }) {
             </motion.div>
           </div>
         </section>
-
-        <MotionSection
-          className="section-shell"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.55 }}
-        >
-          <span className="section-kicker">Featured</span>
-          <h2 className="section-title">Selected Projects</h2>
-          <p className="section-copy">A quick visual snapshot. Full details are in Work.</p>
-
-          <div className="mt-10 grid gap-7 lg:grid-cols-3">
-            {homeCaseStudies.map((project, index) => (
-              <motion.article
-                key={project.name}
-                className="glass-card home-case-card rounded-3xl p-5"
-                initial={{ opacity: 0, y: 26 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, delay: index * 0.08 }}
-              >
-                <a href={project.liveLink} target="_blank" rel="noreferrer" className="cursor-target">
-                  <div className="home-case-preview">
-                    <img src={project.image} alt={`${project.name} preview`} loading="lazy" />
-                  </div>
-                  <p className="home-case-category">{project.category}</p>
-                  <h3 className="home-case-title">{project.name}</h3>
-                </a>
-              </motion.article>
-            ))}
-          </div>
-
-          <div className="mt-9 flex justify-center">
-            <Link to="/works" className="btn-secondary cursor-target">
-              View All Works
-            </Link>
-          </div>
-        </MotionSection>
       </main>
     </>
   )
