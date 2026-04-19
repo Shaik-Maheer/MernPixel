@@ -1,6 +1,6 @@
 export const business = {
   name: 'MernPixel',
-  tagline: 'Design. Develop. Deploy. Grow.',
+  tagline: 'Not built to impress. Built to perform.',
   url: 'https://mernpixeldev.com',
   email: 'mernpixeldev@gmail.com',
   phone: '+91 95150 22680',

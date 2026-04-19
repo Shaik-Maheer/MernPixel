@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import IntroSequence from '../components/IntroSequence'
 import { cloudinaryVideos } from '../data/cloudinaryVideos'
-import { business, developmentLab, homeCaseStudies, homeProcess, stats, testimonials } from '../data/siteData'
+import { developmentLab, homeCaseStudies, homeProcess, stats, testimonials } from '../data/siteData'
 
 export default function HomePage({ showIntro, onIntroComplete }) {
   const MotionHeading = motion.h1
@@ -44,7 +44,7 @@ export default function HomePage({ showIntro, onIntroComplete }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             >
-              Websites That Look Premium.
+              Not Built To Impress.
               <br />
               Built To Perform.
             </MotionHeading>
@@ -55,7 +55,7 @@ export default function HomePage({ showIntro, onIntroComplete }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.75, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
             >
-              {business.tagline} We design and ship business-ready digital experiences with clear messaging, fast performance,
+              We design and ship business-ready digital experiences with clear messaging, fast performance,
               and conversion-focused flows.
             </MotionParagraph>
 
