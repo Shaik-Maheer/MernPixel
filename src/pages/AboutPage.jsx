@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Link } from 'react-router-dom'
+import CountUpNumber from '../components/CountUpNumber'
 import PageEndPromo from '../components/PageEndPromo'
 import { cloudinaryVideos } from '../data/cloudinaryVideos'
 import { coreCrew } from '../data/siteData'
@@ -55,17 +56,11 @@ const storySteps = [
   },
 ]
 
-const headlineWords = ['Not', 'Just', 'Websites.', 'We', 'Build', 'Experiences.']
-const studioMetrics = [
-  { label: 'Core Team', value: '04', note: 'Specialists' },
-  { label: 'Focus', value: '100%', note: 'Outcome Driven' },
-  { label: 'Delivery', value: 'Fast', note: 'Production Ready' },
-]
-const manifestPoints = [
-  'Brand story and UX structure are designed together, not in silos.',
-  'Every section is built for clarity, trust, and measurable action.',
-  'Visual quality is backed by clean implementation and responsive behavior.',
-  'Post-launch improvements are part of the workflow, not an afterthought.',
+const aboutProofStats = [
+  { value: '24+', label: 'Projects' },
+  { value: '18+', label: 'Clients' },
+  { value: '4', label: 'Team Members' },
+  { value: '5', label: 'Years Experience' },
 ]
 const reelStack = ['React', 'Performance UI', 'Conversion Copy', 'Animation Systems', 'Growth Loops', 'QA']
 
@@ -74,7 +69,6 @@ export default function AboutPage() {
   const MotionMain = motion.main
   const MotionHeading = motion.h1
   const MotionParagraph = motion.p
-  const MotionWord = motion.span
   const MotionCard = motion.article
 
   const [introComplete, setIntroComplete] = useState(false)
@@ -177,19 +171,14 @@ export default function AboutPage() {
             </div>
 
             <div className="section-shell relative z-10 flex min-h-screen flex-col items-center justify-center text-center">
-              <h1 className="about-hero-title max-w-5xl">
-                {headlineWords.map((word, index) => (
-                  <MotionWord
-                    key={`${word}-${index}`}
-                    className="about-glow-word"
-                    initial={{ opacity: 0, y: 38, scale: 0.93 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.7, delay: index * 0.11, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    {word}
-                  </MotionWord>
-                ))}
-              </h1>
+              <MotionHeading
+                className="about-hero-title max-w-5xl"
+                initial={{ opacity: 0, y: 38, scale: 0.93 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              >
+                WHAT USERS ACTUALLY CARE ABOUT
+              </MotionHeading>
 
               <MotionParagraph
                 className="mt-8 max-w-2xl text-xl text-white/85"
@@ -197,65 +186,32 @@ export default function AboutPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
               >
-                All your digital needs, one place.
-              </MotionParagraph>
-
-              <MotionParagraph
-                className="about-scroll-indicator mt-14 text-sm uppercase tracking-[0.24em] text-white/65"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.7, delay: 1.15 }}
-              >
-                Scroll to feel the difference ↓
+                Speed, clarity, trust, and a smooth path to contact.
               </MotionParagraph>
             </div>
           </section>
 
-          <section className="section-shell about-manifest-shell">
-            <div className="about-manifest-grid">
-              <motion.article
-                className="glass-card about-manifest-card rounded-3xl p-7 md:p-9"
-                initial={{ opacity: 0, x: -40, y: 18 }}
-                whileInView={{ opacity: 1, x: 0, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <span className="section-kicker">Studio Manifest</span>
-                <h2 className="section-title">A visual studio that thinks like a product team.</h2>
-                <p className="section-copy max-w-none">
-                  We align positioning, interface structure, and engineering quality in one execution stream.
-                  That is how we ship experiences that feel premium and perform in market.
-                </p>
+          <section className="section-shell about-proof-shell">
+            <span className="section-kicker">Proof</span>
+            <h2 className="section-title">WHAT USERS ACTUALLY CARE ABOUT</h2>
+            <p className="section-copy">Speed, clarity, trust, and a smooth path to contact.</p>
 
-                <div className="about-manifest-metrics">
-                  {studioMetrics.map((item) => (
-                    <article key={item.label}>
-                      <p>{item.value}</p>
-                      <span>{item.label}</span>
-                      <small>{item.note}</small>
-                    </article>
-                  ))}
-                </div>
-              </motion.article>
-
-              <motion.article
-                className="glass-card about-manifest-notes rounded-3xl p-7 md:p-9"
-                initial={{ opacity: 0, x: 40, y: 18 }}
-                whileInView={{ opacity: 1, x: 0, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.62, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <p className="about-manifest-kicker">How We Operate</p>
-                <ul>
-                  {manifestPoints.map((point) => (
-                    <li key={point}>{point}</li>
-                  ))}
-                </ul>
-
-                <Link to="/contact" className="btn-primary mt-7 inline-flex cursor-target">
-                  Plan a Discovery Call
-                </Link>
-              </motion.article>
+            <div className="about-proof-grid">
+              {aboutProofStats.map((item, index) => (
+                <motion.article
+                  key={item.label}
+                  className="glass-card about-proof-card rounded-3xl p-7"
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 0.58, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <p className="about-proof-value">
+                    <CountUpNumber value={item.value} />
+                  </p>
+                  <span className="about-proof-label">{item.label}</span>
+                </motion.article>
+              ))}
             </div>
           </section>
 

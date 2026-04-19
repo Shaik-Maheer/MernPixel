@@ -4039,6 +4039,49 @@ main > .section-shell:nth-of-type(even)::before {
   position: relative;
 }
 
+.about-proof-shell {
+  padding-top: clamp(42px, 7vw, 78px);
+}
+
+.about-proof-grid {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.about-proof-card {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(39, 185, 255, 0.24);
+  min-height: 162px;
+}
+
+.about-proof-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 62%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(122, 219, 239, 0.95), rgba(39, 185, 255, 0));
+}
+
+.about-proof-value {
+  margin: 0;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2rem, 4.6vw, 3rem);
+  color: #F4FAFF;
+}
+
+.about-proof-label {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: rgba(230, 230, 230, 0.72);
+}
+
 .about-reel-shell::before {
   content: '';
   position: absolute;
@@ -5919,6 +5962,10 @@ main > .section-shell:nth-of-type(even)::before {
 }
 
 @media (max-width: 640px) {
+  .about-proof-grid {
+    grid-template-columns: 1fr;
+  }
+
   .about-manifest-metrics {
     grid-template-columns: 1fr;
   }
