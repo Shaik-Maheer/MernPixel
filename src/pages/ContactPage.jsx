@@ -21,6 +21,18 @@ const serviceOptions = [
   'Portfolio Building',
 ]
 
+const contactFlow = [
+  { title: 'Share Requirement', detail: 'Submit scope, service, and goal details.' },
+  { title: 'Quick Discovery', detail: 'We map priorities, timeline, and execution path.' },
+  { title: 'Execution Kickoff', detail: 'You receive a clear plan and we start delivery.' },
+]
+
+const responseSignals = [
+  { label: 'First Reply', value: '< 24 Hours' },
+  { label: 'Proposal Clarity', value: 'Scope + Milestones' },
+  { label: 'Communication', value: 'WhatsApp + Email' },
+]
+
 const initialForm = {
   name: '',
   email: '',
@@ -133,9 +145,9 @@ export default function ContactPage() {
       />
 
       <section className="section-shell relative pt-0">
-        <div className="grid gap-7 xl:grid-cols-[0.95fr_1.05fr]">
+        <div className="contact-command-grid">
           <MotionCard
-            className="glass-card contact-info-card rounded-3xl p-7 md:p-9"
+            className="glass-card contact-info-card contact-command-card rounded-3xl p-7 md:p-9"
             initial={{ opacity: 0, x: -72, y: 20 }}
             whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -146,6 +158,15 @@ export default function ContactPage() {
               Share your requirement and our team will connect with a practical execution plan. We keep communication clear,
               timelines realistic, and delivery quality high.
             </p>
+
+            <div className="contact-flow-list">
+              {contactFlow.map((step) => (
+                <article key={step.title}>
+                  <p>{step.title}</p>
+                  <span>{step.detail}</span>
+                </article>
+              ))}
+            </div>
 
             <div className="mt-8 space-y-4">
               <MotionLink
@@ -174,6 +195,15 @@ export default function ContactPage() {
                 </span>
               </MotionLink>
             </div>
+
+            <div className="contact-response-strip">
+              {responseSignals.map((item) => (
+                <article key={item.label}>
+                  <p>{item.value}</p>
+                  <span>{item.label}</span>
+                </article>
+              ))}
+            </div>
           </MotionCard>
 
           <MotionCard
@@ -185,6 +215,11 @@ export default function ContactPage() {
           >
             <h2 className="font-['Cinzel'] text-3xl text-white md:text-4xl">Project Contact Form</h2>
             <p className="mt-4 text-sm text-white/70">Share your details. We route your inquiry directly in WhatsApp + email.</p>
+            <div className="contact-form-steps">
+              <span>Step 1: Fill Details</span>
+              <span>Step 2: Submit Inquiry</span>
+              <span>Step 3: We Reach Out</span>
+            </div>
 
             {submitted && (
               <div className="contact-submit-success mt-6 rounded-2xl border border-[#7ADBEF]/50 bg-[#7ADBEF]/10 p-4">
@@ -297,58 +332,38 @@ export default function ContactPage() {
       </section>
 
       <section className="section-shell pt-0">
-        <article className="glass-card rounded-3xl p-8 text-center md:p-12">
+        <article className="glass-card contact-assurance-panel rounded-3xl p-8 md:p-12">
           <MotionHeading
-            className="font-['Cinzel'] text-4xl leading-tight text-white md:text-6xl"
+            className="font-['Cinzel'] text-center text-4xl leading-tight text-white md:text-6xl"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
           >
-            Clear scope, clear timeline, clean execution.
+            What Happens After You Submit
           </MotionHeading>
-          <p className="mx-auto mt-5 max-w-2xl text-white/74">
-            We start with your business goal, map practical deliverables, and ship with quality checks.
+          <p className="mx-auto mt-5 max-w-2xl text-center text-white/74">
+            We validate your scope, align priorities, and return with a practical execution plan.
           </p>
+
+          <div className="contact-assurance-grid">
+            <article>
+              <p>01</p>
+              <span>Requirement Review</span>
+              <small>Your request is evaluated for scope and business goals.</small>
+            </article>
+            <article>
+              <p>02</p>
+              <span>Execution Blueprint</span>
+              <small>We share milestone flow, timeline, and delivery approach.</small>
+            </article>
+            <article>
+              <p>03</p>
+              <span>Launch-Focused Build</span>
+              <small>Design and development are executed with quality checkpoints.</small>
+            </article>
+          </div>
         </article>
-      </section>
-
-      <section className="section-shell pt-0">
-        <div className="grid gap-6 md:grid-cols-2">
-          <MotionCard
-            className="glass-card rounded-3xl p-7"
-            initial={{ opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.55 }}
-            whileHover={{ y: -6 }}
-          >
-            <p className="text-xs uppercase tracking-[0.2em] text-white/55">Email</p>
-            <a className="mt-3 block text-xl text-white cursor-target" href={`mailto:${business.email}`}>
-              {business.email}
-            </a>
-          </MotionCard>
-
-          <MotionCard
-            className="glass-card rounded-3xl p-7"
-            initial={{ opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.55, delay: 0.08 }}
-            whileHover={{ y: -6 }}
-          >
-            <p className="text-xs uppercase tracking-[0.2em] text-white/55">WhatsApp</p>
-            <a
-              className="mt-3 inline-flex items-center gap-3 text-xl text-white cursor-target"
-              href={quickWhatsAppHref}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span className="contact-wa-pill">Chat</span>
-              <span>{business.phone}</span>
-            </a>
-          </MotionCard>
-        </div>
       </section>
 
       <PageEndPromo

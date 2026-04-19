@@ -4,6 +4,19 @@ import PageEndPromo from '../components/PageEndPromo'
 import PageIntroHero from '../components/PageIntroHero'
 import { coreCrew } from '../data/siteData'
 
+const teamSignals = [
+  { label: 'Disciplines', value: 'Design + Engineering + Growth' },
+  { label: 'Collaboration', value: 'Single Workflow, Shared Ownership' },
+  { label: 'Delivery Pattern', value: 'Weekly Milestones + Review' },
+]
+
+const operatingPrinciples = [
+  'Decisions are grounded in user flow and business outcomes.',
+  'Visual systems stay consistent across screens and breakpoints.',
+  'Engineering choices prioritize performance and maintainability.',
+  'Feedback loops are fast, clear, and action oriented.',
+]
+
 function TeamModal({ member, onClose }) {
   const MotionDiv = Motion.div
   const MotionArticle = Motion.article
@@ -71,6 +84,49 @@ export default function TeamPage() {
         compact
       />
 
+      <section className="section-shell team-command-shell">
+        <div className="team-command-grid">
+          <MotionArticle
+            className="glass-card team-command-card rounded-3xl p-7 md:p-9"
+            initial={{ opacity: 0, x: -40, y: 18 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span className="section-kicker">Team Engine</span>
+            <h1 className="section-title">Small team. Serious execution capacity.</h1>
+            <p className="section-copy max-w-none">
+              Each member owns a core function, but we execute as one integrated unit to keep quality high
+              and delivery fast.
+            </p>
+
+            <div className="team-command-signals">
+              {teamSignals.map((item) => (
+                <article key={item.label}>
+                  <p>{item.label}</p>
+                  <span>{item.value}</span>
+                </article>
+              ))}
+            </div>
+          </MotionArticle>
+
+          <MotionArticle
+            className="glass-card team-principles-card rounded-3xl p-7 md:p-9"
+            initial={{ opacity: 0, x: 40, y: 18 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <p className="team-principles-kicker">Operating Principles</p>
+            <ul>
+              {operatingPrinciples.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
+          </MotionArticle>
+        </div>
+      </section>
+
       <section className="section-shell relative pb-10 pt-6">
         <div className="team-cinema-wrap">
           <MotionDiv
@@ -109,7 +165,7 @@ export default function TeamPage() {
 
       <section className="section-shell pt-0">
         <span className="section-kicker">Core Crew</span>
-        <h1 className="section-title">Meet The 4 People Behind Mern Pixel</h1>
+        <h2 className="section-title">Meet The 4 People Behind Mern Pixel</h2>
 
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           {coreCrew.map((member, index) => (
@@ -132,9 +188,21 @@ export default function TeamPage() {
                 </div>
               </div>
               <p className="mt-5 text-white/72">{member.bio}</p>
-              <button type="button" className="btn-primary mt-6 inline-flex">
-                View Details
-              </button>
+
+              <div className="team-profile-actions">
+                <button type="button" className="btn-primary inline-flex">
+                  View Details
+                </button>
+                <a
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-secondary inline-flex cursor-target"
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  LinkedIn
+                </a>
+              </div>
             </MotionArticle>
           ))}
         </div>

@@ -95,6 +95,18 @@ const servicesGrid = [
 ]
 
 const headlineWords = ['Not', 'Just', 'Websites.', 'We', 'Build', 'Experiences.']
+const studioMetrics = [
+  { label: 'Core Team', value: '04', note: 'Specialists' },
+  { label: 'Focus', value: '100%', note: 'Outcome Driven' },
+  { label: 'Delivery', value: 'Fast', note: 'Production Ready' },
+]
+const manifestPoints = [
+  'Brand story and UX structure are designed together, not in silos.',
+  'Every section is built for clarity, trust, and measurable action.',
+  'Visual quality is backed by clean implementation and responsive behavior.',
+  'Post-launch improvements are part of the workflow, not an afterthought.',
+]
+const reelStack = ['React', 'Performance UI', 'Conversion Copy', 'Animation Systems', 'Growth Loops', 'QA']
 
 function ServiceModal({ service, onClose }) {
   const MotionOverlay = motion.div
@@ -281,6 +293,54 @@ export default function AboutPage() {
             </div>
           </section>
 
+          <section className="section-shell about-manifest-shell">
+            <div className="about-manifest-grid">
+              <motion.article
+                className="glass-card about-manifest-card rounded-3xl p-7 md:p-9"
+                initial={{ opacity: 0, x: -40, y: 18 }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <span className="section-kicker">Studio Manifest</span>
+                <h2 className="section-title">A visual studio that thinks like a product team.</h2>
+                <p className="section-copy max-w-none">
+                  We align positioning, interface structure, and engineering quality in one execution stream.
+                  That is how we ship experiences that feel premium and perform in market.
+                </p>
+
+                <div className="about-manifest-metrics">
+                  {studioMetrics.map((item) => (
+                    <article key={item.label}>
+                      <p>{item.value}</p>
+                      <span>{item.label}</span>
+                      <small>{item.note}</small>
+                    </article>
+                  ))}
+                </div>
+              </motion.article>
+
+              <motion.article
+                className="glass-card about-manifest-notes rounded-3xl p-7 md:p-9"
+                initial={{ opacity: 0, x: 40, y: 18 }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.62, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <p className="about-manifest-kicker">How We Operate</p>
+                <ul>
+                  {manifestPoints.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+
+                <Link to="/contact" className="btn-primary mt-7 inline-flex cursor-target">
+                  Plan a Discovery Call
+                </Link>
+              </motion.article>
+            </div>
+          </section>
+
           <section className="section-shell about-reel-shell">
             <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
               <motion.div
@@ -315,6 +375,12 @@ export default function AboutPage() {
                   reel is delivered using Cloudinary video for smooth playback quality.
                 </p>
 
+                <div className="about-reel-stack">
+                  {reelStack.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+
                 <div className="mt-7 grid gap-3 sm:grid-cols-2">
                   {coreCrew.map((member) => (
                     <a key={member.name} href={member.linkedin} target="_blank" rel="noreferrer" className="about-crew-chip cursor-target">
@@ -338,6 +404,7 @@ export default function AboutPage() {
 
             <span className="section-kicker">Difference</span>
             <h2 className="section-title">What Makes Us Different</h2>
+            <p className="section-copy">Execution depth, visual precision, and business clarity at every stage.</p>
 
             <div className="mt-10 grid gap-5 md:grid-cols-2">
               {differentiators.map((item, index) => (
