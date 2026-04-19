@@ -10,25 +10,6 @@ import { coreCrew } from '../data/siteData'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const differentiators = [
-  {
-    title: 'Web Development',
-    copy: 'Scalable websites with premium interface fidelity, speed-first engineering, and clean architecture.',
-  },
-  {
-    title: 'UI/UX Design',
-    copy: 'Experience design systems that are visually striking, intuitive, and conversion-oriented.',
-  },
-  {
-    title: 'SEO & Digital Marketing',
-    copy: 'Search-ready foundations and growth campaigns aligned to business outcomes, not vanity metrics.',
-  },
-  {
-    title: 'Academic & Portfolio Projects',
-    copy: 'Structured guidance for student and portfolio outcomes with practical quality standards.',
-  },
-]
-
 const storySteps = [
   {
     stepId: '01',
@@ -253,29 +234,6 @@ export default function AboutPage() {
                   Open Our Team
                 </Link>
               </motion.article>
-            </div>
-          </section>
-
-          <section className="section-shell relative">
-            <span className="about-blob about-blob-a" />
-            <span className="about-blob about-blob-b" />
-            <div className="about-grid-pattern" />
-
-            <span className="section-kicker">Difference</span>
-            <h2 className="section-title">What Makes Us Different</h2>
-            <p className="section-copy">Execution depth, visual precision, and business clarity at every stage.</p>
-
-            <div className="mt-10 grid gap-5 md:grid-cols-2">
-              {differentiators.map((item) => (
-                <MotionCard
-                  key={item.title}
-                  className="glass-card about-diff-card rounded-3xl p-7"
-                  whileHover={{ y: -10, rotateX: 2.2, rotateY: -2 }}
-                >
-                  <h3 className="font-['Cinzel'] text-3xl text-white">{item.title}</h3>
-                  <p className="mt-4 text-sm leading-relaxed text-white/75">{item.copy}</p>
-                </MotionCard>
-              ))}
             </div>
           </section>
 
