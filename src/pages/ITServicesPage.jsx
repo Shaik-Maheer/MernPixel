@@ -120,7 +120,7 @@ export default function ITServicesPage() {
         transition={{ duration: 0.55 }}
       >
         <div className="whatdo-overview-grid">
-          <article className="glass-card whatdo-overview-card rounded-3xl p-7 md:p-9">
+          <article className="glass-card whatdo-overview-card rounded-3xl p-5 md:p-6">
             <div className="whatdo-overview-media" aria-hidden>
               <video
                 className="whatdo-overview-video"
