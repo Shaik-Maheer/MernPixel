@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import Lenis from 'lenis'
 
 const SECTION_FOCUS_SELECTOR = 'main .section-shell'
-const SECTION_ENTRY_DIRECTIONS = ['left', 'right', 'bottom']
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max)
 
@@ -70,24 +69,6 @@ export default function useSmoothScroll(routeKey) {
       rafId = window.requestAnimationFrame(updateAllTargets)
     }
 
-    const applyEntryDirection = (element, index) => {
-      const direction = SECTION_ENTRY_DIRECTIONS[index % SECTION_ENTRY_DIRECTIONS.length]
-      let offsetX = '0px'
-      let offsetY = '88px'
-
-      if (direction === 'left') {
-        offsetX = '-92px'
-        offsetY = '0px'
-      } else if (direction === 'right') {
-        offsetX = '92px'
-        offsetY = '0px'
-      }
-
-      element.style.setProperty('--section-enter-x', offsetX)
-      element.style.setProperty('--section-enter-y', offsetY)
-      element.setAttribute('data-enter-direction', direction)
-    }
-
     const registerTargets = () => {
       const elements = document.querySelectorAll(SECTION_FOCUS_SELECTOR)
       elements.forEach((element) => {
@@ -95,7 +76,6 @@ export default function useSmoothScroll(routeKey) {
           return
         }
 
-        applyEntryDirection(element, targets.size)
         targets.add(element)
         element.classList.add('scroll-focus-item')
         element.classList.add('scroll-focus-no-video')

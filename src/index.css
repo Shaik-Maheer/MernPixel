@@ -275,20 +275,12 @@ main > .section-shell:nth-of-type(even)::before {
 }
 
 .scroll-focus-item {
-  --section-focus: 0;
-  --section-enter-x: 0px;
-  --section-enter-y: 88px;
+  --section-focus: 1;
   position: relative;
   isolation: isolate;
-  opacity: calc(0.88 + (var(--section-focus) * 0.12));
-  transform: translate3d(
-      calc((1 - var(--section-focus)) * var(--section-enter-x)),
-      calc((1 - var(--section-focus)) * var(--section-enter-y)),
-      0
-    )
-    scale(calc(0.98 + (var(--section-focus) * 0.02)));
-  filter: saturate(calc(0.72 + (var(--section-focus) * 0.28)))
-    blur(calc((1 - var(--section-focus)) * 0.12px));
+  opacity: 1;
+  transform: none;
+  filter: none;
 }
 
 .scroll-focus-item::before {
