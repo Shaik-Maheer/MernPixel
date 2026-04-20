@@ -25,6 +25,24 @@ export default function IntroSequence({ onDone }) {
     }
   }, [onDone])
 
+  useEffect(() => {
+    const html = document.documentElement
+    const body = document.body
+    const prevHtmlOverflow = html.style.overflow
+    const prevBodyOverflow = body.style.overflow
+    const prevBodyTouchAction = body.style.touchAction
+
+    html.style.overflow = 'hidden'
+    body.style.overflow = 'hidden'
+    body.style.touchAction = 'none'
+
+    return () => {
+      html.style.overflow = prevHtmlOverflow
+      body.style.overflow = prevBodyOverflow
+      body.style.touchAction = prevBodyTouchAction
+    }
+  }, [])
+
   return (
     <MotionConfig reducedMotion="never">
       <section className="intro-wrap">
