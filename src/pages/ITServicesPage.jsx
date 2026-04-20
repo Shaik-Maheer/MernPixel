@@ -78,6 +78,15 @@ const services = [
   },
 ]
 
+const serviceMarquee = [
+  'Web Development',
+  'E-Commerce',
+  'UI/UX Design',
+  'SEO & Growth',
+  'Brand Identity',
+  'Student Projects',
+]
+
 export default function ITServicesPage() {
   const MotionMain = motion.main
   const MotionDiv = motion.div
@@ -112,6 +121,24 @@ export default function ITServicesPage() {
       >
         <div className="whatdo-overview-grid">
           <article className="glass-card whatdo-overview-card rounded-3xl p-7 md:p-9">
+            <div className="whatdo-overview-media" aria-hidden>
+              <video
+                className="whatdo-overview-video"
+                src={cloudinaryVideos.emberOceanAlt}
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+              <div className="whatdo-overview-media-overlay" />
+              <div className="whatdo-overview-marquee">
+                <div className="whatdo-overview-marquee-track">
+                  {[...serviceMarquee, ...serviceMarquee].map((item, index) => (
+                    <span key={`${item}-${index}`}>{item}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
             <span className="section-kicker">Service Promise</span>
             <h1 className="section-title">From idea to launch.</h1>
           </article>

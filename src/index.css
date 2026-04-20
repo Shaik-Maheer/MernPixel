@@ -3733,6 +3733,70 @@ main > .section-shell:nth-of-type(even)::before {
   overflow: hidden;
 }
 
+.whatdo-overview-card {
+  min-height: clamp(250px, 38vw, 350px);
+}
+
+.whatdo-overview-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.whatdo-overview-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.55) saturate(0.9) contrast(1.05);
+  transform: scale(1.08);
+}
+
+.whatdo-overview-media-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(39, 185, 255, 0.28), transparent 36%),
+    linear-gradient(180deg, rgba(2, 8, 14, 0.12), rgba(2, 8, 14, 0.64));
+}
+
+.whatdo-overview-marquee {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(39, 185, 255, 0.28);
+  background: linear-gradient(90deg, rgba(2, 8, 14, 0.8), rgba(3, 18, 30, 0.64));
+}
+
+.whatdo-overview-marquee-track {
+  width: max-content;
+  display: flex;
+  gap: 24px;
+  padding: 8px 0;
+  animation: whatdo-overview-marquee-scroll 26s linear infinite;
+}
+
+.whatdo-overview-marquee-track span {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(230, 230, 230, 0.72);
+  white-space: nowrap;
+}
+
+@keyframes whatdo-overview-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 .whatdo-overview-card::before,
 .whatdo-overview-list::before {
   content: '';
