@@ -141,7 +141,6 @@ export default function TeamPage() {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.55, delay: index * 0.08 }}
               whileHover={{ y: -7, scale: 1.01 }}
-              onClick={() => setActiveMember(member)}
             >
               <div className="team-profile-head">
                 <img src={member.photo} alt={member.name} className="team-profile-photo" />
@@ -153,18 +152,9 @@ export default function TeamPage() {
               </div>
 
               <div className="team-profile-actions">
-                <button type="button" className="btn-primary inline-flex">
+                <button type="button" className="btn-primary inline-flex" onClick={() => setActiveMember(member)}>
                   View Details
                 </button>
-                <a
-                  href={member.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn-secondary inline-flex cursor-target"
-                  onClick={(event) => event.stopPropagation()}
-                >
-                  LinkedIn
-                </a>
               </div>
             </MotionArticle>
           ))}
