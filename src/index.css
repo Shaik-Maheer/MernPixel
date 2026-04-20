@@ -6033,13 +6033,13 @@ main > .section-shell:nth-of-type(even)::before {
   }
 }
 
-html.no-page-motion *:not(.intro-wrap):not(.intro-wrap *) {
+html.no-page-motion *:not(.intro-wrap):not(.intro-wrap *):not(.home-capability-marquee):not(.home-capability-marquee *) {
   animation: none !important;
   transition: none !important;
 }
 
-html.no-page-motion *:not(.intro-wrap):not(.intro-wrap *)::before,
-html.no-page-motion *:not(.intro-wrap):not(.intro-wrap *)::after {
+html.no-page-motion *:not(.intro-wrap):not(.intro-wrap *):not(.home-capability-marquee):not(.home-capability-marquee *)::before,
+html.no-page-motion *:not(.intro-wrap):not(.intro-wrap *):not(.home-capability-marquee):not(.home-capability-marquee *)::after {
   animation: none !important;
   transition: none !important;
 }
