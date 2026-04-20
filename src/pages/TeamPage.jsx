@@ -82,7 +82,11 @@ export default function TeamPage() {
           >
             <span className="section-kicker">Team Engine</span>
             <h1 className="section-title">Small team. Serious execution capacity.</h1>
-            <p className="section-copy max-w-none">Design, development, and growth in one execution flow.</p>
+            <p className="section-copy max-w-none">
+              We are all postgraduates. Our team was formed during a hackathon where we won ₹10,000.
+              We did not stop there. We kept building and started MernPixel because we wanted to create
+              something of our own, not just move through different jobs.
+            </p>
           </MotionArticle>
         </div>
       </section>

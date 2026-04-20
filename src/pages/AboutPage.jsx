@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Link } from 'react-router-dom'
 import CountUpNumber from '../components/CountUpNumber'
 import PageEndPromo from '../components/PageEndPromo'
 import { cloudinaryVideos } from '../data/cloudinaryVideos'
@@ -129,7 +128,7 @@ export default function AboutPage() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               >
-                WHAT USERS ACTUALLY CARE ABOUT
+                OUR STORY STARTED IN A HACKATHON
               </MotionHeading>
 
               <MotionParagraph
@@ -138,7 +137,8 @@ export default function AboutPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
               >
-                Speed, clarity, trust, and a smooth path to contact.
+                We are four postgraduates. We formed this team at a hackathon, won ₹10,000, and kept going.
+                Instead of just taking different jobs, we chose to build MernPixel.
               </MotionParagraph>
             </div>
           </section>
@@ -192,16 +192,6 @@ export default function AboutPage() {
                 </Link>
               </motion.article>
             </div>
-          </section>
-
-          <section className="section-shell">
-            <motion.article className="glass-card rounded-3xl p-7 text-center md:p-10">
-              <span className="section-kicker">Need Service Details?</span>
-              <h2 className="section-title">Know More About Our Services</h2>
-              <Link to="/services" className="btn-primary mt-8 inline-flex cursor-target">
-                Open Services Page
-              </Link>
-            </motion.article>
           </section>
 
           <PageEndPromo
