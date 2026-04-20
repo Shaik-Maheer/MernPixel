@@ -6033,13 +6033,17 @@ main > .section-shell:nth-of-type(even)::before {
   }
 }
 
-html.no-motion *,
-html.no-motion *::before,
-html.no-motion *::after {
+html.no-page-motion *:not(.intro-wrap):not(.intro-wrap *) {
   animation: none !important;
   transition: none !important;
 }
 
-html.no-motion {
+html.no-page-motion *:not(.intro-wrap):not(.intro-wrap *)::before,
+html.no-page-motion *:not(.intro-wrap):not(.intro-wrap *)::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+html.no-page-motion {
   scroll-behavior: auto !important;
 }

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import ChatbotWidget from './components/ChatbotWidget'
 import GlobalNav from './components/GlobalNav'
@@ -19,8 +20,15 @@ import TeamPage from './pages/TeamPage'
 function App() {
   const location = useLocation()
   useSmoothScroll(location.pathname)
+  const [completedIntroKey, setCompletedIntroKey] = useState('')
+  const isHome = location.pathname === '/'
+  const showIntro = isHome && completedIntroKey !== location.key
 
-  const showNav = true
+  const showNav = !isHome || !showIntro
+
+  const handleIntroComplete = () => {
+    setCompletedIntroKey(location.key)
+  }
 
   return (
     <div className="relative overflow-hidden">
@@ -31,7 +39,7 @@ function App() {
       <WhatsAppFloat />
 
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePage showIntro={showIntro} onIntroComplete={handleIntroComplete} />} />
         <Route path="/works" element={<PortfolioPage />} />
         <Route path="/services" element={<ITServicesPage />} />
         <Route path="/clients" element={<ClientsPage />} />
