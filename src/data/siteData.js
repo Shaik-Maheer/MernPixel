@@ -1,5 +1,5 @@
 export const business = {
-  name: 'MernPixel',
+  name: 'MERNpixel',
   tagline: 'Not built to impress. Built to perform.',
   url: 'https://mernpixeldev.com',
   email: 'mernpixeldev@gmail.com',
@@ -119,7 +119,7 @@ export const homeProcess = [
 
 export const developmentLab = {
   codeLines: [
-    'const brand = craftIdentity("MernPixel")',
+    'const brand = craftIdentity("MERNpixel")',
     'const ux = mapJourney({ goal: "conversion" })',
     'const ui = composeInterface(brand, ux)',
     'await ship({ ui, speed: "fast", polish: "premium" })',
@@ -135,7 +135,7 @@ export const developmentLab = {
 export const testimonials = [
   {
     name: 'Verified Client 01',
-    quote: 'MernPixel gave our product a premium look and real business clarity.',
+    quote: 'MERNpixel gave our product a premium look and real business clarity.',
   },
   {
     name: 'Verified Client 02',

@@ -45,7 +45,7 @@ export default function BlogPage() {
 
       <PageEndPromo
         eyebrow="Next Section"
-        title="Build With MernPixel"
+        title="Build With MERNpixel"
         description="Let us discuss your requirement."
         to="/contact"
         buttonLabel="Start Conversation"

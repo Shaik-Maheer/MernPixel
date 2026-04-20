@@ -59,7 +59,7 @@ export default function ContactPage() {
   const [leadLinks, setLeadLinks] = useState({ whatsapp: '', mailto: '' })
   const [ripples, setRipples] = useState([])
 
-  const quickMessage = 'Hi Mern Pixel, I would like to discuss a new project requirement. Please connect with me.'
+  const quickMessage = 'Hi MERNpixel, I would like to discuss a new project requirement. Please connect with me.'
   const quickWhatsAppHref = useMemo(
     () => createWhatsAppLeadHref(business.whatsapp, quickMessage),
     [quickMessage]
@@ -97,7 +97,7 @@ export default function ContactPage() {
     }
 
     const lines = [
-      'Hi Mern Pixel Team,',
+      'Hi MERNpixel Team,',
       '',
       'New project inquiry details:',
       `Name: ${formData.name.trim()}`,

@@ -35,7 +35,7 @@ export default function CareersPage() {
     }
 
     const lines = [
-      'Hi Mern Pixel Team,',
+      'Hi MERNpixel Team,',
       '',
       'Talent pool application:',
       `Name: ${formData.name.trim()}`,

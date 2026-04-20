@@ -17,7 +17,7 @@ const secondaryMenuItems = [
   { label: 'What Clients Say', path: '/clients' },
   {
     label: 'Give Feedback',
-    href: 'mailto:mernpixeldev@gmail.com?subject=Feedback%20for%20MernPixel',
+    href: 'mailto:mernpixeldev@gmail.com?subject=Feedback%20for%20MERNpixel',
   },
   { label: 'Careers', path: '/careers' },
 ]

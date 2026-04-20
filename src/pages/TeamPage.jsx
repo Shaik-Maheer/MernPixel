@@ -84,7 +84,7 @@ export default function TeamPage() {
             <h1 className="section-title">Small team. Serious execution capacity.</h1>
             <p className="section-copy max-w-none">
               We are all postgraduates. Our team was formed during a hackathon where we won ₹10,000.
-              We did not stop there. We kept building and started MernPixel because we wanted to create
+              We did not stop there. We kept building and started MERNpixel because we wanted to create
               something of our own, not just move through different jobs.
             </p>
           </MotionArticle>
@@ -121,7 +121,7 @@ export default function TeamPage() {
               transition={{ duration: 0.65, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
             >
               <p className="team-cinema-copy-title">Builders. Designers. Problem Solvers.</p>
-              <p className="team-cinema-copy-subtitle">The minds behind Mern Pixel.</p>
+              <p className="team-cinema-copy-subtitle">The minds behind MERNpixel.</p>
             </MotionDiv>
           </MotionDiv>
         </div>
@@ -129,7 +129,7 @@ export default function TeamPage() {
 
       <section className="section-shell pt-0">
         <span className="section-kicker">Core Crew</span>
-        <h2 className="section-title">Meet The 4 People Behind Mern Pixel</h2>
+        <h2 className="section-title">Meet The 4 People Behind MERNpixel</h2>
 
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           {coreCrew.map((member, index) => (

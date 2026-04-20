@@ -138,7 +138,7 @@ export default function AboutPage() {
                 transition={{ duration: 0.7, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
               >
                 We are four postgraduates. We formed this team at a hackathon, won ₹10,000, and kept going.
-                Instead of just taking different jobs, we chose to build MernPixel.
+                Instead of just taking different jobs, we chose to build MERNpixel.
               </MotionParagraph>
             </div>
           </section>

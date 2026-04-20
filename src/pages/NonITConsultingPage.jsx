@@ -46,7 +46,7 @@ export default function NonITConsultingPage() {
     }
 
     const lines = [
-      'Hi Mern Pixel Team,',
+      'Hi MERNpixel Team,',
       '',
       'Non-IT hiring requirement:',
       `Company: ${form.company.trim()}`,

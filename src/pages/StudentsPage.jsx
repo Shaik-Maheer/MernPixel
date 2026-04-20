@@ -30,7 +30,7 @@ export default function StudentsPage() {
     }
 
     const lines = [
-      'Hi Mern Pixel Team,',
+      'Hi MERNpixel Team,',
       '',
       'Student project request:',
       `Name: ${projectForm.name.trim()}`,

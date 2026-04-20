@@ -4,7 +4,7 @@ import { sendChatMessage } from '../lib/chatApi'
 
 const initialMessage = {
   role: 'assistant',
-  content: 'Hi, I am the MernPixel assistant. How can I help with your project today?',
+  content: 'Hi, I am the MERNpixel assistant. How can I help with your project today?',
 }
 
 export default function ChatbotWidget() {
@@ -94,7 +94,7 @@ export default function ChatbotWidget() {
           transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
         >
           <header className="chat-panel-head">
-            <p className="chat-panel-title">MernPixel Assistant</p>
+            <p className="chat-panel-title">MERNpixel Assistant</p>
             <p className="chat-panel-subtitle">Instant project guidance</p>
           </header>
 
