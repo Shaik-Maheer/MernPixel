@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import ChatbotWidget from './components/ChatbotWidget'
 import GlobalNav from './components/GlobalNav'
 import PixelSignature from './components/PixelSignature'
+import SiteFooter from './components/SiteFooter'
 import WhatsAppFloat from './components/WhatsAppFloat'
 import useSmoothScroll from './hooks/useSmoothScroll'
 import AboutPage from './pages/AboutPage'
@@ -25,6 +26,7 @@ function App() {
   const showIntro = isHome && completedIntroKey !== location.key
 
   const showNav = !isHome || !showIntro
+  const showFooter = !isHome || !showIntro
 
   const handleIntroComplete = () => {
     setCompletedIntroKey(location.key)
@@ -54,6 +56,8 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+
+      {showFooter && <SiteFooter />}
     </div>
   )
 }
