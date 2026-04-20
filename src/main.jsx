@@ -4,6 +4,8 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
 
+document.documentElement.classList.add('no-motion')
+
 createRoot(document.getElementById('root')).render(
   <MotionConfig reducedMotion="always">
     <BrowserRouter>

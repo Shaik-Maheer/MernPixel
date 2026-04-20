@@ -6032,3 +6032,14 @@ main > .section-shell:nth-of-type(even)::before {
     font-size: 0.92rem;
   }
 }
+
+html.no-motion *,
+html.no-motion *::before,
+html.no-motion *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+html.no-motion {
+  scroll-behavior: auto !important;
+}
