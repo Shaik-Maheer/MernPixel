@@ -178,7 +178,7 @@ export default function AboutPage() {
                 <p className="about-reel-tagline">We Don&apos;t Just Build. We Elevate.</p>
               </motion.div>
 
-              <motion.article className="glass-card rounded-3xl p-7 md:p-9">
+              <motion.article className="glass-card about-reel-card rounded-3xl p-7 md:p-9">
                 <p className="text-xs uppercase tracking-[0.22em] text-white/58">Studio Reel</p>
                 <h2 className="mt-3 font-['Cinzel'] text-4xl text-white md:text-5xl">How We Build</h2>
 
@@ -188,7 +188,7 @@ export default function AboutPage() {
                   ))}
                 </div>
 
-                <Link to="/team" className="btn-primary mt-8 inline-flex cursor-target">
+                <Link to="/team" className="btn-primary about-reel-cta mt-8 inline-flex cursor-target">
                   Open Our Team
                 </Link>
               </motion.article>
