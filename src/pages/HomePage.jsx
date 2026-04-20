@@ -1,27 +1,12 @@
-import { useCallback } from 'react'
 import { motion } from 'framer-motion'
-import IntroSequence from '../components/IntroSequence'
 import { capabilityMarquee } from '../data/siteData'
 
-export default function HomePage({ showIntro, onIntroComplete }) {
+export default function HomePage() {
   const MotionHeading = motion.h1
   const MotionParagraph = motion.p
 
-  const handleIntroDone = useCallback(() => {
-    onIntroComplete?.()
-
-    window.setTimeout(() => {
-      const home = document.getElementById('home')
-      if (home) {
-        home.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }
-    }, 240)
-  }, [onIntroComplete])
-
   return (
     <>
-      {showIntro && <IntroSequence onDone={handleIntroDone} />}
-
       <main id="home" className="relative">
         <section className="home-hero home-hero-minimal relative flex min-h-screen items-center overflow-hidden">
           <div className="home-hero-particles" aria-hidden>
