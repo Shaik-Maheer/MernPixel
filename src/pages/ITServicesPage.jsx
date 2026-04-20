@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import PageEndPromo from '../components/PageEndPromo'
 import PageIntroHero from '../components/PageIntroHero'
+import { cloudinaryVideos } from '../data/cloudinaryVideos'
 
 const services = [
   {
@@ -94,6 +95,7 @@ export default function ITServicesPage() {
       <PageIntroHero
         title="WHAT WE DO"
         subtitle="Digital services for design, build, and growth."
+        videoSrc={cloudinaryVideos.gridRubikSoft}
         compact
       />
 
