@@ -113,7 +113,7 @@ export default function PortfolioPage() {
         title="Your Brand Could Be Featured Here"
         description="Bring your idea. We will build it."
         to="/contact"
-        buttonLabel="Start Your Project 🚀"
+        buttonLabel="Start Your Project"
       />
     </main>
   )

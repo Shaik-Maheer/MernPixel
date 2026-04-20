@@ -183,7 +183,7 @@ export default function ITServicesPage() {
           <h2 className="font-['Cinzel'] text-4xl text-white md:text-6xl">Let&apos;s Build Something Together</h2>
 
           <Link to="/contact" className="btn-primary mt-8 inline-flex cursor-target">
-            Start Your Project 🚀
+            Start Your Project
           </Link>
         </motion.article>
       </section>
