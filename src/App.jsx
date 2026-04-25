@@ -12,6 +12,7 @@ import ClientsPage from './pages/ClientsPage'
 import ContactPage from './pages/ContactPage'
 import HomePage from './pages/HomePage'
 import ITServicesPage from './pages/ITServicesPage'
+import ServiceDetailPage from './pages/ServiceDetailPage'
 import NonITConsultingPage from './pages/NonITConsultingPage'
 import PortfolioPage from './pages/PortfolioPage'
 import PricingPage from './pages/PricingPage'
@@ -39,6 +40,7 @@ function App() {
               <Routes location={location}>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/services" element={<ITServicesPage />} />
+                <Route path="/services/:id" element={<ServiceDetailPage />} />
                 <Route path="/it-services" element={<ITServicesPage />} />
                 <Route path="/pricing" element={<PricingPage />} />
                 <Route path="/non-it-consulting" element={<NonITConsultingPage />} />
@@ -46,7 +48,7 @@ function App() {
                 <Route path="/works" element={<PortfolioPage />} />
                 <Route path="/portfolio" element={<PortfolioPage />} />
                 <Route path="/clients" element={<ClientsPage />} />
-                <Route path="/team" element={<TeamPage />} />
+                <Route path="/team" element={<Navigate to="/about" replace />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/blog" element={<BlogPage />} />
                 <Route path="/careers" element={<CareersPage />} />

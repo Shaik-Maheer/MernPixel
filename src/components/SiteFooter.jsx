@@ -5,7 +5,7 @@ import { business, socialLinks } from '../data/siteData'
 const quickLinks = [
   { label: 'Services', path: '/services' },
   { label: 'Work', path: '/works' },
-  { label: 'Team', path: '/team' },
+  { label: 'About', path: '/about' },
   { label: 'Careers', path: '/careers' },
   { label: 'Contact', path: '/contact' },
 ]
@@ -30,18 +30,18 @@ export default function SiteFooter() {
               Not built to impress. Built to perform. We design and engineer products that move metrics.
             </p>
             
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors"
+                  className="hover:-translate-y-1 transition-transform opacity-90 hover:opacity-100 block drop-shadow-sm"
                   aria-label={social.label}
                   title={social.label}
                 >
-                  <SocialIcon network={social.icon} className="w-4 h-4" />
+                  <SocialIcon network={social.icon} className="w-8 h-8" />
                 </a>
               ))}
             </div>

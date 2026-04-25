@@ -1,7 +1,6 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { servicesDetailed } from '../data/siteData'
-import ServiceModal from '../components/ServiceModal'
 
 const reveal = {
   hidden: { opacity: 0, y: 30 },
@@ -9,8 +8,6 @@ const reveal = {
 }
 
 export default function ITServicesPage() {
-  const [activeService, setActiveService] = useState(null)
-
   return (
     <main className="min-h-screen bg-[#F5F6F8] pb-10 pt-32 relative overflow-hidden">
       
@@ -37,31 +34,31 @@ export default function ITServicesPage() {
         <div className="relative z-30 -mt-24 md:-mt-32 px-4 xs:px-6 sm:px-12">
           {/* We use grid to create the 3 columns, gap-6 like the design */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {servicesDetailed.map((service, i) => (
-              <div 
-                key={i}
-                onClick={() => setActiveService(service)}
-                className="bg-white rounded-xl shadow-[0_15px_40px_rgba(0,0,0,0.06)] px-6 pt-12 pb-10 text-center relative cursor-pointer hover:-translate-y-2 transition-transform duration-300 group flex flex-col items-center"
-              >
-                {/* Floating Black Icon Block */}
-                <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 bg-[#1a1a1a] rounded-[0.75rem] flex items-center justify-center text-white text-2xl shadow-lg transition-transform duration-300 group-hover:scale-110">
-                  {service.icon}
-                </div>
-                
-                {/* Card Content exactly like design */}
-                <h3 className="text-lg font-bold text-[#1a1a1a] mb-4">
-                  {service.title}
-                </h3>
-                
-                <p className="text-[13px] text-[#888888] mb-8 leading-[1.8] line-clamp-4 max-w-[220px]">
-                  {service.description}
-                </p>
-                
-                {/* Bold standard text link MORE */}
-                <div className="mt-auto font-bold text-[12px] text-[#1a1a1a] border-b-[2px] border-transparent hover:border-[#1a1a1a] pb-0.5 tracking-widest transition-colors duration-300">
-                  MORE
-                </div>
-              </div>
+            {servicesDetailed.map((service) => (
+                <Link 
+                  key={service.id}
+                  to={`/services/${service.id}`}
+                  className="bg-white rounded-xl shadow-[0_15px_40px_rgba(0,0,0,0.06)] px-6 pt-12 pb-10 text-center relative cursor-pointer hover:-translate-y-2 transition-transform duration-300 group flex flex-col items-center border border-transparent hover:border-blue-100"
+                >
+                  {/* Floating Black Icon Block */}
+                  <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 bg-[#1a1a1a] rounded-[0.75rem] flex items-center justify-center text-white text-2xl shadow-lg transition-transform duration-300 group-hover:scale-110">
+                    {service.icon}
+                  </div>
+                  
+                  {/* Card Content exactly like design */}
+                  <h3 className="text-lg font-bold text-[#1a1a1a] mb-4">
+                    {service.title}
+                  </h3>
+                  
+                  <p className="text-[13px] text-[#888888] mb-8 leading-[1.8] line-clamp-4 max-w-[220px]">
+                    {service.description}
+                  </p>
+                  
+                  {/* Bold standard text link MORE */}
+                  <div className="mt-auto font-bold text-[12px] text-[#1a1a1a] border-b-[2px] border-transparent group-hover:border-[#1a1a1a] pb-0.5 tracking-widest transition-colors duration-300">
+                    EXPLORE
+                  </div>
+                </Link>
             ))}
           </div>
         </div>
@@ -92,8 +89,6 @@ export default function ITServicesPage() {
           </motion.div>
         </div>
       </section>
-
-      <ServiceModal service={activeService} onClose={() => setActiveService(null)} />
 
     </main>
   )
