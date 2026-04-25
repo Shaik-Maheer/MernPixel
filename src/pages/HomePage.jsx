@@ -113,23 +113,21 @@ export default function HomePage() {
               <motion.article
                 onClick={() => setActiveService(service)}
                 key={service.id}
-                className="group relative bg-white border border-slate-200 rounded-3xl p-6 shadow-sm overflow-hidden transition-all duration-300 hover:border-transparent hover:shadow-lg flex flex-col isolate cursor-pointer hover:-translate-y-1"
+                className="group relative bg-white hover:bg-[#EBFDF1] border border-slate-200 hover:border-[#A7F3D0] rounded-3xl p-6 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-lg flex flex-col isolate cursor-pointer hover:-translate-y-1"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
                 variants={reveal}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
               >
-                {/* Hover Gradient Background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
                 
-                <div className="w-12 h-12 rounded-2xl bg-slate-100/80 flex items-center justify-center text-slate-700 mb-6 text-xl group-hover:bg-white/20 group-hover:text-white transition-colors duration-300">
+                <div className="w-12 h-12 rounded-2xl bg-slate-100/80 group-hover:bg-white flex items-center justify-center text-slate-700 group-hover:text-emerald-600 mb-6 text-xl transition-colors duration-300">
                   {service.icon}
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 group-hover:text-white mb-2 transition-colors duration-300">{service.title}</h3>
-                <p className="text-sm text-slate-500 group-hover:text-white/90 leading-relaxed transition-colors duration-300 flex-grow mb-4">{service.description}</p>
+                <h3 className="text-lg font-bold text-slate-900 mb-2">{service.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed flex-grow mb-4">{service.description}</p>
                 
-                <div className="mt-auto flex items-center text-xs font-bold text-slate-900 group-hover:text-white transition-colors duration-300">
+                <div className="mt-auto flex items-center text-xs font-bold text-slate-900 group-hover:text-emerald-600 transition-colors duration-300">
                   View more 
                   <span className="ml-1 mt-0.5 group-hover:translate-x-1 hover:translate-y-0 transition-transform">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>

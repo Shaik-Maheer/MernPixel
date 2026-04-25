@@ -50,31 +50,29 @@ export default function ITServicesPage() {
               <motion.article
                 onClick={() => setActiveService(service)}
                 key={service.id}
-                className="group relative bg-white border border-slate-200 rounded-[2rem] p-8 shadow-sm overflow-hidden transition-all duration-300 hover:border-transparent hover:shadow-lg flex flex-col items-start isolate cursor-pointer min-h-[260px] hover:-translate-y-1"
+                className="group relative bg-white hover:bg-[#EBFDF1] border border-slate-200 hover:border-[#A7F3D0] rounded-[2rem] p-8 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-lg flex flex-col items-start isolate cursor-pointer min-h-[260px] hover:-translate-y-1"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
                 variants={reveal}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
               >
-                {/* Hover Gradient Background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
                 
-                <div className="w-14 h-14 shrink-0 rounded-2xl bg-slate-100/80 flex items-center justify-center text-slate-700 text-2xl group-hover:bg-white/20 group-hover:text-white transition-colors duration-300 mb-6">
+                <div className="w-14 h-14 shrink-0 rounded-2xl bg-slate-100/80 group-hover:bg-white flex items-center justify-center text-slate-700 group-hover:text-emerald-600 text-2xl transition-colors duration-300 mb-6">
                   {service.icon}
                 </div>
 
                 <div className="flex flex-col h-full w-full">
-                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-white mb-2 transition-colors duration-300">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">
                     {service.title}
                   </h3>
-                  <p className="text-[15px] font-medium text-slate-500 group-hover:text-white/90 leading-relaxed transition-colors duration-300 mb-8">
+                  <p className="text-[15px] font-medium text-slate-500 leading-relaxed mb-8">
                     {service.description}
                   </p>
                   
-                  <div className="mt-auto flex items-center text-sm font-bold text-slate-900 group-hover:text-white transition-colors duration-300">
+                  <div className="mt-auto flex items-center text-sm font-bold text-slate-900 group-hover:text-emerald-600 transition-colors duration-300">
                     View more 
-                    <span className="ml-2 mt-0.5 group-hover:translate-y-1 transition-transform">
+                    <span className="ml-2 mt-0.5 group-hover:translate-x-1 transition-transform">
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                       </svg>
