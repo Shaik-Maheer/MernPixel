@@ -1,5 +1,6 @@
-import { useParams, Navigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { useParams, Navigate, Link } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 import { servicesDetailed, business } from '../data/siteData'
 
 // React Official Icon
@@ -14,7 +15,7 @@ const ReactIcon = () => (
   </svg>
 )
 
-// Python Official Icon (simplified shape)
+// Python Official Icon
 const PythonIcon = () => (
   <svg width="100%" height="100%" viewBox="0 0 118 118" xmlns="http://www.w3.org/2000/svg">
     <path fill="#3776AB" d="M58.33 5.4c-28.53 0-27.24 12.35-27.24 12.35l.03 12.72h27.76v3.94H30.43s-12.7.72-12.7 18.3c0 17.58 11.23 19.34 11.23 19.34l10.1-.02.02 14.4s-1.04 12.06 17.65 12.33c19.16.27 18.67-11.75 18.67-11.75l-.04-8.86-27.2.03s-3.7-.13-3.7-3.95c0-3.8 3.72-3.8 3.72-3.8h17.92s9.26-.53 9.26-10.94V38.1s2.25-10.05-18.04-10.05v-10.3s1.26-12.35-27.4-12.35zm-9.35 8.9c3 0 5.4 2.45 5.4 5.48s-2.4 5.47-5.4 5.47-5.42-2.43-5.42-5.45c0-3.03 2.44-5.5 5.42-5.5z"/>
@@ -37,6 +38,66 @@ const NodeIcon = () => (
   </svg>
 )
 
+const FAQAccordion = ({ faqs }) => {
+  const [openIndex, setOpenIndex] = useState(null)
+  
+  return (
+    <div className="w-full space-y-4">
+      {faqs.map((faq, i) => (
+         <div key={i} className="border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm">
+           <button 
+             className="w-full text-left px-8 py-5 flex justify-between items-center bg-white hover:bg-slate-50 transition-colors"
+             onClick={() => setOpenIndex(openIndex === i ? null : i)}
+           >
+             <span className="font-extrabold text-slate-800 text-lg">{faq.q}</span>
+             <span className={`text-2xl text-blue-500 transition-transform ${openIndex === i ? 'rotate-45' : ''}`}>+</span>
+           </button>
+           <AnimatePresence>
+             {openIndex === i && (
+               <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }} exit={{ height: 0 }} className="overflow-hidden">
+                 <div className="px-8 pb-6 pt-2 text-slate-600 font-medium leading-relaxed">
+                   {faq.a}
+                 </div>
+               </motion.div>
+             )}
+           </AnimatePresence>
+         </div>
+      ))}
+    </div>
+  )
+}
+
+const getFaqsByService = (id) => {
+  const common = [
+    { q: 'How long does a typical engagement last?', a: 'Depending on complexity, standard projects ship in 2-4 weeks, while complex full-stack applications run 6-12 weeks.' },
+    { q: 'Will I have direct access to the developers?', a: 'Absolutely. We don\'t use account managers. You speak directly with the engineers and designers building your product.' },
+    { q: 'Do you offer post-launch support?', a: 'Yes! Every project includes a warranty period, and we offer long-term retainers for feature scaling.' }
+  ]
+  const serviceFaqs = {
+    'web-dev': [
+      { q: 'What tech stack do you use?', a: 'We primarily build with React, Tailwind CSS, Express, and MongoDB for scalable, blazing-fast web experiences.' },
+      { q: 'Can you migrate my old PHP/WordPress site?', a: 'Yes, we frequently modernize legacy stacks into high-performance headless architecture.' }
+    ],
+    'ecommerce': [
+      { q: 'Do you integrate with local payment gateways?', a: 'Yes, we integrate Razorpay, Stripe, PhonePe, and PayPal seamlessly.' }
+    ],
+    'app-dev': [
+      { q: 'Are your apps native or cross-platform?', a: 'We build primarily using React Native to ensure seamless deployment across iOS and Android from a single codebase.' }
+    ],
+    'marketing': [
+      { q: 'Do you guarantee ROI?', a: 'We guarantee a pure, data-driven methodology that maximizes ad-spend and SEO potential, but market variables dictate final numbers.' }
+    ],
+    'academic-projects': [
+      { q: 'Will you explain the codebase to me?', a: 'Yes! We don\'t just hand off code. We conduct extensive walk-throughs so you can confidently present your project.' },
+      { q: 'Do you write the project synopsis/report?', a: 'We provide comprehensive architectural documentation and college-formatted PPTs to ensure you ace your presentation.' }
+    ],
+    'guest-lectures': [
+      { q: 'What is the structure of a typical session?', a: 'Our sessions are highly interactive with zero boring slides. We live-code, do deep resume reviews, and teach tangible startup iteration skills.' }
+    ]
+  }
+  return [...(serviceFaqs[id] || []), ...common].slice(0, 4)
+}
+
 export default function ServiceDetailPage() {
   const { id } = useParams()
   const service = servicesDetailed.find(s => s.id === id)
@@ -46,45 +107,67 @@ export default function ServiceDetailPage() {
   }
 
   const renderHeroVisual = () => {
-    // Academic Projects -> 2 Columns highlighting Major/Minor details
+    // Academic Projects 
     if (service.id === 'academic-projects') {
       return (
-        <div className="w-full max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mb-20 relative z-20">
-          <div className="bg-white p-10 rounded-3xl shadow-xl border border-slate-100 hover:-translate-y-2 transition-transform">
-             <h3 className="text-3xl font-extrabold text-[#1877F2] mb-6">Major Projects</h3>
-             <ul className="space-y-4 text-slate-700">
-               <li className="flex items-start gap-3"><span className="text-blue-500 font-bold mt-1">✓</span><span className="font-medium text-lg leading-relaxed">Full stack application engineering</span></li>
-               <li className="flex items-start gap-3"><span className="text-blue-500 font-bold mt-1">✓</span><span className="font-medium text-lg leading-relaxed">Database architecture and planning</span></li>
-               <li className="flex items-start gap-3"><span className="text-blue-500 font-bold mt-1">✓</span><span className="font-medium text-lg leading-relaxed">Production deployment strategies</span></li>
-               <li className="flex items-start gap-3"><span className="text-blue-500 font-bold mt-1">✓</span><span className="font-medium text-lg leading-relaxed">Comprehensive code documentation</span></li>
-             </ul>
-          </div>
-          <div className="bg-white p-10 rounded-3xl shadow-xl border border-slate-100 hover:-translate-y-2 transition-transform">
-             <h3 className="text-3xl font-extrabold text-[#00B7B5] mb-6">Minor Projects</h3>
-             <ul className="space-y-4 text-slate-700">
-               <li className="flex items-start gap-3"><span className="text-emerald-500 font-bold mt-1">✓</span><span className="font-medium text-lg leading-relaxed">Core algorithm implementation</span></li>
-               <li className="flex items-start gap-3"><span className="text-emerald-500 font-bold mt-1">✓</span><span className="font-medium text-lg leading-relaxed">Frontend UI/UX mockups & design</span></li>
-               <li className="flex items-start gap-3"><span className="text-emerald-500 font-bold mt-1">✓</span><span className="font-medium text-lg leading-relaxed">API integrations and isolated testing</span></li>
-               <li className="flex items-start gap-3"><span className="text-emerald-500 font-bold mt-1">✓</span><span className="font-medium text-lg leading-relaxed">Concept validation and presentation prep</span></li>
-             </ul>
+        <div className="relative w-full max-w-4xl mx-auto h-[350px] flex items-center justify-center mb-24 z-20">
+          <motion.div animate={{ y: [0, -15, 0] }} transition={{ repeat: Infinity, duration: 4 }} className="absolute top-10 left-10 md:left-20 bg-[#1877F2] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">Source Code</motion.div>
+          <motion.div animate={{ y: [0, 20, 0] }} transition={{ repeat: Infinity, duration: 5, delay: 1 }} className="absolute bottom-10 left-[10%] bg-[#D349A1] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">Detailed PPT</motion.div>
+          <motion.div animate={{ y: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 6, delay: 2 }} className="absolute top-16 right-10 md:right-24 bg-[#00B7B5] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">College Formats</motion.div>
+          <motion.div animate={{ y: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 0.5 }} className="absolute bottom-16 right-[15%] bg-[#018790] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">Live Explanation</motion.div>
+          
+          <div className="w-32 h-32 md:w-40 md:h-40 bg-slate-900 rounded-[2rem] flex items-center justify-center text-white text-6xl shadow-2xl z-20 ring-4 ring-white border-4 border-slate-100">
+            🎓
           </div>
         </div>
       )
     }
 
-    // Logo Branding -> No functionality/visual requested
+    // Guest Lectures 
+    if (service.id === 'guest-lectures') {
+      return (
+        <div className="relative w-full max-w-4xl mx-auto h-[350px] flex items-center justify-center mb-24 z-20">
+          <motion.div animate={{ y: [0, -15, 0] }} transition={{ repeat: Infinity, duration: 4 }} className="absolute top-10 left-10 md:left-20 bg-[#1877F2] text-white font-extrabold tracking-widest py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">4 Friends -&gt; Startup</motion.div>
+          <motion.div animate={{ y: [0, 20, 0] }} transition={{ repeat: Infinity, duration: 5, delay: 1 }} className="absolute bottom-10 left-[5%] bg-[#D349A1] text-white font-extrabold tracking-widest py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">Won Hackathon</motion.div>
+          <motion.div animate={{ y: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 6, delay: 2 }} className="absolute top-16 right-5 md:right-10 bg-[#00B7B5] text-white font-extrabold tracking-widest py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">Tech + Business</motion.div>
+          <motion.div animate={{ y: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 0.5 }} className="absolute bottom-16 right-[10%] bg-[#018790] text-white font-extrabold tracking-widest py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">"Give Job, Not Get Job"</motion.div>
+          
+          <div className="w-32 h-32 md:w-40 md:h-40 bg-slate-900 rounded-[2rem] flex items-center justify-center text-white text-6xl shadow-2xl z-20 ring-4 ring-white border-4 border-slate-100">
+            🎤
+          </div>
+        </div>
+      )
+    }
+
+    // Logo Branding
     if (service.id === 'branding') {
       return <div className="mb-0"></div>
     }
 
-    // E-commerce -> Floating bubbles in a section (no solar system)
+    // E-commerce 
     if (service.id === 'ecommerce') {
       return (
         <div className="relative w-full max-w-4xl mx-auto h-[350px] flex items-center justify-center mb-24 z-20">
-          <motion.div animate={{ y: [0, -15, 0] }} transition={{ repeat: Infinity, duration: 4 }} className="absolute top-10 left-10 md:left-20 bg-[#1877F2] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm">UI / UX</motion.div>
-          <motion.div animate={{ y: [0, 20, 0] }} transition={{ repeat: Infinity, duration: 5, delay: 1 }} className="absolute bottom-10 left-[10%] bg-[#D349A1] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm">Wishlist & Auth</motion.div>
-          <motion.div animate={{ y: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 6, delay: 2 }} className="absolute top-16 right-10 md:right-24 bg-[#00B7B5] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm">Cart & Checkout</motion.div>
-          <motion.div animate={{ y: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 0.5 }} className="absolute bottom-16 right-[15%] bg-[#018790] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm">Products API</motion.div>
+          <motion.div animate={{ y: [0, -15, 0] }} transition={{ repeat: Infinity, duration: 4 }} className="absolute top-10 left-10 md:left-20 bg-[#1877F2] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">UI / UX</motion.div>
+          <motion.div animate={{ y: [0, 20, 0] }} transition={{ repeat: Infinity, duration: 5, delay: 1 }} className="absolute bottom-10 left-[10%] bg-[#D349A1] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">Wishlist & Auth</motion.div>
+          <motion.div animate={{ y: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 6, delay: 2 }} className="absolute top-16 right-10 md:right-24 bg-[#00B7B5] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">Cart & Checkout</motion.div>
+          <motion.div animate={{ y: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 0.5 }} className="absolute bottom-16 right-[15%] bg-[#018790] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">Products API</motion.div>
+          
+          <div className="w-32 h-32 md:w-40 md:h-40 bg-slate-900 rounded-[2rem] flex items-center justify-center text-white text-6xl shadow-2xl z-20 ring-4 ring-white border-4 border-slate-100">
+            {service.icon}
+          </div>
+        </div>
+      )
+    }
+
+    // Digital Marketing
+    if (service.id === 'marketing') {
+      return (
+        <div className="relative w-full max-w-4xl mx-auto h-[350px] flex items-center justify-center mb-24 z-20">
+          <motion.div animate={{ y: [0, -15, 0] }} transition={{ repeat: Infinity, duration: 4 }} className="absolute top-10 left-10 md:left-20 bg-[#1877F2] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">SEO Optimization</motion.div>
+          <motion.div animate={{ y: [0, 20, 0] }} transition={{ repeat: Infinity, duration: 5, delay: 1 }} className="absolute bottom-10 left-[10%] bg-[#D349A1] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">Paid Ads Clicks</motion.div>
+          <motion.div animate={{ y: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 6, delay: 2 }} className="absolute top-16 right-10 md:right-24 bg-[#00B7B5] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">Insta Management</motion.div>
+          <motion.div animate={{ y: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 0.5 }} className="absolute bottom-16 right-[15%] bg-[#018790] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">Online Presence</motion.div>
           
           <div className="w-32 h-32 md:w-40 md:h-40 bg-slate-900 rounded-[2rem] flex items-center justify-center text-white text-6xl shadow-2xl z-20 ring-4 ring-white border-4 border-slate-100">
             {service.icon}
@@ -97,62 +180,26 @@ export default function ServiceDetailPage() {
     if (service.id === 'web-dev' || service.id === 'app-dev') {
       return (
         <div className="relative w-[320px] h-[320px] md:w-[460px] md:h-[460px] flex items-center justify-center mb-32 z-20">
-           {/* Center Core */}
            <div className="absolute w-28 h-28 md:w-32 md:h-32 bg-slate-900 rounded-full shadow-[0_0_60px_rgba(0,0,0,0.15)] flex items-center justify-center text-white text-5xl z-20 ring-8 ring-white">
              {service.icon}
            </div>
 
-           {/* Orbit Rings */}
            <div className="absolute w-[220px] h-[220px] md:w-[300px] md:h-[300px] border border-slate-200 rounded-full shadow-inner"></div>
            <div className="absolute w-[320px] h-[320px] md:w-[460px] md:h-[460px] border border-slate-100 rounded-full shadow-inner"></div>
            
-           {/* Inner Revolving Container */}
-           <motion.div 
-              className="absolute w-[220px] h-[220px] md:w-[300px] md:h-[300px]"
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-           >
-              {/* React */}
-              <motion.div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-slate-900 shadow-[0_8px_20px_rgba(0,0,0,0.2)] flex items-center justify-center p-2.5" animate={{ rotate: -360 }} transition={{ repeat: Infinity, duration: 20, ease: "linear" }}>
-                <ReactIcon />
-              </motion.div>
-              {/* Node */}
-              <motion.div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-slate-900 shadow-[0_8px_20px_rgba(0,0,0,0.2)] flex items-center justify-center p-2.5" animate={{ rotate: -360 }} transition={{ repeat: Infinity, duration: 20, ease: "linear" }}>
-                <NodeIcon />
-              </motion.div>
+           <motion.div className="absolute w-[220px] h-[220px] md:w-[300px] md:h-[300px]" animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 20, ease: "linear" }}>
+              <motion.div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-slate-900 shadow-[0_8px_20px_rgba(0,0,0,0.2)] flex items-center justify-center p-2.5" animate={{ rotate: -360 }} transition={{ repeat: Infinity, duration: 20, ease: "linear" }}><ReactIcon /></motion.div>
+              <motion.div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-slate-900 shadow-[0_8px_20px_rgba(0,0,0,0.2)] flex items-center justify-center p-2.5" animate={{ rotate: -360 }} transition={{ repeat: Infinity, duration: 20, ease: "linear" }}><NodeIcon /></motion.div>
            </motion.div>
 
-           {/* Outer Revolving Container */}
-           <motion.div 
-              className="absolute w-[320px] h-[320px] md:w-[460px] md:h-[460px]"
-              animate={{ rotate: -360 }}
-              transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
-           >
-              {/* JS */}
-              <motion.div className="absolute top-1/2 -left-7 -translate-y-1/2 w-14 h-14 rounded-full bg-slate-900 shadow-[0_8px_20px_rgba(0,0,0,0.2)] flex items-center justify-center p-3" animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 30, ease: "linear" }}>
-                <JSIcon />
-              </motion.div>
-              {/* Python */}
-              <motion.div className="absolute top-1/2 -right-7 -translate-y-1/2 w-14 h-14 rounded-full bg-slate-900 shadow-[0_8px_20px_rgba(0,0,0,0.2)] flex items-center justify-center p-3" animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 30, ease: "linear" }}>
-                <PythonIcon />
-              </motion.div>
+           <motion.div className="absolute w-[320px] h-[320px] md:w-[460px] md:h-[460px]" animate={{ rotate: -360 }} transition={{ repeat: Infinity, duration: 30, ease: "linear" }}>
+              <motion.div className="absolute top-1/2 -left-7 -translate-y-1/2 w-14 h-14 rounded-full bg-slate-900 shadow-[0_8px_20px_rgba(0,0,0,0.2)] flex items-center justify-center p-3" animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 30, ease: "linear" }}><JSIcon /></motion.div>
+              <motion.div className="absolute top-1/2 -right-7 -translate-y-1/2 w-14 h-14 rounded-full bg-slate-900 shadow-[0_8px_20px_rgba(0,0,0,0.2)] flex items-center justify-center p-3" animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 30, ease: "linear" }}><PythonIcon /></motion.div>
            </motion.div>
         </div>
       )
     }
 
-    // Marketing Visual
-    if (service.id === 'marketing') {
-      return (
-        <div className="w-full max-w-5xl mx-auto mb-28 z-20 relative">
-          <div className="w-full h-[350px] md:h-[500px] rounded-[2rem] overflow-hidden shadow-2xl ring-1 ring-slate-200">
-            <img src="/marketing_hero.png" alt="Digital Marketing" className="w-full h-full object-cover" />
-          </div>
-        </div>
-      )
-    }
-
-    // Default Fallback (Talent hiring, Consulting, etc.) -> Generate Image
     return (
       <div className="w-full max-w-5xl mx-auto mb-28 z-20 relative flex justify-center">
         <div className="w-full h-[350px] md:h-[550px] rounded-[2rem] overflow-hidden shadow-2xl ring-4 ring-slate-100">
@@ -162,22 +209,20 @@ export default function ServiceDetailPage() {
     )
   }
 
+  const faqs = getFaqsByService(service.id)
+
   return (
-    <main className="min-h-screen pt-32 pb-32 font-sans overflow-hidden">
+    <main className="min-h-screen pt-32 pb-32 font-sans overflow-hidden bg-[#fafafa]">
       
-      {/* Dynamic HERO SECTION */}
       <section className="relative w-full max-w-6xl mx-auto px-6 mb-16 flex flex-col items-center">
         <div className="text-center mb-24 relative z-10 mt-10">
           <span className="text-[13px] font-bold text-blue-600 uppercase tracking-widest mb-4 block">Service Detail</span>
           <h1 className="text-5xl md:text-[5rem] font-extrabold text-slate-900 tracking-tight leading-[1] max-w-4xl mx-auto">{service.title}</h1>
           <div className="mt-8 border border-slate-200 bg-white rounded-full px-8 py-3 text-slate-600 font-bold inline-flex shadow-sm text-[15px]">{service.description}</div>
         </div>
-
-        {/* Morphing Visual Logic */}
         {renderHeroVisual()}
       </section>
 
-      {/* PROBLEM / SOLUTION */}
       <section className="py-24 mb-10">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
@@ -196,19 +241,51 @@ export default function ServiceDetailPage() {
               <p className="text-[22px] md:text-[26px] text-slate-800 leading-relaxed font-bold tracking-tight">We engineer targeted solutions from the ground up, prioritizing extreme execution speed, scalable architecture, and tangible metrics.</p>
             </div>
           </div>
-          
-          <div className="mt-20 pt-16 border-t border-slate-200">
-            <h3 className="text-xl font-extrabold text-slate-900 mb-8 text-center">{service.title} Capabilities</h3>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {service.features?.map((feat, i) => (
-                <li key={i} className="flex items-start gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:-translate-y-1 transition-transform">
-                  <span className="text-blue-500 font-bold bg-blue-50 w-6 h-6 rounded-full flex items-center justify-center shrink-0">✓</span>
-                  <span className="text-slate-700 font-bold text-[15px]">{feat}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
+      </section>
+
+      {/* DYNAMIC TYPES / USE CASES */}
+      {service.useCases && service.useCases.length > 0 && (
+         <section className="py-24 bg-[#0a0a0a] border-y border-slate-900 mt-20">
+           <div className="max-w-6xl mx-auto px-6">
+             <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-4">Types of {service.title}</h2>
+                <p className="text-lg text-slate-400 font-medium">We map our {service.title.toLowerCase()} execution exactly to your archetype.</p>
+             </div>
+             
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+               {service.useCases.map((useCase, idx) => (
+                  <div key={idx} className="bg-[#111] border border-slate-800 rounded-3xl p-8 hover:-translate-y-2 transition-transform duration-300">
+                    <span className="w-10 h-10 rounded-full bg-blue-500/20 text-blue-500 flex items-center justify-center font-bold mb-6">{idx + 1}</span>
+                    <h3 className="text-2xl font-bold text-white mb-2">{useCase}</h3>
+                  </div>
+               ))}
+               <div className="bg-gradient-to-br from-blue-900/50 to-purple-900/50 border border-blue-500/30 rounded-3xl p-8 flex flex-col justify-center">
+                  <h3 className="text-2xl font-bold text-white mb-2">Custom Requirement?</h3>
+                  <p className="text-blue-200">We engineer strictly outside the standard templates.</p>
+               </div>
+             </div>
+           </div>
+         </section>
+      )}
+
+      {/* FAQ SECTION */}
+      <section className="py-28 max-w-3xl mx-auto px-6">
+         <div className="text-center mb-16">
+            <span className="text-[13px] font-bold text-[#D349A1] uppercase tracking-widest mb-3 block">Clarity</span>
+            <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">Common Questions</h2>
+         </div>
+         <FAQAccordion faqs={faqs} />
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="pb-32 pt-16">
+         <div className="max-w-4xl mx-auto px-6 text-center">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-10 tracking-tight">Ready to build without the noise?</h2>
+            <Link to="/contact" className="inline-flex bg-[#D349A1] hover:bg-[#c04090] text-white px-10 py-6 rounded-full text-[15px] font-black tracking-widest uppercase hover:-translate-y-2 transition-transform shadow-[0_20px_40px_rgba(211,73,161,0.3)]">
+               Get in Touch with MERNpixel Team
+            </Link>
+         </div>
       </section>
 
     </main>
