@@ -141,11 +141,22 @@ export default function ServiceDetailPage() {
       )
     }
 
-    // Default Fallback (Talent hiring, Marketing, Consulting, etc.) -> Generate Image
+    // Marketing Visual
+    if (service.id === 'marketing') {
+      return (
+        <div className="w-full max-w-5xl mx-auto mb-28 z-20 relative">
+          <div className="w-full h-[350px] md:h-[500px] rounded-[2rem] overflow-hidden shadow-2xl ring-1 ring-slate-200">
+            <img src="/marketing_hero.png" alt="Digital Marketing" className="w-full h-full object-cover" />
+          </div>
+        </div>
+      )
+    }
+
+    // Default Fallback (Talent hiring, Consulting, etc.) -> Generate Image
     return (
-      <div className="w-full max-w-5xl mx-auto mb-28 z-20 relative">
-        <div className="w-full h-[350px] md:h-[500px] rounded-[2rem] overflow-hidden shadow-2xl ring-1 ring-slate-200">
-          <img src="/generic_service.png" alt="Service Representation" className="w-full h-full object-cover" />
+      <div className="w-full max-w-5xl mx-auto mb-28 z-20 relative flex justify-center">
+        <div className="w-full h-[350px] md:h-[550px] rounded-[2rem] overflow-hidden shadow-2xl ring-4 ring-slate-100">
+          <img src="/generic_service.png" alt="Service Representation" className="w-full h-full object-cover object-center" />
         </div>
       </div>
     )
