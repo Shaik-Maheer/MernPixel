@@ -221,22 +221,34 @@ export default function ServiceDetailPage() {
 
       <section className="py-24 mb-10">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <span className="w-8 h-8 rounded-full bg-rose-100 text-rose-500 flex items-center justify-center font-bold">X</span>
-                <h3 className="text-sm font-bold text-rose-500 uppercase tracking-widest">The Problem</h3>
-              </div>
-              <p className="text-[22px] md:text-[26px] text-slate-800 leading-relaxed font-bold tracking-tight">Most teams deliver generic templates that fail to convert traffic or resolve complex technical debt, causing bloated systems.</p>
+          {service.id === 'branding' ? (
+            <div className="text-center max-w-4xl mx-auto">
+              <h3 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight tracking-tight">A logo is not just a name. It's a brand.</h3>
+              <p className="text-[20px] text-slate-600 leading-[1.8] font-medium">A logo speaks powerfully for what you do with deep embedded meaning. We engineer pixel-perfect identities and deliver your branding in all optimal industry formats, accompanied by highly targeted banners for all major social platforms built to scale.</p>
             </div>
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <span className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-500 flex items-center justify-center font-bold">✓</span>
-                <h3 className="text-sm font-bold text-emerald-600 uppercase tracking-widest">The Solution</h3>
-              </div>
-              <p className="text-[22px] md:text-[26px] text-slate-800 leading-relaxed font-bold tracking-tight">We engineer targeted solutions from the ground up, prioritizing extreme execution speed, scalable architecture, and tangible metrics.</p>
+          ) : service.id === 'academic-projects' ? (
+            <div className="text-center max-w-4xl mx-auto">
+              <h3 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight tracking-tight">We engineer confidence, not just code.</h3>
+              <p className="text-[20px] text-slate-600 leading-[1.8] font-medium">We don't just build a student project blindly. We discuss exactly what's needed, lock in the optimal tech stack, build it completely, and explain the architecture to you structurally so you're unbreakable in your viva submission. <strong className="text-slate-900">Included free:</strong> college-formatted PPTs, robust documentation, code zip, and an exclusive 1-on-1 session to run the stack directly on your system.</p>
             </div>
-          </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="w-8 h-8 rounded-full bg-rose-100 text-rose-500 flex items-center justify-center font-bold">X</span>
+                  <h3 className="text-sm font-bold text-rose-500 uppercase tracking-widest">The Problem</h3>
+                </div>
+                <p className="text-[22px] md:text-[26px] text-slate-800 leading-relaxed font-bold tracking-tight">Most teams deliver generic templates that fail to convert traffic or resolve complex technical debt, causing bloated systems.</p>
+              </div>
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-500 flex items-center justify-center font-bold">✓</span>
+                  <h3 className="text-sm font-bold text-emerald-600 uppercase tracking-widest">The Solution</h3>
+                </div>
+                <p className="text-[22px] md:text-[26px] text-slate-800 leading-relaxed font-bold tracking-tight">We engineer targeted solutions from the ground up, prioritizing extreme execution speed, scalable architecture, and tangible metrics.</p>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
