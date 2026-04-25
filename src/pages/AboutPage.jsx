@@ -1,5 +1,5 @@
 import HeroBackdrop from '../components/HeroBackdrop'
-import { aboutContent } from '../data/siteData'
+import { aboutContent, lectureEvents, originTimeline } from '../data/siteData'
 
 export default function AboutPage() {
   return (
@@ -36,6 +36,46 @@ export default function AboutPage() {
               <li key={item}>{item}</li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      <section className="mp-section">
+        <div className="mp-shell">
+          <div className="mp-heading-row">
+            <p className="mp-kicker">From Hackathon to MERNpixel</p>
+            <h2>Our foundation was built in competition, pressure, and execution.</h2>
+          </div>
+          <div className="mp-timeline">
+            {originTimeline.map((item) => (
+              <article key={item.title} className="mp-card mp-hover-card mp-timeline-item">
+                <p className="mp-chip">{item.stage}</p>
+                <h3>{item.title}</h3>
+                <p>{item.detail}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mp-section mp-section-tint">
+        <div className="mp-shell">
+          <div className="mp-heading-row">
+            <p className="mp-kicker">Guest Lectures</p>
+            <h2>Sharing knowledge with future builders.</h2>
+          </div>
+          <div className="mp-card-grid mp-grid-2">
+            {lectureEvents.map((event) => (
+              <article key={`${event.date}-${event.venue}`} className="mp-card mp-hover-card mp-event-card">
+                <div className="mp-event-meta">
+                  <span>{event.date}</span>
+                  <span>{event.venue}</span>
+                  <span>{event.audience}</span>
+                </div>
+                <h3>{event.topic}</h3>
+                <p className="mp-outcome">{event.highlight}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
     </main>

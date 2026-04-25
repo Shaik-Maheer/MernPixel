@@ -4,12 +4,17 @@ import CountUpNumber from '../components/CountUpNumber'
 import HeroBackdrop from '../components/HeroBackdrop'
 import SlidingComments from '../components/SlidingComments'
 import {
+  achievements,
   caseStudies,
+  confidenceBoosters,
+  lectureEvents,
+  originTimeline,
   pricingPlans,
   processSteps,
   servicesDetailed,
   stats,
   testimonials,
+  trustPoints,
   trustBrands,
   whyChoose,
 } from '../data/siteData'
@@ -67,6 +72,92 @@ export default function HomePage() {
       <section className="mp-section">
         <div className="mp-shell">
           <div className="mp-heading-row">
+            <p className="mp-kicker">Origin Story</p>
+            <h2>From Hackathon to MERNpixel</h2>
+            <p className="mp-lead">Started as 4 postgraduate students, MERNpixel was forged in competition, pressure, and real execution.</p>
+          </div>
+
+          <div className="mp-timeline">
+            {originTimeline.map((item, index) => (
+              <motion.article
+                key={item.title}
+                className="mp-card mp-hover-card mp-timeline-item"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.25 }}
+                variants={reveal}
+                transition={{ duration: 0.45, delay: index * 0.06 }}
+              >
+                <p className="mp-chip">{item.stage}</p>
+                <h3>{item.title}</h3>
+                <p>{item.detail}</p>
+              </motion.article>
+            ))}
+          </div>
+          <p className="mp-origin-quote">Not just a team, but a shared vision built through competition, learning, and execution.</p>
+        </div>
+      </section>
+
+      <section className="mp-section mp-section-tint">
+        <div className="mp-shell">
+          <div className="mp-heading-row">
+            <p className="mp-kicker">Guest Lectures & Impact</p>
+            <h2>Sharing Knowledge, Building Future Talent</h2>
+            <p className="mp-lead">Delivered invited sessions in colleges on AI tools, resume building, live coding, and placement guidance.</p>
+          </div>
+          <div className="mp-card-grid mp-grid-2">
+            {lectureEvents.map((event, index) => (
+              <motion.article
+                key={`${event.date}-${event.venue}`}
+                className="mp-card mp-hover-card mp-event-card"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={reveal}
+                transition={{ duration: 0.45, delay: index * 0.06 }}
+              >
+                <div className="mp-event-meta">
+                  <span>{event.date}</span>
+                  <span>{event.venue}</span>
+                  <span>{event.audience}</span>
+                </div>
+                <h3>{event.topic}</h3>
+                <p className="mp-outcome">{event.highlight}</p>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mp-section">
+        <div className="mp-shell">
+          <div className="mp-heading-row">
+            <p className="mp-kicker">Achievements</p>
+            <h2>Built through real execution, not just theory</h2>
+          </div>
+          <div className="mp-card-grid mp-grid-3">
+            {achievements.map((item, index) => (
+              <motion.article
+                key={item.label}
+                className="mp-card mp-hover-card"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={reveal}
+                transition={{ duration: 0.45, delay: index * 0.05 }}
+              >
+                <h3><CountUpNumber value={item.value} /></h3>
+                <p className="mp-chip">{item.label}</p>
+                <p>{item.description}</p>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mp-section">
+        <div className="mp-shell">
+          <div className="mp-heading-row">
             <p className="mp-kicker">Services</p>
             <h2>Premium execution across design, development, and growth.</h2>
           </div>
@@ -85,8 +176,8 @@ export default function HomePage() {
       <section className="mp-section mp-section-tint">
         <div className="mp-shell">
           <div className="mp-heading-row">
-            <p className="mp-kicker">Why Choose MERNpixel</p>
-            <h2>Built for business credibility and conversions.</h2>
+            <p className="mp-kicker">Why Trust Us</p>
+            <h2>Credibility you can verify before we start.</h2>
           </div>
           <div className="mp-card-grid mp-grid-2">
             {whyChoose.map((item, index) => (
@@ -95,6 +186,24 @@ export default function HomePage() {
                 <p>{item.description}</p>
               </motion.article>
             ))}
+          </div>
+          <div className="mp-card-grid mp-grid-2 mp-trust-lists">
+            <article className="mp-card mp-hover-card">
+              <p className="mp-kicker">Core Trust Signals</p>
+              <ul className="mp-list">
+                {trustPoints.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+            <article className="mp-card mp-hover-card">
+              <p className="mp-kicker">Client Confidence Boosters</p>
+              <ul className="mp-list">
+                {confidenceBoosters.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
           </div>
         </div>
       </section>
@@ -169,10 +278,10 @@ export default function HomePage() {
         <div className="mp-shell mp-cta-row">
           <div>
             <p className="mp-kicker">Let’s Build</p>
-            <h2>Let’s build something great together.</h2>
-            <p className="mp-lead">Tell us your goals and we will map the fastest path to a premium launch.</p>
+            <h2>Started from a hackathon. Now building real products for real businesses.</h2>
+            <p className="mp-lead">Tell us your goal, and we will turn it into a fast, scalable, premium digital experience.</p>
           </div>
-          <Link to="/contact" className="mp-btn mp-btn-primary mp-magnetic">Start Your Project</Link>
+          <Link to="/contact" className="mp-btn mp-btn-primary mp-magnetic">Work with MERNpixel</Link>
         </div>
       </section>
     </main>

@@ -23,20 +23,20 @@ export const stats = [
 
 export const whyChoose = [
   {
-    title: 'Fast Delivery, No Chaos',
-    description: 'Structured timelines and transparent checkpoints keep delivery fast and predictable.',
+    title: 'Built by Developers, Not Marketers',
+    description: 'You work directly with builders who execute real products, not sales-only middle layers.',
   },
   {
-    title: 'Performance-First Engineering',
-    description: 'We optimize speed, stability, and Core Web Vitals from the first sprint.',
+    title: 'Real Project Execution Experience',
+    description: 'Our process is shaped by hackathons, live delivery pressure, and real client implementation.',
   },
   {
-    title: 'Premium UI/UX Standards',
-    description: 'Minimal, high-end interfaces designed for trust and conversion clarity.',
+    title: 'Direct Core-Team Communication',
+    description: 'You communicate with the core creators for faster decisions and cleaner outcomes.',
   },
   {
-    title: 'Business-Driven Execution',
-    description: 'Every design and feature is tied to measurable outcomes, not visual noise.',
+    title: 'Fast Iteration Cycles',
+    description: 'Quick design-development loops help you validate, improve, and launch with confidence.',
   },
 ]
 
@@ -65,7 +65,11 @@ export const servicesDetailed = [
     icon: '◈',
     title: 'Web Development',
     description: 'Premium business websites built for credibility, speed, and conversion.',
-    features: ['Custom architecture', 'Responsive UI systems', 'SEO-ready foundations'],
+    features: [
+      'Pages structured to rank faster on Google and improve visibility.',
+      'Seamless experience across mobile, tablet, and desktop devices.',
+      'Clean architecture that keeps your site fast under real traffic.',
+    ],
     useCases: ['Corporate websites', 'Lead generation funnels', 'Service company platforms'],
     outcome: 'Increase qualified lead conversion by up to 30% with optimized structure and UX.',
   },
@@ -74,7 +78,11 @@ export const servicesDetailed = [
     icon: '⬢',
     title: 'Application Development',
     description: 'Robust web applications for operations, workflows, and product scalability.',
-    features: ['Role-based dashboards', 'API-driven architecture', 'Security-focused implementation'],
+    features: [
+      'Role-based dashboards that reduce team confusion and speed up decisions.',
+      'API-first architecture that scales cleanly as your product grows.',
+      'Security-focused implementation that protects user data and trust.',
+    ],
     useCases: ['Admin systems', 'SaaS dashboards', 'Workflow automation apps'],
     outcome: 'Reduce process friction and improve team efficiency through streamlined product flows.',
   },
@@ -83,7 +91,11 @@ export const servicesDetailed = [
     icon: '▣',
     title: 'E-commerce Solutions',
     description: 'Conversion-optimized storefronts designed for purchase confidence and retention.',
-    features: ['Catalog UX', 'Checkout optimization', 'Performance optimization'],
+    features: [
+      'Catalog experiences designed to make product discovery effortless.',
+      'Checkout flows optimized to reduce drop-offs and recover more revenue.',
+      'Performance tuning that keeps shopping smooth, even during peak traffic.',
+    ],
     useCases: ['D2C brands', 'Niche online stores', 'Premium product catalog sites'],
     outcome: 'Improve add-to-cart and checkout completion with trust-focused purchase journeys.',
   },
@@ -92,7 +104,11 @@ export const servicesDetailed = [
     icon: '✦',
     title: 'Branding & Visual Systems',
     description: 'Distinct identity systems that make your business look premium and consistent.',
-    features: ['Visual direction', 'Brand UI patterns', 'Asset consistency'],
+    features: [
+      'Visual systems that position your brand as premium from first impression.',
+      'Reusable UI patterns that keep every customer touchpoint consistent.',
+      'Asset consistency that strengthens recall across web, ads, and social.',
+    ],
     useCases: ['Rebranding', 'New venture launch', 'Design system upgrades'],
     outcome: 'Strengthen brand recall and customer trust with cohesive visual language.',
   },
@@ -101,10 +117,92 @@ export const servicesDetailed = [
     icon: '⬈',
     title: 'Digital Marketing',
     description: 'Growth-focused strategy aligned with funnels, landing pages, and analytics.',
-    features: ['Funnel strategy', 'Campaign landing pages', 'Performance analytics'],
+    features: [
+      'Funnel strategy built to convert interest into qualified business leads.',
+      'Campaign landing pages optimized for action, not just clicks.',
+      'Performance analytics that guide budget decisions with clear evidence.',
+    ],
     useCases: ['Lead campaigns', 'Offer launches', 'Growth experiments'],
     outcome: 'Generate stronger marketing ROI with clearer messaging and conversion journeys.',
   },
+]
+
+export const originTimeline = [
+  {
+    stage: 'Step 01',
+    title: 'Started as 4 postgraduate students',
+    detail: 'MERNpixel began with four MCA students committed to building, learning, and executing together.',
+  },
+  {
+    stage: 'Step 02',
+    title: 'First hackathon experience',
+    detail: 'Our first major test came during a hackathon where speed, clarity, and teamwork were everything.',
+  },
+  {
+    stage: 'Step 03',
+    title: 'Built something real under pressure',
+    detail: 'We transformed a raw idea into a working solution under tight deadlines and constant iteration.',
+  },
+  {
+    stage: 'Step 04',
+    title: 'Won and gained confidence',
+    detail: 'Winning proved our execution model worked and gave us confidence to build for real clients.',
+  },
+  {
+    stage: 'Step 05',
+    title: 'That moment became the foundation of MERNpixel',
+    detail: 'Not just a team, but a shared vision built through competition, learning, and execution.',
+  },
+]
+
+export const lectureEvents = [
+  {
+    date: 'Feb 2025',
+    venue: 'MCA Department Seminar Hall',
+    audience: '120+ students',
+    topic: 'AI tools for productivity and project acceleration',
+    highlight: 'Hands-on sessions for MCA students',
+  },
+  {
+    date: 'Aug 2025',
+    venue: 'Career Development Cell',
+    audience: '90+ students',
+    topic: 'Resume building, live coding, and placement guidance',
+    highlight: 'Industry-style preparation with practical review',
+  },
+]
+
+export const achievements = [
+  {
+    label: 'Hackathon Wins',
+    value: '1+',
+    description: 'Proven execution under pressure with winning outcomes.',
+  },
+  {
+    label: 'Client Projects',
+    value: '42+',
+    description: 'Delivered websites and apps for real businesses.',
+  },
+  {
+    label: 'College Workshops',
+    value: '6+',
+    description: 'Training sessions delivered on AI, coding, and careers.',
+  },
+]
+
+export const trustPoints = [
+  'Built by developers, not marketers',
+  'Real project execution experience',
+  'Direct communication with core team',
+  'Fast iteration cycles',
+  'Student + startup friendly mindset',
+]
+
+export const confidenceBoosters = [
+  'Fast delivery with clear timelines',
+  'Transparent pricing',
+  'Direct founder communication',
+  'No outsourcing',
 ]
 
 export const pricingPlans = [
