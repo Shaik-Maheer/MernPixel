@@ -102,18 +102,21 @@ export default function HomePage() {
             {servicesDetailed.map((service, index) => (
               <motion.article
                 key={service.id}
-                className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all group flex flex-col hover:border-slate-300"
+                className="group relative bg-white border border-slate-200 rounded-3xl p-6 shadow-sm overflow-hidden transition-all duration-300 hover:border-transparent hover:shadow-lg flex flex-col isolate"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
                 variants={reveal}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
               >
-                <div className="w-12 h-12 rounded-2xl bg-slate-100/80 flex items-center justify-center text-slate-700 mb-6 text-xl group-hover:bg-slate-800 group-hover:text-white transition-colors">
+                {/* Hover Gradient Background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+                
+                <div className="w-12 h-12 rounded-2xl bg-slate-100/80 flex items-center justify-center text-slate-700 mb-6 text-xl group-hover:bg-white/20 group-hover:text-white transition-colors duration-300">
                   {service.icon}
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-2">{service.title}</h3>
-                <p className="text-sm text-slate-500 leading-relaxed">{service.description}</p>
+                <h3 className="text-lg font-bold text-slate-900 group-hover:text-white mb-2 transition-colors duration-300">{service.title}</h3>
+                <p className="text-sm text-slate-500 group-hover:text-white/90 leading-relaxed transition-colors duration-300">{service.description}</p>
               </motion.article>
             ))}
           </div>
@@ -166,22 +169,32 @@ export default function HomePage() {
                 href={work.link}
                 target="_blank"
                 rel="noreferrer"
-                className={`group rounded-[2rem] p-10 flex flex-col min-h-[220px] transition-transform hover:-translate-y-1 ${recentWorkColors[index % recentWorkColors.length]}`}
+                className={`group rounded-[2rem] pt-10 px-10 pb-0 flex flex-col min-h-[340px] transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${recentWorkColors[index % recentWorkColors.length]} overflow-hidden block border border-transparent hover:border-white/50`}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
                 variants={reveal}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
               >
-                <p className="text-[10px] font-bold text-slate-500/80 uppercase tracking-widest mb-3">
-                  {work.type} • {work.title}
-                </p>
-                <h3 className="text-2xl font-bold text-slate-900 mb-auto">
-                  {work.client}
-                </h3>
-                <div className="mt-8 flex items-center text-xs font-bold text-slate-900">
-                  Visit live <span className="ml-1 group-hover:translate-x-1 transition-transform">→</span>
+                <div className="mb-10 relative z-10">
+                  <p className="text-[10px] font-bold text-slate-600/90 uppercase tracking-widest mb-3" style={{letterSpacing: '0.2em'}}>
+                    {work.type} • {work.title}
+                  </p>
+                  <h3 className="text-3xl font-bold text-slate-900 mb-6">
+                    {work.client}
+                  </h3>
+                  <div className="inline-flex items-center text-sm font-bold text-slate-900 bg-white/40 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm hover:bg-white/70 transition-colors">
+                    Visit live <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
                 </div>
+                
+                {/* Project Image Background/Bottom pop */}
+                {work.image && (
+                  <div className="mt-auto w-full h-[240px] relative rounded-t-xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.1)] transform transition-transform duration-500 group-hover:scale-[1.02] translate-y-4 group-hover:translate-y-2">
+                    <img src={work.image} alt={work.title} loading="lazy" className="w-full h-full object-cover object-top" />
+                    <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-t-xl"></div>
+                  </div>
+                )}
               </motion.a>
             ))}
           </div>
