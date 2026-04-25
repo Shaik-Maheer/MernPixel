@@ -91,16 +91,16 @@ p {
 
 .mp-app::before {
   background-image:
-    linear-gradient(rgba(110, 2, 111, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(110, 2, 111, 0.08) 1px, transparent 1px);
-  background-size: 44px 44px;
-  opacity: 0.22;
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 1;
 }
 
 .mp-app::after {
-  background-image: radial-gradient(rgba(179, 4, 181, 0.35) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px);
   background-size: 10px 10px;
-  opacity: 0.09;
+  opacity: 0.5;
 }
 
 .mp-shell {
@@ -314,8 +314,8 @@ p {
   top: 0;
   z-index: 50;
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(110, 2, 111, 0.18);
-  background: rgba(0, 0, 0, 0.72);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .mp-nav {
@@ -342,22 +342,21 @@ p {
   padding: 8px 10px;
   border-radius: 999px;
   font-size: 0.89rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: rgba(179, 4, 181, 0.72);
+  font-weight: 500;
+  color: var(--c-subtext);
   border: 1px solid transparent;
   transition: all 200ms ease;
 }
 
 .mp-nav-index {
-  color: rgba(179, 4, 181, 0.72);
+  color: var(--c-subtext);
 }
 
 .mp-nav-link:hover,
 .mp-nav-link.is-active {
   color: var(--c-text);
-  border-color: rgba(110, 2, 111, 0.46);
-  background: rgba(110, 2, 111, 0.14);
+  border-color: rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.03);
   transform: translateY(-1px);
 }
 
@@ -366,8 +365,8 @@ p {
   width: 48px;
   height: 48px;
   border-radius: 999px;
-  border: 1px solid rgba(110, 2, 111, 0.5);
-  background: rgba(0, 0, 0, 0.84);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.84);
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -381,8 +380,8 @@ p {
 }
 
 .mp-mobile-overlay {
-  border-top: 1px solid rgba(110, 2, 111, 0.2);
-  background: rgba(0, 0, 0, 0.95);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.95);
 }
 
 .mp-mobile-panel {
@@ -397,19 +396,20 @@ p {
   gap: 10px;
   padding: 10px 12px;
   border-radius: 12px;
-  border: 1px solid rgba(110, 2, 111, 0.2);
-  color: rgba(179, 4, 181, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  color: var(--c-subtext);
   transition: all 180ms ease;
 }
 
 .mp-mobile-link:hover,
 .mp-mobile-link.is-active {
-  border-color: rgba(179, 4, 181, 0.5);
-  background: rgba(110, 2, 111, 0.16);
+  border-color: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.02);
+  color: var(--c-text);
 }
 
 .mp-mobile-link-index {
-  color: rgba(179, 4, 181, 0.75);
+  color: var(--c-subtext);
 }
 
 .mp-page {
