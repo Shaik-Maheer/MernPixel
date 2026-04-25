@@ -72,32 +72,43 @@ export default function ChatbotWidget() {
 
   return (
     <>
-      {/* Floating Action Buttons Container */}
       <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
         {/* WhatsApp Connect */}
         <a 
           href={business.whatsapp} 
           target="_blank" 
           rel="noreferrer" 
-          className="flex items-center justify-center w-12 h-12 bg-white border border-slate-200 text-slate-900 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:bg-slate-50 transition-all hover:-translate-y-1 hover:shadow-[0_15px_40px_rgb(0,0,0,0.12)] cursor-pointer"
+          className="flex items-center justify-center hover:-translate-y-1 transition-transform cursor-pointer drop-shadow-lg"
+          title="WhatsApp Us"
         >
-          <SocialIcon network="whatsapp" className="w-6 h-6 drop-shadow-sm" />
+          {/* Official WhatsApp Filled Brand Icon */}
+          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12c0 1.758.455 3.42 1.319 4.896L2 22l5.244-1.375A9.972 9.972 0 0 0 12 22c5.534 0 10-4.48 10-10 0-5.515-4.466-10-10-10z" fill="#25D366"/>
+            <path d="M16.924 15.006c-.244-.122-1.442-.71-1.666-.793-.223-.082-.387-.122-.55.122-.164.244-.632.793-.775.955-.143.163-.286.183-.53.061-.245-.122-1.028-.378-1.958-1.206-.723-.642-1.213-1.436-1.356-1.68-.143-.244-.015-.376.107-.498.11-.11.245-.285.367-.428.122-.142.164-.244.245-.407.082-.163.04-.306-.02-.428-.062-.122-.55-1.325-.755-1.814-.199-.475-.403-.41-.55-.417-.143-.008-.306-.01-.47-.01s-.428.061-.652.305c-.224.244-.856.836-.856 2.038s.876 2.366.998 2.528c.123.163 1.724 2.632 4.175 3.69 1.488.643 2.115.698 2.853.585.597-.092 1.442-.591 1.646-1.162.204-.57.204-1.059.143-1.162-.061-.102-.224-.163-.469-.285z" fill="#ffffff"/>
+          </svg>
         </a>
 
         {/* AI Chatbot Launcher */}
         <MotionButton
           type="button"
-          className="flex items-center gap-2 bg-slate-900 text-white rounded-full px-4 py-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:bg-[#D349A1] transition-colors cursor-pointer"
+          className="flex items-center justify-center w-[56px] h-[56px] bg-slate-900 text-white rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:bg-[#D349A1] transition-all cursor-pointer hover:-translate-y-1 hover:shadow-[0_15px_40px_rgb(211,73,161,0.25)]"
           initial={{ opacity: 0, y: 20, scale: 0.92 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.55, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          whileHover={{ y: -4, shadow: "0 15px 40px rgb(0,0,0,0.2)" }}
-          whileTap={{ scale: 0.98 }}
           onClick={() => setOpen((prev) => !prev)}
           aria-label={open ? 'Close chatbot' : 'Open chatbot'}
+          title={open ? "Close Chat" : "Chat with us"}
         >
-          <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
-          <span className="text-[13px] font-extrabold tracking-widest uppercase mt-0.5">{open ? 'Close Chat' : 'Chat with us'}</span>
+          {open ? (
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          ) : (
+             <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+               <rect width="18" height="14" x="3" y="8" rx="2" ry="2"></rect>
+               <path d="M12 5a3 3 0 1 0-3 3"></path>
+               <path d="M9 13h.01"></path>
+               <path d="M15 13h.01"></path>
+             </svg>
+          )}
         </MotionButton>
       </div>
 
