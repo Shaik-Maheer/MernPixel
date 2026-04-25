@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { Link, useLocation } from 'react-router-dom'
-import logo from '../assets/logo.png'
+import logo from '../assets/mernpixel-logo.svg'
 import { InstagramIcon, LinkedInIcon, WhatsAppIcon } from './SocialIcons'
 import { business, socialLinks } from '../data/siteData'
 
@@ -130,7 +130,7 @@ export default function GlobalNav({ visible = true }) {
       >
         <div className="nav-inner">
           <Link to="/" className="nav-logo-small cursor-target">
-            <img src={logo} alt="Mernpixel" />
+            <img src={logo} alt="MERNpixel" />
           </Link>
 
           <button type="button" className="menu-trigger cursor-target" onClick={() => setOpen((prev) => !prev)}>
@@ -165,7 +165,7 @@ export default function GlobalNav({ visible = true }) {
 
               <div className="menu-top-bar">
                 <Link to="/" className="menu-mini-logo cursor-target" onClick={closeMenu}>
-                  <img src={logo} alt="Mernpixel" />
+                  <img src={logo} alt="MERNpixel" />
                 </Link>
 
                 <button
