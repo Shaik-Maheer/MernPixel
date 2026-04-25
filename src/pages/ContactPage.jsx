@@ -1,151 +1,146 @@
-import { useMemo, useState } from 'react'
-import HeroBackdrop from '../components/HeroBackdrop'
-import { SocialIcon } from '../components/SocialIcons'
+import { motion } from 'framer-motion'
 import { business, socialLinks } from '../data/siteData'
-import { createMailtoLeadHref, createWhatsAppLeadHref, isValidEmail } from '../lib/leadForms'
 
-const services = [
-  'Web Development',
-  'E-commerce Solutions',
-  'Application Development',
-  'Logo & Branding',
-  'Digital Marketing',
-  'Academic Projects',
-  'Talent Hiring / Consulting',
-  'Guest Lectures / Workshops',
-]
-
-const initialForm = {
-  name: '',
-  email: '',
-  service: services[0],
-  message: '',
+const reveal = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
 }
 
 export default function ContactPage() {
-  const [form, setForm] = useState(initialForm)
-  const [error, setError] = useState('')
-
-  const quickWhatsApp = useMemo(
-    () => createWhatsAppLeadHref(business.whatsapp, 'Hi MERNpixel, I want to start a project.'),
-    []
-  )
-
-  const handleChange = (event) => {
-    const { name, value } = event.target
-    setForm((prev) => ({ ...prev, [name]: value }))
-    setError('')
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-
-    if (!form.name.trim()) return setError('Enter your name.')
-    if (!isValidEmail(form.email)) return setError('Enter a valid email.')
-    if (!form.message.trim()) return setError('Add a short requirement.')
-
-    const lines = [
-      'Hi MERNpixel Team,',
-      '',
-      `Name: ${form.name}`,
-      `Email: ${form.email}`,
-      `Service: ${form.service}`,
-      '',
-      'Requirement:',
-      form.message,
-    ]
-
-    const mailto = createMailtoLeadHref({
-      to: business.email,
-      subject: `Project Inquiry - ${form.service}`,
-      lines,
-    })
-    window.location.href = mailto
-  }
-
   return (
-    <main className="mp-page">
-      <section className="mp-page-hero mp-page-hero-media">
-        <HeroBackdrop video="/two.mp4" />
-        <div className="mp-shell mp-grid-2 mp-hero-split">
-          <div>
-            <p className="mp-kicker">Contact</p>
-            <h1>Start your project with MERNpixel.</h1>
-            <p className="mp-lead">Share your requirement. We respond fast.</p>
-            <p className="mp-lead">Email: {business.email} | Phone: {business.phone}</p>
-            <p className="mp-lead">Address: {business.address}</p>
-            <div className="mp-actions">
-              <a href={quickWhatsApp} target="_blank" rel="noreferrer" className="mp-btn mp-btn-primary mp-btn-whatsapp mp-magnetic">
-                WhatsApp
-              </a>
-              <a href={`mailto:${business.email}`} className="mp-btn mp-btn-ghost mp-magnetic">Email</a>
-            </div>
-            <div className="mp-footer-social mp-social-inline">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mp-social-icon"
-                  aria-label={social.label}
-                  title={social.label}
-                >
-                  <SocialIcon network={social.icon} className="mp-social-svg" />
-                </a>
-              ))}
-            </div>
+    <main className="min-h-screen bg-[#FFFFFF] pb-32 relative overflow-hidden">
+      
+      {/* Background Soft Mesh Glows */}
+      <div className="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] bg-purple-200/30 rounded-full blur-[120px] pointer-events-none z-0"></div>
+      <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-green-200/40 rounded-full blur-[100px] pointer-events-none z-0"></div>
+      <div className="absolute top-[40%] left-[20%] w-[400px] h-[400px] bg-blue-100/40 rounded-full blur-[80px] pointer-events-none z-0"></div>
+
+      <section className="relative z-10 pt-20 md:pt-32 pb-16">
+        <div className="max-w-7xl mx-auto px-6">
+          
+          <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
+            
+            {/* Left Contact Info Column */}
+            <motion.div 
+              className="lg:w-[45%] flex flex-col items-start"
+              initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.5 }}
+            >
+              <div className="inline-flex bg-blue-50/80 backdrop-blur-sm rounded-full px-4 py-1.5 mb-8 items-center border border-blue-100">
+                 <span className="text-xs font-bold text-slate-800 tracking-wide">Contact</span>
+              </div>
+
+              <h1 className="text-5xl md:text-[4.5rem] font-extrabold tracking-tight text-slate-900 mb-12 leading-[1.05]">
+                Let's build something <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500">that performs.</span>
+              </h1>
+
+              <div className="flex flex-col gap-4 w-full md:w-[90%]">
+                
+                {/* Email Box */}
+                <div className="bg-white/60 backdrop-blur-md border border-slate-200/60 rounded-3xl p-6 flex items-center gap-6 shadow-sm">
+                  <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 shrink-0">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1">Email</p>
+                    <p className="text-slate-900 font-bold text-[15px]">{business.email}</p>
+                  </div>
+                </div>
+
+                {/* Phone Box */}
+                <div className="bg-white/60 backdrop-blur-md border border-slate-200/60 rounded-3xl p-6 flex items-center gap-6 shadow-sm">
+                  <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 shrink-0">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1">Phone</p>
+                    <p className="text-slate-900 font-bold text-[15px]">{business.phone}</p>
+                  </div>
+                </div>
+
+                {/* Location Box */}
+                <div className="bg-white/60 backdrop-blur-md border border-slate-200/60 rounded-3xl p-6 flex items-center gap-6 shadow-sm">
+                  <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 shrink-0">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1">Location</p>
+                    <p className="text-slate-900 font-bold text-[15px]">{business.address}</p>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Social Links */}
+              <div className="mt-12">
+                <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-6">Social</p>
+                <div className="flex gap-4">
+                  {socialLinks.map((link) => (
+                    <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-700 hover:text-slate-900 hover:shadow-md hover:border-slate-300 transition-all">
+                      <span className="text-sm font-bold uppercase">{link.label.substring(0,2)}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right Form Column */}
+            <motion.div 
+              className="lg:w-[55%] xl:w-[50%] mt-8 lg:mt-0"
+              initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <div className="bg-white/80 backdrop-blur-xl border border-white rounded-[2.5rem] p-8 md:p-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)]">
+                
+                <h2 className="text-[28px] font-bold text-slate-900 mb-2">Tell us about your project</h2>
+                <p className="text-[15px] font-medium text-slate-500 mb-10">We respond within one business day.</p>
+
+                <form className="flex flex-col gap-6" onSubmit={(e) => e.preventDefault()}>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-bold text-slate-900 mb-2">Your name</label>
+                      <input type="text" placeholder="Jane Doe" className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-bold text-slate-900 mb-2">Email</label>
+                      <input type="email" placeholder="you@company.com" className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-bold text-slate-900 mb-2">Company</label>
+                      <input type="text" placeholder="Optional" className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-bold text-slate-900 mb-2">Budget</label>
+                      <input type="text" placeholder="₹50k – ₹5L+" className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-bold text-slate-900 mb-2">What are you looking to build?</label>
+                    <textarea rows="4" placeholder="A short description of the goal, audience and timeline." className="w-full bg-white border border-slate-200 rounded-xl px-5 py-4 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium resize-none"></textarea>
+                  </div>
+
+                  <div className="pt-4">
+                    <button type="submit" className="bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl px-8 py-4 flex items-center gap-3 transition-colors shadow-lg shadow-slate-900/10">
+                      Send message
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                      </svg>
+                    </button>
+                  </div>
+
+                </form>
+
+              </div>
+            </motion.div>
+
           </div>
-
-          <form className="mp-card mp-form" onSubmit={handleSubmit}>
-            <label>
-              Name
-              <input name="name" value={form.name} onChange={handleChange} />
-            </label>
-            <label>
-              Email
-              <input type="email" name="email" value={form.email} onChange={handleChange} />
-            </label>
-            <label>
-              Service
-              <select name="service" value={form.service} onChange={handleChange}>
-                {services.map((service) => (
-                  <option key={service} value={service}>{service}</option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Requirement
-              <textarea name="message" rows="4" value={form.message} onChange={handleChange} />
-            </label>
-
-            {error && <p className="mp-form-error">{error}</p>}
-
-            <button type="submit" className="mp-btn mp-btn-primary mp-magnetic">Send Inquiry</button>
-          </form>
         </div>
       </section>
 
-      <section className="mp-section mp-section-tight">
-        <div className="mp-shell mp-grid-2">
-          <article className="mp-card mp-hover-card">
-            <p className="mp-kicker">Map (Temporary)</p>
-            <h3>Madanapalle, Andhra Pradesh, India</h3>
-            <p>Replace `business.mapEmbedUrl` later for final office location.</p>
-          </article>
-
-          <article className="mp-card">
-            <div className="mp-map-wrap">
-              <iframe
-                title="MERNpixel temporary location map"
-                src={business.mapEmbedUrl}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-          </article>
-        </div>
-      </section>
     </main>
   )
 }
