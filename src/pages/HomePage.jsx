@@ -25,8 +25,8 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-[#FFFFFF] pb-10">
       
-      {/* Background Grid */}
-      <div className="fixed inset-0 z-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px)', backgroundSize: '64px 64px' }} />
+      {/* Background Grid - Lovable Light Blue/Cyan faint grid */}
+      <div className="fixed inset-0 z-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, #E0F2FE 1px, transparent 1px), linear-gradient(to bottom, #E0F2FE 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
 
       {/* Hero Section */}
       <section className="relative z-10 pt-20 pb-16 md:pt-28 md:pb-24 overflow-hidden">
@@ -41,9 +41,9 @@ export default function HomePage() {
                <span className="text-xs font-semibold text-slate-700 tracking-wide">Now booking Q3 projects</span>
             </div>
 
-            <h1 className="text-[3.5rem] md:text-[5.5rem] font-bold tracking-tight text-slate-900 mb-6 leading-[1.1] max-w-4xl text-left">
-              Not built to <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-rose-500 italic">impress.</span><br/>
-              Built to <span className="text-blue-600">perform.</span>
+            <h1 className="text-[3.5rem] md:text-[5.5rem] font-extrabold tracking-tight text-slate-900 mb-6 leading-[1.05] max-w-4xl text-left">
+              Not built to <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500 italic">impress.</span><br/>
+              Built to <span className="text-blue-700">perform.</span>
             </h1>
             
             <p className="text-xl md:text-[22px] text-slate-600 mb-10 max-w-3xl leading-[1.6] text-left font-medium">
@@ -89,9 +89,9 @@ export default function HomePage() {
       <section className="relative z-10 py-16">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:justify-between md:items-end mb-12 gap-4">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight">
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 leading-[1.1]">
               Services shaped around<br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-pink-500">outcomes.</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500">outcomes.</span>
             </h2>
             <Link to="/services" className="text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1 uppercase tracking-widest group">
               View all services <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -124,8 +124,8 @@ export default function HomePage() {
       <section className="relative z-10 py-16 mt-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight">
-              Three principles. <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">Zero<br/>compromises.</span>
+            <h2 className="text-4xl md:text-[3.25rem] font-extrabold tracking-tight text-slate-900 leading-[1.05]">
+              Three principles. <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500">Zero<br/>compromises.</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -152,8 +152,8 @@ export default function HomePage() {
       <section className="relative z-10 py-16 mt-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-end mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900">
-              Recent <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-orange-400">work.</span>
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 leading-[1.1]">
+              Recent <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500">work.</span>
             </h2>
             <Link to="/works" className="text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center tracking-widest uppercase group mb-2">
               All projects <span className="ml-1 group-hover:translate-x-1 transition-transform">→</span>
