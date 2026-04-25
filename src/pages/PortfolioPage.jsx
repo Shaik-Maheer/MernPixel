@@ -1,27 +1,45 @@
+import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
-import CountUpNumber from '../components/CountUpNumber'
 import HeroBackdrop from '../components/HeroBackdrop'
-import { portfolioProjects, stats } from '../data/siteData'
+import { caseStudies } from '../data/siteData'
+
+const filters = ['All', 'Web', 'App', 'E-commerce']
 
 const reveal = {
-  hidden: { opacity: 0, y: 22 },
+  hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
 }
 
 export default function PortfolioPage() {
+  const [activeFilter, setActiveFilter] = useState('All')
+  const [loaded, setLoaded] = useState({})
+
+  const projects = useMemo(() => {
+    if (activeFilter === 'All') {
+      return caseStudies
+    }
+    return caseStudies.filter((project) => project.type === activeFilter)
+  }, [activeFilter])
+
   return (
     <main className="mp-page">
       <section className="mp-page-hero mp-page-hero-media">
         <HeroBackdrop video="/three.mp4" />
         <div className="mp-shell">
-          <p className="mp-kicker">Portfolio</p>
-          <h1>Work that combines business clarity and execution quality.</h1>
-          <div className="mp-stat-grid mp-stat-grid-compact">
-            {stats.slice(0, 3).map((item) => (
-              <article key={item.label}>
-                <strong><CountUpNumber value={item.value} /></strong>
-                <span>{item.label}</span>
-              </article>
+          <p className="mp-kicker">Works</p>
+          <h1>Case studies focused on measurable results.</h1>
+          <p className="mp-lead">Each project captures the client problem, our approach, and the business outcome.</p>
+
+          <div className="mp-filter-row">
+            {filters.map((filter) => (
+              <button
+                key={filter}
+                type="button"
+                className={`mp-filter-btn ${activeFilter === filter ? 'is-active' : ''}`}
+                onClick={() => setActiveFilter(filter)}
+              >
+                {filter}
+              </button>
             ))}
           </div>
         </div>
@@ -29,21 +47,24 @@ export default function PortfolioPage() {
 
       <section className="mp-section">
         <div className="mp-shell mp-card-grid mp-grid-2">
-          {portfolioProjects.map((project, index) => (
-            <motion.article
-              key={project.name}
-              className={`mp-card mp-work-card ${project.fullWidth ? 'mp-span-2' : ''}`}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.18 }}
-              variants={reveal}
-              transition={{ duration: 0.55, delay: index * 0.04 }}
-            >
-              <img src={project.image} alt={project.name} loading="lazy" />
-              <p className="mp-chip">{project.previewLabel || 'Project'}</p>
-              <h3>{project.name}</h3>
-              <p>{project.summary}</p>
-              <a href={project.liveLink} target="_blank" rel="noreferrer" className="mp-text-link">Open Live Project</a>
+          {projects.map((project, index) => (
+            <motion.article key={project.id} className="mp-card mp-work-card mp-case-card" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={reveal} transition={{ duration: 0.45, delay: index * 0.04 }}>
+              <div className="mp-case-media">
+                {!loaded[project.id] && <div className="mp-image-skeleton" aria-hidden />}
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  loading="lazy"
+                  className={loaded[project.id] ? 'is-loaded' : 'is-loading'}
+                  onLoad={() => setLoaded((prev) => ({ ...prev, [project.id]: true }))}
+                />
+              </div>
+              <p className="mp-chip">{project.type} • {project.client}</p>
+              <h3>{project.title}</h3>
+              <p><strong>Client problem:</strong> {project.problem}</p>
+              <p><strong>What MERNpixel did:</strong> {project.solution}</p>
+              <p><strong>Result:</strong> {project.result}</p>
+              <a className="mp-text-link" href={project.link} target="_blank" rel="noreferrer">Open Live Project</a>
             </motion.article>
           ))}
         </div>

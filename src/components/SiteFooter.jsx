@@ -4,6 +4,7 @@ import { business, socialLinks } from '../data/siteData'
 
 const quickLinks = [
   { label: 'Services', path: '/services' },
+  { label: 'Pricing', path: '/pricing' },
   { label: 'Works', path: '/works' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
@@ -17,7 +18,7 @@ export default function SiteFooter() {
       <div className="mp-shell mp-footer-grid">
         <div>
           <img src={logo} alt="MERNpixel" className="mp-footer-logo" />
-          <p className="mp-footer-copy">Premium web experiences for service-first businesses.</p>
+          <p className="mp-footer-copy">High-conversion digital products for brands that want performance and premium execution.</p>
         </div>
 
         <div>

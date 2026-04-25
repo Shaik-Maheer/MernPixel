@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import HeroBackdrop from '../components/HeroBackdrop'
-import { servicePlanets } from '../data/siteData'
+import { servicesDetailed } from '../data/siteData'
 
 const reveal = {
   hidden: { opacity: 0, y: 22 },
@@ -15,22 +15,33 @@ export default function ITServicesPage() {
         <HeroBackdrop video="/two.mp4" />
         <div className="mp-shell">
           <p className="mp-kicker">Services</p>
-          <h1>Premium digital services built for business outcomes.</h1>
-          <p className="mp-lead">From corporate sites to applications and growth systems, every service is tuned for real performance.</p>
+          <h1>Detailed service stack built for conversion and scale.</h1>
+          <p className="mp-lead">Every service includes clear outcomes, practical use cases, and delivery confidence.</p>
         </div>
       </section>
 
       <section className="mp-section">
         <div className="mp-shell mp-card-grid mp-grid-2">
-          {servicePlanets.map((service, index) => (
-            <motion.article key={service.title} className="mp-card mp-hover-card" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={reveal} transition={{ duration: 0.5, delay: index * 0.04 }}>
-              <p className="mp-chip" style={{ '--chip-color': service.color }}>{service.title}</p>
-              <p>{service.summary}</p>
+          {servicesDetailed.map((service, index) => (
+            <motion.article key={service.id} className="mp-card mp-hover-card" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={reveal} transition={{ duration: 0.45, delay: index * 0.04 }}>
+              <p className="mp-chip">{service.icon} {service.title}</p>
+              <p>{service.description}</p>
+
+              <h3>Features</h3>
               <ul className="mp-list">
-                {service.points.map((point) => (
-                  <li key={point}>{point}</li>
+                {service.features.map((item) => (
+                  <li key={item}>{item}</li>
                 ))}
               </ul>
+
+              <h3>Use Cases</h3>
+              <ul className="mp-list">
+                {service.useCases.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+
+              <p className="mp-outcome">Outcome: {service.outcome}</p>
             </motion.article>
           ))}
         </div>
@@ -39,11 +50,10 @@ export default function ITServicesPage() {
       <section className="mp-section mp-cta-band">
         <div className="mp-shell mp-cta-row">
           <div>
-            <p className="mp-kicker">Project Intake</p>
-            <h2>Need execution you can trust?</h2>
-            <p className="mp-lead">Share your requirement and we will map scope, timeline, and delivery model.</p>
+            <p className="mp-kicker">Need a custom scope?</p>
+            <h2>We tailor services to your exact business model.</h2>
           </div>
-          <Link to="/contact" className="mp-btn mp-btn-primary">Discuss Requirement</Link>
+          <Link to="/contact" className="mp-btn mp-btn-primary mp-magnetic">Discuss Your Project</Link>
         </div>
       </section>
     </main>

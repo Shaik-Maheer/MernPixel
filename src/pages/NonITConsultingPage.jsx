@@ -9,17 +9,16 @@ export default function NonITConsultingPage() {
         <HeroBackdrop video="/four.mp4" />
         <div className="mp-shell">
           <p className="mp-kicker">Non-IT Consulting</p>
-          <h1>Business hiring support with faster coordination and role clarity.</h1>
-          <p className="mp-lead">We help teams hire for sales, marketing, and business roles with practical screening workflows.</p>
+          <h1>Practical hiring support for growth-focused business teams.</h1>
         </div>
       </section>
 
       <section className="mp-section">
         <div className="mp-shell mp-card-grid mp-grid-2">
-          {nonItServices.map((item) => (
-            <article key={item} className="mp-card mp-hover-card">
-              <h3>{item}</h3>
-              <p>Execution support includes requirement shaping, candidate filter strategy, and faster response loops.</p>
+          {nonItServices.map((service) => (
+            <article key={service} className="mp-card mp-hover-card">
+              <h3>{service}</h3>
+              <p>From role alignment to screening support and rapid response cycles.</p>
             </article>
           ))}
         </div>
@@ -28,10 +27,10 @@ export default function NonITConsultingPage() {
       <section className="mp-section mp-cta-band">
         <div className="mp-shell mp-cta-row">
           <div>
-            <p className="mp-kicker">Need Help Hiring?</p>
-            <h2>Get a quick consultation for your open roles.</h2>
+            <p className="mp-kicker">Need talent support?</p>
+            <h2>Discuss hiring requirements with our team.</h2>
           </div>
-          <Link to="/contact" className="mp-btn mp-btn-primary">Book a Consultation</Link>
+          <Link to="/contact" className="mp-btn mp-btn-primary mp-magnetic">Book Consultation</Link>
         </div>
       </section>
     </main>

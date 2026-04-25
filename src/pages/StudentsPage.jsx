@@ -8,9 +8,8 @@ export default function StudentsPage() {
       <section className="mp-page-hero mp-page-hero-media">
         <HeroBackdrop video="/one.mp4" />
         <div className="mp-shell">
-          <p className="mp-kicker">Student Services</p>
-          <h1>Project mentoring with practical architecture and demo readiness.</h1>
-          <p className="mp-lead">For major/minor projects, we help students move from idea to implementation with structured support.</p>
+          <p className="mp-kicker">Student Support</p>
+          <h1>Structured mentoring for project delivery and final presentation readiness.</h1>
         </div>
       </section>
 
@@ -19,7 +18,7 @@ export default function StudentsPage() {
           {studentServices.map((service) => (
             <article key={service} className="mp-card mp-hover-card">
               <h3>{service}</h3>
-              <p>Includes planning guidance, implementation support, and final presentation readiness.</p>
+              <p>End-to-end guidance from planning to demo confidence.</p>
             </article>
           ))}
         </div>
@@ -28,10 +27,10 @@ export default function StudentsPage() {
       <section className="mp-section mp-cta-band">
         <div className="mp-shell mp-cta-row">
           <div>
-            <p className="mp-kicker">Guidance Session</p>
-            <h2>Need a one-on-one roadmap for your submission?</h2>
+            <p className="mp-kicker">Need Guidance?</p>
+            <h2>Book a mentoring session today.</h2>
           </div>
-          <Link to="/contact" className="mp-btn mp-btn-primary">Book Session</Link>
+          <Link to="/contact" className="mp-btn mp-btn-primary mp-magnetic">Book Session</Link>
         </div>
       </section>
     </main>

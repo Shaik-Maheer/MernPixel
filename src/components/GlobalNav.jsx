@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import logo from '../assets/mernpixel-logo.svg'
 
 const navItems = [
+  { label: 'Home', path: '/' },
   { label: 'Services', path: '/services' },
+  { label: 'Pricing', path: '/pricing' },
   { label: 'Works', path: '/works' },
-  { label: 'Clients', path: '/clients' },
   { label: 'Team', path: '/team' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
@@ -38,29 +40,58 @@ export default function GlobalNav() {
         </Link>
 
         <nav className="mp-nav-links" aria-label="Main navigation">
-          {navItems.map((item) => (
-            <NavLink key={item.path} to={item.path} className={({ isActive }) => `mp-nav-link ${isActive ? 'is-active' : ''}`}>
-              {item.label}
+          {navItems.map((item, index) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              end={item.path === '/'}
+              className={({ isActive }) => `mp-nav-link ${isActive ? 'is-active' : ''}`}
+            >
+              <span className="mp-nav-index">{String(index + 1).padStart(2, '0')}</span>
+              <span>{item.label}</span>
             </NavLink>
           ))}
         </nav>
 
-        <button type="button" className="mp-nav-toggle" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-controls="mobile-menu">
+        <button type="button" className="mp-nav-toggle" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-controls="mobile-menu" aria-label="Toggle menu">
           <span />
           <span />
         </button>
       </div>
 
-      <nav id="mobile-menu" className={`mp-mobile-menu ${open ? 'is-open' : ''}`} aria-label="Mobile navigation">
-        <div className="mp-shell mp-mobile-menu-inner">
-          {navItems.map((item, index) => (
-            <NavLink key={item.path} to={item.path} className={({ isActive }) => `mp-mobile-link ${isActive ? 'is-active' : ''}`}>
-              <span className="mp-mobile-link-index">{String(index + 1).padStart(2, '0')}</span>
-              <span>{item.label}</span>
-            </NavLink>
-          ))}
-        </div>
-      </nav>
+      <AnimatePresence>
+        {open && (
+          <motion.nav
+            id="mobile-menu"
+            className="mp-mobile-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.24 }}
+            aria-label="Mobile navigation"
+          >
+            <motion.div
+              className="mp-shell mp-mobile-panel"
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.24 }}
+            >
+              {navItems.map((item, index) => (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  end={item.path === '/'}
+                  className={({ isActive }) => `mp-mobile-link ${isActive ? 'is-active' : ''}`}
+                >
+                  <span className="mp-mobile-link-index">{String(index + 1).padStart(2, '0')}</span>
+                  <span>{item.label}</span>
+                </NavLink>
+              ))}
+            </motion.div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </header>
   )
 }
