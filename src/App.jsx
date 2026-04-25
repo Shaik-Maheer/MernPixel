@@ -1,11 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import GlobalNav from './components/GlobalNav'
-import ScrollProgress from './components/ScrollProgress'
 import SiteFooter from './components/SiteFooter'
-import StartupLoader from './components/StartupLoader'
-import CustomCursor from './components/CustomCursor'
 import WhatsAppFloat from './components/WhatsAppFloat'
 import useSmoothScroll from './hooks/useSmoothScroll'
 import AboutPage from './pages/AboutPage'
@@ -23,34 +20,12 @@ import TeamPage from './pages/TeamPage'
 
 function App() {
   const location = useLocation()
-  const [showLoader, setShowLoader] = useState(true)
 
   useSmoothScroll(location.pathname)
 
-  useEffect(() => {
-    setShowLoader(true)
-  }, [])
-
-  const handleLoaderDone = () => {
-    setShowLoader(false)
-  }
-
   return (
-    <div className="mp-app">
-      {showLoader && <StartupLoader onDone={handleLoaderDone} />}
-
-      {!showLoader && (
-        <>
-          <CustomCursor />
-          <ScrollProgress />
-
-          <div className="mp-bg-blobs" aria-hidden>
-            <span />
-            <span />
-            <span />
-          </div>
-
-          <GlobalNav />
+    <div className="min-h-screen font-sans selection:bg-purple-200">
+      <GlobalNav />
 
           <AnimatePresence mode="wait">
             <motion.div
@@ -82,8 +57,6 @@ function App() {
 
           <SiteFooter />
           <WhatsAppFloat />
-        </>
-      )}
     </div>
   )
 }
