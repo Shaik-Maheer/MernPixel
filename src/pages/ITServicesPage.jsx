@@ -27,7 +27,7 @@ export default function ITServicesPage() {
         {/* Background Image Block */}
         <div className="w-full h-[350px] md:h-[420px] rounded-[1.5rem] overflow-hidden relative shadow-md">
           <img 
-            src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2850&auto=format&fit=crop" 
+            src="/services-hero.jpg" 
             alt="Services Background"
             className="w-full h-full object-cover"
           />
