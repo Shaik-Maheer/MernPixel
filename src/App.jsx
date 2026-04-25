@@ -1,10 +1,6 @@
-import { useState } from 'react'
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
-import ChatbotWidget from './components/ChatbotWidget'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import GlobalNav from './components/GlobalNav'
-import PixelSignature from './components/PixelSignature'
-import WhatsAppFloat from './components/WhatsAppFloat'
-import useSmoothScroll from './hooks/useSmoothScroll'
+import SiteFooter from './components/SiteFooter'
 import AboutPage from './pages/AboutPage'
 import BlogPage from './pages/BlogPage'
 import CareersPage from './pages/CareersPage'
@@ -18,42 +14,34 @@ import StudentsPage from './pages/StudentsPage'
 import TeamPage from './pages/TeamPage'
 
 function App() {
-  const location = useLocation()
-  useSmoothScroll(location.pathname)
-  const [completedIntroKey, setCompletedIntroKey] = useState('')
-  const isHome = location.pathname === '/'
-  const showIntro = isHome && completedIntroKey !== location.key
-
-  const showNav = !isHome || !showIntro
-
-  const handleIntroComplete = () => {
-    setCompletedIntroKey(location.key)
-  }
-
   return (
-    <div className="relative overflow-hidden">
-      <div className="cosmic-bg" />
-      <PixelSignature />
-      <GlobalNav visible={showNav} />
-      <ChatbotWidget />
-      <WhatsAppFloat />
+    <div className="mp-app">
+      <div className="mp-bg-blobs" aria-hidden>
+        <span />
+        <span />
+        <span />
+      </div>
 
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<HomePage showIntro={showIntro} onIntroComplete={handleIntroComplete} />} />
-        <Route path="/works" element={<PortfolioPage />} />
+      <GlobalNav />
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="/services" element={<ITServicesPage />} />
-        <Route path="/clients" element={<ClientsPage />} />
-        <Route path="/team" element={<TeamPage />} />
         <Route path="/it-services" element={<ITServicesPage />} />
         <Route path="/non-it-consulting" element={<NonITConsultingPage />} />
         <Route path="/students" element={<StudentsPage />} />
+        <Route path="/works" element={<PortfolioPage />} />
         <Route path="/portfolio" element={<PortfolioPage />} />
+        <Route path="/clients" element={<ClientsPage />} />
+        <Route path="/team" element={<TeamPage />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/careers" element={<CareersPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+
+      <SiteFooter />
     </div>
   )
 }

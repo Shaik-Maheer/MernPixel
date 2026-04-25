@@ -1,103 +1,109 @@
-import { useCallback } from 'react'
 import { motion } from 'framer-motion'
-import IntroSequence from '../components/IntroSequence'
-import { capabilityMarquee } from '../data/siteData'
+import { Link } from 'react-router-dom'
+import { capabilityMarquee, homeCaseStudies, homeProcess, servicePlanets, stats } from '../data/siteData'
 
-export default function HomePage({ showIntro, onIntroComplete }) {
-  const MotionHeading = motion.h1
-  const MotionParagraph = motion.p
+const reveal = {
+  hidden: { opacity: 0, y: 26 },
+  visible: { opacity: 1, y: 0 },
+}
 
-  const handleIntroDone = useCallback(() => {
-    onIntroComplete?.()
-
-    window.setTimeout(() => {
-      const home = document.getElementById('home')
-      if (home) {
-        home.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }
-    }, 240)
-  }, [onIntroComplete])
-
+export default function HomePage() {
   return (
-    <>
-      {showIntro && <IntroSequence onDone={handleIntroDone} />}
+    <main className="mp-page">
+      <section className="mp-hero">
+        <div className="mp-shell mp-hero-grid">
+          <motion.div initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.65 }}>
+            <p className="mp-kicker">MERNpixel Digital Studio</p>
+            <h1 className="mp-display">High-converting websites for serious service businesses.</h1>
+            <p className="mp-lead">
+              We design, build, and optimize performance-first websites and applications that increase trust,
+              improve conversion flow, and scale with your business.
+            </p>
+            <div className="mp-actions">
+              <Link to="/contact" className="mp-btn mp-btn-primary">Start Project</Link>
+              <Link to="/works" className="mp-btn mp-btn-ghost">View Work</Link>
+            </div>
+          </motion.div>
 
-      <main id="home" className="relative">
-        <section className="home-hero home-hero-minimal relative flex min-h-screen items-center overflow-hidden">
-          <div className="home-hero-particles" aria-hidden>
-            {Array.from({ length: 168 }).map((_, index) => (
-              <span
-                key={`hero-particle-${index}`}
-                style={{
-                  '--hero-particle-left': `${(index * 7.13) % 100}%`,
-                  '--hero-particle-top': `${(index * 11.91) % 100}%`,
-                  '--hero-particle-delay': `${(index % 17) * 0.22}s`,
-                  '--hero-particle-size': `${1 + (index % 3)}px`,
-                  '--hero-particle-drift': `${8 + (index % 8) * 1.8}px`,
-                  '--hero-particle-duration': `${5.4 + (index % 7) * 0.6}s`,
-                }}
-              />
+          <motion.div className="mp-hero-panel" initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.7, delay: 0.12 }}>
+            <p>Core Strength</p>
+            <h2>Brand + Conversion + Engineering</h2>
+            <div className="mp-stat-grid">
+              {stats.map((item) => (
+                <article key={item.label}>
+                  <strong>{item.value}</strong>
+                  <span>{item.label}</span>
+                </article>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+
+        <div className="mp-marquee" aria-hidden>
+          <div className="mp-marquee-track">
+            {[...capabilityMarquee, ...capabilityMarquee].map((item, index) => (
+              <span key={`${item}-${index}`}>{item}</span>
             ))}
           </div>
-          <div className="home-hero-overlay" />
+        </div>
+      </section>
 
-          <div className="section-shell relative">
-            <div className="home-hero-minimal-wrap">
-              <motion.p
-                className="home-hero-brand-line"
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
-              >
-                mern pixel
-              </motion.p>
-
-              <motion.p
-                className="home-hero-kicker"
-                initial={{ opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.65, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              >
-                MERNpixel Studio
-              </motion.p>
-
-              <MotionHeading
-                className="home-hero-title relative z-10"
-                initial={{ opacity: 0, y: 34 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              >
-                Not Built To Impress.
-                <br />
-                Built To Perform.
-              </MotionHeading>
-
-              <MotionParagraph
-                className="home-hero-subtitle"
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.75, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
-              >
-                We design and ship business-ready digital experiences with clear messaging, fast performance,
-                and conversion-focused flows.
-              </MotionParagraph>
-            </div>
-
-            <motion.div
-              className="home-capability-marquee"
-              initial={{ opacity: 0, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <div className="home-capability-track">
-                {[...capabilityMarquee, ...capabilityMarquee].map((item, index) => (
-                  <span key={`${item}-${index}`}>{item}</span>
-                ))}
-              </div>
-            </motion.div>
+      <section className="mp-section">
+        <div className="mp-shell">
+          <div className="mp-heading-row">
+            <p className="mp-kicker">Services</p>
+            <h2>Focused solutions, zero noise.</h2>
           </div>
-        </section>
-      </main>
-    </>
+
+          <div className="mp-card-grid mp-grid-3">
+            {servicePlanets.slice(0, 6).map((service, index) => (
+              <motion.article key={service.title} className="mp-card mp-hover-card" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={reveal} transition={{ duration: 0.5, delay: index * 0.05 }}>
+                <p className="mp-chip" style={{ '--chip-color': service.color }}>{service.title}</p>
+                <p>{service.summary}</p>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mp-section">
+        <div className="mp-shell">
+          <div className="mp-heading-row">
+            <p className="mp-kicker">Selected Work</p>
+            <h2>Recent delivery highlights.</h2>
+          </div>
+
+          <div className="mp-card-grid mp-grid-3">
+            {homeCaseStudies.map((project, index) => (
+              <motion.article key={project.name} className="mp-card mp-work-card" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={reveal} transition={{ duration: 0.55, delay: index * 0.06 }}>
+                <img src={project.image} alt={project.name} loading="lazy" />
+                <p className="mp-chip">{project.category}</p>
+                <h3>{project.name}</h3>
+                <p>{project.impact}</p>
+                <a href={project.liveLink} target="_blank" rel="noreferrer" className="mp-text-link">Visit Live</a>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mp-section mp-section-tint">
+        <div className="mp-shell">
+          <div className="mp-heading-row">
+            <p className="mp-kicker">Execution Model</p>
+            <h2>How we deliver every project.</h2>
+          </div>
+
+          <div className="mp-card-grid mp-grid-4">
+            {homeProcess.map((step, index) => (
+              <motion.article key={step.step} className="mp-card mp-hover-card" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={reveal} transition={{ duration: 0.45, delay: index * 0.05 }}>
+                <h3>{step.step}</h3>
+                <p>{step.detail}</p>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
   )
 }

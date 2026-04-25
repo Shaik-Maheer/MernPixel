@@ -1,209 +1,63 @@
-import { useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Link } from 'react-router-dom'
-import CountUpNumber from '../components/CountUpNumber'
-import PageEndPromo from '../components/PageEndPromo'
-import { cloudinaryVideos } from '../data/cloudinaryVideos'
+import { motion } from 'framer-motion'
+import { business, homeProcess, stats } from '../data/siteData'
 
-gsap.registerPlugin(ScrollTrigger)
-
-const aboutProofStats = [
-  { value: '24+', label: 'Projects' },
-  { value: '18+', label: 'Clients' },
-  { value: '4', label: 'Team Members' },
-  { value: '5', label: 'Years Experience' },
-]
-const reelStack = ['React', 'Performance UI', 'QA']
+const reveal = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+}
 
 export default function AboutPage() {
-  const MotionSection = motion.section
-  const MotionMain = motion.main
-  const MotionHeading = motion.h1
-  const MotionParagraph = motion.p
-
-  const [introComplete, setIntroComplete] = useState(false)
-  const heroRef = useRef(null)
-  const heroVideoRef = useRef(null)
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      setIntroComplete(true)
-    }, 900)
-
-    return () => window.clearTimeout(timer)
-  }, [])
-
-  useEffect(() => {
-    if (!introComplete) {
-      return undefined
-    }
-
-    const context = gsap.context(() => {
-      if (heroVideoRef.current && heroRef.current) {
-        gsap.to(heroVideoRef.current, {
-          scale: 1.14,
-          y: -60,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 1.1,
-          },
-        })
-      }
-    })
-
-    return () => context.revert()
-  }, [introComplete])
-
   return (
-    <>
-      <AnimatePresence mode="wait">
-        {!introComplete && (
-          <MotionSection
-            key="about-loader"
-            className="about-intro-wrap"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="about-intro-particles" />
+    <main className="mp-page">
+      <section className="mp-page-hero">
+        <div className="mp-shell mp-grid-2 mp-hero-split">
+          <div>
+            <p className="mp-kicker">About {business.name}</p>
+            <h1>We are a compact team focused on high-standard digital delivery.</h1>
+            <p className="mp-lead">Our work combines strategic UX, strong visual systems, and maintainable engineering to create measurable business impact.</p>
+          </div>
 
-            <MotionHeading
-              className="about-intro-title"
-              initial={{ opacity: 0, y: 64, scale: 0.92 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-            >
-              ABOUT US
-            </MotionHeading>
+          <div className="mp-card mp-hover-card">
+            <p className="mp-kicker">What we optimize</p>
+            <ul className="mp-list">
+              <li>Brand trust and premium perception</li>
+              <li>Lead flow and conversion consistency</li>
+              <li>Speed, technical quality, and scalability</li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
-            <MotionParagraph
-              className="about-intro-sub"
-              initial={{ opacity: 0, y: 26 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, delay: 0.36 }}
-            >
-              Ideas . Innovation . Impact
-            </MotionParagraph>
-          </MotionSection>
-        )}
-      </AnimatePresence>
+      <section className="mp-section">
+        <div className="mp-shell">
+          <div className="mp-stat-grid">
+            {stats.map((item) => (
+              <article key={item.label}>
+                <strong>{item.value}</strong>
+                <span>{item.label}</span>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {introComplete && (
-        <MotionMain initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
-          <section ref={heroRef} className="relative min-h-screen overflow-hidden">
-            <video
-              ref={heroVideoRef}
-              className="about-hero-video"
-              src={cloudinaryVideos.emberOcean}
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
-            <div className="about-hero-overlay" />
+      <section className="mp-section">
+        <div className="mp-shell">
+          <div className="mp-heading-row">
+            <p className="mp-kicker">Delivery Framework</p>
+            <h2>Practical process, premium output.</h2>
+          </div>
 
-            <div className="about-falling-wrap" aria-hidden>
-              {Array.from({ length: 26 }).map((_, index) => (
-                <span
-                  key={`fall-${index}`}
-                  className="about-falling"
-                  style={{
-                    left: `${(index * 7) % 100}%`,
-                    animationDelay: `${(index % 8) * 0.5}s`,
-                    animationDuration: `${4.1 + (index % 6) * 0.6}s`,
-                  }}
-                />
-              ))}
-            </div>
-
-            <div className="section-shell relative z-10 flex min-h-screen flex-col items-center justify-center text-center">
-              <MotionHeading
-                className="about-hero-title max-w-5xl"
-                initial={{ opacity: 0, y: 38, scale: 0.93 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              >
-                OUR STORY STARTED IN A HACKATHON
-              </MotionHeading>
-
-              <MotionParagraph
-                className="mt-8 max-w-2xl text-xl text-white/85"
-                initial={{ opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              >
-                We are four postgraduates. We formed this team at a hackathon, won ₹10,000, and kept going.
-                Instead of just taking different jobs, we chose to build MERNpixel.
-              </MotionParagraph>
-            </div>
-          </section>
-
-          <section className="section-shell about-proof-shell">
-            <span className="section-kicker">Proof</span>
-            <h2 className="section-title">Proof Snapshot</h2>
-
-            <div className="about-proof-grid">
-              {aboutProofStats.map((item) => (
-                <motion.article
-                  key={item.label}
-                  className="glass-card about-proof-card rounded-3xl p-7"
-                >
-                  <p className="about-proof-value">
-                    <CountUpNumber value={item.value} />
-                  </p>
-                  <span className="about-proof-label">{item.label}</span>
-                </motion.article>
-              ))}
-            </div>
-          </section>
-
-          <section className="section-shell about-reel-shell">
-            <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
-              <motion.div className="about-reel-video-wrap">
-                <video
-                  className="about-reel-video"
-                  src={cloudinaryVideos.gridRubikCrop}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                />
-                <div className="about-reel-overlay" />
-                <p className="about-reel-tagline">We Don&apos;t Just Build. We Elevate.</p>
-              </motion.div>
-
-              <motion.article className="glass-card about-reel-card rounded-3xl p-7 md:p-9">
-                <p className="text-xs uppercase tracking-[0.22em] text-white/58">Studio Reel</p>
-                <h2 className="mt-3 font-['Cinzel'] text-4xl text-white md:text-5xl">How We Build</h2>
-
-                <div className="about-reel-stack">
-                  {reelStack.map((item) => (
-                    <span key={item}>{item}</span>
-                  ))}
-                </div>
-
-                <Link to="/team" className="btn-primary about-reel-cta mt-8 inline-flex cursor-target">
-                  Open Our Team
-                </Link>
+          <div className="mp-card-grid mp-grid-4">
+            {homeProcess.map((step, index) => (
+              <motion.article key={step.step} className="mp-card mp-hover-card" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={reveal} transition={{ duration: 0.5, delay: index * 0.05 }}>
+                <h3>{step.step}</h3>
+                <p>{step.detail}</p>
               </motion.article>
-            </div>
-          </section>
-
-          <PageEndPromo
-            eyebrow="Next Section"
-            title="Take A Tour Of Our Projects"
-            description="Explore project outcomes."
-            to="/portfolio"
-            buttonLabel="View Our Creations"
-          />
-        </MotionMain>
-      )}
-    </>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
   )
 }

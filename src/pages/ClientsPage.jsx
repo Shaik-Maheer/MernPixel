@@ -1,52 +1,44 @@
 import { motion } from 'framer-motion'
-import PageEndPromo from '../components/PageEndPromo'
-import PageIntroHero from '../components/PageIntroHero'
-import { testimonials } from '../data/siteData'
+import { stats, testimonials } from '../data/siteData'
+
+const reveal = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+}
 
 export default function ClientsPage() {
-  const MotionCard = motion.article
-
   return (
-    <main className="pt-24">
-      <PageIntroHero
-        title="CLIENTS"
-        subtitle="Feedback from clients."
-        compact
-      />
-
-      <section className="section-shell">
-        <div className="clients-hero-grid">
-          <article className="glass-card clients-quote-card rounded-3xl p-7 md:p-9 lg:col-span-2">
-            <p className="clients-quote-kicker">Featured Feedback</p>
-            <p className="clients-quote-text">"{testimonials[0].quote}"</p>
-            <p className="clients-quote-name">{testimonials[0].name}</p>
-          </article>
+    <main className="mp-page">
+      <section className="mp-page-hero">
+        <div className="mp-shell">
+          <p className="mp-kicker">Clients</p>
+          <h1>Long-term partnerships built on trust and measurable outcomes.</h1>
+          <p className="mp-lead">We focus on delivery reliability, communication clarity, and conversion impact for every engagement.</p>
         </div>
+      </section>
 
-        <div className="mt-8 grid gap-5 lg:grid-cols-3">
-          {testimonials.map((item, index) => (
-            <MotionCard
-              key={item.name}
-              className="glass-card rounded-3xl p-7"
-              initial={{ opacity: 0, y: 26 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.64, delay: index * 0.08 }}
-            >
-              <p className="text-white/80">"{item.quote}"</p>
-              <p className="mt-4 text-xs uppercase tracking-[0.18em] text-white/55">{item.name}</p>
-            </MotionCard>
+      <section className="mp-section">
+        <div className="mp-shell mp-stat-grid">
+          {stats.slice(0, 3).map((item) => (
+            <article key={item.label}>
+              <strong>{item.value}</strong>
+              <span>{item.label}</span>
+            </article>
           ))}
         </div>
       </section>
 
-      <PageEndPromo
-        eyebrow="Next Section"
-        title="Discover What We Do"
-        description="Explore our services."
-        to="/services"
-        buttonLabel="Explore Services"
-      />
+      <section className="mp-section">
+        <div className="mp-shell mp-card-grid mp-grid-3">
+          {testimonials.map((testimonial, index) => (
+            <motion.article key={testimonial.name} className="mp-card mp-hover-card" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={reveal} transition={{ duration: 0.45, delay: index * 0.05 }}>
+              <p className="mp-chip">Client Feedback</p>
+              <p>"{testimonial.quote}"</p>
+              <h3>{testimonial.name}</h3>
+            </motion.article>
+          ))}
+        </div>
+      </section>
     </main>
   )
 }

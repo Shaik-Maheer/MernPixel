@@ -1,54 +1,49 @@
 import { Link } from 'react-router-dom'
-import { business, publicPages, socialLinks } from '../data/siteData'
+import logo from '../assets/mernpixel-logo.svg'
+import { business, socialLinks } from '../data/siteData'
 
-const footerPages = publicPages.filter((page) => page.path !== '/')
+const quickLinks = [
+  { label: 'Services', path: '/services' },
+  { label: 'Works', path: '/works' },
+  { label: 'About', path: '/about' },
+  { label: 'Contact', path: '/contact' },
+]
 
 export default function SiteFooter() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="site-footer">
-      <div className="section-shell site-footer-grid">
+    <footer className="mp-footer">
+      <div className="mp-shell mp-footer-grid">
         <div>
-          <p className="site-footer-kicker">{business.name}</p>
-          <h2 className="site-footer-title">{business.tagline}</h2>
-          <p className="site-footer-copy">Design, development, and growth in one focused flow.</p>
+          <img src={logo} alt="MERNpixel" className="mp-footer-logo" />
+          <p className="mp-footer-copy">Premium web experiences for service-first businesses.</p>
         </div>
 
         <div>
-          <p className="site-footer-head">Quick Links</p>
-          <nav className="site-footer-links" aria-label="Footer">
-            {footerPages.map((page) => (
-              <Link key={page.path} to={page.path} className="site-footer-link cursor-target">
-                {page.label}
-              </Link>
+          <p className="mp-footer-title">Quick Links</p>
+          <div className="mp-footer-links">
+            {quickLinks.map((link) => (
+              <Link key={link.path} to={link.path}>{link.label}</Link>
             ))}
-          </nav>
+          </div>
         </div>
 
         <div>
-          <p className="site-footer-head">Contact</p>
-          <div className="site-footer-contact">
-            <a href={business.whatsapp} target="_blank" rel="noreferrer" className="site-footer-link cursor-target">
-              WhatsApp
-            </a>
-            <a href={`mailto:${business.email}`} className="site-footer-link cursor-target">
-              {business.email}
-            </a>
-            <a href={`tel:${business.phone.replace(/\s+/g, '')}`} className="site-footer-link cursor-target">
-              {business.phone}
-            </a>
+          <p className="mp-footer-title">Contact</p>
+          <div className="mp-footer-links">
+            <a href={`mailto:${business.email}`}>{business.email}</a>
+            <a href={`tel:${business.phone.replace(/\s+/g, '')}`}>{business.phone}</a>
+            <a href={business.whatsapp} target="_blank" rel="noreferrer">WhatsApp</a>
           </div>
         </div>
       </div>
 
-      <div className="site-footer-bottom">
-        <p>© {year} {business.name}. All rights reserved.</p>
-        <div className="site-footer-social">
-          {socialLinks.map((item) => (
-            <a key={item.label} href={item.href} target="_blank" rel="noreferrer" className="site-footer-link cursor-target">
-              {item.label}
-            </a>
+      <div className="mp-shell mp-footer-bottom">
+        <p>(c) {year} MERNpixel. All rights reserved.</p>
+        <div className="mp-footer-social">
+          {socialLinks.map((social) => (
+            <a key={social.label} href={social.href} target="_blank" rel="noreferrer">{social.label}</a>
           ))}
         </div>
       </div>
