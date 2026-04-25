@@ -18,10 +18,10 @@ export default function SiteFooter() {
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Top Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 lg:gap-16 mb-20">
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-8 md:gap-8 lg:gap-16 mb-20">
           
           {/* Brand Column */}
-          <div className="col-span-1 md:col-span-5 lg:col-span-4">
+          <div className="col-span-2 md:col-span-5 lg:col-span-4">
             <Link to="/" className="flex items-center gap-3 mb-6">
               <div className="w-8 h-8 bg-slate-900 text-white flex items-center justify-center rounded-lg font-bold text-sm">
                 M
@@ -55,7 +55,7 @@ export default function SiteFooter() {
           <div className="col-span-1 md:col-span-2 lg:col-span-3"></div>
 
           {/* Explore Column */}
-          <div className="col-span-1 md:col-span-2 lg:col-span-2">
+          <div className="col-span-1 md:col-span-3 lg:col-span-2">
             <h4 className="text-sm font-bold text-slate-900 mb-6">Explore</h4>
             <ul className="flex flex-col gap-4">
               {quickLinks.map((link) => (
@@ -69,7 +69,7 @@ export default function SiteFooter() {
           </div>
 
           {/* Reach us Column */}
-          <div className="col-span-1 md:col-span-3 lg:col-span-3">
+          <div className="col-span-1 md:col-span-4 lg:col-span-3">
             <h4 className="text-sm font-bold text-slate-900 mb-6">Reach us</h4>
             <ul className="flex flex-col gap-4">
               <li>

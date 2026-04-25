@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { sendChatMessage } from '../lib/chatApi'
+import { SocialIcon } from './SocialIcons'
+import { business } from '../data/siteData'
 
 const initialMessage = {
   role: 'assistant',
@@ -70,20 +72,35 @@ export default function ChatbotWidget() {
 
   return (
     <>
-      <MotionButton
-        type="button"
-        className="fixed bottom-6 right-24 z-50 flex items-center gap-2 bg-slate-900 text-white rounded-full px-4 py-3 shadow-xl hover:bg-slate-800 transition-colors cursor-pointer"
-        initial={{ opacity: 0, y: 20, scale: 0.92 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.55, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        whileHover={{ y: -3, scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        onClick={() => setOpen((prev) => !prev)}
-        aria-label={open ? 'Close chatbot' : 'Open chatbot'}
-      >
-        <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
-        <span className="text-sm font-bold tracking-wide">{open ? 'Close Chat' : 'Chat with us'}</span>
-      </MotionButton>
+      {/* Floating Action Buttons Container */}
+      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+        {/* WhatsApp Connect */}
+        <a 
+          href={business.whatsapp} 
+          target="_blank" 
+          rel="noreferrer" 
+          className="flex items-center gap-2.5 bg-white border border-slate-200 text-slate-900 rounded-full px-4 py-3 shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:bg-slate-50 transition-all hover:-translate-y-1 hover:shadow-[0_15px_40px_rgb(0,0,0,0.12)] cursor-pointer"
+        >
+          <SocialIcon network="whatsapp" className="w-[18px] h-[18px] drop-shadow-sm" />
+          <span className="text-[13px] font-extrabold tracking-widest uppercase mt-0.5 hidden sm:inline-block">WhatsApp</span>
+        </a>
+
+        {/* AI Chatbot Launcher */}
+        <MotionButton
+          type="button"
+          className="flex items-center gap-2 bg-slate-900 text-white rounded-full px-4 py-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:bg-slate-800 transition-colors cursor-pointer"
+          initial={{ opacity: 0, y: 20, scale: 0.92 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.55, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          whileHover={{ y: -4, shadow: "0 15px 40px rgb(0,0,0,0.2)" }}
+          whileTap={{ scale: 0.98 }}
+          onClick={() => setOpen((prev) => !prev)}
+          aria-label={open ? 'Close chatbot' : 'Open chatbot'}
+        >
+          <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+          <span className="text-[13px] font-extrabold tracking-widest uppercase mt-0.5">{open ? 'Close Chat' : 'Chat with us'}</span>
+        </MotionButton>
+      </div>
 
       {open && (
         <motion.aside
