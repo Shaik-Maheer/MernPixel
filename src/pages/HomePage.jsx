@@ -1,22 +1,18 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import CountUpNumber from '../components/CountUpNumber'
+import DetailModal from '../components/DetailModal'
 import HeroBackdrop from '../components/HeroBackdrop'
-import SlidingComments from '../components/SlidingComments'
 import {
-  achievements,
   caseStudies,
-  confidenceBoosters,
-  lectureEvents,
-  originTimeline,
+  lectureDetail,
   pricingPlans,
-  processSteps,
   servicesDetailed,
   stats,
-  testimonials,
-  trustPoints,
+  storyDetail,
+  teamMembers,
   trustBrands,
-  whyChoose,
 } from '../data/siteData'
 
 const reveal = {
@@ -24,8 +20,43 @@ const reveal = {
   visible: { opacity: 1, y: 0 },
 }
 
+function createServiceModal(service) {
+  return {
+    subtitle: 'Service Details',
+    title: service.title,
+    sections: [
+      { label: 'Features', items: service.features },
+      { label: 'Use Cases', items: service.useCases },
+      { label: 'Benefits', items: [service.outcome] },
+    ],
+  }
+}
+
+function createWorkModal(work) {
+  return {
+    subtitle: work.client,
+    title: work.title,
+    fullscreen: true,
+    sections: [
+      { label: 'Project Overview', text: work.problem },
+      { label: 'What We Did', text: work.solution },
+      { label: 'Result', text: work.result },
+    ],
+    actions: [{ label: 'Open Live Project', href: work.link, external: true }],
+  }
+}
+
+function createTeamModal(member) {
+  return {
+    subtitle: member.role,
+    title: member.name,
+    sections: [{ label: 'Profile', text: member.bio }],
+    actions: [{ label: 'LinkedIn', href: member.linkedin, external: true }],
+  }
+}
+
 export default function HomePage() {
-  const featured = caseStudies.slice(0, 3)
+  const [modal, setModal] = useState(null)
 
   return (
     <main className="mp-page">
@@ -33,19 +64,19 @@ export default function HomePage() {
         <HeroBackdrop video="/one.mp4" />
 
         <div className="mp-shell mp-hero-grid">
-          <motion.div initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.6 }}>
-            <p className="mp-kicker">MERNpixel Premium Studio</p>
-            <h1 className="mp-display">We build digital products that drive real business growth.</h1>
-            <p className="mp-lead">Performance-first engineering, conversion-focused UX, and scalable architecture for brands that demand quality.</p>
+          <motion.div initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.55 }}>
+            <p className="mp-kicker">MERNpixel Agency</p>
+            <h1 className="mp-display">We build high-performance digital products</h1>
+            <p className="mp-lead">Premium UI, scalable engineering, and conversion-focused delivery.</p>
             <div className="mp-actions">
-              <Link to="/contact" className="mp-btn mp-btn-primary mp-magnetic">Get Started</Link>
               <Link to="/works" className="mp-btn mp-btn-ghost mp-magnetic">View Work</Link>
+              <Link to="/contact" className="mp-btn mp-btn-primary mp-magnetic">Start Project</Link>
             </div>
           </motion.div>
 
-          <motion.aside className="mp-hero-panel" initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.7, delay: 0.1 }}>
-            <p>Delivery Snapshot</p>
-            <h2>Reliable quality from strategy to launch.</h2>
+          <motion.aside className="mp-hero-panel" initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.6, delay: 0.1 }}>
+            <p>Trusted Execution</p>
+            <h2>Built for speed and business outcomes.</h2>
             <div className="mp-stat-grid">
               {stats.map((item) => (
                 <article key={item.label}>
@@ -72,157 +103,25 @@ export default function HomePage() {
       <section className="mp-section">
         <div className="mp-shell">
           <div className="mp-heading-row">
-            <p className="mp-kicker">Origin Story</p>
-            <h2>From Hackathon to MERNpixel</h2>
-            <p className="mp-lead">Started as 4 postgraduate students, MERNpixel was forged in competition, pressure, and real execution.</p>
-          </div>
-
-          <div className="mp-timeline">
-            {originTimeline.map((item, index) => (
-              <motion.article
-                key={item.title}
-                className="mp-card mp-hover-card mp-timeline-item"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.25 }}
-                variants={reveal}
-                transition={{ duration: 0.45, delay: index * 0.06 }}
-              >
-                <p className="mp-chip">{item.stage}</p>
-                <h3>{item.title}</h3>
-                <p>{item.detail}</p>
-              </motion.article>
-            ))}
-          </div>
-          <p className="mp-origin-quote">Not just a team, but a shared vision built through competition, learning, and execution.</p>
-        </div>
-      </section>
-
-      <section className="mp-section mp-section-tint">
-        <div className="mp-shell">
-          <div className="mp-heading-row">
-            <p className="mp-kicker">Guest Lectures & Impact</p>
-            <h2>Sharing Knowledge, Building Future Talent</h2>
-            <p className="mp-lead">Delivered invited sessions in colleges on AI tools, resume building, live coding, and placement guidance.</p>
-          </div>
-          <div className="mp-card-grid mp-grid-2">
-            {lectureEvents.map((event, index) => (
-              <motion.article
-                key={`${event.date}-${event.venue}`}
-                className="mp-card mp-hover-card mp-event-card"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                variants={reveal}
-                transition={{ duration: 0.45, delay: index * 0.06 }}
-              >
-                <div className="mp-event-meta">
-                  <span>{event.date}</span>
-                  <span>{event.venue}</span>
-                  <span>{event.audience}</span>
-                </div>
-                <h3>{event.topic}</h3>
-                <p className="mp-outcome">{event.highlight}</p>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mp-section">
-        <div className="mp-shell">
-          <div className="mp-heading-row">
-            <p className="mp-kicker">Achievements</p>
-            <h2>Built through real execution, not just theory</h2>
-          </div>
-          <div className="mp-card-grid mp-grid-3">
-            {achievements.map((item, index) => (
-              <motion.article
-                key={item.label}
-                className="mp-card mp-hover-card"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                variants={reveal}
-                transition={{ duration: 0.45, delay: index * 0.05 }}
-              >
-                <h3><CountUpNumber value={item.value} /></h3>
-                <p className="mp-chip">{item.label}</p>
-                <p>{item.description}</p>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mp-section">
-        <div className="mp-shell">
-          <div className="mp-heading-row">
             <p className="mp-kicker">Services</p>
-            <h2>Premium execution across design, development, and growth.</h2>
+            <h2>Fast, focused execution across product and growth.</h2>
           </div>
-          <div className="mp-card-grid mp-grid-3">
+          <div className="mp-service-rail">
             {servicesDetailed.map((service, index) => (
-              <motion.article key={service.id} className="mp-card mp-hover-card" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={reveal} transition={{ duration: 0.45, delay: index * 0.05 }}>
+              <motion.article
+                key={service.id}
+                className="mp-card mp-hover-card mp-service-rail-item"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={reveal}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+              >
                 <p className="mp-chip">{service.title}</p>
                 <p>{service.description}</p>
-                <p className="mp-outcome">Outcome: {service.outcome}</p>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mp-section mp-section-tint">
-        <div className="mp-shell">
-          <div className="mp-heading-row">
-            <p className="mp-kicker">Why Trust Us</p>
-            <h2>Credibility you can verify before we start.</h2>
-          </div>
-          <div className="mp-card-grid mp-grid-2">
-            {whyChoose.map((item, index) => (
-              <motion.article key={item.title} className="mp-card mp-hover-card" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={reveal} transition={{ duration: 0.45, delay: index * 0.04 }}>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </motion.article>
-            ))}
-          </div>
-          <div className="mp-card-grid mp-grid-2 mp-trust-lists">
-            <article className="mp-card mp-hover-card">
-              <p className="mp-kicker">Core Trust Signals</p>
-              <ul className="mp-list">
-                {trustPoints.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </article>
-            <article className="mp-card mp-hover-card">
-              <p className="mp-kicker">Client Confidence Boosters</p>
-              <ul className="mp-list">
-                {confidenceBoosters.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section className="mp-section">
-        <div className="mp-shell">
-          <div className="mp-heading-row">
-            <p className="mp-kicker">Featured Work</p>
-            <h2>Case-study driven project highlights.</h2>
-          </div>
-          <div className="mp-card-grid mp-grid-3">
-            {featured.map((item, index) => (
-              <motion.article key={item.id} className="mp-card mp-work-card" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={reveal} transition={{ duration: 0.5, delay: index * 0.05 }}>
-                <img src={item.image} alt={item.title} loading="lazy" />
-                <h3>{item.title}</h3>
-                <p><strong>Problem:</strong> {item.problem}</p>
-                <p><strong>Solution:</strong> {item.solution}</p>
-                <p><strong>Result:</strong> {item.result}</p>
-                <a className="mp-text-link" href={item.link} target="_blank" rel="noreferrer">Open Case Study</a>
+                <button type="button" className="mp-text-link" onClick={() => setModal(createServiceModal(service))}>
+                  View More
+                </button>
               </motion.article>
             ))}
           </div>
@@ -232,58 +131,155 @@ export default function HomePage() {
       <section className="mp-section">
         <div className="mp-shell">
           <div className="mp-heading-row">
-            <p className="mp-kicker">Process</p>
-            <h2>Clear workflow from requirement to launch.</h2>
-          </div>
-          <div className="mp-card-grid mp-grid-4">
-            {processSteps.map((step, index) => (
-              <motion.article key={step.step} className="mp-card mp-hover-card" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={reveal} transition={{ duration: 0.45, delay: index * 0.04 }}>
-                <h3>{step.step}</h3>
-                <p>{step.detail}</p>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mp-section mp-section-tint">
-        <div className="mp-shell">
-          <div className="mp-heading-row">
-            <p className="mp-kicker">Pricing Preview</p>
-            <h2>Flexible plans for different growth stages.</h2>
+            <p className="mp-kicker">Works</p>
+            <h2>Visual-first projects with measurable outcomes.</h2>
           </div>
           <div className="mp-card-grid mp-grid-3">
-            {pricingPlans.map((plan, index) => (
-              <motion.article key={plan.name} className={`mp-card mp-pricing-card ${plan.featured ? 'is-featured' : ''}`} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={reveal} transition={{ duration: 0.45, delay: index * 0.04 }}>
-                <p className="mp-chip">{plan.name}</p>
-                <h3>{plan.price}</h3>
-                <p>{plan.summary}</p>
-                <ul className="mp-list">
-                  {plan.includes.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </motion.article>
+            {caseStudies.slice(0, 3).map((work, index) => (
+              <motion.button
+                key={work.id}
+                type="button"
+                className="mp-card mp-work-card mp-work-button"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={reveal}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                onClick={() => setModal(createWorkModal(work))}
+              >
+                <img src={work.image} alt={work.title} loading="lazy" />
+                <p className="mp-chip">{work.type}</p>
+                <h3>{work.title}</h3>
+                <p>{work.result}</p>
+              </motion.button>
             ))}
           </div>
           <div className="mp-actions mp-actions-center">
-            <Link to="/pricing" className="mp-btn mp-btn-ghost mp-magnetic">See Full Pricing</Link>
+            <Link to="/works" className="mp-btn mp-btn-ghost mp-magnetic">See All Works</Link>
           </div>
         </div>
       </section>
 
-      <SlidingComments items={testimonials} />
+      <section className="mp-section mp-section-tint">
+        <div className="mp-shell mp-grid-2">
+          <article className="mp-card mp-hover-card">
+            <p className="mp-kicker">Story</p>
+            <h3>Started with a Hackathon</h3>
+            <p>4 students. Built, competed, won. That became MERNpixel.</p>
+            <button
+              type="button"
+              className="mp-text-link"
+              onClick={() =>
+                setModal({
+                  subtitle: 'Origin Story',
+                  title: storyDetail.title,
+                  sections: [{ label: 'Journey', items: storyDetail.points }],
+                })
+              }
+            >
+              View Story
+            </button>
+          </article>
+
+          <article className="mp-card mp-hover-card">
+            <p className="mp-kicker">Guest Sessions</p>
+            <h3>Sharing knowledge with future builders.</h3>
+            <p>AI tools, resume building, and live coding.</p>
+            <button
+              type="button"
+              className="mp-text-link"
+              onClick={() =>
+                setModal({
+                  subtitle: 'Guest Lecture Detail',
+                  title: lectureDetail.title,
+                  sections: [
+                    { label: 'Topics', items: lectureDetail.topics },
+                    { label: 'Events', items: lectureDetail.events },
+                    { label: 'Format', text: lectureDetail.note },
+                  ],
+                })
+              }
+            >
+              View More
+            </button>
+          </article>
+        </div>
+      </section>
+
+      <section className="mp-section">
+        <div className="mp-shell">
+          <div className="mp-heading-row">
+            <p className="mp-kicker">Pricing</p>
+            <h2>Simple plans with clear delivery scope.</h2>
+          </div>
+          <div className="mp-card-grid mp-grid-3">
+            {pricingPlans.map((plan, index) => (
+              <motion.article
+                key={plan.name}
+                className={`mp-card mp-pricing-card ${plan.featured ? 'is-featured' : ''}`}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={reveal}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+              >
+                <p className="mp-chip">{plan.name}</p>
+                <h3>{plan.price}</h3>
+                <p>{plan.summary}</p>
+                <Link to="/pricing" className="mp-btn mp-btn-ghost mp-magnetic">Get Started</Link>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mp-section">
+        <div className="mp-shell">
+          <div className="mp-heading-row">
+            <p className="mp-kicker">Team</p>
+            <h2>Core builders driving every project.</h2>
+          </div>
+          <div className="mp-card-grid mp-grid-4">
+            {teamMembers.map((member, index) => (
+              <motion.button
+                key={member.name}
+                type="button"
+                className="mp-card mp-hover-card mp-team-mini"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={reveal}
+                transition={{ duration: 0.4, delay: index * 0.04 }}
+                onClick={() => setModal(createTeamModal(member))}
+              >
+                <h3>{member.name}</h3>
+                <p>{member.role}</p>
+                <span className="mp-text-link">View More</span>
+              </motion.button>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className="mp-section mp-cta-band">
         <div className="mp-shell mp-cta-row">
           <div>
-            <p className="mp-kicker">Let’s Build</p>
-            <h2>Started from a hackathon. Now building real products for real businesses.</h2>
-            <p className="mp-lead">Tell us your goal, and we will turn it into a fast, scalable, premium digital experience.</p>
+            <p className="mp-kicker">Final CTA</p>
+            <h2>Build a faster, sharper digital presence with MERNpixel.</h2>
           </div>
-          <Link to="/contact" className="mp-btn mp-btn-primary mp-magnetic">Work with MERNpixel</Link>
+          <Link to="/contact" className="mp-btn mp-btn-primary mp-magnetic">Start Project</Link>
         </div>
       </section>
+
+      <DetailModal
+        open={Boolean(modal)}
+        onClose={() => setModal(null)}
+        title={modal?.title}
+        subtitle={modal?.subtitle}
+        sections={modal?.sections}
+        actions={modal?.actions}
+        fullscreen={modal?.fullscreen}
+      />
     </main>
   )
 }

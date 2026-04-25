@@ -208,24 +208,45 @@ export const confidenceBoosters = [
 export const pricingPlans = [
   {
     name: 'Starter',
-    price: '$900 - $1,800',
-    summary: 'Best for early-stage businesses launching their first professional presence.',
-    includes: ['Basic website', 'Up to 5 pages', 'Responsive layout', 'Lead/contact integration'],
+    price: '₹5,000 - ₹10,000',
+    summary: 'For fast business launch websites.',
+    includes: ['Up to 5 pages', 'Responsive layout', 'Contact capture setup', 'Basic performance tuning'],
   },
   {
     name: 'Professional',
-    price: '$2,500 - $5,000',
-    summary: 'Best for growth-stage brands needing premium UI, SEO, and conversion depth.',
-    includes: ['Advanced UI/UX', 'SEO optimization', 'Micro-interactions', 'Performance tuning'],
+    price: '₹15,000 - ₹30,000',
+    summary: 'For growth-focused premium web presence.',
+    includes: ['Advanced UI/UX', 'SEO-ready structure', 'Motion interactions', 'Conversion sections'],
     featured: true,
   },
   {
     name: 'Premium',
-    price: '$6,500+',
-    summary: 'Best for custom products, SaaS platforms, and high-scale digital operations.',
-    includes: ['Full custom solution', 'Web app / SaaS architecture', 'Deep optimization', 'Priority support'],
+    price: '₹50,000+',
+    summary: 'For custom products and scalable apps.',
+    includes: ['Custom product build', 'Web app / SaaS architecture', 'Deep optimization', 'Priority support'],
   },
 ]
+
+export const storyDetail = {
+  title: 'From Hackathon to MERNpixel',
+  points: [
+    'Started as four MCA students with one goal: build real products, not just demos.',
+    'Entered our first hackathon, where every decision had to be fast and practical.',
+    'Built, tested, and iterated under pressure with clear team ownership.',
+    'Won the competition and realized our execution style could solve real client problems.',
+    'That momentum became MERNpixel: a team built on learning, pressure, and delivery.',
+  ],
+}
+
+export const lectureDetail = {
+  title: 'Guest Sessions',
+  topics: ['AI tools', 'Resume building', 'Live coding', 'Placement guidance'],
+  events: [
+    'MCA Department Seminar Hall: hands-on AI and productivity workflows.',
+    'Career Development Cell: resume reviews with live coding practice.',
+  ],
+  note: 'Poster-style practical sessions designed for MCA students entering real hiring rounds.',
+}
 
 export const caseStudies = [
   {

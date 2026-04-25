@@ -5,6 +5,8 @@ import GlobalNav from './components/GlobalNav'
 import ScrollProgress from './components/ScrollProgress'
 import SiteFooter from './components/SiteFooter'
 import StartupLoader from './components/StartupLoader'
+import CustomCursor from './components/CustomCursor'
+import WhatsAppFloat from './components/WhatsAppFloat'
 import useSmoothScroll from './hooks/useSmoothScroll'
 import AboutPage from './pages/AboutPage'
 import BlogPage from './pages/BlogPage'
@@ -39,6 +41,7 @@ function App() {
 
       {!showLoader && (
         <>
+          <CustomCursor />
           <ScrollProgress />
 
           <div className="mp-bg-blobs" aria-hidden>
@@ -78,6 +81,7 @@ function App() {
           </AnimatePresence>
 
           <SiteFooter />
+          <WhatsAppFloat />
         </>
       )}
     </div>

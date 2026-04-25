@@ -1,61 +1,84 @@
+import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import DetailModal from '../components/DetailModal'
 import HeroBackdrop from '../components/HeroBackdrop'
 import { servicesDetailed } from '../data/siteData'
 
 const reveal = {
-  hidden: { opacity: 0, y: 22 },
+  hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
 }
 
 export default function ITServicesPage() {
+  const [activeId, setActiveId] = useState(servicesDetailed[0].id)
+  const [modalOpen, setModalOpen] = useState(false)
+
+  const activeService = useMemo(
+    () => servicesDetailed.find((service) => service.id === activeId) || servicesDetailed[0],
+    [activeId]
+  )
+
   return (
     <main className="mp-page">
       <section className="mp-page-hero mp-page-hero-media">
         <HeroBackdrop video="/two.mp4" />
         <div className="mp-shell">
           <p className="mp-kicker">Services</p>
-          <h1>Detailed service stack built for conversion and scale.</h1>
-          <p className="mp-lead">Every service includes clear outcomes, practical use cases, and delivery confidence.</p>
+          <h1>Focused solutions for growth-stage businesses.</h1>
+          <p className="mp-lead">Pick a service and open details only when needed.</p>
         </div>
       </section>
 
       <section className="mp-section">
-        <div className="mp-shell mp-card-grid mp-grid-2">
-          {servicesDetailed.map((service, index) => (
-            <motion.article key={service.id} className="mp-card mp-hover-card" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={reveal} transition={{ duration: 0.45, delay: index * 0.04 }}>
-              <p className="mp-chip">{service.icon} {service.title}</p>
-              <p>{service.description}</p>
-
-              <h3>Features</h3>
-              <ul className="mp-list">
-                {service.features.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-
-              <h3>Use Cases</h3>
-              <ul className="mp-list">
-                {service.useCases.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-
-              <p className="mp-outcome">Outcome: {service.outcome}</p>
-            </motion.article>
-          ))}
-        </div>
-      </section>
-
-      <section className="mp-section mp-cta-band">
-        <div className="mp-shell mp-cta-row">
-          <div>
-            <p className="mp-kicker">Need a custom scope?</p>
-            <h2>We tailor services to your exact business model.</h2>
+        <div className="mp-shell">
+          <div className="mp-service-tabs" role="tablist" aria-label="Service tabs">
+            {servicesDetailed.map((service) => (
+              <button
+                key={service.id}
+                type="button"
+                role="tab"
+                aria-selected={activeService.id === service.id}
+                className={`mp-service-tab ${activeService.id === service.id ? 'is-active' : ''}`}
+                onClick={() => setActiveId(service.id)}
+              >
+                {service.title}
+              </button>
+            ))}
           </div>
-          <Link to="/contact" className="mp-btn mp-btn-primary mp-magnetic">Discuss Your Project</Link>
+
+          <motion.article
+            key={activeService.id}
+            className="mp-card mp-hover-card mp-service-highlight"
+            initial="hidden"
+            animate="visible"
+            variants={reveal}
+            transition={{ duration: 0.28 }}
+          >
+            <p className="mp-chip">{activeService.icon} Service Focus</p>
+            <h2>{activeService.title}</h2>
+            <p>{activeService.description}</p>
+            <div className="mp-actions">
+              <button type="button" className="mp-btn mp-btn-primary mp-magnetic" onClick={() => setModalOpen(true)}>
+                View More
+              </button>
+              <Link to="/contact" className="mp-btn mp-btn-ghost mp-magnetic">Start Project</Link>
+            </div>
+          </motion.article>
         </div>
       </section>
+
+      <DetailModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        subtitle="Service Details"
+        title={activeService.title}
+        sections={[
+          { label: 'Features', items: activeService.features },
+          { label: 'Use Cases', items: activeService.useCases },
+          { label: 'Benefits', items: [activeService.outcome] },
+        ]}
+      />
     </main>
   )
 }

@@ -1,83 +1,76 @@
+import { useState } from 'react'
+import DetailModal from '../components/DetailModal'
 import HeroBackdrop from '../components/HeroBackdrop'
-import { aboutContent, lectureEvents, originTimeline } from '../data/siteData'
+import { aboutContent, lectureDetail, storyDetail } from '../data/siteData'
 
 export default function AboutPage() {
+  const [activeModal, setActiveModal] = useState('')
+
   return (
     <main className="mp-page">
       <section className="mp-page-hero mp-page-hero-media">
         <HeroBackdrop video="/four.mp4" />
         <div className="mp-shell">
           <p className="mp-kicker">About MERNpixel</p>
-          <h1>Why MERNpixel exists: to turn digital products into growth engines.</h1>
+          <h1>Premium digital execution with startup speed.</h1>
+          <p className="mp-lead">Built by developers focused on outcomes, not noise.</p>
         </div>
       </section>
 
       <section className="mp-section">
         <div className="mp-shell mp-grid-2">
           <article className="mp-card mp-hover-card">
-            <p className="mp-kicker">Company Story</p>
-            <p>{aboutContent.story}</p>
+            <p className="mp-kicker">Started with a Hackathon</p>
+            <h3>4 students built, competed, and won.</h3>
+            <p>That turning point became MERNpixel.</p>
+            <button type="button" className="mp-text-link" onClick={() => setActiveModal('story')}>
+              View Story
+            </button>
           </article>
 
           <article className="mp-card mp-hover-card">
+            <p className="mp-kicker">Guest Sessions</p>
+            <h3>Sharing knowledge with future builders.</h3>
+            <p>AI tools, resume building, and live coding sessions.</p>
+            <button type="button" className="mp-text-link" onClick={() => setActiveModal('lecture')}>
+              View More
+            </button>
+          </article>
+        </div>
+      </section>
+
+      <section className="mp-section mp-section-tint">
+        <div className="mp-shell mp-grid-2">
+          <article className="mp-card mp-hover-card">
             <p className="mp-kicker">Mission</p>
             <p>{aboutContent.mission}</p>
-            <p className="mp-kicker mp-kicker-spaced">Vision</p>
+          </article>
+          <article className="mp-card mp-hover-card">
+            <p className="mp-kicker">Vision</p>
             <p>{aboutContent.vision}</p>
           </article>
         </div>
       </section>
 
-      <section className="mp-section mp-section-tint">
-        <div className="mp-shell mp-card mp-hover-card">
-          <p className="mp-kicker">What Makes Us Different</p>
-          <ul className="mp-list">
-            {aboutContent.differentiator.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <DetailModal
+        open={activeModal === 'story'}
+        onClose={() => setActiveModal('')}
+        subtitle="Origin Story"
+        title={storyDetail.title}
+        sections={[{ label: 'Journey', items: storyDetail.points }]}
+      />
 
-      <section className="mp-section">
-        <div className="mp-shell">
-          <div className="mp-heading-row">
-            <p className="mp-kicker">From Hackathon to MERNpixel</p>
-            <h2>Our foundation was built in competition, pressure, and execution.</h2>
-          </div>
-          <div className="mp-timeline">
-            {originTimeline.map((item) => (
-              <article key={item.title} className="mp-card mp-hover-card mp-timeline-item">
-                <p className="mp-chip">{item.stage}</p>
-                <h3>{item.title}</h3>
-                <p>{item.detail}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mp-section mp-section-tint">
-        <div className="mp-shell">
-          <div className="mp-heading-row">
-            <p className="mp-kicker">Guest Lectures</p>
-            <h2>Sharing knowledge with future builders.</h2>
-          </div>
-          <div className="mp-card-grid mp-grid-2">
-            {lectureEvents.map((event) => (
-              <article key={`${event.date}-${event.venue}`} className="mp-card mp-hover-card mp-event-card">
-                <div className="mp-event-meta">
-                  <span>{event.date}</span>
-                  <span>{event.venue}</span>
-                  <span>{event.audience}</span>
-                </div>
-                <h3>{event.topic}</h3>
-                <p className="mp-outcome">{event.highlight}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <DetailModal
+        open={activeModal === 'lecture'}
+        onClose={() => setActiveModal('')}
+        subtitle="Guest Sessions"
+        title={lectureDetail.title}
+        sections={[
+          { label: 'Topics', items: lectureDetail.topics },
+          { label: 'Events', items: lectureDetail.events },
+          { label: 'Format', text: lectureDetail.note },
+        ]}
+      />
     </main>
   )
 }

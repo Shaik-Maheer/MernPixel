@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
+import DetailModal from '../components/DetailModal'
 import HeroBackdrop from '../components/HeroBackdrop'
 import { caseStudies } from '../data/siteData'
 
@@ -13,6 +14,7 @@ const reveal = {
 export default function PortfolioPage() {
   const [activeFilter, setActiveFilter] = useState('All')
   const [loaded, setLoaded] = useState({})
+  const [selectedProject, setSelectedProject] = useState(null)
 
   const projects = useMemo(() => {
     if (activeFilter === 'All') {
@@ -27,8 +29,8 @@ export default function PortfolioPage() {
         <HeroBackdrop video="/three.mp4" />
         <div className="mp-shell">
           <p className="mp-kicker">Works</p>
-          <h1>Case studies focused on measurable results.</h1>
-          <p className="mp-lead">Each project captures the client problem, our approach, and the business outcome.</p>
+          <h1>Real projects, real outcomes.</h1>
+          <p className="mp-lead">Click any project for the full case snapshot.</p>
 
           <div className="mp-filter-row">
             {filters.map((filter) => (
@@ -48,7 +50,17 @@ export default function PortfolioPage() {
       <section className="mp-section">
         <div className="mp-shell mp-card-grid mp-grid-2">
           {projects.map((project, index) => (
-            <motion.article key={project.id} className="mp-card mp-work-card mp-case-card" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={reveal} transition={{ duration: 0.45, delay: index * 0.04 }}>
+            <motion.button
+              key={project.id}
+              type="button"
+              className="mp-card mp-work-card mp-case-card mp-work-button"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={reveal}
+              transition={{ duration: 0.4, delay: index * 0.04 }}
+              onClick={() => setSelectedProject(project)}
+            >
               <div className="mp-case-media">
                 {!loaded[project.id] && <div className="mp-image-skeleton" aria-hidden />}
                 <img
@@ -61,14 +73,30 @@ export default function PortfolioPage() {
               </div>
               <p className="mp-chip">{project.type} • {project.client}</p>
               <h3>{project.title}</h3>
-              <p><strong>Client problem:</strong> {project.problem}</p>
-              <p><strong>What MERNpixel did:</strong> {project.solution}</p>
-              <p><strong>Result:</strong> {project.result}</p>
-              <a className="mp-text-link" href={project.link} target="_blank" rel="noreferrer">Open Live Project</a>
-            </motion.article>
+              <p>{project.result}</p>
+              <span className="mp-text-link">View More</span>
+            </motion.button>
           ))}
         </div>
       </section>
+
+      <DetailModal
+        open={Boolean(selectedProject)}
+        onClose={() => setSelectedProject(null)}
+        subtitle={selectedProject?.client}
+        title={selectedProject?.title}
+        fullscreen
+        sections={
+          selectedProject
+            ? [
+                { label: 'Project Overview', text: selectedProject.problem },
+                { label: 'What We Did', text: selectedProject.solution },
+                { label: 'Result', text: selectedProject.result },
+              ]
+            : []
+        }
+        actions={selectedProject ? [{ label: 'Open Live Project', href: selectedProject.link, external: true }] : []}
+      />
     </main>
   )
 }

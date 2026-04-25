@@ -1,19 +1,13 @@
 import { useMemo, useState } from 'react'
 import HeroBackdrop from '../components/HeroBackdrop'
 import { business } from '../data/siteData'
-import {
-  createMailtoLeadHref,
-  createWhatsAppLeadHref,
-  isValidEmail,
-  isValidPhone,
-} from '../lib/leadForms'
+import { createMailtoLeadHref, createWhatsAppLeadHref, isValidEmail } from '../lib/leadForms'
 
-const services = ['Web Development', 'Application Development', 'E-commerce', 'Branding', 'Digital Marketing', 'Custom Scope']
+const services = ['Web Development', 'Application Development', 'E-commerce', 'Branding', 'Digital Marketing']
 
 const initialForm = {
   name: '',
   email: '',
-  phone: '',
   service: services[0],
   message: '',
 }
@@ -23,7 +17,7 @@ export default function ContactPage() {
   const [error, setError] = useState('')
 
   const quickWhatsApp = useMemo(
-    () => createWhatsAppLeadHref(business.whatsapp, 'Hi MERNpixel, I want to discuss a project.'),
+    () => createWhatsAppLeadHref(business.whatsapp, 'Hi MERNpixel, I want to start a project.'),
     []
   )
 
@@ -36,17 +30,15 @@ export default function ContactPage() {
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    if (!form.name.trim()) return setError('Please enter your name.')
-    if (!isValidEmail(form.email)) return setError('Please enter a valid email.')
-    if (!isValidPhone(form.phone)) return setError('Please enter a valid phone number.')
-    if (!form.message.trim()) return setError('Please describe your requirement.')
+    if (!form.name.trim()) return setError('Enter your name.')
+    if (!isValidEmail(form.email)) return setError('Enter a valid email.')
+    if (!form.message.trim()) return setError('Add a short requirement.')
 
     const lines = [
       'Hi MERNpixel Team,',
       '',
       `Name: ${form.name}`,
       `Email: ${form.email}`,
-      `Phone: ${form.phone}`,
       `Service: ${form.service}`,
       '',
       'Requirement:',
@@ -58,9 +50,6 @@ export default function ContactPage() {
       subject: `Project Inquiry - ${form.service}`,
       lines,
     })
-
-    const whatsapp = createWhatsAppLeadHref(business.whatsapp, lines.join('\n'))
-    window.open(whatsapp, '_blank', 'noopener,noreferrer')
     window.location.href = mailto
   }
 
@@ -71,17 +60,12 @@ export default function ContactPage() {
         <div className="mp-shell mp-grid-2 mp-hero-split">
           <div>
             <p className="mp-kicker">Contact</p>
-            <h1>Let&apos;s discuss your project scope and launch roadmap.</h1>
-            <p className="mp-lead">Quick response promise: we typically reply within one business day.</p>
-
-            <div className="mp-card mp-contact-meta">
-              <p><strong>Email:</strong> {business.email}</p>
-              <p><strong>Phone:</strong> {business.phone}</p>
-              <p><strong>WhatsApp:</strong> Instant project chat available</p>
-            </div>
-
+            <h1>Start your project with MERNpixel.</h1>
+            <p className="mp-lead">Share your requirement. We respond fast.</p>
             <div className="mp-actions">
-              <a href={quickWhatsApp} target="_blank" rel="noreferrer" className="mp-btn mp-btn-primary mp-magnetic">WhatsApp</a>
+              <a href={quickWhatsApp} target="_blank" rel="noreferrer" className="mp-btn mp-btn-primary mp-btn-whatsapp mp-magnetic">
+                WhatsApp
+              </a>
               <a href={`mailto:${business.email}`} className="mp-btn mp-btn-ghost mp-magnetic">Email</a>
             </div>
           </div>
@@ -94,10 +78,6 @@ export default function ContactPage() {
             <label>
               Email
               <input type="email" name="email" value={form.email} onChange={handleChange} />
-            </label>
-            <label>
-              Phone
-              <input name="phone" value={form.phone} onChange={handleChange} />
             </label>
             <label>
               Service
@@ -114,7 +94,7 @@ export default function ContactPage() {
 
             {error && <p className="mp-form-error">{error}</p>}
 
-            <button type="submit" className="mp-btn mp-btn-primary mp-magnetic">Submit</button>
+            <button type="submit" className="mp-btn mp-btn-primary mp-magnetic">Send Inquiry</button>
           </form>
         </div>
       </section>
