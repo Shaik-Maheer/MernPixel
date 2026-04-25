@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit'
 import { connectDB } from './config/db.js'
 import chatRouter from './routes/chat.js'
 import mailRouter from './routes/mail.js'
+import adminRouter from './routes/admin.js'
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js'
 
 const app = express()
@@ -60,6 +61,7 @@ app.get('/health', (req, res) => {
 
 app.use('/api/chat', chatRouter)
 app.use('/api/mail', mailRouter)
+app.use('/api/admin', adminRouter)
 
 app.use(notFoundHandler)
 app.use(errorHandler)

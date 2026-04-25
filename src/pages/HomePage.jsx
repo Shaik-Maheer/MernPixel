@@ -1,10 +1,38 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { servicesDetailed, caseStudies } from '../data/siteData'
 import CountUpNumber from '../components/CountUpNumber'
 import SEO from '../components/SEO'
 import ServiceModal from '../components/ServiceModal'
+
+const baseUrl = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '')
+
+const ClientMarquee = () => {
+  const [clients, setClients] = useState([
+    { _id: '1', name: 'Client1', logoUrl: '/clients/IMG_3824.PNG' },
+    { _id: '2', name: 'Client2', logoUrl: '/clients/IMG_7487.PNG' },
+    { _id: '3', name: 'Client3', logoUrl: '/clients/IMG_7516.PNG' }
+  ])
+
+  useEffect(() => {
+    fetch(`${baseUrl}/api/admin/clients`)
+      .then(r => r.json())
+      .then(data => { if(data.length > 0) setClients(data) })
+      .catch(console.error)
+  }, [])
+
+  return (
+    <div className="max-w-7xl mx-auto px-6 w-full text-center">
+      <p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">Trusted by growing brands.</p>
+      <div className="flex flex-wrap justify-center items-center gap-10 md:gap-20">
+         {clients.map(client => (
+            <img key={client._id} src={client.logoUrl} alt={client.name} className="h-10 md:h-12 object-contain grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100" />
+         ))}
+      </div>
+    </div>
+  )
+}
 
 const reveal = {
   hidden: { opacity: 0, y: 20 },
@@ -80,14 +108,7 @@ export default function HomePage() {
 
       {/* Clients Section */}
       <section className="relative z-10 py-12 bg-[#F8F9FA] border-y border-slate-200/50 flex flex-col items-center">
-        <div className="max-w-7xl mx-auto px-6 w-full text-center">
-          <p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">Trusted by growing brands.</p>
-          <div className="flex flex-wrap justify-center items-center gap-10 md:gap-20">
-             <img src="/clients/IMG_3824.PNG" alt="Client 1" className="h-10 md:h-12 object-contain grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100" />
-             <img src="/clients/IMG_7487.PNG" alt="Client 2" className="h-10 md:h-12 object-contain grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100" />
-             <img src="/clients/IMG_7516.PNG" alt="Client 3" className="h-10 md:h-12 object-contain grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100" />
-          </div>
-        </div>
+        <ClientMarquee />
       </section>
 
       {/* Services Section */}

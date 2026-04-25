@@ -1,5 +1,6 @@
 import express from 'express'
 import nodemailer from 'nodemailer'
+import ContactForm from '../models/ContactForm.js'
 
 const router = express.Router()
 
@@ -11,6 +12,12 @@ router.post('/', async (req, res, next) => {
       const err = new Error('Name, email, and description are required.')
       err.status = 400
       throw err
+    }
+
+    try {
+      await ContactForm.create({ name, email, company, budget, description })
+    } catch (dbErr) {
+      console.error('Failed to save to database', dbErr)
     }
 
     const transporter = nodemailer.createTransport({

@@ -19,15 +19,18 @@ import PricingPage from './pages/PricingPage'
 import StudentsPage from './pages/StudentsPage'
 import TeamPage from './pages/TeamPage'
 import NotFoundPage from './pages/NotFoundPage'
+import BookPage from './pages/BookPage'
+import AdminPage from './pages/AdminPage'
 
 function App() {
   const location = useLocation()
-
   useSmoothScroll(location.pathname)
+
+  const isAdmin = location.pathname.startsWith('/admin')
 
   return (
     <div className="min-h-screen font-sans selection:bg-purple-200">
-      <GlobalNav />
+      {!isAdmin && <GlobalNav />}
 
           <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
             <motion.div
@@ -53,13 +56,19 @@ function App() {
                 <Route path="/blog" element={<BlogPage />} />
                 <Route path="/careers" element={<CareersPage />} />
                 <Route path="/contact" element={<ContactPage />} />
+                <Route path="/book" element={<BookPage />} />
+                <Route path="/admin" element={<AdminPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </motion.div>
           </AnimatePresence>
 
-      <SiteFooter />
-      <ChatbotWidget />
+      {!isAdmin && (
+        <>
+          <SiteFooter />
+          <ChatbotWidget />
+        </>
+      )}
     </div>
   )
 }
