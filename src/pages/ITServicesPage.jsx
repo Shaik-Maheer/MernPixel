@@ -52,7 +52,7 @@ export default function ITServicesPage() {
                 </p>
                 
                 {/* Bold standard text link MORE */}
-                <div className="mt-auto font-bold text-[12px] text-[#1a1a1a] border-b-[2px] border-[#1a1a1a] pb-0.5 tracking-widest hover:text-blue-600 hover:border-blue-600 transition-colors">
+                <div className="mt-auto font-bold text-[12px] text-[#1a1a1a] border-b-[2px] border-transparent hover:border-[#1a1a1a] pb-0.5 tracking-widest transition-colors duration-300">
                   MORE
                 </div>
               </div>
