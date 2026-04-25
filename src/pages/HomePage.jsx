@@ -150,22 +150,22 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <motion.div className="group bg-white border border-slate-100 rounded-[2rem] p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={reveal}>
-              <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center mb-6 shadow-md rotate-[-3deg] group-hover:rotate-0 group-hover:scale-110 transition-all duration-300">
-                <span className="text-white text-xl drop-shadow-md">⚡️</span>
+              <div className="w-12 h-12 rounded-2xl bg-[#FFF8E7] border border-[#FBE3A1] flex items-center justify-center mb-6 shadow-sm rotate-[-3deg] group-hover:rotate-0 group-hover:scale-110 transition-all duration-300">
+                <span className="text-xl drop-shadow-sm">⚡️</span>
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">Speed</h3>
               <p className="text-sm text-slate-500 leading-relaxed">Lighthouse-grade performance, ruthless asset budgets, fast time-to-interaction.</p>
             </motion.div>
             <motion.div className="group bg-white border border-slate-100 rounded-[2rem] p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={reveal} transition={{ delay: 0.1 }}>
-              <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center mb-6 shadow-md rotate-[3deg] group-hover:rotate-0 group-hover:scale-110 transition-all duration-300">
-                <span className="text-white text-xl drop-shadow-md">🎯</span>
+              <div className="w-12 h-12 rounded-2xl bg-[#FFF8E7] border border-[#FBE3A1] flex items-center justify-center mb-6 shadow-sm rotate-[3deg] group-hover:rotate-0 group-hover:scale-110 transition-all duration-300">
+                <span className="text-xl drop-shadow-sm">🎯</span>
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">Conversion</h3>
               <p className="text-sm text-slate-500 leading-relaxed">Every section earns its place. Hierarchy, trust and CTAs designed to convert.</p>
             </motion.div>
             <motion.div className="group bg-white border border-slate-100 rounded-[2rem] p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={reveal} transition={{ delay: 0.2 }}>
-              <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center mb-6 shadow-md rotate-[-3deg] group-hover:rotate-0 group-hover:scale-110 transition-all duration-300">
-                <span className="text-white text-xl drop-shadow-md">🚀</span>
+              <div className="w-12 h-12 rounded-2xl bg-[#FFF8E7] border border-[#FBE3A1] flex items-center justify-center mb-6 shadow-sm rotate-[-3deg] group-hover:rotate-0 group-hover:scale-110 transition-all duration-300">
+                <span className="text-xl drop-shadow-sm">🚀</span>
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">Scale</h3>
               <p className="text-sm text-slate-500 leading-relaxed">Architecture that holds up — clean code, sane patterns, easy to extend.</p>
