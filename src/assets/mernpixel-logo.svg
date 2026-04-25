@@ -1,4 +1,4 @@
-<svg width="720" height="220" viewBox="0 0 720 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="mernpixelLogoTitle mernpixelLogoDesc">
+<svg width="800" height="220" viewBox="0 0 800 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="mernpixelLogoTitle mernpixelLogoDesc">
   <title id="mernpixelLogoTitle">MERNpixel logo</title>
   <desc id="mernpixelLogoDesc">Penguin icon with the text MERNpixel</desc>
   <defs>
@@ -23,5 +23,5 @@
     <ellipse cx="133" cy="193" rx="20" ry="9" fill="#FFD150"/>
   </g>
 
-  <text x="236" y="145" fill="url(#wordMark)" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="96" font-weight="600" letter-spacing="0.5">MERNpixel</text>
+  <text x="228" y="145" fill="url(#wordMark)" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="94" font-weight="600" letter-spacing="0.5">MERNpixel</text>
 </svg>
