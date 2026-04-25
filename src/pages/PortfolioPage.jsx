@@ -16,6 +16,14 @@ const recentWorkColors = [
 ]
 
 export default function PortfolioPage() {
+  const orderedStudies = [
+    caseStudies.find(c => c.client.includes('Indian Cricket')),
+    caseStudies.find(c => c.client.includes('Stylistar')),
+    caseStudies.find(c => c.client.includes('Malik Tea')),
+    caseStudies.find(c => c.client.includes('Talent IQ')),
+    ...caseStudies.filter(c => !['Indian Cricket', 'Stylistar', 'Malik Tea', 'Talent IQ'].some(name => c.client.includes(name)))
+  ].filter(Boolean);
+
   return (
     <main className="min-h-screen bg-[#FFFFFF] pb-32">
       
@@ -43,9 +51,9 @@ export default function PortfolioPage() {
       <section className="relative z-10">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {caseStudies.map((work, index) => {
+            {orderedStudies.map((work, index) => {
               // Custom pattern: 1st row = 1 col, 2nd row = 2 cols, 3rd row = 1 col...
-              // 0->2 cols wide, 1->1 col, 2->1 col, 3->2 cols wide, etc.
+              // 0->2 cols wide, 1->col-span-1, 2->col-span-1, 3->col-span-2, etc.
               const patternCycle = index % 3;
               const isFullWidth = patternCycle === 0;
 
@@ -55,7 +63,7 @@ export default function PortfolioPage() {
                   href={work.link}
                   target="_blank"
                   rel="noreferrer"
-                  className={`group relative rounded-[2rem] p-8 md:p-14 flex flex-col min-h-[300px] transition-all duration-300 hover:scale-[1.01] hover:shadow-xl ${recentWorkColors[index % recentWorkColors.length]} overflow-hidden block border border-transparent hover:border-white/50 ${isFullWidth ? 'md:col-span-2' : 'md:col-span-1'}`}
+                  className={`group relative rounded-[2rem] p-8 md:p-14 flex flex-col min-h-[300px] transition-all duration-300 hover:scale-[1.01] hover:shadow-xl overflow-hidden block border border-transparent hover:border-white/50 ${isFullWidth ? 'md:col-span-2' : 'md:col-span-1'} ${recentWorkColors[index % recentWorkColors.length]}`}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, amount: 0.1 }}
@@ -67,7 +75,7 @@ export default function PortfolioPage() {
                       {/* Top label area */}
                       <div className="flex justify-between items-start w-full">
                         <p className="text-xs font-bold text-slate-600 uppercase tracking-widest mb-6" style={{letterSpacing: '0.15em'}}>
-                          <span className="text-slate-800">{String(index + 1).padStart(2, '0')}</span> <span className="text-slate-400 mx-2">·</span> {work.type}
+                          {work.type}
                         </p>
                       </div>
 
@@ -77,7 +85,7 @@ export default function PortfolioPage() {
                       </h3>
                     </div>
 
-                    {/* Arrow Button & Optional Image Pop (like HomePage) */}
+                    {/* Arrow Button */}
                     <div className="mt-12 flex justify-between items-end">
                       <div className="w-14 h-14 rounded-full bg-slate-900 text-white flex items-center justify-center transform transition-transform duration-300 group-hover:bg-slate-800 shadow-xl group-hover:scale-110 ml-auto translate-y-2 group-hover:-translate-y-1">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -88,10 +96,10 @@ export default function PortfolioPage() {
                     </div>
                   </div>
 
-                  {/* Faint subtle image overlay to satisfy picture request without breaking the clean aesthetic */}
+                  {/* Faint subtle image overlay to satisfy picture request */}
                   {work.image && (
                     <div className={`absolute bottom-0 right-0 z-0 transition-all duration-500 transform translate-y-full opacity-0 group-hover:translate-y-8 group-hover:opacity-100 ${isFullWidth ? 'w-2/5' : 'w-4/5'}`}>
-                      <img src={work.image} alt={work.title} className="w-full h-auto rounded-tl-2xl shadow-2xl skew-y-3 skew-x-3" />
+                      <img src={work.image} alt={work.title} className="w-full h-auto rounded-tl-2xl shadow-2xl skew-y-3 skew-x-3 object-cover" />
                     </div>
                   )}
 
