@@ -66,11 +66,11 @@ export default function SiteFooter() {
 
           {/* Reach us Column */}
           <div className="col-span-1 md:col-span-4 lg:col-span-3">
-            <h4 className="text-sm font-bold text-slate-900 mb-6">Reach us</h4>
-            <ul className="flex flex-col gap-4">
+            <h4 className="text-[15px] font-extrabold text-slate-900 mb-6 uppercase tracking-widest">Reach Us</h4>
+            <ul className="flex flex-col gap-5">
               <li>
-                <a href={`mailto:${business.email}`} className="group relative text-[15px] font-bold text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-3 w-fit">
-                  <span className="text-blue-500 group-hover:scale-110 transition-transform">✉</span> 
+                <a href={`mailto:${business.email}`} className="group relative text-[15px] font-bold text-slate-600 hover:text-slate-900 transition-colors flex items-center gap-3 w-fit">
+                  <img src="/pics/email_icon.svg" className="w-5 h-5 group-hover:scale-110 transition-transform" alt="Email" />
                   <span className="relative">
                     {business.email}
                     <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
@@ -78,8 +78,8 @@ export default function SiteFooter() {
                 </a>
               </li>
               <li>
-                <a href={`tel:${business.phone.replace(/\s+/g, '')}`} className="group relative text-[15px] font-bold text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-3 w-fit">
-                  <span className="text-blue-500 group-hover:scale-110 transition-transform">☎</span> 
+                <a href={`tel:${business.phone.replace(/\s+/g, '')}`} className="group relative text-[15px] font-bold text-slate-600 hover:text-slate-900 transition-colors flex items-center gap-3 w-fit">
+                  <img src="/pics/phone_icon.svg" className="w-5 h-5 group-hover:scale-110 transition-transform" alt="Phone" />
                   <span className="relative">
                     {business.phone}
                     <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
@@ -87,8 +87,8 @@ export default function SiteFooter() {
                 </a>
               </li>
               <li className="flex items-start gap-3 w-fit">
-                <span className="text-blue-500 mt-0.5">📍</span> 
-                <span className="text-[15px] font-bold text-slate-500 leading-relaxed">{business.address}</span>
+                <span className="text-xl mt-0.5">📍</span> 
+                <span className="text-[15px] font-bold text-slate-600 leading-relaxed">{business.address}</span>
               </li>
             </ul>
           </div>
