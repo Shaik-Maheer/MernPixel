@@ -58,11 +58,11 @@ function StarField() {
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" array={emberPositions} count={emberPositions.length / 3} itemSize={3} />
         </bufferGeometry>
-        <pointsMaterial color="#ACBFA4" size={0.15} opacity={0.4} transparent sizeAttenuation blending={THREE.AdditiveBlending} />
+        <pointsMaterial color="#458B73" size={0.15} opacity={0.4} transparent sizeAttenuation blending={THREE.AdditiveBlending} />
       </points>
       {/* Drei built-in extras */}
       <Stars radius={50} depth={50} count={12000} factor={8} saturation={1} fade speed={3} />
-      <Sparkles count={2000} scale={30} size={15} speed={0.4} opacity={0.6} color="#FF7F11" />
+      <Sparkles count={2000} scale={30} size={15} speed={0.4} opacity={0.6} color="#F26076" />
     </>
   )
 }
@@ -78,15 +78,15 @@ function FireSun() {
     <group ref={groupRef}>
       <mesh>
         <sphereGeometry args={[3.2, 64, 64]} />
-        <meshStandardMaterial color="#000000" emissive="#E2E8CE" emissiveIntensity={4} wireframe={false} />
+        <meshStandardMaterial color="#000000" emissive="#FFFFFF" emissiveIntensity={4} wireframe={false} />
       </mesh>
       <mesh>
         <sphereGeometry args={[3.5, 32, 32]} />
-        <meshBasicMaterial color="#ACBFA4" wireframe transparent opacity={0.4} blending={THREE.AdditiveBlending} />
+        <meshBasicMaterial color="#458B73" wireframe transparent opacity={0.4} blending={THREE.AdditiveBlending} />
       </mesh>
       <mesh>
         <sphereGeometry args={[3.8, 48, 48]} />
-        <meshBasicMaterial color="#FF7F11" wireframe transparent opacity={0.2} blending={THREE.AdditiveBlending} />
+        <meshBasicMaterial color="#F26076" wireframe transparent opacity={0.2} blending={THREE.AdditiveBlending} />
       </mesh>
     </group>
   )
@@ -124,7 +124,7 @@ function OrbitRings() {
       {Array.from({length: 12}).map((_, i) => (
         <mesh key={i} rotation={[Math.PI / 2 + (i*0.1), i*0.2, 0]}>
           <torusGeometry args={[5 + i*0.8, 0.015, 12, 120]} />
-          <meshBasicMaterial color={i % 2 === 0 ? "#ACBFA4" : "#E2E8CE"} transparent opacity={0.3} blending={THREE.AdditiveBlending} />
+          <meshBasicMaterial color={i % 2 === 0 ? "#458B73" : "#FFFFFF"} transparent opacity={0.3} blending={THREE.AdditiveBlending} />
         </mesh>
       ))}
     </group>
@@ -135,7 +135,7 @@ function Scene() {
   return (
     <>
       <ambientLight intensity={0.5} />
-      <pointLight position={[0, 0, 0]} intensity={10} color="#E2E8CE" distance={30} />
+      <pointLight position={[0, 0, 0]} intensity={10} color="#FFFFFF" distance={30} />
       <StarField />
       <FireSun />
       <OrbitRings />
@@ -145,7 +145,7 @@ function Scene() {
           radius={4.5 + i * 0.6} 
           speed={0.1 + (pseudoRandom(i, 5) * 0.4)} 
           size={0.1 + pseudoRandom(i, 6) * 0.3} 
-          color={pseudoRandom(i, 7) > 0.5 ? "#E2E8CE" : "#FF7F11"} 
+          color={pseudoRandom(i, 7) > 0.5 ? "#FFFFFF" : "#F26076"} 
           offset={pseudoRandom(i, 8) * Math.PI * 2} 
         />
       ))}
