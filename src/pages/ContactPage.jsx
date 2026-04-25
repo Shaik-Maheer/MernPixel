@@ -91,16 +91,7 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                {/* Location Box */}
-                <div className="bg-white/60 backdrop-blur-md border border-slate-200/60 rounded-3xl p-6 flex items-center gap-6 shadow-sm">
-                  <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 shrink-0">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                  </div>
-                  <div>
-                    <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1">Location</p>
-                    <p className="text-slate-900 font-bold text-[15px]">{business.address}</p>
-                  </div>
-                </div>
+                {/* Location Box removed per request */}
 
               </div>
 
@@ -110,7 +101,7 @@ export default function ContactPage() {
                 <div className="flex gap-4">
                   {socialLinks.map((link) => (
                     <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center hover:-translate-y-1 hover:shadow-md hover:bg-white hover:border-slate-300 transition-all shadow-sm" aria-label={link.label}>
-                      <SocialIcon network={link.icon} className="w-5 h-5 drop-shadow-sm" />
+                      <img src={`/pics/${link.label.toLowerCase()}_icon.svg`} className="w-4 h-4 object-contain" alt={link.label} />
                     </a>
                   ))}
                 </div>

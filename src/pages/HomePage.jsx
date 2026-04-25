@@ -78,8 +78,20 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Clients Section */}
+      <section className="relative z-10 py-12 bg-[#F8F9FA] border-y border-slate-200/50 flex flex-col items-center">
+        <div className="max-w-7xl mx-auto px-6 w-full text-center">
+          <p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">Trusted by growing brands.</p>
+          <div className="flex flex-wrap justify-center items-center gap-10 md:gap-20">
+             <img src="/clients/IMG_3824.PNG" alt="Client 1" className="h-10 md:h-12 object-contain grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100" />
+             <img src="/clients/IMG_7487.PNG" alt="Client 2" className="h-10 md:h-12 object-contain grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100" />
+             <img src="/clients/IMG_7516.PNG" alt="Client 3" className="h-10 md:h-12 object-contain grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100" />
+          </div>
+        </div>
+      </section>
+
       {/* Services Section */}
-      <section className="relative z-10 py-16">
+      <section className="relative z-10 py-16 mt-16">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:justify-between md:items-end mb-12 gap-4">
             <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 leading-[1.1]">
@@ -133,21 +145,21 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <motion.div className="group bg-[#FFF9EA] border border-[#FCEBA2] rounded-[2rem] p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={reveal}>
               <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center mb-6 shadow-md rotate-[-3deg] group-hover:rotate-0 group-hover:scale-110 transition-all duration-300">
-                <span className="text-xl drop-shadow-sm text-white">⚡️</span>
+                <span className="text-xl drop-shadow-sm text-white font-black">S</span>
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">Speed</h3>
               <p className="text-sm text-slate-500 leading-relaxed">Lighthouse-grade performance, ruthless asset budgets, fast time-to-interaction.</p>
             </motion.div>
             <motion.div className="group bg-[#FFF9EA] border border-[#FCEBA2] rounded-[2rem] p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={reveal} transition={{ delay: 0.1 }}>
               <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center mb-6 shadow-md rotate-[3deg] group-hover:rotate-0 group-hover:scale-110 transition-all duration-300">
-                <span className="text-xl drop-shadow-sm text-white">🎯</span>
+                <span className="text-xl drop-shadow-sm text-white font-black">C</span>
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">Conversion</h3>
               <p className="text-sm text-slate-500 leading-relaxed">Every section earns its place. Hierarchy, trust and CTAs designed to convert.</p>
             </motion.div>
             <motion.div className="group bg-[#FFF9EA] border border-[#FCEBA2] rounded-[2rem] p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={reveal} transition={{ delay: 0.2 }}>
               <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center mb-6 shadow-md rotate-[-3deg] group-hover:rotate-0 group-hover:scale-110 transition-all duration-300">
-                <span className="text-xl drop-shadow-sm text-white">🚀</span>
+                <span className="text-xl drop-shadow-sm text-white font-black">S</span>
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">Scale</h3>
               <p className="text-sm text-slate-500 leading-relaxed">Architecture that holds up — clean code, sane patterns, easy to extend.</p>

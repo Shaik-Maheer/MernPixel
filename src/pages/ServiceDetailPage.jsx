@@ -116,8 +116,8 @@ export default function ServiceDetailPage() {
           <motion.div animate={{ y: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 6, delay: 2 }} className="absolute top-16 right-10 md:right-24 bg-[#00B7B5] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">College Formats</motion.div>
           <motion.div animate={{ y: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 0.5 }} className="absolute bottom-16 right-[15%] bg-[#018790] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">Live Explanation</motion.div>
           
-          <div className="w-32 h-32 md:w-40 md:h-40 bg-slate-900 rounded-[2rem] flex items-center justify-center text-white text-6xl shadow-2xl z-20 ring-4 ring-white border-4 border-slate-100">
-            🎓
+          <div className="w-32 h-32 md:w-40 md:h-40 bg-slate-900 rounded-[2rem] flex items-center justify-center text-white text-[3rem] font-black shadow-2xl z-20 ring-4 ring-white border-4 border-slate-100">
+            A
           </div>
         </div>
       )
@@ -132,8 +132,8 @@ export default function ServiceDetailPage() {
           <motion.div animate={{ y: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 6, delay: 2 }} className="absolute top-16 right-5 md:right-10 bg-[#00B7B5] text-white font-extrabold tracking-widest py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">Tech + Business</motion.div>
           <motion.div animate={{ y: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 0.5 }} className="absolute bottom-16 right-[10%] bg-[#018790] text-white font-extrabold tracking-widest py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">"Give Job, Not Get Job"</motion.div>
           
-          <div className="w-32 h-32 md:w-40 md:h-40 bg-slate-900 rounded-[2rem] flex items-center justify-center text-white text-6xl shadow-2xl z-20 ring-4 ring-white border-4 border-slate-100">
-            🎤
+          <div className="w-32 h-32 md:w-40 md:h-40 bg-slate-900 rounded-[2rem] flex items-center justify-center text-white text-[3rem] font-black shadow-2xl z-20 ring-4 ring-white border-4 border-slate-100">
+            G
           </div>
         </div>
       )

@@ -41,7 +41,7 @@ export default function SiteFooter() {
                   aria-label={social.label}
                   title={social.label}
                 >
-                  <SocialIcon network={social.icon} className="w-8 h-8" />
+                  <img src={`/pics/${social.label.toLowerCase()}_icon.svg`} className="w-5 h-5 object-contain opacity-70 hover:opacity-100 transition-all" alt={social.label} />
                 </a>
               ))}
             </div>
@@ -85,10 +85,6 @@ export default function SiteFooter() {
                     <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                   </span>
                 </a>
-              </li>
-              <li className="flex items-start gap-3 w-fit">
-                <span className="text-xl mt-0.5">📍</span> 
-                <span className="text-[15px] font-bold text-slate-600 leading-relaxed">{business.address}</span>
               </li>
             </ul>
           </div>
