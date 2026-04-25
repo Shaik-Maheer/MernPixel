@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { teamMembers } from '../data/siteData'
 
 const reveal = {
@@ -16,6 +17,8 @@ const getInitials = (name) => {
 }
 
 export default function TeamPage() {
+  const [selectedMember, setSelectedMember] = useState(null)
+
   return (
     <main className="min-h-screen bg-[#FFFFFF] pb-32 relative overflow-hidden">
       
@@ -47,6 +50,7 @@ export default function TeamPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {teamMembers.map((member, index) => (
               <motion.article
+                onClick={() => setSelectedMember(member)}
                 key={member.name}
                 className="group relative bg-white/60 border border-slate-200/80 rounded-[2rem] p-8 md:p-10 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-lg flex items-center gap-8 isolate cursor-pointer hover:-translate-y-1"
                 initial="hidden"
@@ -83,6 +87,66 @@ export default function TeamPage() {
           </div>
         </div>
       </section>
+
+      {/* Team Member Modal */}
+      <AnimatePresence>
+        {selectedMember && (
+          <motion.div
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedMember(null)}
+          >
+            <motion.div
+              className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl max-w-lg w-full relative overflow-hidden"
+              initial={{ scale: 0.95, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.95, y: 20, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button 
+                onClick={() => setSelectedMember(null)}
+                className="absolute top-6 right-6 w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-colors"
+              >
+                ✕
+              </button>
+
+              <div className="flex flex-col items-center text-center">
+                
+                {selectedMember.image ? (
+                  <div className="w-32 h-32 rounded-full overflow-hidden mb-6 shadow-lg border-4 border-white ring-1 ring-slate-100">
+                    <img src={selectedMember.image} alt={selectedMember.name} className="w-full h-full object-cover" />
+                  </div>
+                ) : (
+                  <div className="w-32 h-32 rounded-[2rem] bg-slate-100 text-slate-300 font-bold text-4xl flex items-center justify-center mb-6 shadow-sm border border-slate-200">
+                    {getInitials(selectedMember.name)}
+                  </div>
+                )}
+                
+                <h3 className="text-3xl font-extrabold text-slate-900 mb-1">{selectedMember.name}</h3>
+                <p className="text-[15px] font-bold text-blue-600 mb-6 uppercase tracking-widest">{selectedMember.role}</p>
+
+                <p className="text-slate-600 leading-relaxed mb-8">
+                  {selectedMember.bio}
+                </p>
+
+                <a 
+                  href={selectedMember.linkedin || "https://linkedin.com"} 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="bg-[#0077B5] hover:bg-[#005E93] text-white font-bold rounded-xl px-8 py-3.5 flex items-center gap-3 transition-colors shadow-lg hover:shadow-xl w-full justify-center"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                  Connect with me
+                </a>
+
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </main>
   )

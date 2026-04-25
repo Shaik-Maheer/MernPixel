@@ -11,7 +11,7 @@ export default {
         cloud: '#000000',
       },
       fontFamily: {
-        sans: ['Outfit', 'sans-serif'],
+        sans: ['Plus Jakarta Sans', 'sans-serif'],
         display: ['Cormorant Garamond', 'serif'],
         body: ['Space Grotesk', 'sans-serif'],
       },

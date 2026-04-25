@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import GlobalNav from './components/GlobalNav'
 import SiteFooter from './components/SiteFooter'
-import WhatsAppFloat from './components/WhatsAppFloat'
 import ChatbotWidget from './components/ChatbotWidget'
 import useSmoothScroll from './hooks/useSmoothScroll'
 import AboutPage from './pages/AboutPage'
@@ -18,6 +17,7 @@ import PortfolioPage from './pages/PortfolioPage'
 import PricingPage from './pages/PricingPage'
 import StudentsPage from './pages/StudentsPage'
 import TeamPage from './pages/TeamPage'
+import NotFoundPage from './pages/NotFoundPage'
 
 function App() {
   const location = useLocation()
@@ -51,13 +51,12 @@ function App() {
                 <Route path="/blog" element={<BlogPage />} />
                 <Route path="/careers" element={<CareersPage />} />
                 <Route path="/contact" element={<ContactPage />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
+                <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </motion.div>
           </AnimatePresence>
 
       <SiteFooter />
-      <WhatsAppFloat />
       <ChatbotWidget />
     </div>
   )

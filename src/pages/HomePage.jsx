@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { servicesDetailed, caseStudies } from '../data/siteData'
 import CountUpNumber from '../components/CountUpNumber'
+import SEO from '../components/SEO'
 
 const reveal = {
   hidden: { opacity: 0, y: 20 },
@@ -25,6 +26,7 @@ const recentWorkColors = [
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-[#FFFFFF] pb-10">
+      <SEO title="Product Studio" />
       
       {/* Background Grid - Lovable Light Blue/Cyan faint grid */}
       <div className="fixed inset-0 z-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, #E0F2FE 1px, transparent 1px), linear-gradient(to bottom, #E0F2FE 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
