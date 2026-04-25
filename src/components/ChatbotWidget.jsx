@@ -79,10 +79,9 @@ export default function ChatbotWidget() {
           href={business.whatsapp} 
           target="_blank" 
           rel="noreferrer" 
-          className="flex items-center gap-2.5 bg-white border border-slate-200 text-slate-900 rounded-full px-4 py-3 shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:bg-slate-50 transition-all hover:-translate-y-1 hover:shadow-[0_15px_40px_rgb(0,0,0,0.12)] cursor-pointer"
+          className="flex items-center justify-center w-12 h-12 bg-white border border-slate-200 text-slate-900 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:bg-slate-50 transition-all hover:-translate-y-1 hover:shadow-[0_15px_40px_rgb(0,0,0,0.12)] cursor-pointer"
         >
-          <SocialIcon network="whatsapp" className="w-[18px] h-[18px] drop-shadow-sm" />
-          <span className="text-[13px] font-extrabold tracking-widest uppercase mt-0.5 hidden sm:inline-block">WhatsApp</span>
+          <SocialIcon network="whatsapp" className="w-6 h-6 drop-shadow-sm" />
         </a>
 
         {/* AI Chatbot Launcher */}

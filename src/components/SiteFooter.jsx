@@ -52,7 +52,7 @@ export default function SiteFooter() {
             </div>
           </div>
 
-          <div className="col-span-1 md:col-span-2 lg:col-span-3"></div>
+          <div className="hidden md:block md:col-span-2 lg:col-span-3"></div>
 
           {/* Explore Column */}
           <div className="col-span-1 md:col-span-3 lg:col-span-2">
