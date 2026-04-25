@@ -27,7 +27,7 @@ export default function SiteFooter() {
                 M
               </div>
               <div className="text-xl font-bold text-slate-900 tracking-tight">
-                MERN<span className="text-slate-900 font-serif italic">pixel</span>
+                MERN<span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 font-serif italic">pixel</span>
               </div>
             </Link>
             
