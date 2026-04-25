@@ -16,7 +16,7 @@ export default function NotFoundPage() {
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#FFF8E7]/60 rounded-full blur-[100px] -translate-y-1/4 translate-x-1/4 z-0 pointer-events-none"></div>
       <div className="absolute bottom-[10%] left-0 w-[500px] h-[500px] bg-rose-50/50 rounded-full blur-[100px] translate-y-1/4 -translate-x-1/4 z-0 pointer-events-none"></div>
       
-      <div className="fixed inset-0 z-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, #E0F2FE 1px, transparent 1px), linear-gradient(to bottom, #E0F2FE 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
+      <div className="absolute inset-0 z-[-1] pointer-events-none opacity-70" style={{ backgroundImage: 'linear-gradient(to right, #E0F2FE 1.5px, transparent 1.5px), linear-gradient(to bottom, #E0F2FE 1.5px, transparent 1.5px)', backgroundSize: '48px 48px' }} />
 
       <motion.div 
         className="relative z-10 text-center px-6 max-w-2xl"

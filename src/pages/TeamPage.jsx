@@ -25,10 +25,10 @@ export default function TeamPage() {
       {/* Background Dots Grid & Soft Glows */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#FFF8E7]/60 rounded-full blur-[100px] -translate-y-1/4 translate-x-1/4 z-0 pointer-events-none"></div>
       <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-purple-50/40 rounded-full blur-[100px] z-0 pointer-events-none"></div>
-      <div className="fixed inset-0 z-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, #E0F2FE 1px, transparent 1px), linear-gradient(to bottom, #E0F2FE 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
 
       {/* Hero Section */}
       <section className="relative z-10 pt-20 pb-12 md:pt-28 md:pb-16 overflow-hidden">
+        <div className="absolute inset-0 z-[-1] pointer-events-none opacity-70" style={{ backgroundImage: 'linear-gradient(to right, #E0F2FE 1.5px, transparent 1.5px), linear-gradient(to bottom, #E0F2FE 1.5px, transparent 1.5px)', backgroundSize: '48px 48px' }} />
         <div className="max-w-6xl mx-auto px-6 flex flex-col items-start">
           <motion.div initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.5 }}>
 
