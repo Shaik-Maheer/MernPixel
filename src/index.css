@@ -6610,3 +6610,77 @@ main > .section-shell:nth-of-type(even)::before {
   background: #f6aa2c !important;
   box-shadow: 0 0 10px rgba(246, 170, 44, 0.4) !important;
 }
+
+/* Contrast fix pass for light palette pages */
+.portfolio-overview-metrics article,
+.clients-trust-signals article,
+.about-manifest-metrics article,
+.whatdo-overview-signals article,
+.contact-assurance-grid article,
+.contact-flow-list article,
+.contact-response-strip article,
+.team-command-signals article,
+.nonit-flow-stack article,
+.student-path-stack article,
+.blog-flow-stack article,
+.home-hero-panel-stats article,
+.blog-post-footer span,
+.blog-post-meta span,
+.contact-form-steps span,
+.contact-channel {
+  border-color: rgba(29, 116, 216, 0.28) !important;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(234, 246, 255, 0.92)) !important;
+  box-shadow: 0 10px 22px rgba(20, 67, 143, 0.1) !important;
+}
+
+.portfolio-overview-metrics p,
+.clients-trust-signals p,
+.about-manifest-metrics p,
+.whatdo-overview-signals p,
+.contact-assurance-grid p,
+.contact-response-strip p,
+.home-hero-panel-stats p {
+  color: #173788 !important;
+}
+
+.portfolio-overview-metrics span,
+.clients-trust-signals span,
+.about-manifest-metrics span,
+.whatdo-overview-signals span,
+.contact-assurance-grid span,
+.contact-assurance-grid small,
+.contact-response-strip span,
+.team-command-signals span,
+.nonit-flow-stack span,
+.student-path-stack span,
+.blog-flow-stack span,
+.home-hero-panel-stats span,
+.blog-post-meta span,
+.blog-post-footer span,
+.contact-form-steps span,
+.contact-channel-label,
+.contact-channel-value {
+  color: rgba(23, 55, 136, 0.78) !important;
+}
+
+.contact-flow-list p,
+.team-command-signals p,
+.nonit-flow-stack small,
+.student-path-stack small,
+.blog-flow-stack small,
+.blog-post-meta p,
+.contact-assurance-grid span {
+  color: #1d74d8 !important;
+}
+
+.nonit-flow-stack p,
+.student-path-stack p,
+.blog-flow-stack p,
+.home-hero-panel-points li,
+.portfolio-overview-notes li,
+.clients-quote-text,
+.nonit-form-note li,
+.careers-note-card li,
+.careers-values-card li {
+  color: #173788 !important;
+}
