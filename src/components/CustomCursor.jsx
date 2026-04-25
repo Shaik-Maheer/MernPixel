@@ -71,8 +71,8 @@ export default function CustomCursor() {
         animate={{
           scale: pressed ? 0.86 : active ? 1.35 : 1,
           opacity: active ? 0.95 : 0.75,
-          borderColor: active ? '#27B9FF' : '#E6E6E6',
-          boxShadow: active ? '0 0 28px rgba(39, 185, 255, 0.65)' : '0 0 20px rgba(18, 153, 230, 0.45)',
+          borderColor: active ? '#9CAB84' : '#89986D',
+          boxShadow: active ? '0 0 28px rgba(156, 171, 132, 0.6)' : '0 0 20px rgba(137, 152, 109, 0.45)',
         }}
         transition={{ duration: 0.18, ease: 'easeOut' }}
       />
@@ -82,8 +82,8 @@ export default function CustomCursor() {
         style={{ x: springX, y: springY }}
         animate={{
           scale: pressed ? 0.66 : active ? 1.2 : 1,
-          backgroundColor: active ? '#16A4F0' : '#1299E6',
-          boxShadow: active ? '0 0 16px rgba(22, 164, 240, 0.8)' : '0 0 14px rgba(18, 153, 230, 0.7)',
+          backgroundColor: active ? '#9CAB84' : '#89986D',
+          boxShadow: active ? '0 0 16px rgba(156, 171, 132, 0.8)' : '0 0 14px rgba(137, 152, 109, 0.7)',
         }}
         transition={{ duration: 0.18, ease: 'easeOut' }}
       />
