@@ -163,7 +163,7 @@ export default function ServiceDetailPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#FDFDFD] pt-32 pb-32 font-sans overflow-hidden">
+    <main className="min-h-screen pt-32 pb-32 font-sans overflow-hidden">
       
       {/* Dynamic HERO SECTION */}
       <section className="relative w-full max-w-6xl mx-auto px-6 mb-16 flex flex-col items-center">
@@ -178,7 +178,7 @@ export default function ServiceDetailPage() {
       </section>
 
       {/* PROBLEM / SOLUTION */}
-      <section className="bg-slate-50 py-24 mb-24 border-y border-slate-200/60">
+      <section className="py-24 mb-10">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
             <div>
@@ -208,47 +208,6 @@ export default function ServiceDetailPage() {
               ))}
             </ul>
           </div>
-        </div>
-      </section>
-
-      {/* TARGETED FORM */}
-      <section className="max-w-3xl mx-auto px-6">
-        <div className="bg-[#0a0a0a] rounded-[2rem] p-8 md:p-14 shadow-2xl relative overflow-hidden">
-          {/* Subtle decoration */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-
-          <div className="text-center mb-12 relative z-10">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4 tracking-tight">Initialize Your Scope</h2>
-            <p className="text-slate-400 font-medium text-lg">Define your {service.title.toLowerCase()} requirements below. Data routes directly to the core team.</p>
-          </div>
-          
-          <form className="flex flex-col gap-6 relative z-10" action={`mailto:${business?.email || 'mernpixeldev@gmail.com'}`} method="GET" encType="text/plain">
-            <input type="hidden" name="subject" value={`Inquiry: ${service.title} Request`} />
-            
-            <div className="flex flex-col gap-2.5">
-              <label className="text-[13px] font-bold text-slate-300 uppercase tracking-wider">Client Name</label>
-              <input type="text" name="name" required className="bg-slate-800/50 border border-slate-700 rounded-xl px-5 py-4 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all placeholder:text-slate-500 font-medium" placeholder="E.g., John Doe" />
-            </div>
-            
-            <div className="flex flex-col gap-2.5">
-              <label className="text-[13px] font-bold text-slate-300 uppercase tracking-wider">Project Archetype</label>
-              <select name="scope" className="bg-slate-800/50 border border-slate-700 rounded-xl px-5 py-4 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all appearance-none cursor-pointer font-medium">
-                {service.useCases?.map((useCase, i) => (
-                  <option key={i} value={useCase} className="bg-slate-800">{useCase}</option>
-                ))}
-                <option value="Custom Requirement" className="bg-slate-800">Custom Build / Unlisted</option>
-              </select>
-            </div>
-
-            <div className="flex flex-col gap-2.5">
-              <label className="text-[13px] font-bold text-slate-300 uppercase tracking-wider">Execution Brief</label>
-              <textarea name="body" required rows="5" className="bg-slate-800/50 border border-slate-700 rounded-xl px-5 py-4 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all placeholder:text-slate-500 resize-none font-medium leading-relaxed" placeholder="Detail your core objectives, technical constraints, or timelines..."></textarea>
-            </div>
-            
-            <button type="submit" className="mt-6 bg-[#D349A1] hover:bg-[#c04090] text-white font-extrabold text-[15px] uppercase tracking-widest rounded-xl py-5 transition-transform hover:-translate-y-1 shadow-[0_10px_30px_rgba(211,73,161,0.3)]">
-              Send Request to MERNpixel
-            </button>
-          </form>
         </div>
       </section>
 
