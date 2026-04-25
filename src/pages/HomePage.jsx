@@ -43,10 +43,7 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-6 flex flex-col items-start">
           <motion.div initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.5 }}>
             
-            <div className="inline-flex bg-slate-100 rounded-full px-4 py-1.5 mb-8 items-center border border-slate-200">
-               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2"></span>
-               <span className="text-xs font-semibold text-slate-700 tracking-wide">Now booking Q3 projects</span>
-            </div>
+            {/* Removed Booking Badge */}
 
             <h1 className="text-[3.5rem] md:text-[5.5rem] font-extrabold tracking-tight text-slate-900 mb-6 leading-[1.05] max-w-4xl text-left">
               Not built to <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500 italic">impress.</span><br/>
@@ -70,21 +67,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stats Bar */}
-      <section className="relative z-10 pb-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {stats.map((stat, i) => (
-              <motion.div key={i} className="bg-[#F5EDFF] border border-purple-100 rounded-2xl p-6 shadow-sm hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 cursor-default" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={reveal} transition={{ delay: i * 0.1 }}>
-                <h3 className="text-3xl font-bold text-blue-700 mb-1">
-                  <CountUpNumber value={stat.value} duration={2000} />
-                </h3>
-                <p className="text-xs font-medium text-slate-500 uppercase tracking-widest">{stat.label}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Removed Stats Bar per request */}
 
       {/* Marquee */}
       <section className="relative z-10 py-8 overflow-hidden bg-transparent border-y border-slate-100 flex items-center mb-20 whitespace-nowrap">

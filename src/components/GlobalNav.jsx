@@ -20,8 +20,8 @@ export default function GlobalNav() {
   }, [location.pathname])
 
   return (
-    <header className="sticky top-0 z-50 px-4 py-4 w-full flex justify-center">
-      <div className="w-full max-w-7xl mx-auto rounded-full bg-white/80 backdrop-blur-md border border-slate-200/60 shadow-sm px-6 py-4 flex items-center justify-between">
+    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/60 shadow-sm flex items-center justify-center">
+      <div className="w-full max-w-[1400px] px-6 py-4 flex items-center justify-between">
         
         {/* Logo Section */}
         <Link to="/" className="flex items-center gap-3" aria-label="MERNpixel home">
