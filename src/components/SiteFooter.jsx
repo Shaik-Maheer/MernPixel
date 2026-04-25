@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import logo from '../assets/mernpixel-logo.svg'
+import { SocialIcon } from './SocialIcons'
 import { business, socialLinks } from '../data/siteData'
 
 const quickLinks = [
@@ -35,7 +36,6 @@ export default function SiteFooter() {
           <div className="mp-footer-links">
             <a href={`mailto:${business.email}`}>{business.email}</a>
             <a href={`tel:${business.phone.replace(/\s+/g, '')}`}>{business.phone}</a>
-            <a href={business.whatsapp} target="_blank" rel="noreferrer">WhatsApp</a>
           </div>
         </div>
       </div>
@@ -44,7 +44,17 @@ export default function SiteFooter() {
         <p>(c) {year} MERNpixel. All rights reserved.</p>
         <div className="mp-footer-social">
           {socialLinks.map((social) => (
-            <a key={social.label} href={social.href} target="_blank" rel="noreferrer">{social.label}</a>
+            <a
+              key={social.label}
+              href={social.href}
+              target="_blank"
+              rel="noreferrer"
+              className="mp-social-icon"
+              aria-label={social.label}
+              title={social.label}
+            >
+              <SocialIcon network={social.icon} className="mp-social-svg" />
+            </a>
           ))}
         </div>
       </div>

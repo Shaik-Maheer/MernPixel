@@ -5,12 +5,17 @@ export const business = {
   email: 'mernpixeldev@gmail.com',
   phone: '+91 95150 22680',
   whatsapp: 'https://wa.me/919515022680',
+  address: 'Madanapalle, Andhra Pradesh, India',
+  // Temporary embed location. Replace this URL later when final office location is available.
+  mapEmbedUrl: 'https://www.google.com/maps?q=Madanapalle%2C%20Andhra%20Pradesh%2C%20India&output=embed',
 }
 
 export const socialLinks = [
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/mernpixel' },
-  { label: 'Instagram', href: 'https://www.instagram.com/mernpixel' },
-  { label: 'GitHub', href: 'https://github.com/mernpixel' },
+  { label: 'Instagram', icon: 'instagram', href: 'https://www.instagram.com/mernpixel' },
+  { label: 'LinkedIn', icon: 'linkedin', href: 'https://www.linkedin.com/company/mernpixel' },
+  { label: 'Facebook', icon: 'facebook', href: 'https://www.facebook.com/mernpixel' },
+  { label: 'YouTube', icon: 'youtube', href: 'https://www.youtube.com/@mernpixel' },
+  { label: 'WhatsApp', icon: 'whatsapp', href: 'https://wa.me/919515022680' },
 ]
 
 export const trustBrands = ['NovaEdge', 'Apex Retail', 'Clarity Labs', 'UrbanNest', 'PrimeVista', 'OrbitWorks']

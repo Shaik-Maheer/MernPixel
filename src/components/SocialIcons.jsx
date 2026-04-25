@@ -1,49 +1,79 @@
+function IconBase({ className = '', children, viewBox = '0 0 24 24' }) {
+  return (
+    <svg
+      className={className}
+      viewBox={viewBox}
+      aria-hidden="true"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {children}
+    </svg>
+  )
+}
+
 export function LinkedInIcon({ className = '' }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <rect width="24" height="24" rx="5" fill="#0A66C2" />
-      <path
-        d="M6.72 8.92H4.38v7.46h2.34V8.92ZM5.55 7.9a1.36 1.36 0 1 0 0-2.72 1.36 1.36 0 0 0 0 2.72Zm11.83 4.2c0-2.3-1.22-3.37-2.86-3.37-1.32 0-1.9.72-2.23 1.23V8.92H9.96v7.46h2.33v-4.14c0-1.1.21-2.16 1.57-2.16 1.34 0 1.36 1.25 1.36 2.23v4.07h2.34l-.18-4.28Z"
-        fill="#fff"
-      />
-    </svg>
+    <IconBase className={className}>
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6Z" />
+      <rect x="2" y="9" width="4" height="12" />
+      <circle cx="4" cy="4" r="2" />
+    </IconBase>
   )
 }
 
 export function InstagramIcon({ className = '' }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <defs>
-        <radialGradient id="instagram-gradient-a" cx="30%" cy="108%" r="150%">
-          <stop offset="0%" stopColor="#FEDA75" />
-          <stop offset="24%" stopColor="#FA7E1E" />
-          <stop offset="52%" stopColor="#D62976" />
-          <stop offset="78%" stopColor="#962FBF" />
-          <stop offset="100%" stopColor="#4F5BD5" />
-        </radialGradient>
-      </defs>
-      <rect width="24" height="24" rx="6" fill="url(#instagram-gradient-a)" />
-      <path
-        d="M12 7.35A4.65 4.65 0 1 0 12 16.65 4.65 4.65 0 0 0 12 7.35Zm0 7.64a2.99 2.99 0 1 1 0-5.98 2.99 2.99 0 0 1 0 5.98Zm5.92-7.84a1.08 1.08 0 1 1-2.16 0 1.08 1.08 0 0 1 2.16 0Z"
-        fill="#fff"
-      />
-      <path
-        d="M12 4.8c1.95 0 2.18.01 2.95.04.71.03 1.1.15 1.36.25.34.13.58.29.84.55.26.26.42.5.55.84.1.26.22.65.25 1.36.03.77.04 1 .04 2.95s-.01 2.18-.04 2.95c-.03.71-.15 1.1-.25 1.36-.13.34-.29.58-.55.84-.26.26-.5.42-.84.55-.26.1-.65.22-1.36.25-.77.03-1 .04-2.95.04s-2.18-.01-2.95-.04c-.71-.03-1.1-.15-1.36-.25a2.26 2.26 0 0 1-.84-.55 2.26 2.26 0 0 1-.55-.84c-.1-.26-.22-.65-.25-1.36-.03-.77-.04-1-.04-2.95s.01-2.18.04-2.95c.03-.71.15-1.1.25-1.36.13-.34.29-.58.55-.84.26-.26.5-.42.84-.55.26-.1.65-.22 1.36-.25.77-.03 1-.04 2.95-.04Zm0-1.31c-1.99 0-2.24.01-3.02.04-.78.04-1.31.16-1.78.34-.48.19-.89.44-1.3.85-.41.41-.66.82-.85 1.3-.18.47-.3 1-.34 1.78-.03.78-.04 1.03-.04 3.02s.01 2.24.04 3.02c.04.78.16 1.31.34 1.78.19.48.44.89.85 1.3.41.41.82.66 1.3.85.47.18 1 .3 1.78.34.78.03 1.03.04 3.02.04s2.24-.01 3.02-.04c.78-.04 1.31-.16 1.78-.34.48-.19.89-.44 1.3-.85.41-.41.66-.82.85-1.3.18-.47.3-1 .34-1.78.03-.78.04-1.03.04-3.02s-.01-2.24-.04-3.02c-.04-.78-.16-1.31-.34-1.78a3.58 3.58 0 0 0-.85-1.3 3.58 3.58 0 0 0-1.3-.85c-.47-.18-1-.3-1.78-.34-.78-.03-1.03-.04-3.02-.04Z"
-        fill="#fff"
-      />
-    </svg>
+    <IconBase className={className}>
+      <rect x="2.5" y="2.5" width="19" height="19" rx="5" />
+      <circle cx="12" cy="12" r="4.2" />
+      <circle cx="17.3" cy="6.7" r="1" />
+    </IconBase>
+  )
+}
+
+export function FacebookIcon({ className = '' }) {
+  return (
+    <IconBase className={className}>
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </IconBase>
+  )
+}
+
+export function YouTubeIcon({ className = '' }) {
+  return (
+    <IconBase className={className}>
+      <rect x="3" y="6" width="18" height="12" rx="3" />
+      <path d="m10 9 5 3-5 3z" fill="currentColor" stroke="none" />
+    </IconBase>
   )
 }
 
 export function WhatsAppIcon({ className = '' }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="12" fill="#25D366" />
-      <path
-        d="M12.04 5.04a6.88 6.88 0 0 0-5.83 10.55l-.77 2.82 2.89-.76a6.87 6.87 0 1 0 3.71-12.61Zm0 12.58a5.72 5.72 0 0 1-2.91-.8l-.21-.12-1.72.45.46-1.67-.14-.22a5.72 5.72 0 1 1 4.52 2.36Zm3.14-4.28c-.17-.09-1.01-.5-1.16-.56-.16-.06-.27-.09-.39.09-.11.17-.44.56-.54.67-.1.12-.2.13-.37.04-.17-.09-.72-.27-1.37-.85-.5-.45-.84-1-.94-1.17-.1-.17-.01-.27.07-.36.08-.08.17-.2.26-.3.09-.1.12-.17.17-.29.06-.12.03-.22-.01-.31-.04-.09-.39-.94-.53-1.29-.14-.34-.28-.29-.39-.3h-.33c-.11 0-.3.04-.45.22-.16.17-.59.58-.59 1.42 0 .84.61 1.65.7 1.77.09.11 1.2 1.83 2.9 2.57.41.17.72.28.97.36.41.13.78.11 1.07.07.33-.05 1.01-.41 1.15-.81.14-.39.14-.73.1-.81-.04-.09-.16-.14-.33-.22Z"
-        fill="#fff"
-      />
-    </svg>
+    <IconBase className={className}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="m9.5 18-2 .8.8-2" />
+      <path d="M9.6 9.1c.2-.4.4-.4.6-.4h.6c.2 0 .4.1.5.4l.6 1.4c.1.2 0 .4-.1.6l-.5.6c-.1.1-.1.3 0 .4.2.4.7 1.1 1.5 1.7.8.6 1.4.8 1.8.9.2.1.3 0 .4-.1l.5-.6c.2-.2.4-.3.6-.2l1.3.6c.3.1.4.3.4.5v.6c0 .3-.1.5-.4.6-.5.2-1.3.3-2.3-.1a8.1 8.1 0 0 1-2.9-1.8 8.2 8.2 0 0 1-2-2.9c-.3-1-.2-1.8 0-2.2Z" />
+    </IconBase>
   )
 }
 
+const iconMap = {
+  instagram: InstagramIcon,
+  linkedin: LinkedInIcon,
+  facebook: FacebookIcon,
+  youtube: YouTubeIcon,
+  whatsapp: WhatsAppIcon,
+}
+
+export function SocialIcon({ network, className = '' }) {
+  const Icon = iconMap[network]
+  if (!Icon) {
+    return null
+  }
+  return <Icon className={className} />
+}

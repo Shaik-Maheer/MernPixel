@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import HeroBackdrop from '../components/HeroBackdrop'
-import { business } from '../data/siteData'
+import { SocialIcon } from '../components/SocialIcons'
+import { business, socialLinks } from '../data/siteData'
 import { createMailtoLeadHref, createWhatsAppLeadHref, isValidEmail } from '../lib/leadForms'
 
 const services = [
@@ -72,11 +73,27 @@ export default function ContactPage() {
             <h1>Start your project with MERNpixel.</h1>
             <p className="mp-lead">Share your requirement. We respond fast.</p>
             <p className="mp-lead">Email: {business.email} | Phone: {business.phone}</p>
+            <p className="mp-lead">Address: {business.address}</p>
             <div className="mp-actions">
               <a href={quickWhatsApp} target="_blank" rel="noreferrer" className="mp-btn mp-btn-primary mp-btn-whatsapp mp-magnetic">
                 WhatsApp
               </a>
               <a href={`mailto:${business.email}`} className="mp-btn mp-btn-ghost mp-magnetic">Email</a>
+            </div>
+            <div className="mp-footer-social mp-social-inline">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mp-social-icon"
+                  aria-label={social.label}
+                  title={social.label}
+                >
+                  <SocialIcon network={social.icon} className="mp-social-svg" />
+                </a>
+              ))}
             </div>
           </div>
 
@@ -106,6 +123,27 @@ export default function ContactPage() {
 
             <button type="submit" className="mp-btn mp-btn-primary mp-magnetic">Send Inquiry</button>
           </form>
+        </div>
+      </section>
+
+      <section className="mp-section mp-section-tight">
+        <div className="mp-shell mp-grid-2">
+          <article className="mp-card mp-hover-card">
+            <p className="mp-kicker">Map (Temporary)</p>
+            <h3>Madanapalle, Andhra Pradesh, India</h3>
+            <p>Replace `business.mapEmbedUrl` later for final office location.</p>
+          </article>
+
+          <article className="mp-card">
+            <div className="mp-map-wrap">
+              <iframe
+                title="MERNpixel temporary location map"
+                src={business.mapEmbedUrl}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          </article>
         </div>
       </section>
     </main>

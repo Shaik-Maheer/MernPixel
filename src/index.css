@@ -1236,12 +1236,53 @@ p {
   gap: 12px;
 }
 
-.mp-footer-social a {
-  color: rgba(229, 231, 235, 0.74);
+.mp-social-inline {
+  margin-top: 14px;
 }
 
-.mp-footer-social a:hover {
+.mp-social-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(99, 102, 241, 0.28);
+  background: rgba(17, 24, 39, 0.66);
+  color: #9CA3AF;
+  display: grid;
+  place-items: center;
+  transition: transform 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.mp-social-svg {
+  width: 19px;
+  height: 19px;
+}
+
+.mp-social-icon:hover {
   color: var(--c-highlight);
+  border-color: rgba(34, 211, 238, 0.6);
+  transform: translateY(-2px) scale(1.06);
+  box-shadow: 0 0 16px rgba(34, 211, 238, 0.25);
+}
+
+.mp-social-icon:nth-child(even):hover {
+  color: var(--c-accent);
+  border-color: rgba(99, 102, 241, 0.65);
+  box-shadow: 0 0 16px rgba(99, 102, 241, 0.28);
+}
+
+.mp-map-wrap {
+  height: clamp(240px, 34vw, 320px);
+  border-radius: 14px;
+  border: 1px solid rgba(99, 102, 241, 0.28);
+  overflow: hidden;
+}
+
+.mp-map-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  filter: saturate(0.85) contrast(1.02);
 }
 
 .mp-modal-overlay {
