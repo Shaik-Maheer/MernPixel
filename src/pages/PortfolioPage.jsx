@@ -1,117 +1,90 @@
 import { motion } from 'framer-motion'
 import { caseStudies } from '../data/siteData'
 
-const reveal = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-}
-
-const recentWorkColors = [
-  'bg-[#FFE8D6]', // Soft orange for Cricket
-  'bg-[#F3E8FF]', // Soft purple for Stylistar
-  'bg-[#E0F2FE]', // Soft blue
-  'bg-[#FFEDD5]', // Soft peach
-  'bg-[#DCFCE7]', // Soft green
-  'bg-[#FEF9C3]', // Soft yellow
-]
-
 export default function PortfolioPage() {
-  const orderedStudies = [
-    caseStudies.find(c => c.client.includes('Indian Cricket')),
-    caseStudies.find(c => c.client.includes('Stylistar')),
-    caseStudies.find(c => c.client.includes('Malik Tea')),
-    caseStudies.find(c => c.client.includes('Talent IQ')),
-    ...caseStudies.filter(c => !['Indian Cricket', 'Stylistar', 'Malik Tea', 'Talent IQ'].some(name => c.client.includes(name)))
-  ].filter(Boolean);
-
   return (
-    <main className="min-h-screen bg-[#FFFFFF] pb-32 overflow-hidden relative">
-      
-      {/* Background Dots Grid & Soft Glows */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#FFF8E7]/60 rounded-full blur-[100px] -translate-y-1/4 translate-x-1/4 z-0 pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-50/50 rounded-full blur-[100px] translate-y-1/4 -translate-x-1/4 z-0 pointer-events-none"></div>
-
-      {/* Hero Section */}
-      <section className="relative z-10 pt-28 pb-16 md:pt-36 md:pb-20 overflow-hidden">
-        <div className="absolute inset-0 z-[-1] pointer-events-none opacity-70" style={{ backgroundImage: 'linear-gradient(to right, #E0F2FE 1.5px, transparent 1.5px), linear-gradient(to bottom, #E0F2FE 1.5px, transparent 1.5px)', backgroundSize: '48px 48px' }} />
-        <div className="max-w-4xl mx-auto px-6 text-left">
-          <motion.div initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.5 }}>
-            
-            <div className="inline-flex bg-slate-100 rounded-full px-4 py-1.5 mb-8 items-center border border-slate-200">
-               <span className="text-xs font-semibold text-slate-700 tracking-wide">Selected work</span>
-            </div>
-
-            <h1 className="text-[3.5rem] md:text-[5.5rem] font-extrabold tracking-tight text-slate-900 mb-6 leading-[1.05] max-w-4xl text-left">
-              Projects that <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500">ship and perform.</span>
-            </h1>
-            
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Dynamic Projects Grid */}
-      <section className="relative z-10">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {orderedStudies.map((work, index) => {
-              // Custom pattern: 1st row = 1 col, 2nd row = 2 cols, 3rd row = 1 col...
-              // 0->2 cols wide, 1->col-span-1, 2->col-span-1, 3->col-span-2, etc.
-              const patternCycle = index % 3;
-              const isFullWidth = patternCycle === 0;
-
-              return (
-                <motion.a
-                  key={work.id}
-                  href={work.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`group relative rounded-[2rem] p-8 md:p-14 flex flex-col min-h-[300px] transition-all duration-300 hover:scale-[1.01] hover:shadow-xl overflow-hidden block border border-transparent hover:border-white/50 ${isFullWidth ? 'md:col-span-2' : 'md:col-span-1'} ${recentWorkColors[index % recentWorkColors.length]}`}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.1 }}
-                  variants={reveal}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                >
-                  <div className="relative z-10 flex flex-col h-full justify-between">
-                    <div>
-                      {/* Top label area */}
-                      <div className="flex justify-between items-start w-full">
-                        <p className="text-xs font-bold text-slate-600 uppercase tracking-widest mb-6" style={{letterSpacing: '0.15em'}}>
-                          {work.type}
-                        </p>
-                      </div>
-
-                      {/* Main Title */}
-                      <h3 className={`font-bold text-slate-900 ${isFullWidth ? 'text-4xl md:text-5xl max-w-lg' : 'text-3xl md:text-4xl'}`}>
-                        {work.client}
-                      </h3>
-                    </div>
-
-                    {/* Arrow Button */}
-                    <div className="mt-12 flex justify-between items-end">
-                      <div className="w-14 h-14 rounded-full bg-slate-900 text-white flex items-center justify-center transform transition-transform duration-300 group-hover:bg-[#D349A1] shadow-xl group-hover:scale-110 ml-auto translate-y-2 group-hover:-translate-y-1">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                          <line x1="7" y1="17" x2="17" y2="7"></line>
-                          <polyline points="7 7 17 7 17 17"></polyline>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Faint subtle image overlay to satisfy picture request */}
-                  {work.image && (
-                    <div className={`absolute bottom-0 right-0 z-0 transition-all duration-500 transform translate-y-full opacity-0 group-hover:translate-y-8 group-hover:opacity-100 ${isFullWidth ? 'w-2/5' : 'w-4/5'}`}>
-                      <img src={work.image} alt={work.title} className="w-full h-auto rounded-tl-2xl shadow-2xl skew-y-3 skew-x-3 object-cover" />
-                    </div>
-                  )}
-
-                </motion.a>
-              )
-            })}
+    <main className="min-h-screen bg-white pb-32 font-sans overflow-hidden">
+       
+       {/* Top Dark Section */}
+       {/* Using black as requested: "keep black color background" */}
+       <section className="bg-[#0a0a0a] pt-32 pb-48 px-6 md:px-12 relative">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center mt-12 mb-8 relative z-10">
+             
+             {/* Left Header */}
+             <div className="text-left w-full max-w-lg mb-8 md:mb-0">
+               <span className="text-[13px] font-bold text-gray-400 uppercase tracking-widest mb-3 block">
+                 PORTFOLIO
+               </span>
+               <h1 className="text-5xl md:text-[4rem] font-bold text-white leading-tight">
+                 Our Projects
+               </h1>
+             </div>
+             
+             {/* Right Text */}
+             <div className="w-full md:max-w-md xl:max-w-lg">
+               <p className="text-[14px] md:text-[15px] text-gray-300 leading-[1.8] font-medium">
+                 We engineer premium digital products driven by scalable architecture, seamless user experience, and real business outcomes. 
+                 Explore our selected technical implementations below.
+               </p>
+             </div>
+             
           </div>
-        </div>
-      </section>
 
+          {/* Minimalist Line decor top right (similar to the image) */}
+          <div className="absolute top-0 right-10 lg:right-32 flex space-x-6 opacity-30 pointer-events-none">
+             <div className="w-px h-[280px] bg-white relative">
+                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[11px] h-[11px] border border-white rounded-full translate-y-1/2 bg-[#0a0a0a]"></div>
+             </div>
+             <div className="w-px h-[200px] bg-white relative mt-16">
+                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[11px] h-[11px] border border-white rounded-full translate-y-1/2 bg-[#0a0a0a]"></div>
+             </div>
+          </div>
+       </section>
+       
+       {/* Overlapping Projects Grid */}
+       <section className="max-w-7xl mx-auto px-6 relative z-10 -mt-32">
+          {/* We have 5 case studies, using grid-cols-1 md:grid-cols-2 lg:grid-cols-3 will naturally wrap them safely */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+             {caseStudies.map((work, i) => (
+               <motion.div 
+                 key={work.id}
+                 className="flex flex-col text-center"
+                 initial={{ opacity: 0, y: 30 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 viewport={{ once: true, amount: 0.1 }}
+                 transition={{ delay: i * 0.1, duration: 0.5 }}
+               >
+                 {/* Image Container */}
+                 <div className="w-full aspect-video md:aspect-[4/3] rounded-sm overflow-hidden mb-6 bg-slate-900 shadow-xl group">
+                    <a href={work.link} target="_blank" rel="noreferrer" className="block w-full h-full relative cursor-pointer">
+                      {work.image ? (
+                        <img 
+                          src={work.image} 
+                          alt={work.title} 
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-slate-800 flex items-center justify-center text-slate-500">Image unavilable</div>
+                      )}
+                      
+                      {/* Hover Overlay */}
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+                    </a>
+                 </div>
+                 
+                 {/* Replaced 'Project 1 / Client Name' with just the Website Link heading */}
+                 <a href={work.link} target="_blank" rel="noreferrer" className="inline-block mx-auto hover:opacity-75 transition-opacity">
+                   <h3 className="text-[17px] font-extrabold text-[#3B82F6]">
+                     {work.client}
+                   </h3>
+                 </a>
+                 
+               </motion.div>
+             ))}
+          </div>
+       </section>
+       
     </main>
   )
 }
+
