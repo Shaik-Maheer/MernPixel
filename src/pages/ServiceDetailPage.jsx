@@ -147,14 +147,10 @@ export default function ServiceDetailPage() {
     // E-commerce 
     if (service.id === 'ecommerce') {
       return (
-        <div className="relative w-full max-w-4xl mx-auto h-[350px] flex items-center justify-center mb-24 z-20">
-          <motion.div animate={{ y: [0, -15, 0] }} transition={{ repeat: Infinity, duration: 4 }} className="absolute top-10 left-10 md:left-20 bg-[#1877F2] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">UI / UX</motion.div>
-          <motion.div animate={{ y: [0, 20, 0] }} transition={{ repeat: Infinity, duration: 5, delay: 1 }} className="absolute bottom-10 left-[10%] bg-[#D349A1] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">Wishlist & Auth</motion.div>
-          <motion.div animate={{ y: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 6, delay: 2 }} className="absolute top-16 right-10 md:right-24 bg-[#00B7B5] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">Cart & Checkout</motion.div>
-          <motion.div animate={{ y: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 0.5 }} className="absolute bottom-16 right-[15%] bg-[#018790] text-white font-extrabold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm border-2 border-white/20">Products API</motion.div>
-          
-          <div className="w-32 h-32 md:w-40 md:h-40 bg-slate-900 rounded-[2rem] flex items-center justify-center text-white text-6xl shadow-2xl z-20 ring-4 ring-white border-4 border-slate-100">
-            {service.icon}
+        <div className="relative w-full max-w-5xl mx-auto mb-28 z-20">
+          <div className="w-full h-[350px] md:h-[500px] rounded-[2rem] overflow-hidden shadow-2xl ring-1 ring-slate-200">
+            <video src="/customerdealing.mp4" autoPlay loop muted playsInline className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none rounded-[2rem]"></div>
           </div>
         </div>
       )
@@ -176,26 +172,26 @@ export default function ServiceDetailPage() {
       )
     }
 
-    // Web / App Dev -> Official Icons Solar System
-    if (service.id === 'web-dev' || service.id === 'app-dev') {
+    // Web Development
+    if (service.id === 'web-dev') {
       return (
-        <div className="relative w-[320px] h-[320px] md:w-[460px] md:h-[460px] flex items-center justify-center mb-32 z-20">
-           <div className="absolute w-28 h-28 md:w-32 md:h-32 bg-slate-900 rounded-full shadow-[0_0_60px_rgba(0,0,0,0.15)] flex items-center justify-center text-white text-5xl z-20 ring-8 ring-white">
-             {service.icon}
-           </div>
+        <div className="relative w-full max-w-5xl mx-auto mb-28 z-20">
+          <div className="w-full h-[350px] md:h-[500px] rounded-[2rem] overflow-hidden shadow-2xl ring-1 ring-slate-200">
+            <video src="/web_development.mp4" autoPlay loop muted playsInline className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none rounded-[2rem]"></div>
+          </div>
+        </div>
+      )
+    }
 
-           <div className="absolute w-[220px] h-[220px] md:w-[300px] md:h-[300px] border border-slate-200 rounded-full shadow-inner"></div>
-           <div className="absolute w-[320px] h-[320px] md:w-[460px] md:h-[460px] border border-slate-100 rounded-full shadow-inner"></div>
-           
-           <motion.div className="absolute w-[220px] h-[220px] md:w-[300px] md:h-[300px]" animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 20, ease: "linear" }}>
-              <motion.div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-slate-900 shadow-[0_8px_20px_rgba(0,0,0,0.2)] flex items-center justify-center p-2.5" animate={{ rotate: -360 }} transition={{ repeat: Infinity, duration: 20, ease: "linear" }}><ReactIcon /></motion.div>
-              <motion.div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-slate-900 shadow-[0_8px_20px_rgba(0,0,0,0.2)] flex items-center justify-center p-2.5" animate={{ rotate: -360 }} transition={{ repeat: Infinity, duration: 20, ease: "linear" }}><NodeIcon /></motion.div>
-           </motion.div>
-
-           <motion.div className="absolute w-[320px] h-[320px] md:w-[460px] md:h-[460px]" animate={{ rotate: -360 }} transition={{ repeat: Infinity, duration: 30, ease: "linear" }}>
-              <motion.div className="absolute top-1/2 -left-7 -translate-y-1/2 w-14 h-14 rounded-full bg-slate-900 shadow-[0_8px_20px_rgba(0,0,0,0.2)] flex items-center justify-center p-3" animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 30, ease: "linear" }}><JSIcon /></motion.div>
-              <motion.div className="absolute top-1/2 -right-7 -translate-y-1/2 w-14 h-14 rounded-full bg-slate-900 shadow-[0_8px_20px_rgba(0,0,0,0.2)] flex items-center justify-center p-3" animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 30, ease: "linear" }}><PythonIcon /></motion.div>
-           </motion.div>
+    // App Development
+    if (service.id === 'app-dev') {
+      return (
+        <div className="relative w-full max-w-5xl mx-auto mb-28 z-20">
+          <div className="w-full h-[350px] md:h-[500px] rounded-[2rem] overflow-hidden shadow-2xl ring-1 ring-slate-200">
+            <video src="/meetings.mp4" autoPlay loop muted playsInline className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none rounded-[2rem]"></div>
+          </div>
         </div>
       )
     }
