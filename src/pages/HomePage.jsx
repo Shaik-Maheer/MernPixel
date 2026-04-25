@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { servicesDetailed, caseStudies } from '../data/siteData'
+import CountUpNumber from '../components/CountUpNumber'
 
 const reveal = {
   hidden: { opacity: 0, y: 20 },
@@ -68,8 +69,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {stats.map((stat, i) => (
-              <motion.div key={i} className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={reveal} transition={{ delay: i * 0.1 }}>
-                <h3 className="text-3xl font-bold text-blue-700 mb-1">{stat.value}</h3>
+              <motion.div key={i} className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 cursor-default" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={reveal} transition={{ delay: i * 0.1 }}>
+                <h3 className="text-3xl font-bold text-blue-700 mb-1">
+                  <CountUpNumber value={stat.value} duration={2000} />
+                </h3>
                 <p className="text-xs font-medium text-slate-500 uppercase tracking-widest">{stat.label}</p>
               </motion.div>
             ))}

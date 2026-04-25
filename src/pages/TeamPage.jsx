@@ -17,9 +17,11 @@ const getInitials = (name) => {
 
 export default function TeamPage() {
   return (
-    <main className="min-h-screen bg-[#FFFFFF] pb-32">
+    <main className="min-h-screen bg-[#FFFFFF] pb-32 relative overflow-hidden">
       
-      {/* Background Dots Grid */}
+      {/* Background Dots Grid & Soft Glows */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#FFF8E7]/60 rounded-full blur-[100px] -translate-y-1/4 translate-x-1/4 z-0 pointer-events-none"></div>
+      <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-purple-50/40 rounded-full blur-[100px] z-0 pointer-events-none"></div>
       <div className="fixed inset-0 z-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, #E0F2FE 1px, transparent 1px), linear-gradient(to bottom, #E0F2FE 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
 
       {/* Hero Section */}
