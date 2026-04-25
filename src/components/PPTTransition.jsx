@@ -27,7 +27,7 @@ export default function PPTTransition({ children }) {
           return (
             <MotionDiv
               key={i}
-              className="bg-[#170C79] border-[0.5px] border-[#56B6C6]/35 shadow-[0_0_15px_#8ACBD0] origin-center"
+              className="bg-[#5D1C6A] border-[0.5px] border-[#FFB090]/35 shadow-[0_0_15px_#CA5995] origin-center"
               initial={{ scale: 1, opacity: 1, borderRadius: '0%' }}
               animate={{ scale: 0, opacity: 0, borderRadius: '50%' }}
               exit={{ scale: 1, opacity: 1, borderRadius: '0%' }}
