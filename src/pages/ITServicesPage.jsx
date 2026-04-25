@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import DetailModal from '../components/DetailModal'
 import HeroBackdrop from '../components/HeroBackdrop'
 import { servicesDetailed } from '../data/siteData'
@@ -11,13 +11,25 @@ const reveal = {
 }
 
 export default function ITServicesPage() {
-  const [activeId, setActiveId] = useState(servicesDetailed[0].id)
+  const [searchParams] = useSearchParams()
+  const requestedId = searchParams.get('service')
+  const initialServiceId = servicesDetailed.some((service) => service.id === requestedId)
+    ? requestedId
+    : servicesDetailed[0].id
+
+  const [activeId, setActiveId] = useState(initialServiceId)
   const [modalOpen, setModalOpen] = useState(false)
 
   const activeService = useMemo(
     () => servicesDetailed.find((service) => service.id === activeId) || servicesDetailed[0],
     [activeId]
   )
+
+  useEffect(() => {
+    if (requestedId && servicesDetailed.some((service) => service.id === requestedId)) {
+      setActiveId(requestedId)
+    }
+  }, [requestedId])
 
   return (
     <main className="mp-page">

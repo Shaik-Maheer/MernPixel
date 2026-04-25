@@ -12,24 +12,11 @@ import {
   stats,
   storyDetail,
   teamMembers,
-  trustBrands,
 } from '../data/siteData'
 
 const reveal = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0 },
-}
-
-function createServiceModal(service) {
-  return {
-    subtitle: 'Service Details',
-    title: service.title,
-    sections: [
-      { label: 'Features', items: service.features },
-      { label: 'Use Cases', items: service.useCases },
-      { label: 'Benefits', items: [service.outcome] },
-    ],
-  }
 }
 
 function createWorkModal(work) {
@@ -89,28 +76,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mp-section mp-section-tight">
-        <div className="mp-shell">
-          <p className="mp-kicker">Trusted by growing businesses</p>
-          <div className="mp-logo-row">
-            {trustBrands.map((brand) => (
-              <span key={brand}>{brand}</span>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="mp-section">
         <div className="mp-shell">
           <div className="mp-heading-row">
             <p className="mp-kicker">Services</p>
             <h2>Fast, focused execution across product and growth.</h2>
           </div>
-          <div className="mp-service-rail">
+          <div className="mp-card-grid mp-grid-services">
             {servicesDetailed.map((service, index) => (
               <motion.article
                 key={service.id}
-                className="mp-card mp-hover-card mp-service-rail-item"
+                className="mp-card mp-hover-card mp-service-card"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
@@ -118,10 +94,10 @@ export default function HomePage() {
                 transition={{ duration: 0.4, delay: index * 0.05 }}
               >
                 <p className="mp-chip">{service.title}</p>
-                <p>{service.description}</p>
-                <button type="button" className="mp-text-link" onClick={() => setModal(createServiceModal(service))}>
+                <p className="mp-service-line">{service.description}</p>
+                <Link to={`/services?service=${service.id}`} className="mp-text-link">
                   View More
-                </button>
+                </Link>
               </motion.article>
             ))}
           </div>
