@@ -1,16 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --c-primary: #000000;
-  --c-secondary: #E3D3B5;
-  --c-accent: #6E026F;
-  --c-highlight: #B304B5;
-  --c-text: #FFFFFF;
-  --c-subtext: #A0A0A0;
+  --c-primary: #F8FAFB;
+  --c-secondary: #FFFFFF;
+  --c-accent: #1E40AF;
+  --c-highlight: #8B5CF6;
+  --c-text: #0F172A;
+  --c-subtext: #64748B;
 }
 
 * {
@@ -30,13 +30,10 @@ html {
 }
 
 body {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Inter', sans-serif;
   letter-spacing: -0.01em;
   color: var(--c-text);
-  background:
-    radial-gradient(circle at 12% 8%, rgba(110, 2, 111, 0.24), transparent 36%),
-    radial-gradient(circle at 88% 14%, rgba(255, 255, 255, 0.2), transparent 36%),
-    linear-gradient(165deg, var(--c-primary) 0%, #000000 48%, var(--c-secondary) 100%);
+  background: #F8FAFB;
   overflow-x: hidden;
 }
 

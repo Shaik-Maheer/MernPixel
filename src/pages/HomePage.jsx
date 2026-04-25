@@ -47,32 +47,25 @@ export default function HomePage() {
 
   return (
     <main className="mp-page">
-      <section className="mp-hero mp-hero-media">
-        <HeroBackdrop video="/one.mp4" />
-
-        <div className="mp-shell mp-hero-grid">
+      <section className="py-24 md:py-36 relative overflow-hidden flex items-center justify-center">
+        <div className="mp-shell relative z-10 text-center max-w-4xl mx-auto flex flex-col items-center">
           <motion.div initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.55 }}>
-            <p className="mp-kicker">MERNpixel Agency</p>
-            <h1 className="mp-display">We build high-performance digital products</h1>
-            <p className="mp-lead">For startups, businesses, and growing brands.</p>
-            <div className="mp-actions">
-              <Link to="/works" className="mp-btn mp-btn-ghost mp-magnetic">View Work</Link>
-              <Link to="/contact" className="mp-btn mp-btn-primary mp-magnetic">Start Project</Link>
+            <div className="inline-flex bg-white/60 backdrop-blur-md border border-slate-200 rounded-full px-4 py-1.5 mb-8 shadow-sm items-center">
+               <span className="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+               <span className="text-sm font-medium text-slate-800">Now booking Q3 projects</span>
+            </div>
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 mb-6 leading-tight">
+              Not built to <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 italic">impress.</span><br/>
+              Built to <span className="text-blue-700">perform.</span>
+            </h1>
+            <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto">
+              We build high-performance digital products shaped around outcomes. Fast, scalable, and premium for growing brands.
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link to="/contact" className="bg-slate-900 text-white px-8 py-4 rounded-full font-semibold hover:bg-slate-800 transition-all flex items-center shadow-lg">Start a project <span className="ml-2">→</span></Link>
+              <Link to="/works" className="bg-white text-slate-900 border border-slate-200 px-8 py-4 rounded-full font-semibold hover:bg-slate-50 transition-all shadow-sm">View all work</Link>
             </div>
           </motion.div>
-
-          <motion.aside className="mp-hero-panel" initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.6, delay: 0.1 }}>
-            <p>Trusted Execution</p>
-            <h2>Built for speed and business outcomes.</h2>
-            <div className="mp-stat-grid">
-              {stats.map((item) => (
-                <article key={item.label}>
-                  <strong><CountUpNumber value={item.value} /></strong>
-                  <span>{item.label}</span>
-                </article>
-              ))}
-            </div>
-          </motion.aside>
         </div>
       </section>
 
@@ -104,18 +97,22 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mp-section">
-        <div className="mp-shell">
-          <div className="mp-heading-row">
-            <p className="mp-kicker">Works</p>
-            <h2>Visual-first projects with measurable outcomes.</h2>
+      <section className="py-20 bg-white/40">
+        <div className="mp-shell space-y-12">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4">
+            <div>
+              <h2 className="text-4xl font-bold text-slate-900">Featured Work</h2>
+            </div>
+            <Link to="/works" className="text-slate-600 hover:text-slate-900 font-medium flex items-center group">
+              See our work <span className="ml-1 group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
           </div>
-          <div className="mp-card-grid mp-grid-3">
-            {caseStudies.slice(0, 3).map((work, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {caseStudies.map((work, index) => (
               <motion.button
                 key={work.id}
                 type="button"
-                className="mp-card mp-work-card mp-work-button"
+                className="group bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all text-left flex flex-col"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
@@ -123,15 +120,17 @@ export default function HomePage() {
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 onClick={() => setModal(createWorkModal(work))}
               >
-                <img src={work.image} alt={work.title} loading="lazy" />
-                <p className="mp-chip">{work.type}</p>
-                <h3>{work.title}</h3>
-                <p>{work.result}</p>
+                <div className="overflow-hidden w-full aspect-video bg-slate-100 relative">
+                  <img src={work.image} alt={work.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                </div>
+                <div className="p-6 flex-1 flex flex-col bg-white">
+                  <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-2">{work.type} • {work.client}</p>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">{work.title}</h3>
+                  <p className="text-slate-600 text-sm flex-1">{work.result}</p>
+                  <span className="mt-4 text-sm font-medium text-slate-900 flex items-center group-hover:text-blue-600 transition-colors">View Details <span className="ml-1">→</span></span>
+                </div>
               </motion.button>
             ))}
-          </div>
-          <div className="mp-actions mp-actions-center">
-            <Link to="/works" className="mp-btn mp-btn-ghost mp-magnetic">See All Works</Link>
           </div>
         </div>
       </section>
@@ -209,18 +208,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mp-section">
-        <div className="mp-shell">
-          <div className="mp-heading-row">
-            <p className="mp-kicker">Team</p>
-            <h2>Core builders driving every project.</h2>
+      <section className="py-20 text-center">
+        <div className="mp-shell space-y-12">
+          <div className="max-w-2xl mx-auto pb-4">
+            <h2 className="text-4xl font-bold text-slate-900 mb-4">Meet the Team</h2>
+            <p className="text-lg text-slate-600">Core builders driving every project. We are a product studio shaped by hackathons and measurable outcomes.</p>
           </div>
-          <div className="mp-card-grid mp-grid-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {teamMembers.map((member, index) => (
               <motion.button
                 key={member.name}
                 type="button"
-                className="mp-card mp-hover-card mp-team-mini"
+                className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-lg transition-all text-center flex flex-col items-center group"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
@@ -228,9 +227,12 @@ export default function HomePage() {
                 transition={{ duration: 0.4, delay: index * 0.04 }}
                 onClick={() => setModal(createTeamModal(member))}
               >
-                <h3>{member.name}</h3>
-                <p>{member.role}</p>
-                <span className="mp-text-link">View More</span>
+                <div className="w-24 h-24 rounded-full overflow-hidden mb-5 bg-slate-100 shadow-inner group-hover:scale-105 transition-transform duration-300">
+                  <img src={member.photo} alt={member.name} loading="lazy" className="w-full h-full object-cover" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 mb-1">{member.name}</h3>
+                <p className="text-sm text-blue-600 font-medium mb-3">{member.role}</p>
+                <span className="text-xs font-semibold text-slate-400 group-hover:text-slate-600 transition-colors uppercase tracking-wider">View Profile</span>
               </motion.button>
             ))}
           </div>
