@@ -1,101 +1,103 @@
-import { useState } from 'react'
+import { useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import logo from '../assets/mernpixel-logo.svg'
-import { featuredStats, processSteps, serviceHighlights } from '../data/siteData'
+import IntroSequence from '../components/IntroSequence'
+import { capabilityMarquee } from '../data/siteData'
 
-export default function HomePage() {
-  const [openCard, setOpenCard] = useState(null)
+export default function HomePage({ showIntro, onIntroComplete }) {
+  const MotionHeading = motion.h1
+  const MotionParagraph = motion.p
+
+  const handleIntroDone = useCallback(() => {
+    onIntroComplete?.()
+
+    window.setTimeout(() => {
+      const home = document.getElementById('home')
+      if (home) {
+        home.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 240)
+  }, [onIntroComplete])
 
   return (
-    <main>
-      <section className="hero-section">
-        <div className="container hero-grid">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <p className="eyebrow">MERNpixel Digital Studio</p>
-            <h1>Professional web experiences built for service brands.</h1>
-            <p className="lead-copy">
-              We build fast websites and web applications that improve trust, generate quality leads, and support business growth.
-            </p>
+    <>
+      {showIntro && <IntroSequence onDone={handleIntroDone} />}
 
-            <div className="hero-actions">
-              <Link to="/contact" className="btn btn-primary">Start Project</Link>
-              <Link to="/services" className="btn btn-secondary">View Services</Link>
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="hero-logo-wrap"
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-          >
-            <img src={logo} alt="MERNpixel" />
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="section-block compact-top">
-        <div className="container stats-row">
-          {featuredStats.map((item) => (
-            <article key={item.label} className="stat-card">
-              <p>{item.value}</p>
-              <span>{item.label}</span>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section-block">
-        <div className="container">
-          <div className="section-head">
-            <p className="eyebrow">Core Services</p>
-            <h2>Only what drives outcomes.</h2>
-          </div>
-
-          <div className="card-grid">
-            {serviceHighlights.map((service, index) => {
-              const expanded = openCard === index
-              return (
-                <article key={service.title} className={`service-card ${expanded ? 'is-expanded' : ''}`}>
-                  <h3>{service.title}</h3>
-                  <p className="card-short">{service.short}</p>
-                  <p className="card-detail">{service.detail}</p>
-                  <button
-                    type="button"
-                    className="text-btn"
-                    onClick={() => setOpenCard(expanded ? null : index)}
-                  >
-                    {expanded ? 'Hide' : 'View more'}
-                  </button>
-                </article>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-block process-band">
-        <div className="container">
-          <div className="section-head">
-            <p className="eyebrow">How We Work</p>
-            <h2>Simple process. Clear ownership.</h2>
-          </div>
-
-          <div className="process-grid">
-            {processSteps.map((step) => (
-              <article key={step.title} className="process-card">
-                <h3>{step.title}</h3>
-                <p>{step.description}</p>
-              </article>
+      <main id="home" className="relative">
+        <section className="home-hero home-hero-minimal relative flex min-h-screen items-center overflow-hidden">
+          <div className="home-hero-particles" aria-hidden>
+            {Array.from({ length: 168 }).map((_, index) => (
+              <span
+                key={`hero-particle-${index}`}
+                style={{
+                  '--hero-particle-left': `${(index * 7.13) % 100}%`,
+                  '--hero-particle-top': `${(index * 11.91) % 100}%`,
+                  '--hero-particle-delay': `${(index % 17) * 0.22}s`,
+                  '--hero-particle-size': `${1 + (index % 3)}px`,
+                  '--hero-particle-drift': `${8 + (index % 8) * 1.8}px`,
+                  '--hero-particle-duration': `${5.4 + (index % 7) * 0.6}s`,
+                }}
+              />
             ))}
           </div>
-        </div>
-      </section>
-    </main>
+          <div className="home-hero-overlay" />
+
+          <div className="section-shell relative">
+            <div className="home-hero-minimal-wrap">
+              <motion.p
+                className="home-hero-brand-line"
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
+              >
+                mern pixel
+              </motion.p>
+
+              <motion.p
+                className="home-hero-kicker"
+                initial={{ opacity: 0, y: 22 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.65, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              >
+                MERNpixel Studio
+              </motion.p>
+
+              <MotionHeading
+                className="home-hero-title relative z-10"
+                initial={{ opacity: 0, y: 34 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              >
+                Not Built To Impress.
+                <br />
+                Built To Perform.
+              </MotionHeading>
+
+              <MotionParagraph
+                className="home-hero-subtitle"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.75, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
+              >
+                We design and ship business-ready digital experiences with clear messaging, fast performance,
+                and conversion-focused flows.
+              </MotionParagraph>
+            </div>
+
+            <motion.div
+              className="home-capability-marquee"
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="home-capability-track">
+                {[...capabilityMarquee, ...capabilityMarquee].map((item, index) => (
+                  <span key={`${item}-${index}`}>{item}</span>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      </main>
+    </>
   )
 }
