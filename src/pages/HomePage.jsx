@@ -87,10 +87,11 @@ export default function HomePage() {
       </section>
 
       {/* Marquee */}
-      <section className="relative z-10 py-6 overflow-hidden bg-transparent border-y border-slate-100 flex items-center mb-20 whitespace-nowrap">
-        <div className="animate-[marquee_20s_linear_infinite] flex items-center gap-6 text-xl md:text-3xl font-bold text-slate-400/80">
-          <span>✦ Brand</span><span>✦ Speed</span><span>✦ Outcomes</span><span>✦ Trust</span><span>✦ Polish</span><span>✦ Performance</span><span>✦ Conversion</span><span>✦ Architecture</span>
-          <span>✦ Brand</span><span>✦ Speed</span><span>✦ Outcomes</span><span>✦ Trust</span><span>✦ Polish</span><span>✦ Performance</span><span>✦ Conversion</span><span>✦ Architecture</span>
+      <section className="relative z-10 py-8 overflow-hidden bg-transparent border-y border-slate-100 flex items-center mb-20 whitespace-nowrap">
+        <div className="animate-[marquee_30s_linear_infinite] flex items-center gap-24 md:gap-40 text-xl md:text-[2rem] font-extrabold text-slate-400/60 uppercase tracking-[0.2em]">
+          {Array(4).fill(['Brand', 'Speed', 'Outcomes', 'Trust', 'Polish', 'Performance', 'Conversion', 'Architecture']).flat().map((word, i) => (
+             <span key={i}>{word}</span>
+          ))}
         </div>
       </section>
 
