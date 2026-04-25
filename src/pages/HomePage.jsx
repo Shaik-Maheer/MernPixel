@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { capabilityMarquee, homeCaseStudies, homeProcess, servicePlanets, stats } from '../data/siteData'
+import CountUpNumber from '../components/CountUpNumber'
+import HeroBackdrop from '../components/HeroBackdrop'
+import SlidingComments from '../components/SlidingComments'
+import { capabilityMarquee, homeCaseStudies, homeProcess, servicePlanets, stats, testimonials } from '../data/siteData'
 
 const reveal = {
   hidden: { opacity: 0, y: 26 },
@@ -10,7 +13,8 @@ const reveal = {
 export default function HomePage() {
   return (
     <main className="mp-page">
-      <section className="mp-hero">
+      <section className="mp-hero mp-hero-media">
+        <HeroBackdrop video="/one.mp4" />
         <div className="mp-shell mp-hero-grid">
           <motion.div initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.65 }}>
             <p className="mp-kicker">MERNpixel Digital Studio</p>
@@ -31,7 +35,7 @@ export default function HomePage() {
             <div className="mp-stat-grid">
               {stats.map((item) => (
                 <article key={item.label}>
-                  <strong>{item.value}</strong>
+                  <strong><CountUpNumber value={item.value} /></strong>
                   <span>{item.label}</span>
                 </article>
               ))}
@@ -47,6 +51,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <SlidingComments items={testimonials} />
 
       <section className="mp-section">
         <div className="mp-shell">

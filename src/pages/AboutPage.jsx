@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion'
+import CountUpNumber from '../components/CountUpNumber'
+import HeroBackdrop from '../components/HeroBackdrop'
 import { business, homeProcess, stats } from '../data/siteData'
 
 const reveal = {
@@ -9,7 +11,8 @@ const reveal = {
 export default function AboutPage() {
   return (
     <main className="mp-page">
-      <section className="mp-page-hero">
+      <section className="mp-page-hero mp-page-hero-media">
+        <HeroBackdrop video="/four.mp4" />
         <div className="mp-shell mp-grid-2 mp-hero-split">
           <div>
             <p className="mp-kicker">About {business.name}</p>
@@ -33,7 +36,7 @@ export default function AboutPage() {
           <div className="mp-stat-grid">
             {stats.map((item) => (
               <article key={item.label}>
-                <strong>{item.value}</strong>
+                <strong><CountUpNumber value={item.value} /></strong>
                 <span>{item.label}</span>
               </article>
             ))}

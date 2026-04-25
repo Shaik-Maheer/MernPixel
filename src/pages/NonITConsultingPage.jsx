@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom'
+import HeroBackdrop from '../components/HeroBackdrop'
 import { nonItServices } from '../data/siteData'
 
 export default function NonITConsultingPage() {
   return (
     <main className="mp-page">
-      <section className="mp-page-hero">
+      <section className="mp-page-hero mp-page-hero-media">
+        <HeroBackdrop video="/four.mp4" />
         <div className="mp-shell">
           <p className="mp-kicker">Non-IT Consulting</p>
           <h1>Business hiring support with faster coordination and role clarity.</h1>

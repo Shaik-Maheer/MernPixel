@@ -1,4 +1,7 @@
 import { motion } from 'framer-motion'
+import CountUpNumber from '../components/CountUpNumber'
+import HeroBackdrop from '../components/HeroBackdrop'
+import SlidingComments from '../components/SlidingComments'
 import { stats, testimonials } from '../data/siteData'
 
 const reveal = {
@@ -9,7 +12,8 @@ const reveal = {
 export default function ClientsPage() {
   return (
     <main className="mp-page">
-      <section className="mp-page-hero">
+      <section className="mp-page-hero mp-page-hero-media">
+        <HeroBackdrop video="/five.mp4" />
         <div className="mp-shell">
           <p className="mp-kicker">Clients</p>
           <h1>Long-term partnerships built on trust and measurable outcomes.</h1>
@@ -21,12 +25,14 @@ export default function ClientsPage() {
         <div className="mp-shell mp-stat-grid">
           {stats.slice(0, 3).map((item) => (
             <article key={item.label}>
-              <strong>{item.value}</strong>
+              <strong><CountUpNumber value={item.value} /></strong>
               <span>{item.label}</span>
             </article>
           ))}
         </div>
       </section>
+
+      <SlidingComments items={testimonials} />
 
       <section className="mp-section">
         <div className="mp-shell mp-card-grid mp-grid-3">

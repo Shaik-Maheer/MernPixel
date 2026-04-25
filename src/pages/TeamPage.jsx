@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import HeroBackdrop from '../components/HeroBackdrop'
 import { coreCrew } from '../data/siteData'
 
 const reveal = {
@@ -9,7 +10,8 @@ const reveal = {
 export default function TeamPage() {
   return (
     <main className="mp-page">
-      <section className="mp-page-hero">
+      <section className="mp-page-hero mp-page-hero-media">
+        <HeroBackdrop video="/five.mp4" />
         <div className="mp-shell">
           <p className="mp-kicker">Core Team</p>
           <h1>Specialists with shared ownership from design to deployment.</h1>

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import HeroBackdrop from '../components/HeroBackdrop'
 import { servicePlanets } from '../data/siteData'
 
 const reveal = {
@@ -10,7 +11,8 @@ const reveal = {
 export default function ITServicesPage() {
   return (
     <main className="mp-page">
-      <section className="mp-page-hero">
+      <section className="mp-page-hero mp-page-hero-media">
+        <HeroBackdrop video="/two.mp4" />
         <div className="mp-shell">
           <p className="mp-kicker">Services</p>
           <h1>Premium digital services built for business outcomes.</h1>

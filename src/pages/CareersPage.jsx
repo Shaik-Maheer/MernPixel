@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import HeroBackdrop from '../components/HeroBackdrop'
 
 const openings = [
   'Frontend Engineer (React)',
@@ -9,7 +10,8 @@ const openings = [
 export default function CareersPage() {
   return (
     <main className="mp-page">
-      <section className="mp-page-hero">
+      <section className="mp-page-hero mp-page-hero-media">
+        <HeroBackdrop video="/three.mp4" />
         <div className="mp-shell">
           <p className="mp-kicker">Careers</p>
           <h1>Join a focused team that values craft, accountability, and speed.</h1>

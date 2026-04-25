@@ -53,9 +53,10 @@ export default function GlobalNav() {
 
       <nav id="mobile-menu" className={`mp-mobile-menu ${open ? 'is-open' : ''}`} aria-label="Mobile navigation">
         <div className="mp-shell mp-mobile-menu-inner">
-          {navItems.map((item) => (
+          {navItems.map((item, index) => (
             <NavLink key={item.path} to={item.path} className={({ isActive }) => `mp-mobile-link ${isActive ? 'is-active' : ''}`}>
-              {item.label}
+              <span className="mp-mobile-link-index">{String(index + 1).padStart(2, '0')}</span>
+              <span>{item.label}</span>
             </NavLink>
           ))}
         </div>

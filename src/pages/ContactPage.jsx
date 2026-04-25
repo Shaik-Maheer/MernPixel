@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import HeroBackdrop from '../components/HeroBackdrop'
 import { business } from '../data/siteData'
 import {
   createMailtoLeadHref,
@@ -87,7 +88,8 @@ export default function ContactPage() {
 
   return (
     <main className="mp-page">
-      <section className="mp-page-hero">
+      <section className="mp-page-hero mp-page-hero-media">
+        <HeroBackdrop video="/two.mp4" />
         <div className="mp-shell mp-grid-2 mp-hero-split">
           <div>
             <p className="mp-kicker">Contact</p>

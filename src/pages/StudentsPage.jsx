@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom'
+import HeroBackdrop from '../components/HeroBackdrop'
 import { studentServices } from '../data/siteData'
 
 export default function StudentsPage() {
   return (
     <main className="mp-page">
-      <section className="mp-page-hero">
+      <section className="mp-page-hero mp-page-hero-media">
+        <HeroBackdrop video="/one.mp4" />
         <div className="mp-shell">
           <p className="mp-kicker">Student Services</p>
           <h1>Project mentoring with practical architecture and demo readiness.</h1>
