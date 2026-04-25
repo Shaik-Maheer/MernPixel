@@ -109,8 +109,8 @@ export default function ContactPage() {
                 <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-6">Social</p>
                 <div className="flex gap-4">
                   {socialLinks.map((link) => (
-                    <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-700 hover:text-white hover:bg-slate-900 transition-colors shadow-sm" aria-label={link.label}>
-                      <SocialIcon network={link.icon} className="w-5 h-5" />
+                    <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center hover:-translate-y-1 hover:shadow-md hover:bg-white hover:border-slate-300 transition-all shadow-sm" aria-label={link.label}>
+                      <SocialIcon network={link.icon} className="w-5 h-5 drop-shadow-sm" />
                     </a>
                   ))}
                 </div>
