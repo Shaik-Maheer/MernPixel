@@ -72,7 +72,7 @@ export default function ChatbotWidget() {
 
   return (
     <>
-      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-4">
         {/* WhatsApp Connect */}
         <a 
           href={business.whatsapp} 
@@ -120,9 +120,18 @@ export default function ChatbotWidget() {
           exit={{ opacity: 0, y: 14, scale: 0.98 }}
           transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
         >
-          <header className="bg-slate-50 border-b border-slate-100 p-5">
-            <p className="text-lg font-extrabold text-slate-900">MERNpixel Assistant</p>
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest mt-1">Instant guidance</p>
+          <header className="bg-slate-50 border-b border-slate-100 p-5 relative">
+            <div className="pr-8">
+              <p className="text-lg font-extrabold text-slate-900">MERNpixel Assistant</p>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest mt-1">Instant guidance</p>
+            </div>
+            <button 
+              onClick={() => setOpen(false)}
+              className="absolute top-5 right-5 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-200/50"
+              aria-label="Close Chat"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
           </header>
 
           <div ref={listRef} className="flex-1 overflow-y-auto p-5 flex flex-col gap-4 bg-[#F8FAFB]">
