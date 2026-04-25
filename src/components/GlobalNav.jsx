@@ -40,7 +40,11 @@ export default function GlobalNav() {
               to={item.path}
               end={item.path === '/'}
               className={({ isActive }) => 
-                `text-sm font-medium transition-colors hover:text-slate-900 ${isActive ? 'text-slate-900' : 'text-slate-500'}`
+                `text-sm font-medium transition-colors hover:text-slate-900 pb-1 border-b-2 ${
+                  isActive 
+                    ? 'text-slate-900 border-rose-500' 
+                    : 'text-slate-500 border-transparent hover:border-slate-300'
+                }`
               }
             >
               {item.label}

@@ -23,38 +23,38 @@ const recentWorkColors = [
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-[#FDFDFD] pb-10">
+    <main className="min-h-screen bg-[#FFFFFF] pb-10">
       
       {/* Background Grid */}
-      <div className="fixed inset-0 z-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+      <div className="fixed inset-0 z-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px)', backgroundSize: '64px 64px' }} />
 
       {/* Hero Section */}
-      <section className="relative z-10 pt-24 pb-16 md:pt-36 md:pb-24 overflow-hidden">
+      <section className="relative z-10 pt-20 pb-16 md:pt-28 md:pb-24 overflow-hidden">
         {/* Soft yellow glow */}
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-yellow-100/50 rounded-full blur-3xl -translate-y-1/4 translate-x-1/4 z-[-1]"></div>
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#FFF8E7]/80 rounded-full blur-3xl -translate-y-1/4 translate-x-1/4 z-[-1]"></div>
 
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col items-start">
           <motion.div initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.5 }}>
             
-            <div className="inline-flex bg-blue-50/50 rounded-full px-4 py-1.5 mb-8 items-center border border-blue-100">
-               <span className="w-1.5 h-1.5 rounded-full bg-teal-500 mr-2 animate-pulse"></span>
+            <div className="inline-flex bg-slate-100 rounded-full px-4 py-1.5 mb-8 items-center border border-slate-200">
+               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2"></span>
                <span className="text-xs font-semibold text-slate-700 tracking-wide">Now booking Q3 projects</span>
             </div>
 
-            <h1 className="text-6xl md:text-[5.5rem] font-bold tracking-tight text-slate-900 mb-6 leading-[1.05] max-w-4xl">
-              Not built to <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 italic font-serif">impress.</span><br/>
-              Built to <span className="text-blue-700">perform.</span>
+            <h1 className="text-[3.5rem] md:text-[5.5rem] font-bold tracking-tight text-slate-900 mb-6 leading-[1.1] max-w-4xl text-left">
+              Not built to <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-rose-500 italic">impress.</span><br/>
+              Built to <span className="text-blue-600">perform.</span>
             </h1>
             
-            <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl leading-relaxed">
+            <p className="text-xl md:text-[22px] text-slate-600 mb-10 max-w-3xl leading-[1.6] text-left font-medium">
               MERNpixel is a product studio for businesses that care about outcomes — websites, apps, brands and growth systems engineered to move the metric.
             </p>
             
-            <div className="flex flex-wrap gap-4">
-              <Link to="/contact" className="bg-slate-900 text-white px-6 py-3.5 rounded-full font-medium hover:bg-slate-800 transition-all flex items-center text-sm">
-                Start a project <span className="ml-2 font-normal">→</span>
+            <div className="flex flex-wrap gap-4 text-left justify-start">
+              <Link to="/contact" className="bg-[#0F172A] text-white px-7 py-3 rounded-full font-medium hover:bg-slate-800 transition-all flex items-center text-[15px]">
+                Start a project <span className="ml-2 font-normal text-slate-400">→</span>
               </Link>
-              <Link to="/works" className="bg-white text-slate-900 border border-slate-200 px-6 py-3.5 rounded-full font-medium hover:bg-slate-50 transition-all text-sm">
+              <Link to="/works" className="bg-white text-slate-900 border border-slate-200 px-7 py-3 rounded-full font-medium hover:bg-slate-50 transition-all text-[15px]">
                 See our work
               </Link>
             </div>

@@ -31,11 +31,16 @@ export default {
           '0%, 100%': { opacity: 0.25, transform: 'translateY(0px)' },
           '50%': { opacity: 0.6, transform: 'translateY(-8px)' },
         },
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
       },
       animation: {
         float: 'float 7s ease-in-out infinite',
         reveal: 'reveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards',
         shimmer: 'shimmer 8s ease-in-out infinite',
+        marquee: 'marquee 25s linear infinite',
       },
     },
   },
