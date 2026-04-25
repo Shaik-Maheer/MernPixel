@@ -4,6 +4,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import GlobalNav from './components/GlobalNav'
 import SiteFooter from './components/SiteFooter'
 import WhatsAppFloat from './components/WhatsAppFloat'
+import ChatbotWidget from './components/ChatbotWidget'
 import useSmoothScroll from './hooks/useSmoothScroll'
 import AboutPage from './pages/AboutPage'
 import BlogPage from './pages/BlogPage'
@@ -55,8 +56,9 @@ function App() {
             </motion.div>
           </AnimatePresence>
 
-          <SiteFooter />
-          <WhatsAppFloat />
+      <SiteFooter />
+      <WhatsAppFloat />
+      <ChatbotWidget />
     </div>
   )
 }

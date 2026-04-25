@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { business, socialLinks } from '../data/siteData'
+import { SocialIcon } from '../components/SocialIcons'
 
 const reveal = {
   hidden: { opacity: 0, y: 20 },
@@ -7,6 +9,38 @@ const reveal = {
 }
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({ name: '', email: '', company: '', budget: '', description: '' })
+  const [status, setStatus] = useState({ loading: false, message: '', isError: false })
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (!formData.name || !formData.email || !formData.description) {
+      setStatus({ loading: false, message: 'Please fill out your name, email, and description.', isError: true })
+      return
+    }
+
+    setStatus({ loading: true, message: '', isError: false })
+
+    try {
+      const baseUrl = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '')
+      const response = await fetch(`${baseUrl}/api/mail`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      
+      const data = await response.json().catch(() => ({}))
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message.')
+      }
+
+      setStatus({ loading: false, message: 'Message sent successfully! We will be in touch soon.', isError: false })
+      setFormData({ name: '', email: '', company: '', budget: '', description: '' })
+    } catch (err) {
+      setStatus({ loading: false, message: 'Unable to send message. Please try again later.', isError: true })
+    }
+  }
   return (
     <main className="min-h-screen bg-[#FFFFFF] pb-32 relative overflow-hidden">
       
@@ -75,8 +109,8 @@ export default function ContactPage() {
                 <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-6">Social</p>
                 <div className="flex gap-4">
                   {socialLinks.map((link) => (
-                    <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-700 hover:text-slate-900 hover:shadow-md hover:border-slate-300 transition-all">
-                      <span className="text-sm font-bold uppercase">{link.label.substring(0,2)}</span>
+                    <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-700 hover:text-white hover:bg-slate-900 transition-colors shadow-sm" aria-label={link.label}>
+                      <SocialIcon network={link.icon} className="w-5 h-5" />
                     </a>
                   ))}
                 </div>
@@ -93,42 +127,50 @@ export default function ContactPage() {
                 <h2 className="text-[28px] font-bold text-slate-900 mb-2">Tell us about your project</h2>
                 <p className="text-[15px] font-medium text-slate-500 mb-10">We respond within one business day.</p>
 
-                <form className="flex flex-col gap-6" onSubmit={(e) => e.preventDefault()}>
+                <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-bold text-slate-900 mb-2">Your name</label>
-                      <input type="text" placeholder="Jane Doe" className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
+                      <input type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} placeholder="Jane Doe" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
                     </div>
                     <div>
                       <label className="block text-sm font-bold text-slate-900 mb-2">Email</label>
-                      <input type="email" placeholder="you@company.com" className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
+                      <input type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} placeholder="you@company.com" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-bold text-slate-900 mb-2">Company</label>
-                      <input type="text" placeholder="Optional" className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
+                      <input type="text" value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} placeholder="Optional" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
                     </div>
                     <div>
                       <label className="block text-sm font-bold text-slate-900 mb-2">Budget</label>
-                      <input type="text" placeholder="₹50k – ₹5L+" className="w-full bg-white border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
+                      <input type="text" value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})} placeholder="₹50k – ₹5L+" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
                     </div>
                   </div>
 
                   <div>
                     <label className="block text-sm font-bold text-slate-900 mb-2">What are you looking to build?</label>
-                    <textarea rows="4" placeholder="A short description of the goal, audience and timeline." className="w-full bg-white border border-slate-200 rounded-xl px-5 py-4 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium resize-none"></textarea>
+                    <textarea value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} rows="4" placeholder="A short description of the goal, audience and timeline." className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium resize-none"></textarea>
                   </div>
 
-                  <div className="pt-4">
-                    <button type="submit" className="bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl px-8 py-4 flex items-center gap-3 transition-colors shadow-lg shadow-slate-900/10">
-                      Send message
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                      </svg>
+                  {status.message && (
+                    <div className={`p-4 rounded-xl text-sm font-bold ${status.isError ? 'bg-rose-50 text-rose-600 border border-rose-100' : 'bg-emerald-50 text-emerald-600 border border-emerald-100'}`}>
+                      {status.message}
+                    </div>
+                  )}
+
+                  <div className="pt-2">
+                    <button type="submit" disabled={status.loading} className="w-full md:w-auto bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white font-bold rounded-xl px-8 py-4 flex items-center justify-center gap-3 transition-colors shadow-lg shadow-slate-900/10">
+                      {status.loading ? 'Sending...' : 'Send message'}
+                      {!status.loading && (
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      )}
                     </button>
                   </div>
 

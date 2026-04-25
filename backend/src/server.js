@@ -5,6 +5,7 @@ import helmet from 'helmet'
 import rateLimit from 'express-rate-limit'
 import { connectDB } from './config/db.js'
 import chatRouter from './routes/chat.js'
+import mailRouter from './routes/mail.js'
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js'
 
 const app = express()
@@ -58,6 +59,7 @@ app.get('/health', (req, res) => {
 })
 
 app.use('/api/chat', chatRouter)
+app.use('/api/mail', mailRouter)
 
 app.use(notFoundHandler)
 app.use(errorHandler)
