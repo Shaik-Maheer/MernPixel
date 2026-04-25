@@ -1,6 +1,6 @@
 import { useParams, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { servicesDetailed } from '../data/siteData'
+import { servicesDetailed, business } from '../data/siteData'
 
 // React Official Icon
 const ReactIcon = () => (
