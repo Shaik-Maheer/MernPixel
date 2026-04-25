@@ -28,7 +28,7 @@ function App() {
     <div className="min-h-screen font-sans selection:bg-purple-200">
       <GlobalNav />
 
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
             <motion.div
               key={location.pathname}
               initial={{ opacity: 0, y: 14 }}

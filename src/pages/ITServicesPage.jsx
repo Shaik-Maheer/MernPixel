@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import { servicesDetailed } from '../data/siteData'
 import ServiceModal from '../components/ServiceModal'
 
 const reveal = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0 },
 }
 
@@ -13,70 +12,71 @@ export default function ITServicesPage() {
   const [activeService, setActiveService] = useState(null)
 
   return (
-    <main className="min-h-screen bg-[#FFFFFF] pb-32 relative overflow-hidden">
+    <main className="min-h-screen bg-[#F8FAFC] pb-32 overflow-hidden">
       
-      {/* Background Dots Grid & Soft Glows */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#FFF8E7]/60 rounded-full blur-[100px] -translate-y-1/4 translate-x-1/4 z-0 pointer-events-none"></div>
-      <div className="absolute bottom-[10%] left-0 w-[500px] h-[500px] bg-blue-50/50 rounded-full blur-[100px] translate-y-1/4 -translate-x-1/4 z-0 pointer-events-none"></div>
-
-      {/* Hero Section */}
-      <section className="relative z-10 pt-28 pb-16 md:pt-36 md:pb-20 overflow-hidden">
-        <div className="absolute inset-0 z-[-1] pointer-events-none opacity-70" style={{ backgroundImage: 'linear-gradient(to right, #E0F2FE 1.5px, transparent 1.5px), linear-gradient(to bottom, #E0F2FE 1.5px, transparent 1.5px)', backgroundSize: '48px 48px' }} />
-        
-        <div className="max-w-4xl mx-auto px-6 text-left">
+      {/* Title Section */}
+      <section className="pt-32 pb-10 bg-white">
+        <div className="max-w-7xl mx-auto px-6 text-center">
           <motion.div initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.5 }}>
-            
-            <div className="inline-flex bg-blue-50 rounded-full px-4 py-1.5 mb-8 items-center border border-blue-100">
-               <span className="text-xs font-bold text-slate-800 tracking-wide">Services</span>
-            </div>
-
-            <h1 className="text-5xl md:text-[5rem] font-extrabold tracking-tight text-slate-900 mb-8 leading-[1.1] max-w-4xl">
-              Built around what <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500">moves the metric.</span>
+            <h1 className="text-5xl md:text-[4rem] font-extrabold tracking-tight text-slate-900 mb-6">
+              Our Services
             </h1>
-            
-            <p className="text-lg md:text-[22px] text-slate-600 max-w-3xl leading-[1.6] font-medium">
-              From shipping a high-converting site to mentoring student projects — every engagement is shaped to deliver real outcomes.
+            <p className="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto font-medium">
+              Built around what <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500">moves the metric</span>. From shipping a high-converting site to mentoring student projects, every engagement delivers real outcomes.
             </p>
-            
           </motion.div>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="relative z-10 pb-20">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+      {/* Hero Image Section */}
+      <section className="relative w-full h-[500px] md:h-[650px] bg-white">
+        <div className="absolute inset-x-0 top-0 h-full w-full max-w-[1600px] mx-auto">
+          <motion.div 
+             className="relative w-full h-full"
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 1 }}
+             transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <img 
+               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2850&auto=format&fit=crop" 
+               alt="Our Team" 
+               className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-slate-900/10"></div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Services Cards (Overlapping the image) */}
+      <section className="relative z-20 -mt-32 md:-mt-48 pb-20">
+        <div className="max-w-[1200px] mx-auto px-4 md:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 justify-center">
             {servicesDetailed.map((service, index) => (
               <motion.article
                 onClick={() => setActiveService(service)}
                 key={service.id}
-                className="group relative bg-white hover:bg-[#EBFDF1] border border-slate-200 hover:border-[#A7F3D0] rounded-[2rem] p-8 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-lg flex flex-col items-start isolate cursor-pointer min-h-[260px] hover:-translate-y-1"
+                className="group bg-white rounded-[2rem] p-8 md:p-10 shadow-2xl shadow-slate-300/40 hover:shadow-slate-400/50 transition-all duration-300 flex flex-col items-center text-center cursor-pointer transform hover:-translate-y-2"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
                 variants={reveal}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
               >
                 
-                <div className="w-14 h-14 shrink-0 rounded-2xl bg-slate-100/80 group-hover:bg-white flex items-center justify-center text-slate-700 group-hover:text-emerald-600 text-2xl transition-colors duration-300 mb-6">
+                <div className="w-20 h-20 shrink-0 rounded-[1.5rem] bg-slate-900 flex items-center justify-center text-white text-3xl transition-transform duration-300 mb-8 shadow-md group-hover:scale-110">
                   {service.icon}
                 </div>
 
-                <div className="flex flex-col h-full w-full">
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">
+                <div className="flex flex-col h-full w-full items-center">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">
                     {service.title}
                   </h3>
-                  <p className="text-[15px] font-medium text-slate-500 leading-relaxed mb-8">
+                  <p className="text-[15px] font-medium text-slate-500 leading-relaxed mb-8 max-w-[280px]">
                     {service.description}
                   </p>
                   
-                  <div className="mt-auto flex items-center text-sm font-bold text-slate-900 group-hover:text-emerald-600 transition-colors duration-300">
-                    View more 
-                    <span className="ml-2 mt-0.5 group-hover:translate-x-1 transition-transform">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                      </svg>
-                    </span>
+                  <div className="mt-auto text-sm font-extrabold text-slate-900 uppercase tracking-widest border-b-2 border-transparent group-hover:border-slate-900 pb-1 transition-all">
+                    More
                   </div>
                 </div>
 

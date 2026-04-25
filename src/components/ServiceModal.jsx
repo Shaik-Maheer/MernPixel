@@ -20,7 +20,7 @@ export default function ServiceModal({ service, onClose }) {
           onClick={onClose}
         >
           <motion.article
-            className="bg-white w-full max-w-2xl rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden"
+            className="bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative"
             initial={{ scale: 0.95, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: 0.95, y: 20, opacity: 0 }}
@@ -57,7 +57,7 @@ export default function ServiceModal({ service, onClose }) {
               <h4 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-4">Keywords / Best Used For</h4>
               <div className="flex flex-wrap gap-2">
                 {service.useCases.map((useCase, i) => (
-                  <span key={i} className="bg-white border border-slate-200 text-slate-600 text-[13px] font-bold px-4 py-2 rounded-full cursor-default shadow-sm hover:border-slate-300 hover:text-slate-900 transition-colors">
+                  <span key={i} className="bg-[#FAF5FF] border border-purple-100 text-slate-700 text-[13px] font-bold px-4 py-2 rounded-full cursor-default shadow-sm hover:border-purple-200 transition-colors">
                     {useCase}
                   </span>
                 ))}
