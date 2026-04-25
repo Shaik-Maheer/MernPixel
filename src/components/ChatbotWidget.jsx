@@ -87,7 +87,7 @@ export default function ChatbotWidget() {
         {/* AI Chatbot Launcher */}
         <MotionButton
           type="button"
-          className="flex items-center gap-2 bg-slate-900 text-white rounded-full px-4 py-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:bg-slate-800 transition-colors cursor-pointer"
+          className="flex items-center gap-2 bg-slate-900 text-white rounded-full px-4 py-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:bg-[#D349A1] transition-colors cursor-pointer"
           initial={{ opacity: 0, y: 20, scale: 0.92 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.55, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
@@ -135,7 +135,7 @@ export default function ChatbotWidget() {
               maxLength={4000}
               disabled={loading}
             />
-            <button type="submit" className="w-12 h-12 rounded-xl bg-slate-900 text-white flex items-center justify-center hover:bg-slate-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading || !input.trim()}>
+            <button type="submit" className="w-12 h-12 rounded-xl bg-slate-900 text-white flex items-center justify-center hover:bg-[#D349A1] transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading || !input.trim()}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
             </button>
           </form>

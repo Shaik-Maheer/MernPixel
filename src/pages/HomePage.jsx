@@ -58,7 +58,7 @@ export default function HomePage() {
             </p>
             
             <div className="flex flex-wrap gap-4 text-left justify-start">
-              <Link to="/contact" className="bg-[#0F172A] text-white px-7 py-3 rounded-full font-medium hover:bg-slate-800 transition-all flex items-center text-[15px]">
+              <Link to="/contact" className="bg-[#0F172A] text-white px-7 py-3 rounded-full font-medium hover:bg-[#D349A1] transition-all flex items-center text-[15px]">
                 Start a project <span className="ml-2 font-normal text-slate-400">→</span>
               </Link>
               <Link to="/works" className="bg-white text-slate-900 border border-slate-200 px-7 py-3 rounded-full font-medium hover:bg-slate-50 transition-all text-[15px]">

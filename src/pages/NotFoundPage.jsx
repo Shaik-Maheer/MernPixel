@@ -34,7 +34,7 @@ export default function NotFoundPage() {
           Looks like this route isn't performing. The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
         </p>
 
-        <Link to="/" className="inline-flex bg-slate-900 text-white px-8 py-3.5 rounded-full font-bold hover:bg-slate-800 transition-all shadow-md items-center gap-2">
+        <Link to="/" className="inline-flex bg-slate-900 text-white px-8 py-3.5 rounded-full font-bold hover:bg-[#D349A1] transition-all shadow-md items-center gap-2">
           Return to Hub <span className="text-slate-400">→</span>
         </Link>
       </motion.div>

@@ -89,7 +89,7 @@ export default function PortfolioPage() {
 
                     {/* Arrow Button */}
                     <div className="mt-12 flex justify-between items-end">
-                      <div className="w-14 h-14 rounded-full bg-slate-900 text-white flex items-center justify-center transform transition-transform duration-300 group-hover:bg-slate-800 shadow-xl group-hover:scale-110 ml-auto translate-y-2 group-hover:-translate-y-1">
+                      <div className="w-14 h-14 rounded-full bg-slate-900 text-white flex items-center justify-center transform transition-transform duration-300 group-hover:bg-[#D349A1] shadow-xl group-hover:scale-110 ml-auto translate-y-2 group-hover:-translate-y-1">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                           <line x1="7" y1="17" x2="17" y2="7"></line>
                           <polyline points="7 7 17 7 17 17"></polyline>

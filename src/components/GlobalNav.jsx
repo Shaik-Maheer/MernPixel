@@ -60,7 +60,7 @@ export default function GlobalNav() {
 
         {/* CTA & Mobile Toggle */}
         <div className="flex items-center gap-4">
-          <Link to="/contact" className="hidden md:inline-flex bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-slate-800 transition-colors shadow-md">
+          <Link to="/contact" className="hidden md:inline-flex bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#D349A1] transition-colors shadow-md">
             Start a project
           </Link>
           

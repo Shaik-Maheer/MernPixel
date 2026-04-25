@@ -45,7 +45,7 @@ export default function CareersPage() {
                       {link.label}
                     </a>
                   ))}
-                  <Link to="/contact" className="bg-slate-900 hover:bg-slate-800 text-white rounded-xl px-6 py-3 text-sm font-bold transition-colors">
+                  <Link to="/contact" className="bg-slate-900 hover:bg-[#D349A1] text-white rounded-xl px-6 py-3 text-sm font-bold transition-colors">
                     Get in touch
                   </Link>
                 </div>
