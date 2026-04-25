@@ -3,69 +3,73 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 export default function ServiceModal({ service, onClose }) {
   useEffect(() => {
-    if (!service) {
-      return undefined
-    }
-
-    const onEscape = (event) => {
-      if (event.key === 'Escape') {
-        onClose()
-      }
-    }
-
+    if (!service) return;
+    const onEscape = (e) => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', onEscape)
     return () => window.removeEventListener('keydown', onEscape)
   }, [onClose, service])
 
-  const MotionOverlay = motion.div
-  const MotionCard = motion.article
-
   return (
     <AnimatePresence>
       {service && (
-        <MotionOverlay
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/75 px-4 py-8 backdrop-blur-sm"
+        <motion.div
+          className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-slate-900/30 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
         >
-          <MotionCard
-            className="glass-card relative w-full max-w-2xl rounded-3xl p-8 md:p-10"
-            initial={{ opacity: 0, y: 30, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            onClick={(event) => event.stopPropagation()}
+          <motion.article
+            className="bg-white w-full max-w-2xl rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden"
+            initial={{ scale: 0.95, y: 20, opacity: 0 }}
+            animate={{ scale: 1, y: 0, opacity: 1 }}
+            exit={{ scale: 0.95, y: 20, opacity: 0 }}
+            onClick={(e) => e.stopPropagation()}
           >
             <button
-              type="button"
               onClick={onClose}
-              className="absolute right-4 top-4 h-10 w-10 rounded-full border border-white/30 bg-white/5 text-xl text-white transition hover:bg-white hover:text-black"
-              aria-label="Close service details"
+              className="absolute top-6 right-6 w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-colors z-10"
+              aria-label="Close"
             >
-              ×
+              ✕
             </button>
 
-            <div className="mb-3 inline-flex rounded-full border border-white/20 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/65">
-              Service Planet Detail
+            <div className="w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-3xl mb-6 shadow-sm">
+              {service.icon}
             </div>
-            <h3 className="font-['Cinzel'] text-4xl text-white">{service.title}</h3>
-            <p className="mt-4 leading-relaxed text-white/75">{service.summary}</p>
 
-            <div className="mt-6 space-y-3">
-              {service.points.map((point) => (
-                <div key={point} className="flex items-start gap-3">
-                  <span
-                    className="mt-1 h-2.5 w-2.5 rounded-full"
-                    style={{ backgroundColor: service.color, boxShadow: `0 0 12px ${service.color}` }}
-                  />
-                  <p className="text-sm text-white/80">{point}</p>
-                </div>
-              ))}
+            <h3 className="text-3xl font-extrabold text-slate-900 mb-2">{service.title}</h3>
+            <p className="text-lg font-medium text-slate-600 mb-8">{service.description}</p>
+
+            <div className="bg-slate-50 rounded-2xl p-6 mb-8 border border-slate-100">
+              <h4 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-4">What we provide</h4>
+              <ul className="space-y-3">
+                {service.features.map((feature, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span className="text-emerald-500 font-bold mt-0.5">✓</span>
+                    <span className="text-[15px] font-medium text-slate-700">{feature}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </MotionCard>
-        </MotionOverlay>
+
+            <div className="mb-8">
+              <h4 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-4">Keywords / Best Used For</h4>
+              <div className="flex flex-wrap gap-2">
+                {service.useCases.map((useCase, i) => (
+                  <span key={i} className="bg-white border border-slate-200 text-slate-600 text-[13px] font-bold px-4 py-2 rounded-full cursor-default shadow-sm hover:border-slate-300 hover:text-slate-900 transition-colors">
+                    {useCase}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500 rounded-2xl p-6 text-white text-center shadow-lg relative overflow-hidden">
+               <span className="relative z-10 font-bold tracking-wide">Expected Outcome: {service.outcome}</span>
+            </div>
+
+          </motion.article>
+        </motion.div>
       )}
     </AnimatePresence>
   )

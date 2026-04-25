@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { servicesDetailed } from '../data/siteData'
+import ServiceModal from '../components/ServiceModal'
 
 const reveal = {
   hidden: { opacity: 0, y: 20 },
@@ -8,6 +10,8 @@ const reveal = {
 }
 
 export default function ITServicesPage() {
+  const [activeService, setActiveService] = useState(null)
+
   return (
     <main className="min-h-screen bg-[#FFFFFF] pb-32 relative overflow-hidden">
       
@@ -44,8 +48,9 @@ export default function ITServicesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {servicesDetailed.map((service, index) => (
               <motion.article
+                onClick={() => setActiveService(service)}
                 key={service.id}
-                className="group relative bg-white border border-slate-200 rounded-[2rem] p-8 shadow-sm overflow-hidden transition-all duration-300 hover:border-transparent hover:shadow-lg flex flex-col items-start isolate cursor-pointer min-h-[260px]"
+                className="group relative bg-white border border-slate-200 rounded-[2rem] p-8 shadow-sm overflow-hidden transition-all duration-300 hover:border-transparent hover:shadow-lg flex flex-col items-start isolate cursor-pointer min-h-[260px] hover:-translate-y-1"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
@@ -82,6 +87,8 @@ export default function ITServicesPage() {
           </div>
         </div>
       </section>
+
+      <ServiceModal service={activeService} onClose={() => setActiveService(null)} />
 
     </main>
   )

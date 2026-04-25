@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { servicesDetailed, caseStudies } from '../data/siteData'
 import CountUpNumber from '../components/CountUpNumber'
 import SEO from '../components/SEO'
+import ServiceModal from '../components/ServiceModal'
 
 const reveal = {
   hidden: { opacity: 0, y: 20 },
@@ -24,6 +26,8 @@ const recentWorkColors = [
 ]
 
 export default function HomePage() {
+  const [activeService, setActiveService] = useState(null)
+
   return (
     <main className="min-h-screen bg-[#FFFFFF] pb-10">
       <SEO title="Product Studio" />
@@ -106,8 +110,9 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {servicesDetailed.map((service, index) => (
               <motion.article
+                onClick={() => setActiveService(service)}
                 key={service.id}
-                className="group relative bg-white border border-slate-200 rounded-3xl p-6 shadow-sm overflow-hidden transition-all duration-300 hover:border-transparent hover:shadow-lg flex flex-col isolate"
+                className="group relative bg-white border border-slate-200 rounded-3xl p-6 shadow-sm overflow-hidden transition-all duration-300 hover:border-transparent hover:shadow-lg flex flex-col isolate cursor-pointer hover:-translate-y-1"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
@@ -121,7 +126,14 @@ export default function HomePage() {
                   {service.icon}
                 </div>
                 <h3 className="text-lg font-bold text-slate-900 group-hover:text-white mb-2 transition-colors duration-300">{service.title}</h3>
-                <p className="text-sm text-slate-500 group-hover:text-white/90 leading-relaxed transition-colors duration-300">{service.description}</p>
+                <p className="text-sm text-slate-500 group-hover:text-white/90 leading-relaxed transition-colors duration-300 flex-grow mb-4">{service.description}</p>
+                
+                <div className="mt-auto flex items-center text-xs font-bold text-slate-900 group-hover:text-white transition-colors duration-300">
+                  View more 
+                  <span className="ml-1 mt-0.5 group-hover:translate-x-1 hover:translate-y-0 transition-transform">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </span>
+                </div>
               </motion.article>
             ))}
           </div>
@@ -229,6 +241,9 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
+
+      <ServiceModal service={activeService} onClose={() => setActiveService(null)} />
+
     </main>
   )
 }
