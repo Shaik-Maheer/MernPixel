@@ -4,11 +4,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        navy: '#000000',
-        hotpink: '#0D8FDB',
-        blush: '#1299E6',
-        ember: '#16A4F0',
-        cloud: '#E6E6E6',
+        navy: '#170C79',
+        hotpink: '#56B6C6',
+        blush: '#8ACBD0',
+        ember: '#EFE3CA',
+        cloud: '#EFE3CA',
       },
       fontFamily: {
         display: ['Cormorant Garamond', 'serif'],
