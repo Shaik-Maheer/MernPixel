@@ -38,9 +38,9 @@ function createWorkModal(work) {
     title: work.title,
     fullscreen: true,
     sections: [
-      { label: 'Project Overview', text: work.problem },
-      { label: 'What We Did', text: work.solution },
-      { label: 'Result', text: work.result },
+      { label: 'Project Name', text: work.title },
+      { label: 'What We Built', text: work.solution },
+      { label: 'Outcome / Result', text: work.result },
     ],
     actions: [{ label: 'Open Live Project', href: work.link, external: true }],
   }
@@ -67,7 +67,7 @@ export default function HomePage() {
           <motion.div initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.55 }}>
             <p className="mp-kicker">MERNpixel Agency</p>
             <h1 className="mp-display">We build high-performance digital products</h1>
-            <p className="mp-lead">Premium UI, scalable engineering, and conversion-focused delivery.</p>
+            <p className="mp-lead">For startups, businesses, and growing brands.</p>
             <div className="mp-actions">
               <Link to="/works" className="mp-btn mp-btn-ghost mp-magnetic">View Work</Link>
               <Link to="/contact" className="mp-btn mp-btn-primary mp-magnetic">Start Project</Link>

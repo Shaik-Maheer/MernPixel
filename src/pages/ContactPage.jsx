@@ -3,7 +3,16 @@ import HeroBackdrop from '../components/HeroBackdrop'
 import { business } from '../data/siteData'
 import { createMailtoLeadHref, createWhatsAppLeadHref, isValidEmail } from '../lib/leadForms'
 
-const services = ['Web Development', 'Application Development', 'E-commerce', 'Branding', 'Digital Marketing']
+const services = [
+  'Web Development',
+  'E-commerce Solutions',
+  'Application Development',
+  'Logo & Branding',
+  'Digital Marketing',
+  'Academic Projects',
+  'Talent Hiring / Consulting',
+  'Guest Lectures / Workshops',
+]
 
 const initialForm = {
   name: '',
@@ -62,6 +71,7 @@ export default function ContactPage() {
             <p className="mp-kicker">Contact</p>
             <h1>Start your project with MERNpixel.</h1>
             <p className="mp-lead">Share your requirement. We respond fast.</p>
+            <p className="mp-lead">Email: {business.email} | Phone: {business.phone}</p>
             <div className="mp-actions">
               <a href={quickWhatsApp} target="_blank" rel="noreferrer" className="mp-btn mp-btn-primary mp-btn-whatsapp mp-magnetic">
                 WhatsApp

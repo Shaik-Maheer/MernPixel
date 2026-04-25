@@ -36,13 +36,16 @@ export default function PricingPage() {
               <h3>{plan.price}</h3>
               <p>{plan.summary}</p>
               <ul className="mp-list">
-                {plan.includes.slice(0, 4).map((item) => (
+                {plan.includes.slice(0, 3).map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
               <Link to="/contact" className="mp-btn mp-btn-primary mp-magnetic">Get Started</Link>
             </motion.article>
           ))}
+        </div>
+        <div className="mp-actions mp-actions-center">
+          <p className="mp-lead">Custom pricing available</p>
         </div>
       </section>
     </main>

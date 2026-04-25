@@ -29,7 +29,7 @@ export default function TeamPage() {
             <motion.button
               key={member.name}
               type="button"
-              className="mp-card mp-team-card mp-hover-card mp-team-button"
+              className="mp-card mp-hover-card mp-team-mini mp-team-button"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
@@ -37,12 +37,9 @@ export default function TeamPage() {
               transition={{ duration: 0.4, delay: index * 0.05 }}
               onClick={() => setActiveMember(member)}
             >
-              <img src={member.photo} alt={member.name} loading="lazy" />
-              <div>
-                <h3>{member.name}</h3>
-                <p>{member.role}</p>
-                <span className="mp-text-link">View More</span>
-              </div>
+              <h3>{member.name}</h3>
+              <p>{member.role}</p>
+              <span className="mp-text-link">View More</span>
             </motion.button>
           ))}
         </div>

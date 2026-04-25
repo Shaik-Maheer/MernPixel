@@ -89,9 +89,9 @@ export default function PortfolioPage() {
         sections={
           selectedProject
             ? [
-                { label: 'Project Overview', text: selectedProject.problem },
-                { label: 'What We Did', text: selectedProject.solution },
-                { label: 'Result', text: selectedProject.result },
+                { label: 'Project Name', text: selectedProject.title },
+                { label: 'What We Built', text: selectedProject.solution },
+                { label: 'Outcome / Result', text: selectedProject.result },
               ]
             : []
         }
