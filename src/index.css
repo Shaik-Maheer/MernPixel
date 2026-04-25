@@ -6480,3 +6480,133 @@ main > .section-shell:nth-of-type(even)::before {
 [class*='border-white'] {
   border-color: rgba(23, 55, 136, 0.24) !important;
 }
+
+/* Extra logo-palette enforcement to remove remaining dark blocks */
+.intro-wrap,
+.about-intro-wrap {
+  background: linear-gradient(180deg, #f9fcff, #eaf4ff) !important;
+}
+
+.fire-spark-layer {
+  background:
+    radial-gradient(circle at 20% 24%, rgba(29, 116, 216, 0.18), transparent 26%),
+    radial-gradient(circle at 80% 20%, rgba(40, 199, 221, 0.16), transparent 26%),
+    radial-gradient(circle at 45% 76%, rgba(29, 116, 216, 0.1), transparent 32%) !important;
+}
+
+.fire-spark-layer::before {
+  background-image: radial-gradient(rgba(23, 55, 136, 0.28) 1px, transparent 1px) !important;
+  opacity: 0.16 !important;
+}
+
+.fire-spark-layer::after {
+  background-image:
+    radial-gradient(rgba(29, 116, 216, 0.3) 1px, transparent 1px),
+    radial-gradient(rgba(40, 199, 221, 0.3) 1px, transparent 1px) !important;
+  opacity: 0.16 !important;
+}
+
+.intro-stage {
+  border-color: rgba(29, 116, 216, 0.28) !important;
+  background: linear-gradient(156deg, rgba(255, 255, 255, 0.96), rgba(237, 247, 255, 0.92)) !important;
+  box-shadow: 0 20px 50px rgba(18, 71, 152, 0.16) !important;
+}
+
+.intro-stage::before {
+  background-image: radial-gradient(rgba(23, 55, 136, 0.16) 1px, transparent 1px) !important;
+  opacity: 0.06 !important;
+}
+
+.intro-letter-base {
+  color: rgba(23, 55, 136, 0.2) !important;
+}
+
+.fill-fire {
+  background-image:
+    radial-gradient(circle at 25% 20%, #28c7dd 0%, transparent 22%),
+    radial-gradient(circle at 78% 29%, #1d74d8 0%, transparent 24%),
+    linear-gradient(120deg, #173788 0%, #1d74d8 48%, #28c7dd 100%) !important;
+}
+
+.intro-subtext {
+  color: rgba(23, 55, 136, 0.72) !important;
+}
+
+.page-intro-static {
+  background:
+    radial-gradient(circle at 20% 12%, rgba(29, 116, 216, 0.16), transparent 38%),
+    radial-gradient(circle at 78% 20%, rgba(40, 199, 221, 0.15), transparent 36%),
+    linear-gradient(180deg, rgba(249, 252, 255, 0.96), rgba(231, 243, 255, 0.95)) !important;
+}
+
+.page-intro-video {
+  opacity: 0.24 !important;
+  filter: brightness(0.92) saturate(0.95) contrast(1.02) !important;
+}
+
+.page-intro-overlay,
+.page-intro-overlay-static {
+  background:
+    radial-gradient(circle at 18% 20%, rgba(29, 116, 216, 0.2), transparent 38%),
+    radial-gradient(circle at 82% 20%, rgba(40, 199, 221, 0.18), transparent 40%),
+    linear-gradient(180deg, rgba(248, 252, 255, 0.38), rgba(236, 246, 255, 0.72)) !important;
+}
+
+.page-intro-kicker {
+  color: rgba(23, 55, 136, 0.7) !important;
+}
+
+.page-intro-title,
+.page-intro-letter {
+  color: #173788 !important;
+  text-shadow: 0 8px 20px rgba(29, 116, 216, 0.14) !important;
+}
+
+.home-hero-minimal::before {
+  background:
+    radial-gradient(circle at 50% 14%, rgba(40, 199, 221, 0.2), transparent 42%),
+    radial-gradient(circle at 8% 82%, rgba(29, 116, 216, 0.14), transparent 32%),
+    radial-gradient(circle at 92% 80%, rgba(29, 116, 216, 0.14), transparent 30%),
+    linear-gradient(180deg, #f9fcff, #e9f4ff) !important;
+}
+
+.home-hero-overlay {
+  background:
+    radial-gradient(circle at 50% 18%, rgba(40, 199, 221, 0.18), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(235, 246, 255, 0.66)) !important;
+}
+
+.home-hero-brand-line {
+  color: #1d74d8 !important;
+  text-shadow: 0 0 12px rgba(29, 116, 216, 0.2) !important;
+}
+
+.home-hero-kicker {
+  color: #173788 !important;
+  text-shadow: none !important;
+}
+
+.home-hero-title {
+  color: #173788 !important;
+  text-shadow: 0 12px 28px rgba(29, 116, 216, 0.16) !important;
+}
+
+.home-hero-subtitle {
+  color: rgba(23, 55, 136, 0.86) !important;
+  text-shadow: none !important;
+}
+
+.home-capability-marquee {
+  border-color: rgba(29, 116, 216, 0.34) !important;
+  background: linear-gradient(90deg, rgba(248, 252, 255, 0.96), rgba(233, 244, 255, 0.96), rgba(248, 252, 255, 0.96)) !important;
+  box-shadow: 0 14px 28px rgba(22, 73, 154, 0.14), 0 0 18px rgba(40, 199, 221, 0.12) !important;
+}
+
+.home-capability-track span {
+  color: rgba(23, 55, 136, 0.9) !important;
+}
+
+.home-capability-track span::before {
+  background: #f6aa2c !important;
+  box-shadow: 0 0 10px rgba(246, 170, 44, 0.4) !important;
+}
