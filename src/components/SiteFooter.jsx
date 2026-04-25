@@ -60,8 +60,9 @@ export default function SiteFooter() {
             <ul className="flex flex-col gap-4">
               {quickLinks.map((link) => (
                 <li key={link.path}>
-                  <Link to={link.path} className="text-sm text-slate-500 hover:text-slate-900 transition-colors">
-                    {link.label}
+                  <Link to={link.path} className="group relative text-[15px] font-bold text-slate-500 hover:text-slate-900 transition-colors w-fit inline-block">
+                    <span className="relative z-10">{link.label}</span>
+                    <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                   </Link>
                 </li>
               ))}
@@ -73,18 +74,26 @@ export default function SiteFooter() {
             <h4 className="text-sm font-bold text-slate-900 mb-6">Reach us</h4>
             <ul className="flex flex-col gap-4">
               <li>
-                <a href={`mailto:${business.email}`} className="text-sm text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-3">
-                  <span className="text-blue-500">✉</span> {business.email}
+                <a href={`mailto:${business.email}`} className="group relative text-[15px] font-bold text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-3 w-fit">
+                  <span className="text-blue-500 group-hover:scale-110 transition-transform">✉</span> 
+                  <span className="relative">
+                    {business.email}
+                    <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                  </span>
                 </a>
               </li>
               <li>
-                <a href={`tel:${business.phone.replace(/\s+/g, '')}`} className="text-sm text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-3">
-                  <span className="text-blue-500">☎</span> {business.phone}
+                <a href={`tel:${business.phone.replace(/\s+/g, '')}`} className="group relative text-[15px] font-bold text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-3 w-fit">
+                  <span className="text-blue-500 group-hover:scale-110 transition-transform">☎</span> 
+                  <span className="relative">
+                    {business.phone}
+                    <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                  </span>
                 </a>
               </li>
-              <li className="flex items-start gap-3">
+              <li className="flex items-start gap-3 w-fit">
                 <span className="text-blue-500 mt-0.5">📍</span> 
-                <span className="text-sm text-slate-500">{business.address}</span>
+                <span className="text-[15px] font-bold text-slate-500 leading-relaxed">{business.address}</span>
               </li>
             </ul>
           </div>

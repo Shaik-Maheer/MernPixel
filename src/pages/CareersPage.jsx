@@ -11,8 +11,8 @@ export default function CareersPage() {
   return (
     <main className="min-h-screen bg-[#FFFFFF] pb-32">
       
-      {/* Background Dots Grid */}
-      <div className="fixed inset-0 z-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, #E0F2FE 1px, transparent 1px), linear-gradient(to bottom, #E0F2FE 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
+      {/* Background Half Section */}
+      <div className="absolute top-0 inset-x-0 h-[65vh] bg-[#FAF5FF] z-0 rounded-b-[4rem]"></div>
 
       <section className="relative z-10 pt-20 md:pt-32 pb-16 flex flex-col items-center justify-center min-h-[70vh]">
         <div className="max-w-3xl mx-auto px-6 text-center">

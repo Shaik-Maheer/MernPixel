@@ -41,14 +41,19 @@ export default function GlobalNav() {
               to={item.path}
               end={item.path === '/'}
               className={({ isActive }) => 
-                `text-sm font-medium transition-colors hover:text-slate-900 pb-1 border-b-2 ${
+                `relative text-[15px] transition-all duration-300 group py-1 ${
                   isActive 
-                    ? 'text-slate-900 border-rose-500' 
-                    : 'text-slate-500 border-transparent hover:border-slate-300'
+                    ? 'text-slate-900 font-extrabold' 
+                    : 'text-slate-600 font-bold hover:text-slate-900'
                 }`
               }
             >
-              {item.label}
+              {({ isActive }) => (
+                <>
+                  {item.label}
+                  <span className={`absolute -bottom-0.5 left-0 h-[2.5px] rounded-full transition-all duration-300 ${isActive ? 'w-full bg-rose-500' : 'w-0 bg-blue-600 group-hover:w-full'}`}></span>
+                </>
+              )}
             </NavLink>
           ))}
         </nav>
