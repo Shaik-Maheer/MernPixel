@@ -8,12 +8,9 @@ const quickLinks = [
   { label: 'Work', path: '/works' },
   { label: 'Gallery', path: '/gallery' },
   { label: 'Blog', path: '/blog' },
-  { label: 'Students', path: '/student-projects' },
   { label: 'About', path: '/about' },
-  { label: 'Careers', path: '/careers' },
   { label: 'Contact', path: '/contact' },
   { label: 'Book Session', path: '/book' },
-  { label: 'Privacy Policy', path: '/privacy-policy' },
 ]
 
 export default function SiteFooter() {
@@ -86,9 +83,6 @@ export default function SiteFooter() {
           <div className="flex items-center flex-wrap gap-4">
             <Link to="/admin" className="text-xs font-semibold text-slate-400 hover:text-[#E15D2B] transition-colors">
               Admin
-            </Link>
-            <Link to="/privacy-policy" className="text-xs font-semibold text-slate-400 hover:text-[#E15D2B] transition-colors">
-              Privacy Policy
             </Link>
             <p className="text-xs font-semibold text-slate-400">{business.tagline}</p>
           </div>
