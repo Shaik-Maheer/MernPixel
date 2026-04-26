@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { sendChatMessage } from '../lib/chatApi'
-import { SocialIcon } from './SocialIcons'
-import { business } from '../data/siteData'
 
 const initialMessage = {
   role: 'assistant',
@@ -73,17 +71,6 @@ export default function ChatbotWidget() {
   return (
     <>
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-4">
-        {/* WhatsApp Connect */}
-        <a 
-          href={business.whatsapp} 
-          target="_blank" 
-          rel="noreferrer" 
-          className="flex items-center justify-center hover:-translate-y-1 transition-transform cursor-pointer drop-shadow-lg"
-          title="WhatsApp Us"
-        >
-          <img src="/pics/whatsapp_icon.svg" alt="WhatsApp" className="w-[56px] h-[56px]" />
-        </a>
-
         {/* AI Chatbot Launcher */}
         <MotionButton
           type="button"

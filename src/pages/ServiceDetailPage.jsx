@@ -6,6 +6,7 @@ import ServiceIcon from '../components/ServiceIcon'
 
 const themeMap = {
   'web-dev': { primary: 'from-cyan-400 to-blue-600', shadow: 'shadow-cyan-500/20', bgGlow: 'bg-cyan-500/10' },
+  'portfolio': { primary: 'from-orange-400 to-amber-500', shadow: 'shadow-orange-500/20', bgGlow: 'bg-orange-500/10' },
   'ecommerce': { primary: 'from-emerald-400 to-teal-500', shadow: 'shadow-emerald-500/20', bgGlow: 'bg-emerald-500/10' },
   'app-dev': { primary: 'from-purple-400 to-indigo-600', shadow: 'shadow-purple-500/20', bgGlow: 'bg-purple-500/10' },
   'branding': { primary: 'from-rose-400 to-orange-500', shadow: 'shadow-rose-500/20', bgGlow: 'bg-rose-500/10' },
@@ -54,6 +55,10 @@ const getFaqsByService = (id) => {
     'web-dev': [
       { q: 'What tech stack do you use?', a: 'We primarily build with React, Tailwind CSS, Express, and MongoDB for scalable, blazing-fast web experiences.' },
       { q: 'Can you migrate my old PHP/WordPress site?', a: 'Yes, we frequently modernize legacy stacks into high-performance headless architecture.' }
+    ],
+    'portfolio': [
+      { q: 'Who needs a portfolio website?', a: 'Anyone who wants to showcase work clearly: students, freelancers, creators, architects, consultants, agencies, and service businesses.' },
+      { q: 'Can you make a low-budget starter portfolio?', a: 'Yes. We offer a clean starter portfolio package from Rs 4,999 and can scale it as your profile or business grows.' }
     ],
     'ecommerce': [
       { q: 'Do you integrate with local payment gateways?', a: 'Yes, we integrate Razorpay, Stripe, PhonePe, and PayPal seamlessly.' }
@@ -141,6 +146,7 @@ export default function ServiceDetailPage() {
     if (service.id === 'web-dev') mediaFile = '/web_development.mp4';
     if (service.id === 'app-dev') mediaFile = '/meetings.mp4';
     if (service.id === 'branding') mediaFile = '/services-hero.jpg';
+    if (service.id === 'portfolio') mediaFile = '/services-hero.jpg';
     if (!mediaFile) mediaFile = '/generic_service.png';
 
     const isVideo = mediaFile.endsWith('.mp4');
@@ -205,6 +211,46 @@ export default function ServiceDetailPage() {
             <div className={`border border-white/10 bg-white/5 backdrop-blur-xl rounded-[3rem] p-12 md:p-24 text-center max-w-5xl mx-auto ring-1 ring-white/5 ${theme.shadow}`}>
               <h3 className="text-3xl md:text-5xl font-extrabold mb-8 leading-tight tracking-tight text-white">We engineer confidence, not just code.</h3>
               <p className="text-xl text-slate-300 leading-relaxed font-medium">We do not just build a student project blindly. We discuss exactly what's needed, lock in the optimal tech stack, build it completely, and explain the architecture to you structurally so you're unbreakable in your viva submission. <strong className="text-white">Included free:</strong> college-formatted PPTs, robust documentation, code zip, and an exclusive 1-on-1 session to run the stack directly on your system.</p>
+            </div>
+          ) : service.id === 'portfolio' ? (
+            <div className={`border border-white/10 bg-white/5 backdrop-blur-xl rounded-[3rem] p-12 md:p-24 text-center max-w-5xl mx-auto ring-1 ring-white/5 ${theme.shadow}`}>
+              <h3 className="text-3xl md:text-5xl font-extrabold mb-8 leading-tight tracking-tight text-white">Portfolio is your proof, not just a page.</h3>
+              <p className="text-xl text-slate-300 leading-relaxed font-medium">
+                In any field, a portfolio helps people trust your work faster. We build clear portfolio websites that show your projects, services, and credibility in a simple way anyone can understand.
+              </p>
+              <div className="mt-10 flex flex-wrap justify-center gap-3">
+                <span className="px-4 py-2 text-sm font-bold rounded-full border border-white/20 bg-white/10 text-white">Starter: from Rs 4,999</span>
+                <span className="px-4 py-2 text-sm font-bold rounded-full border border-white/20 bg-white/10 text-white">Professional: from Rs 9,999</span>
+                <span className="px-4 py-2 text-sm font-bold rounded-full border border-white/20 bg-white/10 text-white">Advanced: from Rs 18,999</span>
+              </div>
+            </div>
+          ) : service.id === 'talent-hiring' ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+              <div className="bg-white/5 border border-white/5 rounded-[2.5rem] p-12 backdrop-blur-md">
+                <div className="flex items-center gap-4 mb-8">
+                  <span className="w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold text-xl ring-1 ring-rose-500/50">X</span>
+                  <h3 className="text-sm font-black text-rose-400 uppercase tracking-widest">The Problem</h3>
+                </div>
+                <p className="text-2xl text-slate-300 leading-relaxed font-medium tracking-tight">
+                  Teams receive many resumes, but finding candidates who truly match the role, mindset, and budget takes too much time.
+                </p>
+              </div>
+              <div className={`bg-gradient-to-br ${theme.bgGlow} border border-white/10 rounded-[2.5rem] p-12 backdrop-blur-md relative overflow-hidden`}>
+                <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl ${theme.primary} opacity-20 blur-[80px]`}></div>
+                <div className="relative z-10">
+                  <div className="flex items-center gap-4 mb-8">
+                    <span className={`w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center ring-1 ring-emerald-500/50`}>
+                      <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M5 12.5l4 4L19 7.5" />
+                      </svg>
+                    </span>
+                    <h3 className="text-sm font-black text-emerald-400 uppercase tracking-widest">The Solution</h3>
+                  </div>
+                  <p className="text-2xl text-white leading-relaxed font-bold tracking-tight">
+                    We help you connect with the right candidates fast by understanding your exact requirement, shortlisting best-fit profiles, and supporting interview coordination.
+                  </p>
+                </div>
+              </div>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">

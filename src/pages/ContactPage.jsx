@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { business, socialLinks } from '../data/siteData'
-import { SocialIcon } from '../components/SocialIcons'
 
 const reveal = {
   hidden: { opacity: 0, y: 20 },
@@ -9,7 +8,7 @@ const reveal = {
 }
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({ name: '', email: '', company: '', budget: '', description: '' })
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', company: '', budget: '', description: '' })
   const [status, setStatus] = useState({ loading: false, message: '', isError: false })
 
   const handleSubmit = async (e) => {
@@ -36,7 +35,7 @@ export default function ContactPage() {
       }
 
       setStatus({ loading: false, message: 'Message sent successfully! We will be in touch soon.', isError: false })
-      setFormData({ name: '', email: '', company: '', budget: '', description: '' })
+      setFormData({ name: '', email: '', phone: '', subject: '', company: '', budget: '', description: '' })
     } catch (err) {
       setStatus({ loading: false, message: 'Unable to send message. Please try again later.', isError: true })
     }
@@ -142,6 +141,17 @@ export default function ContactPage() {
                     </div>
                   </div>
 
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-bold text-slate-900 mb-2">Phone</label>
+                      <input type="tel" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} placeholder="+91 9XXXXXXXXX" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-bold text-slate-900 mb-2">Subject</label>
+                      <input type="text" value={formData.subject} onChange={(e) => setFormData({...formData, subject: e.target.value})} placeholder="Project discussion" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
+                    </div>
+                  </div>
+
                   <div>
                     <label className="block text-sm font-bold text-slate-900 mb-2">What are you looking to build?</label>
                     <textarea value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} rows="4" placeholder="A short description of the goal, audience and timeline." className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium resize-none"></textarea>
@@ -154,7 +164,7 @@ export default function ContactPage() {
                   )}
 
                   <div className="pt-2">
-                    <button type="submit" disabled={status.loading} className="w-full md:w-auto bg-slate-900 hover:bg-[#D349A1] disabled:opacity-50 text-white font-bold rounded-xl px-8 py-4 flex items-center justify-center gap-3 transition-colors shadow-lg shadow-slate-900/10">
+                    <button type="submit" disabled={status.loading} className="w-full md:w-auto bg-slate-900 hover:bg-[#dc4005] disabled:opacity-50 text-white font-bold rounded-xl px-8 py-4 flex items-center justify-center gap-3 transition-colors shadow-lg shadow-slate-900/10">
                       {status.loading ? 'Sending...' : 'Send message'}
                       {!status.loading && (
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

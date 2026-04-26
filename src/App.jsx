@@ -17,6 +17,7 @@ import NonITConsultingPage from './pages/NonITConsultingPage'
 import PortfolioPage from './pages/PortfolioPage'
 import PricingPage from './pages/PricingPage'
 import StudentsPage from './pages/StudentsPage'
+import StudentProjectDetailPage from './pages/StudentProjectDetailPage'
 import TeamPage from './pages/TeamPage'
 import NotFoundPage from './pages/NotFoundPage'
 import BookPage from './pages/BookPage'
@@ -49,6 +50,8 @@ function App() {
                 <Route path="/pricing" element={<PricingPage />} />
                 <Route path="/non-it-consulting" element={<NonITConsultingPage />} />
                 <Route path="/students" element={<StudentsPage />} />
+                <Route path="/student-projects" element={<StudentsPage />} />
+                <Route path="/student-projects/:id" element={<StudentProjectDetailPage />} />
                 <Route path="/works" element={<PortfolioPage />} />
                 <Route path="/portfolio" element={<PortfolioPage />} />
                 <Route path="/clients" element={<ClientsPage />} />

@@ -13,6 +13,17 @@ const iconShapes = {
       <path d="M9 9V7.5a3 3 0 0 1 6 0V9" />
     </>
   ),
+  portfolio: (
+    <>
+      <rect x="3.5" y="5" width="17" height="14.5" rx="2" />
+      <path d="M8.5 5v14.5" />
+      <path d="M11 9h6" />
+      <path d="M11 12h6" />
+      <path d="M11 15h4.5" />
+      <circle cx="6.2" cy="10.2" r="1.1" fill="currentColor" stroke="none" />
+      <path d="M4.9 14.6c.45-.9 1.2-1.35 2.2-1.35 1.05 0 1.8.45 2.25 1.35" />
+    </>
+  ),
   app: (
     <>
       <rect x="7.5" y="3.5" width="9" height="17" rx="2" />

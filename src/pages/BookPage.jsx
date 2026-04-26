@@ -5,15 +5,14 @@ const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://mernpixel.onrende
 export default function BookPage() {
   const [slots, setSlots] = useState([])
   const [selectedSlot, setSelectedSlot] = useState(null)
-  const [formData, setFormData] = useState({ clientName: '', clientEmail: '', clientVision: '' })
+  const [formData, setFormData] = useState({ clientName: '', clientEmail: '', clientPhone: '', clientTopic: '' })
   const [status, setStatus] = useState({ loading: false, message: '', error: false })
 
   useEffect(() => {
     fetch(`${baseUrl}/api/admin/bookings`)
       .then(res => res.json())
       .then(data => {
-         // Only show available slots (isBooked === false)
-         setSlots(data.filter(s => !s.isBooked))
+         setSlots(Array.isArray(data) ? data : [])
       })
       .catch(console.error)
   }, [])
@@ -35,11 +34,12 @@ export default function BookPage() {
       })
       if (res.ok) {
         setStatus({ loading: false, message: 'Session requested! We will email you the Google Meet link upon approval.', error: false })
-        setFormData({ clientName: '', clientEmail: '', clientVision: '' })
+        setFormData({ clientName: '', clientEmail: '', clientPhone: '', clientTopic: '' })
         setSelectedSlot(null)
         setSlots(slots.filter(s => s._id !== selectedSlot._id))
       } else {
-        setStatus({ loading: false, message: 'Failed to book slot.', error: true })
+        const data = await res.json().catch(() => ({}))
+        setStatus({ loading: false, message: data.error || 'Failed to book slot.', error: true })
       }
     } catch (err) {
       setStatus({ loading: false, message: 'Network error.', error: true })
@@ -86,8 +86,12 @@ export default function BookPage() {
                  <input type="email" value={formData.clientEmail} onChange={e=>setFormData({...formData, clientEmail: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3 outline-none focus:border-blue-500" required />
               </div>
               <div>
-                 <label className="block text-sm font-bold text-slate-900 mb-2">What's your vision?</label>
-                 <textarea value={formData.clientVision} onChange={e=>setFormData({...formData, clientVision: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3 outline-none focus:border-blue-500" rows="3" required></textarea>
+                 <label className="block text-sm font-bold text-slate-900 mb-2">Phone Number</label>
+                 <input type="tel" value={formData.clientPhone} onChange={e=>setFormData({...formData, clientPhone: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3 outline-none focus:border-blue-500" required />
+              </div>
+              <div>
+                 <label className="block text-sm font-bold text-slate-900 mb-2">What do you want to discuss?</label>
+                 <textarea value={formData.clientTopic} onChange={e=>setFormData({...formData, clientTopic: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3 outline-none focus:border-blue-500" rows="3" required></textarea>
               </div>
            </div>
 
@@ -97,7 +101,7 @@ export default function BookPage() {
               </div>
            )}
 
-           <button type="submit" disabled={status.loading || slots.length === 0} className="mt-8 w-full bg-[#1877F2] hover:bg-blue-700 disabled:opacity-50 text-white font-bold py-4 rounded-xl shadow-lg transition-colors">
+           <button type="submit" disabled={status.loading || slots.length === 0} className="mt-8 w-full bg-slate-900 hover:bg-[#dc4005] disabled:opacity-50 text-white font-bold py-4 rounded-xl shadow-lg transition-colors">
               {status.loading ? 'Requesting...' : 'Request Session Booking'}
            </button>
         </form>

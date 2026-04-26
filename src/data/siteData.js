@@ -75,8 +75,25 @@ export const servicesDetailed = [
       'Responsive delivery for all devices.',
       'SEO-ready technical structure.',
     ],
-    useCases: ['Corporate websites', 'Lead funnels', 'Service company sites'],
+    useCases: ['Static websites', 'Dynamic websites', 'End-to-end full-stack web apps'],
     outcome: 'Faster loading and stronger conversion trust.',
+  },
+  {
+    id: 'portfolio',
+    icon: 'portfolio',
+    title: 'Portfolio Websites',
+    description: 'Professional portfolio websites that clearly present your work and build trust. Starting from Rs 4,999.',
+    features: [
+      'Clean one-page and multi-page portfolio structures.',
+      'Project showcase with screenshots, videos, and clear case studies.',
+      'Mobile-first delivery with contact forms, WhatsApp, and social links.',
+    ],
+    useCases: [
+      'Student and fresher portfolios (from Rs 4,999)',
+      'Freelancer and creator portfolios (from Rs 9,999)',
+      'Agency and company portfolios with advanced sections (from Rs 18,999)',
+    ],
+    outcome: 'Better visibility, stronger credibility, and higher chance of getting calls from clients or recruiters.',
   },
   {
     id: 'ecommerce',
@@ -86,9 +103,9 @@ export const servicesDetailed = [
     features: [
       'High-intent product page UX.',
       'Checkout flow optimization.',
-      'Catalog and payment integration.',
+      'Catalog and payment gateway integration (Razorpay, Stripe, UPI, cards).',
     ],
-    useCases: ['D2C brands', 'Niche stores', 'Catalog-led businesses'],
+    useCases: ['B2C online stores', 'B2B catalog and ordering portals', 'Hybrid B2B + B2C e-commerce'],
     outcome: 'Higher add-to-cart and completed orders.',
   },
   {

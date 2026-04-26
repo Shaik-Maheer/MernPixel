@@ -5,15 +5,14 @@ import { servicesDetailed, caseStudies } from '../data/siteData'
 import CountUpNumber from '../components/CountUpNumber'
 import SEO from '../components/SEO'
 import ServiceModal from '../components/ServiceModal'
-import ServiceIcon from '../components/ServiceIcon'
 
 const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://mernpixel.onrender.com').replace(/\/+$/, '').replace(/\/api$/, '')
 
 const ClientMarquee = () => {
   const [clients, setClients] = useState([
-    { _id: '1', name: 'Client1', logoUrl: '/clients/IMG_3824.PNG' },
-    { _id: '2', name: 'Client2', logoUrl: '/clients/IMG_7487.PNG' },
-    { _id: '3', name: 'Client3', logoUrl: '/clients/IMG_7516.PNG' }
+    { _id: '1', name: 'Client1', logoUrl: '/clients/IMG_3824.PNG', website: '' },
+    { _id: '2', name: 'Client2', logoUrl: '/clients/IMG_7487.PNG', website: '' },
+    { _id: '3', name: 'Client3', logoUrl: '/clients/IMG_7516.PNG', website: '' }
   ])
 
   useEffect(() => {
@@ -28,7 +27,16 @@ const ClientMarquee = () => {
       <p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">Trusted by growing brands.</p>
       <div className="flex flex-wrap justify-center items-center gap-10 md:gap-20">
          {clients.map(client => (
-            <img key={client._id} src={client.logoUrl} alt={client.name} className="h-10 md:h-12 object-contain" />
+            <a
+              key={client._id}
+              href={client.website || undefined}
+              target={client.website ? '_blank' : undefined}
+              rel={client.website ? 'noreferrer' : undefined}
+              className={client.website ? 'transition-transform hover:-translate-y-1' : ''}
+              aria-label={client.name}
+            >
+              <img src={client.logoUrl} alt={client.name} className="h-10 md:h-12 object-contain" />
+            </a>
          ))}
       </div>
     </div>
@@ -131,9 +139,6 @@ export default function HomePage() {
                 transition={{ duration: 0.4, delay: index * 0.05 }}
               >
                 
-                <div className="w-12 h-12 rounded-2xl bg-slate-100/80 group-hover:bg-white flex items-center justify-center text-slate-700 group-hover:text-emerald-600 mb-6 transition-colors duration-300">
-                  <ServiceIcon type={service.icon} className="w-5 h-5" />
-                </div>
                 <h3 className="text-lg font-bold text-slate-900 mb-2">{service.title}</h3>
                 <p className="text-sm text-slate-500 leading-relaxed flex-grow mb-4">{service.description}</p>
                 
@@ -196,12 +201,9 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {caseStudies.slice(0, 4).map((work, index) => (
-              <motion.a
+              <motion.article
                 key={work.id}
-                href={work.link}
-                target="_blank"
-                rel="noreferrer"
-                className="group rounded-[2rem] pt-10 px-10 pb-0 flex flex-col min-h-[340px] transition-all duration-300 hover:-translate-y-2 hover:shadow-xl bg-white overflow-hidden block border border-slate-200 hover:border-slate-300"
+                className="group rounded-[2rem] pt-10 px-10 pb-0 flex flex-col min-h-[340px] transition-all duration-300 hover:-translate-y-2 hover:shadow-xl bg-white overflow-hidden border border-slate-200 hover:border-slate-300"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
@@ -209,25 +211,23 @@ export default function HomePage() {
                 transition={{ duration: 0.4, delay: index * 0.1 }}
               >
                 <div className="mb-10 relative z-10">
-                  <p className="text-[10px] font-bold text-slate-600/90 uppercase tracking-widest mb-3" style={{letterSpacing: '0.2em'}}>
-                    {work.type} • {work.title}
-                  </p>
-                  <h3 className="text-3xl font-bold text-slate-900 mb-6">
-                    {work.client}
-                  </h3>
-                  <div className="inline-flex items-center text-sm font-bold text-slate-900 bg-white/40 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm hover:bg-white/70 transition-colors">
-                    Visit live <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
-                  </div>
+                  <a href={work.link} target="_blank" rel="noreferrer" className="inline-block">
+                    <h3 className="text-3xl font-bold text-slate-900 hover:text-[#dc4005] transition-colors">
+                      {work.client}
+                    </h3>
+                  </a>
                 </div>
                 
                 {/* Project Image Background/Bottom pop */}
                 {work.image && (
-                  <div className="mt-auto w-full h-[240px] relative rounded-t-xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.1)] transform transition-transform duration-500 group-hover:scale-[1.02] translate-y-4 group-hover:translate-y-2">
-                    <img src={work.image} alt={work.title} loading="lazy" className="w-full h-full object-cover object-top" />
-                    <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-t-xl"></div>
-                  </div>
+                  <a href={work.link} target="_blank" rel="noreferrer" className="mt-auto block">
+                    <div className="w-full h-[240px] relative rounded-t-xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.1)] transform transition-transform duration-500 group-hover:scale-[1.02] translate-y-4 group-hover:translate-y-2">
+                      <img src={work.image} alt={work.title} loading="lazy" className="w-full h-full object-cover object-top" />
+                      <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-t-xl"></div>
+                    </div>
+                  </a>
                 )}
-              </motion.a>
+              </motion.article>
             ))}
           </div>
         </div>

@@ -58,6 +58,9 @@ app.use(
 app.get('/health', (req, res) => {
   res.status(200).json({ ok: true, service: 'mernpixel-backend' })
 })
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ ok: true, service: 'mernpixel-backend' })
+})
 
 app.use('/api/chat', chatRouter)
 app.use('/api/mail', mailRouter)
