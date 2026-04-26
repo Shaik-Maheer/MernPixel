@@ -57,7 +57,7 @@ function App() {
                 <Route path="/careers" element={<CareersPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/book" element={<BookPage />} />
-                <Route path="/admin" element={<AdminPage />} />
+                <Route path="/admin/*" element={<AdminPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </motion.div>
