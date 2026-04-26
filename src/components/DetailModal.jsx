@@ -46,7 +46,9 @@ export default function DetailModal({
               onClick={onClose} 
               aria-label="Close details"
             >
-              ×
+              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" />
+              </svg>
             </button>
 
             {subtitle && <p className="text-sm font-black text-rose-500 uppercase tracking-widest mb-4 inline-block bg-rose-500/10 px-4 py-1.5 rounded-full">{subtitle}</p>}

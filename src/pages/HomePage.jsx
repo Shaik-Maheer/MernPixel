@@ -5,6 +5,7 @@ import { servicesDetailed, caseStudies } from '../data/siteData'
 import CountUpNumber from '../components/CountUpNumber'
 import SEO from '../components/SEO'
 import ServiceModal from '../components/ServiceModal'
+import ServiceIcon from '../components/ServiceIcon'
 
 const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://mernpixel.onrender.com').replace(/\/+$/, '').replace(/\/api$/, '')
 
@@ -44,13 +45,6 @@ const stats = [
   { value: '5+', label: 'Live products shipped' },
   { value: '24%', label: 'Conversion uplift' },
   { value: '100%', label: 'Performance-first' },
-]
-
-const recentWorkColors = [
-  'bg-orange-100/80',  // Indian Cricket
-  'bg-purple-100/80',  // Stylistar
-  'bg-cyan-100/80',    // Talent IQ
-  'bg-amber-100/80',   // Malik Tea
 ]
 
 export default function HomePage() {
@@ -137,8 +131,8 @@ export default function HomePage() {
                 transition={{ duration: 0.4, delay: index * 0.05 }}
               >
                 
-                <div className="w-12 h-12 rounded-2xl bg-slate-100/80 group-hover:bg-white flex items-center justify-center text-slate-700 group-hover:text-emerald-600 mb-6 text-xl transition-colors duration-300">
-                  {service.icon}
+                <div className="w-12 h-12 rounded-2xl bg-slate-100/80 group-hover:bg-white flex items-center justify-center text-slate-700 group-hover:text-emerald-600 mb-6 transition-colors duration-300">
+                  <ServiceIcon type={service.icon} className="w-5 h-5" />
                 </div>
                 <h3 className="text-lg font-bold text-slate-900 mb-2">{service.title}</h3>
                 <p className="text-sm text-slate-500 leading-relaxed flex-grow mb-4">{service.description}</p>
@@ -207,7 +201,7 @@ export default function HomePage() {
                 href={work.link}
                 target="_blank"
                 rel="noreferrer"
-                className={`group rounded-[2rem] pt-10 px-10 pb-0 flex flex-col min-h-[340px] transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${recentWorkColors[index % recentWorkColors.length]} overflow-hidden block border border-transparent hover:border-white/50`}
+                className="group rounded-[2rem] pt-10 px-10 pb-0 flex flex-col min-h-[340px] transition-all duration-300 hover:-translate-y-2 hover:shadow-xl bg-white overflow-hidden block border border-slate-200 hover:border-slate-300"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}

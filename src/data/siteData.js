@@ -67,7 +67,7 @@ export const processSteps = [
 export const servicesDetailed = [
   {
     id: 'web-dev',
-    icon: '◈',
+    icon: 'web',
     title: 'Web Development',
     description: 'Fast, scalable websites built for performance.',
     features: [
@@ -80,7 +80,7 @@ export const servicesDetailed = [
   },
   {
     id: 'ecommerce',
-    icon: '▣',
+    icon: 'commerce',
     title: 'E-commerce Solutions',
     description: 'Conversion-focused online stores.',
     features: [
@@ -93,7 +93,7 @@ export const servicesDetailed = [
   },
   {
     id: 'app-dev',
-    icon: '⬢',
+    icon: 'app',
     title: 'Application Development',
     description: 'Custom apps with strong architecture.',
     features: [
@@ -106,7 +106,7 @@ export const servicesDetailed = [
   },
   {
     id: 'branding',
-    icon: '✦',
+    icon: 'branding',
     title: 'Logo & Branding',
     description: 'Memorable brand identity systems.',
     features: [
@@ -119,7 +119,7 @@ export const servicesDetailed = [
   },
   {
     id: 'marketing',
-    icon: '⬈',
+    icon: 'marketing',
     title: 'Digital Marketing',
     description: 'Growth-focused campaigns and funnels.',
     features: [
@@ -132,7 +132,7 @@ export const servicesDetailed = [
   },
   {
     id: 'academic-projects',
-    icon: '❖',
+    icon: 'academic',
     title: 'Academic Projects',
     description: 'Major & minor projects with mentoring support.',
     features: ['Major projects', 'Minor projects', 'Guidance + explanation'],
@@ -141,7 +141,7 @@ export const servicesDetailed = [
   },
   {
     id: 'talent-hiring',
-    icon: '⬡',
+    icon: 'hiring',
     title: 'Talent Hiring / Consulting',
     description: 'We help companies hire the right candidates.',
     features: [
@@ -154,7 +154,7 @@ export const servicesDetailed = [
   },
   {
     id: 'guest-lectures',
-    icon: '✧',
+    icon: 'lectures',
     title: 'Guest Lectures / Workshops',
     description: 'Training students for real-world skills.',
     features: ['AI tools', 'Resume building', 'Live coding', 'Placement guidance'],
@@ -193,7 +193,18 @@ export const originTimeline = [
 
 export const lectureEvents = [
   {
+    date: '19 Nov 2025',
+    time: '09:10 AM - 11:10 AM',
+    venue: 'KKB Seminar Hall',
+    audience: 'MCA 2025-2027 batch',
+    topic: 'AI Tools & Placement Guidance',
+    workshop: 'Resume Building & Live Vibe Coding',
+    speakers: ['Shaik Maheer', 'N. Sidda Reddy', 'B. Manohar', 'Shaik Nishar Basha'],
+    highlight: 'Hands-on workshop delivered at MITS for career readiness and practical coding exposure.',
+  },
+  {
     date: 'Feb 2025',
+    time: 'Session Block',
     venue: 'MCA Department Seminar Hall',
     audience: '120+ students',
     topic: 'AI tools for productivity and project acceleration',
@@ -201,6 +212,7 @@ export const lectureEvents = [
   },
   {
     date: 'Aug 2025',
+    time: 'Session Block',
     venue: 'Career Development Cell',
     audience: '90+ students',
     topic: 'Resume building, live coding, and placement guidance',
@@ -278,6 +290,7 @@ export const lectureDetail = {
   title: 'Guest Sessions',
   topics: ['AI tools', 'Resume building', 'Live coding', 'Placement guidance'],
   events: [
+    'KKB Seminar Hall (19 Nov 2025): AI tools and placement guidance for MCA 2025-2027 batch.',
     'MCA Department Seminar Hall: hands-on AI and productivity workflows.',
     'Career Development Cell: resume reviews with live coding practice.',
   ],

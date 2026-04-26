@@ -104,7 +104,7 @@ export default function SiteFooter() {
               Privacy Policy
             </Link>
             <p className="text-xs font-semibold text-slate-400 hidden sm:block">
-              Performance over polish. Always.
+              {business.tagline}
             </p>
           </div>
         </div>

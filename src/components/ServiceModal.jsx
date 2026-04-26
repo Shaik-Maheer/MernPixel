@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import ServiceIcon from './ServiceIcon'
 
 export default function ServiceModal({ service, onClose }) {
   useEffect(() => {
@@ -31,11 +32,13 @@ export default function ServiceModal({ service, onClose }) {
               className="absolute top-4 right-4 md:top-6 md:right-6 w-8 h-8 rounded-full flex items-center justify-center bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors z-10"
               aria-label="Close"
             >
-              ✕
+              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" />
+              </svg>
             </button>
 
-            <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl mb-4 shadow-sm">
-              {service.icon}
+            <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4 shadow-sm">
+              <ServiceIcon type={service.icon} className="w-6 h-6" />
             </div>
 
             <h3 className="text-xl md:text-2xl font-extrabold text-slate-900 mb-2">{service.title}</h3>
@@ -46,7 +49,11 @@ export default function ServiceModal({ service, onClose }) {
               <ul className="space-y-2">
                 {service.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-2">
-                    <span className="text-emerald-500 font-bold mt-0.5 text-sm">✓</span>
+                    <span className="text-emerald-500 mt-0.5">
+                      <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M5 12.5l4 4L19 7.5" />
+                      </svg>
+                    </span>
                     <span className="text-[13px] md:text-sm font-medium text-slate-700">{feature}</span>
                   </li>
                 ))}

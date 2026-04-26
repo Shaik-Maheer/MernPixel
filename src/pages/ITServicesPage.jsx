@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { servicesDetailed } from '../data/siteData'
+import ServiceIcon from '../components/ServiceIcon'
 
 const reveal = {
   hidden: { opacity: 0, y: 30 },
@@ -9,10 +10,20 @@ const reveal = {
 
 export default function ITServicesPage() {
   return (
-    <main className="min-h-screen bg-[#F5F6F8] pb-32 overflow-hidden pt-[4.5rem]">
+    <main className="min-h-screen bg-[#F5F6F8] pb-32 overflow-hidden">
       
       {/* 1. FIRST SECTION: Custom Theme Background Dialogue/Approach */}
       <section className="relative w-full bg-[#dc4005] pt-24 pb-20 md:pt-32 md:pb-28 overflow-hidden shadow-xl">
+        {/* Subtle grid texture */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-20"
+          style={{
+            backgroundImage:
+              'linear-gradient(to right, rgba(255,255,255,0.22) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.22) 1px, transparent 1px)',
+            backgroundSize: '42px 42px',
+          }}
+        ></div>
+
         {/* Soft atmospheric glows for pink theme */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-rose-600/10 rounded-full blur-[80px] pointer-events-none"></div>
@@ -64,8 +75,8 @@ export default function ITServicesPage() {
                className="bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.06)] px-8 pt-16 pb-12 text-center relative cursor-pointer hover:-translate-y-3 transition-all duration-300 group flex flex-col items-center border border-slate-100 hover:border-blue-200"
              >
                {/* Floating Black Icon Block - increased size */}
-               <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-[#1a1a1a] rounded-[18px] flex items-center justify-center text-white text-3xl shadow-xl transition-transform duration-300 group-hover:scale-110">
-                 {service.icon}
+               <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-[#1a1a1a] rounded-[18px] flex items-center justify-center text-white shadow-xl transition-transform duration-300 group-hover:scale-110">
+                 <ServiceIcon type={service.icon} className="w-9 h-9" strokeWidth={1.9} />
                </div>
                
                {/* Card Content - Increased sizing */}
@@ -89,4 +100,3 @@ export default function ITServicesPage() {
     </main>
   )
 }
-

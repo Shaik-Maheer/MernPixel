@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useParams, Navigate, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { servicesDetailed } from '../data/siteData'
+import { servicesDetailed, lectureEvents } from '../data/siteData'
+import ServiceIcon from '../components/ServiceIcon'
 
 const themeMap = {
   'web-dev': { primary: 'from-cyan-400 to-blue-600', shadow: 'shadow-cyan-500/20', bgGlow: 'bg-cyan-500/10' },
@@ -99,8 +100,8 @@ export default function ServiceDetailPage() {
           <motion.div animate={{ y: [0, 20, 0] }} transition={{ repeat: Infinity, duration: 5, delay: 1 }} className="absolute bottom-10 left-[10%] bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm">Detailed PPT</motion.div>
           <motion.div animate={{ y: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 6, delay: 2 }} className="absolute top-20 right-10 lg:right-24 bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm">College Formats</motion.div>
           <motion.div animate={{ y: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 0.5 }} className="absolute bottom-20 right-[10%] bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm">Live Explanation</motion.div>
-          <div className={`w-40 h-40 rounded-[2.5rem] flex items-center justify-center text-white text-[4rem] font-black shadow-2xl z-20 ${theme.bgGlow} border border-white/20 backdrop-blur-lg`}>
-            {service.icon}
+          <div className={`w-40 h-40 rounded-[2.5rem] flex items-center justify-center text-white shadow-2xl z-20 ${theme.bgGlow} border border-white/20 backdrop-blur-lg`}>
+            <ServiceIcon type={service.icon} className="w-20 h-20" strokeWidth={1.5} />
           </div>
         </div>
       )
@@ -113,8 +114,8 @@ export default function ServiceDetailPage() {
           <motion.div animate={{ y: [0, 20, 0] }} transition={{ repeat: Infinity, duration: 5, delay: 1 }} className="absolute bottom-10 left-[5%] bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest py-4 px-8 rounded-full shadow-2xl text-sm">Live Coding</motion.div>
           <motion.div animate={{ y: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 6, delay: 2 }} className="absolute top-20 right-4 lg:right-10 bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest py-4 px-8 rounded-full shadow-2xl text-sm">Tech + Business</motion.div>
           <motion.div animate={{ y: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 0.5 }} className="absolute bottom-20 right-[5%] bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest py-4 px-8 rounded-full shadow-2xl text-sm">Resume Reviews</motion.div>
-          <div className={`w-40 h-40 rounded-[2.5rem] flex items-center justify-center text-white text-[4rem] font-black shadow-2xl z-20 ${theme.bgGlow} border border-white/20 backdrop-blur-lg`}>
-            {service.icon}
+          <div className={`w-40 h-40 rounded-[2.5rem] flex items-center justify-center text-white shadow-2xl z-20 ${theme.bgGlow} border border-white/20 backdrop-blur-lg`}>
+            <ServiceIcon type={service.icon} className="w-20 h-20" strokeWidth={1.5} />
           </div>
         </div>
       )
@@ -127,8 +128,8 @@ export default function ServiceDetailPage() {
           <motion.div animate={{ y: [0, 20, 0] }} transition={{ repeat: Infinity, duration: 5, delay: 1 }} className="absolute bottom-10 left-[10%] bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm">Paid Ads Clicks</motion.div>
           <motion.div animate={{ y: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 6, delay: 2 }} className="absolute top-20 right-10 lg:right-24 bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm">Social Scaling</motion.div>
           <motion.div animate={{ y: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 0.5 }} className="absolute bottom-20 right-[10%] bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm">Online KPI</motion.div>
-          <div className={`w-40 h-40 rounded-[2.5rem] flex items-center justify-center text-white text-[4rem] font-black shadow-2xl z-20 ${theme.bgGlow} border border-white/20 backdrop-blur-lg`}>
-            {service.icon}
+          <div className={`w-40 h-40 rounded-[2.5rem] flex items-center justify-center text-white shadow-2xl z-20 ${theme.bgGlow} border border-white/20 backdrop-blur-lg`}>
+            <ServiceIcon type={service.icon} className="w-20 h-20" strokeWidth={1.5} />
           </div>
         </div>
       )
@@ -218,7 +219,11 @@ export default function ServiceDetailPage() {
                 <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl ${theme.primary} opacity-20 blur-[80px]`}></div>
                 <div className="relative z-10">
                   <div className="flex items-center gap-4 mb-8">
-                    <span className={`w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xl ring-1 ring-emerald-500/50`}>✓</span>
+                    <span className={`w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center ring-1 ring-emerald-500/50`}>
+                      <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M5 12.5l4 4L19 7.5" />
+                      </svg>
+                    </span>
                     <h3 className="text-sm font-black text-emerald-400 uppercase tracking-widest">The Solution</h3>
                   </div>
                   <p className="text-2xl text-white leading-relaxed font-bold tracking-tight">We engineer targeted solutions from the ground up, prioritizing extreme execution speed, scalable architecture, and tangible metrics.</p>
@@ -258,6 +263,67 @@ export default function ServiceDetailPage() {
          </section>
       )}
 
+      {service.id === 'guest-lectures' && lectureEvents.length > 0 && (
+        <section className="pb-8 md:pb-16 relative z-20">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="text-center mb-12">
+              <span className={`inline-block text-xs font-black uppercase tracking-[0.28em] px-5 py-2 rounded-full border border-white/10 bg-white/5 bg-gradient-to-r ${theme.primary} bg-clip-text text-transparent`}>
+                Featured Workshops
+              </span>
+              <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white mt-6">Guest Lectures in Action</h2>
+              <p className="text-slate-300 text-lg mt-4 max-w-3xl mx-auto leading-relaxed">
+                Themed sessions combining AI tools, resume workflows, live coding, and placement-focused preparation.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {lectureEvents.map((event, idx) => (
+                <article key={`${event.date}-${event.topic}-${idx}`} className={`relative overflow-hidden bg-white/5 border border-white/10 rounded-[2rem] p-8 md:p-10 backdrop-blur-md ${theme.shadow}`}>
+                  <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${theme.primary}`}></div>
+                  <div className="flex items-center justify-between gap-4 mb-5">
+                    <p className="text-[11px] font-black tracking-[0.22em] uppercase text-slate-300">Workshop {String(idx + 1).padStart(2, '0')}</p>
+                    <p className="text-sm font-bold text-white">{event.date}</p>
+                  </div>
+
+                  <h3 className="text-2xl md:text-3xl font-extrabold text-white leading-tight mb-3">{event.topic}</h3>
+                  {event.workshop && <p className="text-fuchsia-300 font-bold text-lg mb-6">{event.workshop}</p>}
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                    <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                      <p className="text-[11px] font-black tracking-[0.2em] uppercase text-slate-400 mb-2">Time</p>
+                      <p className="text-white font-semibold">{event.time || 'TBA'}</p>
+                    </div>
+                    <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                      <p className="text-[11px] font-black tracking-[0.2em] uppercase text-slate-400 mb-2">Venue</p>
+                      <p className="text-white font-semibold">{event.venue}</p>
+                    </div>
+                    <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:col-span-2">
+                      <p className="text-[11px] font-black tracking-[0.2em] uppercase text-slate-400 mb-2">Audience</p>
+                      <p className="text-white font-semibold">{event.audience}</p>
+                    </div>
+                  </div>
+
+                  {event.speakers && event.speakers.length > 0 && (
+                    <div className="mb-6">
+                      <p className="text-[11px] font-black tracking-[0.2em] uppercase text-slate-400 mb-3">Speakers</p>
+                      <div className="flex flex-wrap gap-2">
+                        {event.speakers.map((speaker, speakerIdx) => (
+                          <span key={`${speaker}-${speakerIdx}`} className="px-3 py-1.5 text-sm font-semibold text-white rounded-full border border-white/15 bg-white/5">
+                            {speaker}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <p className="text-slate-300 leading-relaxed">{event.highlight}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* FAQ */}
       <section className="py-24 max-w-4xl mx-auto px-6 relative z-20">
          <div className="text-center mb-16">
@@ -281,4 +347,3 @@ export default function ServiceDetailPage() {
     </main>
   )
 }
-
