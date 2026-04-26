@@ -22,7 +22,7 @@ export default function ContactPage() {
     setStatus({ loading: true, message: '', isError: false })
 
     try {
-      const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://mernpixel.onrender.com').replace(/\/+$/, '')
+      const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://mernpixel.onrender.com').replace(/\/+$/, '').replace(/\/api$/, '')
       const response = await fetch(`${baseUrl}/api/mail`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://mernpixel.onrender.com').replace(/\/+$/, '')
+const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://mernpixel.onrender.com').replace(/\/+$/, '').replace(/\/api$/, '')
 
 export default function BlogPage() {
   const [blogs, setBlogs] = useState([])

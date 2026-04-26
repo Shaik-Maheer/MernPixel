@@ -19,7 +19,7 @@ function buildChatEndpoint(apiBase) {
 }
 
 function resolveApiBaseUrl() {
-  const envBase = import.meta.env.VITE_API_BASE_URL?.trim()
+  const envBase = (import.meta.env.VITE_API_BASE_URL?.trim() || '').replace(/\/+$/, '').replace(/\/api$/, '')
   if (envBase) {
     return stripTrailingSlash(envBase)
   }
