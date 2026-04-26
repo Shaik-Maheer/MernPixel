@@ -1,6 +1,6 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import DetailModal from '../components/DetailModal'
-import HeroBackdrop from '../components/HeroBackdrop'
 import { aboutContent, lectureDetail, storyDetail, teamMembers } from '../data/siteData'
 
 export default function AboutPage() {
@@ -9,13 +9,12 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen bg-[#0a0a0a] pb-32 text-slate-200">
       {/* HERO SECTION */}
-      <section className="relative w-full h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
-        <HeroBackdrop video="/four.mp4" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/60 via-[#0a0a0a]/80 to-[#0a0a0a] z-10 pointer-events-none"></div>
+      <section className="relative w-full h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden bg-[#005C6B]">
+        <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none"></div>
         <div className="relative z-20 text-center max-w-4xl mx-auto px-6">
-          <p className="text-sm font-extrabold text-blue-500 uppercase tracking-[0.2em] mb-4">About MERNpixel</p>
+          <p className="text-sm font-extrabold text-[#AEE9E0] uppercase tracking-[0.2em] mb-4">About MERNpixel</p>
           <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight leading-[1.1] mb-6">Premium execution with startup speed.</h1>
-          <p className="text-xl md:text-2xl text-slate-400 font-medium">Built by developers focused on outcomes, not noise.</p>
+          <p className="text-xl md:text-2xl text-white/90 font-medium">Built by developers focused on outcomes, not noise.</p>
         </div>
       </section>
 
@@ -39,9 +38,9 @@ export default function AboutPage() {
                <h3 className="text-3xl font-extrabold text-white mb-4">Sharing knowledge with future builders.</h3>
                <p className="text-lg text-slate-400 leading-relaxed mb-8">AI tools, resume building, and raw live coding sessions for students.</p>
             </div>
-            <button type="button" className="text-[13px] font-black text-white uppercase tracking-widest border-b-2 border-slate-700 hover:border-emerald-500 pb-1 w-fit mx-auto transition-colors" onClick={() => setActiveModal('lecture')}>
+            <Link to="/services/guest-lectures" className="text-[13px] font-black text-white uppercase tracking-widest border-b-2 border-slate-700 hover:border-emerald-500 pb-1 w-fit mx-auto transition-colors">
               View Details
-            </button>
+            </Link>
           </article>
         </div>
       </section>

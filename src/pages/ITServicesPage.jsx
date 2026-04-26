@@ -11,24 +11,24 @@ export default function ITServicesPage() {
   return (
     <main className="min-h-screen bg-[#F5F6F8] pb-32 overflow-hidden pt-[4.5rem]">
       
-      {/* 1. FIRST SECTION: Black Background Dialogue/Approach */}
-      <section className="relative w-full bg-[#0a0a0a] pt-24 pb-20 md:pt-32 md:pb-28 overflow-hidden shadow-2xl">
-        {/* Soft atmospheric glows for dark theme */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[80px] pointer-events-none"></div>
+      {/* 1. FIRST SECTION: Custom Theme Background Dialogue/Approach */}
+      <section className="relative w-full bg-[#E378B4] pt-24 pb-20 md:pt-32 md:pb-28 overflow-hidden shadow-xl">
+        {/* Soft atmospheric glows for pink theme */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-rose-600/10 rounded-full blur-[80px] pointer-events-none"></div>
 
         <div className="max-w-4xl mx-auto px-6 text-left relative z-20">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={reveal} transition={{ duration: 0.6 }}>
             
-            <div className="inline-flex bg-white/10 rounded-full px-5 py-2 mb-8 items-center border border-white/20 backdrop-blur-sm">
-               <span className="text-xs font-bold text-slate-200 tracking-widest uppercase">Our Approach</span>
+            <div className="inline-flex bg-white/20 rounded-full px-5 py-2 mb-8 items-center border border-white/40 backdrop-blur-md">
+               <span className="text-xs font-black text-white tracking-widest uppercase">Our Approach</span>
             </div>
 
             <h2 className="text-4xl md:text-[4.5rem] font-extrabold tracking-tight text-white mb-8 leading-[1.1] max-w-4xl">
-              Built around what <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-rose-400">moves the metric.</span>
+              Built around what <span className="text-white drop-shadow-[0_2px_15px_rgba(255,255,255,0.4)] underline decoration-white/40 underline-offset-[12px]">moves the metric.</span>
             </h2>
             
-            <p className="text-lg md:text-[22px] text-slate-300 max-w-3xl leading-[1.6] font-medium">
+            <p className="text-lg md:text-[22px] text-white/90 max-w-3xl leading-[1.6] font-bold tracking-wide">
               From shipping a high-converting site to mentoring student projects — every engagement is shaped to deliver real outcomes.
             </p>
             
