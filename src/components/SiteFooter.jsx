@@ -102,7 +102,10 @@ export default function SiteFooter() {
             <Link to="/admin" className="text-xs font-semibold text-slate-400 hover:text-blue-500 transition-colors">
               Admin
             </Link>
-            <p className="text-xs font-semibold text-slate-400">
+            <Link to="/privacy-policy" className="text-xs font-semibold text-slate-400 hover:text-blue-500 transition-colors">
+              Privacy Policy
+            </Link>
+            <p className="text-xs font-semibold text-slate-400 hidden sm:block">
               Performance over polish. Always.
             </p>
           </div>

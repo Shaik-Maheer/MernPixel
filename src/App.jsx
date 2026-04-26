@@ -21,7 +21,8 @@ import TeamPage from './pages/TeamPage'
 import NotFoundPage from './pages/NotFoundPage'
 import BookPage from './pages/BookPage'
 import AdminPage from './pages/AdminPage'
-
+import GalleryPage from './pages/GalleryPage'
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
 function App() {
   const location = useLocation()
   useSmoothScroll(location.pathname)
@@ -57,6 +58,9 @@ function App() {
                 <Route path="/careers" element={<CareersPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/book" element={<BookPage />} />
+                <Route path="/book-a-session" element={<Navigate to="/book" replace />} />
+                <Route path="/gallery" element={<GalleryPage />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
                 <Route path="/admin/*" element={<AdminPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
