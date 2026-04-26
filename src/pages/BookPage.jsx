@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const baseUrl = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '')
+const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://mernpixel.onrender.com').replace(/\/+$/, '')
 
 export default function BookPage() {
   const [slots, setSlots] = useState([])
