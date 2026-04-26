@@ -10,7 +10,6 @@ const quickLinks = [
   { label: 'Blog', path: '/blog' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
-  { label: 'Book Session', path: '/book' },
 ]
 
 export default function SiteFooter() {
