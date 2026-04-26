@@ -7,6 +7,7 @@ import Blog from '../models/Blog.js'
 import BookingSlot from '../models/BookingSlot.js'
 import StudentProject from '../models/StudentProject.js'
 import GalleryItem from '../models/GalleryItem.js'
+import SiteSetting from '../models/SiteSetting.js'
 
 const router = express.Router()
 
@@ -71,6 +72,40 @@ function parseCsvList(input) {
       .filter(Boolean)
   }
   return []
+}
+
+const GALLERY_BOOTSTRAP_KEY = 'gallery_bootstrapped_v1'
+const defaultGallerySeed = [
+  { type: 'image', src: '/workshops/event-poster.png', category: 'Events' },
+  { type: 'image', src: '/workshops/event-quantum-classroom.png', category: 'Events' },
+  { type: 'image', src: '/workshops/event-codestorm-stage.png', category: 'Events' },
+  { type: 'image', src: '/workshops/event-new-classroom.jpg', category: 'Events' },
+  { type: 'video', src: '/four.mp4', category: 'Behind the Scenes' },
+  { type: 'image', src: '/generic_service.png', category: 'Office' },
+  { type: 'video', src: '/web_development.mp4', category: 'Events' },
+  { type: 'video', src: '/meetings.mp4', category: 'Behind the Scenes' },
+]
+
+async function ensureGalleryBootstrappedOnce() {
+  const marker = await SiteSetting.findOne({ key: GALLERY_BOOTSTRAP_KEY }).lean()
+  if (marker) return
+
+  const existingCount = await GalleryItem.countDocuments()
+  if (existingCount === 0) {
+    await GalleryItem.insertMany(
+      defaultGallerySeed.map((item, index) => ({
+        ...item,
+        active: true,
+        position: index,
+      }))
+    )
+  }
+
+  await SiteSetting.updateOne(
+    { key: GALLERY_BOOTSTRAP_KEY },
+    { $set: { value: { initializedAt: new Date().toISOString() } } },
+    { upsert: true }
+  )
 }
 
 async function getNextGalleryPosition() {
@@ -233,6 +268,7 @@ router.delete('/clients/:id', authMiddleware, async (req, res, next) => {
 // GALLERY
 router.get('/gallery', async (req, res, next) => {
   try {
+    await ensureGalleryBootstrappedOnce()
     const adminMode = isAdminRequest(req)
     const query = adminMode ? {} : { active: true }
     const items = await GalleryItem.find(query).sort({ position: 1, createdAt: 1 })
