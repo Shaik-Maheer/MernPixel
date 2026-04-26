@@ -75,16 +75,36 @@ function parseCsvList(input) {
 }
 
 const GALLERY_BOOTSTRAP_KEY = 'gallery_bootstrapped_v1'
+const GALLERY_LAYOUT_KEY = 'gallery_layout_v1'
 const defaultGallerySeed = [
-  { type: 'image', src: '/workshops/event-poster.png', category: 'Events' },
-  { type: 'image', src: '/workshops/event-quantum-classroom.png', category: 'Events' },
-  { type: 'image', src: '/workshops/event-codestorm-stage.png', category: 'Events' },
-  { type: 'image', src: '/workshops/event-new-classroom.jpg', category: 'Events' },
-  { type: 'video', src: '/four.mp4', category: 'Behind the Scenes' },
-  { type: 'image', src: '/generic_service.png', category: 'Office' },
-  { type: 'video', src: '/web_development.mp4', category: 'Events' },
-  { type: 'video', src: '/meetings.mp4', category: 'Behind the Scenes' },
+  { type: 'image', src: '/workshops/event-poster.png', category: 'Events', colSpan: 1, height: 340 },
+  { type: 'image', src: '/workshops/event-quantum-classroom.png', category: 'Events', colSpan: 2, height: 300 },
+  { type: 'image', src: '/workshops/event-codestorm-stage.png', category: 'Events', colSpan: 1, height: 460 },
+  { type: 'image', src: '/workshops/event-new-classroom.jpg', category: 'Events', colSpan: 2, height: 360 },
+  { type: 'video', src: '/four.mp4', category: 'Behind the Scenes', colSpan: 1, height: 320 },
+  { type: 'image', src: '/generic_service.png', category: 'Office', colSpan: 1, height: 320 },
+  { type: 'video', src: '/web_development.mp4', category: 'Events', colSpan: 1, height: 320 },
+  { type: 'video', src: '/meetings.mp4', category: 'Behind the Scenes', colSpan: 1, height: 320 },
 ]
+const defaultGalleryLayout = {
+  mobileColumns: 1,
+  tabletColumns: 2,
+  desktopColumns: 3,
+}
+
+function clampNumber(value, min, max, fallback) {
+  const safeValue = Number(value)
+  if (!Number.isFinite(safeValue)) return fallback
+  return Math.max(min, Math.min(max, safeValue))
+}
+
+function normalizeGalleryLayout(input = {}) {
+  return {
+    mobileColumns: clampNumber(input.mobileColumns, 1, 2, defaultGalleryLayout.mobileColumns),
+    tabletColumns: clampNumber(input.tabletColumns, 1, 4, defaultGalleryLayout.tabletColumns),
+    desktopColumns: clampNumber(input.desktopColumns, 1, 6, defaultGalleryLayout.desktopColumns),
+  }
+}
 
 async function ensureGalleryBootstrappedOnce() {
   const marker = await SiteSetting.findOne({ key: GALLERY_BOOTSTRAP_KEY }).lean()
@@ -106,6 +126,14 @@ async function ensureGalleryBootstrappedOnce() {
     { $set: { value: { initializedAt: new Date().toISOString() } } },
     { upsert: true }
   )
+}
+
+async function getGalleryLayout() {
+  const setting = await SiteSetting.findOne({ key: GALLERY_LAYOUT_KEY }).lean()
+  if (!setting?.value || typeof setting.value !== 'object') {
+    return defaultGalleryLayout
+  }
+  return normalizeGalleryLayout(setting.value)
 }
 
 async function getNextGalleryPosition() {
@@ -266,6 +294,29 @@ router.delete('/clients/:id', authMiddleware, async (req, res, next) => {
 })
 
 // GALLERY
+router.get('/gallery-layout', async (req, res, next) => {
+  try {
+    const layout = await getGalleryLayout()
+    return res.json(layout)
+  } catch (error) {
+    return next(error)
+  }
+})
+
+router.put('/gallery-layout', authMiddleware, async (req, res, next) => {
+  try {
+    const payload = normalizeGalleryLayout(req.body || {})
+    await SiteSetting.updateOne(
+      { key: GALLERY_LAYOUT_KEY },
+      { $set: { value: payload } },
+      { upsert: true }
+    )
+    return res.json(payload)
+  } catch (error) {
+    return next(error)
+  }
+})
+
 router.get('/gallery', async (req, res, next) => {
   try {
     await ensureGalleryBootstrappedOnce()
@@ -280,7 +331,7 @@ router.get('/gallery', async (req, res, next) => {
 
 router.post('/gallery', authMiddleware, async (req, res, next) => {
   try {
-    const { type = 'image', src = '', category = 'Events', active = true, position } = req.body || {}
+    const { type = 'image', src = '', category = 'Events', active = true, position, colSpan = 1, height = 320 } = req.body || {}
     const safeType = String(type).trim().toLowerCase()
     const safeSrc = String(src).trim()
 
@@ -297,6 +348,8 @@ router.post('/gallery', authMiddleware, async (req, res, next) => {
       src: safeSrc,
       category: String(category || 'Events').trim() || 'Events',
       active: Boolean(active),
+      colSpan: clampNumber(colSpan, 1, 6, 1),
+      height: clampNumber(height, 120, 1600, 320),
       position: nextPosition,
     })
     return res.json(item)
@@ -329,6 +382,12 @@ router.put('/gallery/:id', authMiddleware, async (req, res, next) => {
     }
     if (body.active !== undefined) {
       updates.active = Boolean(body.active)
+    }
+    if (body.colSpan !== undefined) {
+      updates.colSpan = clampNumber(body.colSpan, 1, 6, 1)
+    }
+    if (body.height !== undefined) {
+      updates.height = clampNumber(body.height, 120, 1600, 320)
     }
     if (body.position !== undefined) {
       const safePosition = Number(body.position)

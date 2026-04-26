@@ -78,8 +78,14 @@ function AdminLogin({ setToken }) {
 
 function AdminDashboard({ token, setToken }) {
   const [activeTab, setActiveTab] = useState('forms')
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const tabs = ['forms', 'bookings', 'clients', 'blogs', 'gallery', 'students']
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab)
+    setSidebarOpen(false)
+  }
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken')
@@ -88,13 +94,39 @@ function AdminDashboard({ token, setToken }) {
 
   return (
     <div className="min-h-screen bg-slate-50 flex">
-      <aside className="w-64 bg-slate-900 text-white flex flex-col p-6">
-        <h2 className="text-xl font-black mb-10 tracking-widest uppercase text-[#dc4005]">MERNpixel CMS</h2>
+      {sidebarOpen && (
+        <button
+          type="button"
+          aria-label="Close sidebar backdrop"
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      <aside
+        className={`fixed md:static top-0 left-0 h-screen w-64 bg-slate-900 text-white flex flex-col p-6 z-50 transition-transform duration-300 ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+        }`}
+      >
+        <div className="flex items-center justify-between mb-10">
+          <h2 className="text-xl font-black tracking-widest uppercase text-[#dc4005]">MERNpixel CMS</h2>
+          <button
+            type="button"
+            className="md:hidden text-slate-300 hover:text-white"
+            onClick={() => setSidebarOpen(false)}
+            aria-label="Close menu"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
         <nav className="flex flex-col gap-2 flex-grow">
           {tabs.map((tab) => (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => handleTabChange(tab)}
               className={`text-left px-4 py-3 rounded-lg font-bold uppercase tracking-wide text-sm transition-colors ${
                 activeTab === tab ? 'bg-[#dc4005] text-white' : 'text-slate-400 hover:bg-slate-800 hover:text-white'
               }`}
@@ -108,7 +140,22 @@ function AdminDashboard({ token, setToken }) {
         </button>
       </aside>
 
-      <main className="flex-1 p-10 h-screen overflow-y-auto">
+      <main className="flex-1 p-4 md:p-10 h-screen overflow-y-auto">
+        <div className="md:hidden mb-4">
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(true)}
+            className="inline-flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-lg font-bold text-sm"
+            aria-label="Open menu"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+            Menu
+          </button>
+        </div>
         {activeTab === 'forms' && <FormsPanel token={token} />}
         {activeTab === 'clients' && <ClientsPanel token={token} />}
         {activeTab === 'blogs' && <BlogsPanel token={token} />}
@@ -443,34 +490,48 @@ const emptyGalleryForm = {
   type: 'image',
   src: '',
   category: 'Events',
+  colSpan: 1,
+  height: 320,
   active: true,
 }
 
 const defaultGallerySeed = [
-  { type: 'image', src: '/workshops/event-poster.png', category: 'Events', active: true },
-  { type: 'image', src: '/workshops/event-quantum-classroom.png', category: 'Events', active: true },
-  { type: 'image', src: '/workshops/event-codestorm-stage.png', category: 'Events', active: true },
-  { type: 'image', src: '/workshops/event-new-classroom.jpg', category: 'Events', active: true },
-  { type: 'video', src: '/four.mp4', category: 'Behind the Scenes', active: true },
-  { type: 'image', src: '/generic_service.png', category: 'Office', active: true },
-  { type: 'video', src: '/web_development.mp4', category: 'Events', active: true },
-  { type: 'video', src: '/meetings.mp4', category: 'Behind the Scenes', active: true },
+  { type: 'image', src: '/workshops/event-poster.png', category: 'Events', colSpan: 1, height: 340, active: true },
+  { type: 'image', src: '/workshops/event-quantum-classroom.png', category: 'Events', colSpan: 2, height: 300, active: true },
+  { type: 'image', src: '/workshops/event-codestorm-stage.png', category: 'Events', colSpan: 1, height: 460, active: true },
+  { type: 'image', src: '/workshops/event-new-classroom.jpg', category: 'Events', colSpan: 2, height: 360, active: true },
+  { type: 'video', src: '/four.mp4', category: 'Behind the Scenes', colSpan: 1, height: 320, active: true },
+  { type: 'image', src: '/generic_service.png', category: 'Office', colSpan: 1, height: 320, active: true },
+  { type: 'video', src: '/web_development.mp4', category: 'Events', colSpan: 1, height: 320, active: true },
+  { type: 'video', src: '/meetings.mp4', category: 'Behind the Scenes', colSpan: 1, height: 320, active: true },
 ]
 
 const galleryImportMarkerKey = 'mp_gallery_seed_imported_v1'
+const galleryCategories = ['Events', 'Behind the Scenes', 'Office']
+const galleryViewFilters = ['All', 'Image', 'Video', ...galleryCategories]
+const defaultGalleryLayout = { mobileColumns: 1, tabletColumns: 2, desktopColumns: 3 }
 
 function GalleryPanel({ token }) {
   const [items, setItems] = useState([])
   const [form, setForm] = useState(emptyGalleryForm)
   const [editingId, setEditingId] = useState('')
   const [editForm, setEditForm] = useState(emptyGalleryForm)
+  const [layout, setLayout] = useState(defaultGalleryLayout)
+  const [viewFilter, setViewFilter] = useState('All')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
 
   const importDefaultGallery = async () => {
+    const existing = await adminFetch(token, '/api/admin/gallery')
+    const existingKeys = new Set(
+      (Array.isArray(existing) ? existing : []).map((item) => `${item.type}|${item.src}`)
+    )
+
     for (let i = 0; i < defaultGallerySeed.length; i += 1) {
       const item = defaultGallerySeed[i]
+      const key = `${item.type}|${item.src}`
+      if (existingKeys.has(key)) continue
       await adminFetch(token, '/api/admin/gallery', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -502,8 +563,22 @@ function GalleryPanel({ token }) {
     }
   }
 
+  const fetchLayout = async () => {
+    try {
+      const data = await adminFetch(token, '/api/admin/gallery-layout')
+      setLayout({
+        mobileColumns: Number(data.mobileColumns) || defaultGalleryLayout.mobileColumns,
+        tabletColumns: Number(data.tabletColumns) || defaultGalleryLayout.tabletColumns,
+        desktopColumns: Number(data.desktopColumns) || defaultGalleryLayout.desktopColumns,
+      })
+    } catch (layoutError) {
+      console.error(layoutError)
+    }
+  }
+
   useEffect(() => {
     fetchGallery().catch(console.error)
+    fetchLayout().catch(console.error)
   }, [token])
 
   const handleAdd = async (e) => {
@@ -561,6 +636,8 @@ function GalleryPanel({ token }) {
       type: item.type || 'image',
       src: item.src || '',
       category: item.category || 'Events',
+      colSpan: Number(item.colSpan) || 1,
+      height: Number(item.height) || 320,
       active: Boolean(item.active),
     })
   }
@@ -628,12 +705,100 @@ function GalleryPanel({ token }) {
     }
   }
 
+  const handleSaveLayout = async () => {
+    setSaving(true)
+    setError('')
+    try {
+      const payload = {
+        mobileColumns: Number(layout.mobileColumns) || defaultGalleryLayout.mobileColumns,
+        tabletColumns: Number(layout.tabletColumns) || defaultGalleryLayout.tabletColumns,
+        desktopColumns: Number(layout.desktopColumns) || defaultGalleryLayout.desktopColumns,
+      }
+      const data = await adminFetch(token, '/api/admin/gallery-layout', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      setLayout({
+        mobileColumns: Number(data.mobileColumns) || defaultGalleryLayout.mobileColumns,
+        tabletColumns: Number(data.tabletColumns) || defaultGalleryLayout.tabletColumns,
+        desktopColumns: Number(data.desktopColumns) || defaultGalleryLayout.desktopColumns,
+      })
+    } catch (saveLayoutError) {
+      setError(saveLayoutError.message || 'Failed to update gallery layout.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const visibleItems = items
+    .map((item, index) => ({ item, index }))
+    .filter(({ item }) => {
+      if (viewFilter === 'All') return true
+      if (viewFilter === 'Image') return item.type === 'image'
+      if (viewFilter === 'Video') return item.type === 'video'
+      return (item.category || '') === viewFilter
+    })
+
   return (
     <div>
       <h2 className="text-3xl font-black text-slate-900 mb-2">Gallery Control</h2>
       <p className="text-sm text-slate-600 font-medium mb-8">
         Add, remove, replace, hide/show, and reorder gallery media. Order here controls what appears first on the live gallery page.
       </p>
+
+      <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-8">
+        <h3 className="text-lg font-extrabold text-slate-900 mb-4">Gallery Layout</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <label className="text-sm font-bold text-slate-700">
+            Mobile Columns
+            <select
+              value={layout.mobileColumns}
+              onChange={(e) => setLayout({ ...layout, mobileColumns: Number(e.target.value) })}
+              className="mt-2 w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+            >
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+            </select>
+          </label>
+          <label className="text-sm font-bold text-slate-700">
+            Tablet Columns
+            <select
+              value={layout.tabletColumns}
+              onChange={(e) => setLayout({ ...layout, tabletColumns: Number(e.target.value) })}
+              className="mt-2 w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+            >
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+            </select>
+          </label>
+          <label className="text-sm font-bold text-slate-700">
+            Desktop Columns
+            <select
+              value={layout.desktopColumns}
+              onChange={(e) => setLayout({ ...layout, desktopColumns: Number(e.target.value) })}
+              className="mt-2 w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+            >
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+              <option value={6}>6</option>
+            </select>
+          </label>
+        </div>
+        <button
+          type="button"
+          onClick={handleSaveLayout}
+          disabled={saving}
+          className="mt-4 bg-slate-900 hover:bg-[#dc4005] disabled:opacity-60 text-white font-bold py-3 px-6 rounded-xl transition-colors"
+        >
+          Save Layout
+        </button>
+      </div>
 
       <form onSubmit={handleAdd} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
         <select
@@ -644,13 +809,17 @@ function GalleryPanel({ token }) {
           <option value="image">Image</option>
           <option value="video">Video</option>
         </select>
-        <input
+        <select
           value={form.category}
           onChange={(e) => setForm({ ...form, category: e.target.value })}
-          placeholder="Category (Events / Office / Behind the Scenes)"
           className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
-          required
-        />
+        >
+          {galleryCategories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
         <input
           value={form.src}
           onChange={(e) => setForm({ ...form, src: e.target.value })}
@@ -658,6 +827,32 @@ function GalleryPanel({ token }) {
           className="md:col-span-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
           required
         />
+        <label className="text-sm font-bold text-slate-700">
+          Width (Column Span)
+          <select
+            value={form.colSpan}
+            onChange={(e) => setForm({ ...form, colSpan: Number(e.target.value) })}
+            className="mt-2 w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+          >
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
+            <option value={6}>6</option>
+          </select>
+        </label>
+        <label className="text-sm font-bold text-slate-700">
+          Height (px)
+          <input
+            type="number"
+            min={120}
+            max={1600}
+            value={form.height}
+            onChange={(e) => setForm({ ...form, height: Number(e.target.value) || 320 })}
+            className="mt-2 w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+          />
+        </label>
         <label className="md:col-span-2 flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-slate-700">
           <input type="checkbox" checked={form.active} onChange={(e) => setForm({ ...form, active: e.target.checked })} />
           Visible on website
@@ -684,10 +879,25 @@ function GalleryPanel({ token }) {
         </div>
       )}
 
+      <div className="mb-6 flex flex-wrap items-center gap-3">
+        <label className="text-sm font-bold text-slate-700">View:</label>
+        <select
+          value={viewFilter}
+          onChange={(e) => setViewFilter(e.target.value)}
+          className="bg-white border border-slate-200 rounded-xl px-4 py-2 text-sm font-semibold"
+        >
+          {galleryViewFilters.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {items.map((item, index) => (
+        {visibleItems.map(({ item, index }) => (
           <div key={item._id} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-            <div className="w-full h-52 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 mb-4">
+            <div className="w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200 mb-4" style={{ height: `${Number(item.height) || 320}px` }}>
               {item.type === 'video' ? (
                 <video src={item.src} className="w-full h-full object-cover" muted loop playsInline autoPlay />
               ) : (
@@ -696,7 +906,7 @@ function GalleryPanel({ token }) {
             </div>
 
             <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3">
-              Position #{index + 1} • {item.type}
+              Position #{index + 1} • {item.type} • Span {Number(item.colSpan) || 1} • {Number(item.height) || 320}px
             </p>
 
             {editingId === item._id ? (
@@ -709,16 +919,48 @@ function GalleryPanel({ token }) {
                   <option value="image">Image</option>
                   <option value="video">Video</option>
                 </select>
-                <input
+                <select
                   value={editForm.category}
                   onChange={(e) => setEditForm({ ...editForm, category: e.target.value })}
                   className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
-                />
+                >
+                  {galleryCategories.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
                 <input
                   value={editForm.src}
                   onChange={(e) => setEditForm({ ...editForm, src: e.target.value })}
                   className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
                 />
+                <label className="text-sm font-bold text-slate-700">
+                  Width (Column Span)
+                  <select
+                    value={editForm.colSpan}
+                    onChange={(e) => setEditForm({ ...editForm, colSpan: Number(e.target.value) })}
+                    className="mt-2 w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+                  >
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
+                    <option value={6}>6</option>
+                  </select>
+                </label>
+                <label className="text-sm font-bold text-slate-700">
+                  Height (px)
+                  <input
+                    type="number"
+                    min={120}
+                    max={1600}
+                    value={editForm.height}
+                    onChange={(e) => setEditForm({ ...editForm, height: Number(e.target.value) || 320 })}
+                    className="mt-2 w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+                  />
+                </label>
                 <label className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-slate-700">
                   <input type="checkbox" checked={editForm.active} onChange={(e) => setEditForm({ ...editForm, active: e.target.checked })} />
                   Visible on website
@@ -745,7 +987,7 @@ function GalleryPanel({ token }) {
                 <p className={`mt-2 text-[11px] font-bold uppercase tracking-widest ${item.active ? 'text-emerald-600' : 'text-slate-400'}`}>
                   {item.active ? 'Visible' : 'Hidden'}
                 </p>
-                <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-2">
+                <div className="mt-4 hidden sm:grid grid-cols-2 sm:grid-cols-3 gap-2">
                   <button onClick={() => moveItem(index, -1)} disabled={saving || index === 0} className="text-xs font-bold text-slate-700 bg-slate-100 px-3 py-2 rounded-full disabled:opacity-50">
                     Move Up
                   </button>
@@ -761,6 +1003,28 @@ function GalleryPanel({ token }) {
                   <button onClick={() => handleDelete(item._id)} disabled={saving} className="text-xs font-bold text-rose-700 bg-rose-50 px-3 py-2 rounded-full disabled:opacity-50">
                     Delete
                   </button>
+                </div>
+                <div className="mt-4 sm:hidden">
+                  <details className="bg-slate-100 rounded-xl p-2">
+                    <summary className="list-none cursor-pointer text-center text-sm font-bold text-slate-700">...</summary>
+                    <div className="mt-2 grid grid-cols-1 gap-2">
+                      <button onClick={() => moveItem(index, -1)} disabled={saving || index === 0} className="text-xs font-bold text-slate-700 bg-white px-3 py-2 rounded-full disabled:opacity-50">
+                        Move Up
+                      </button>
+                      <button onClick={() => moveItem(index, 1)} disabled={saving || index === items.length - 1} className="text-xs font-bold text-slate-700 bg-white px-3 py-2 rounded-full disabled:opacity-50">
+                        Move Down
+                      </button>
+                      <button onClick={() => startEdit(item)} className="text-xs font-bold text-blue-700 bg-blue-50 px-3 py-2 rounded-full">
+                        Replace/Edit
+                      </button>
+                      <button onClick={() => toggleActive(item)} disabled={saving} className="text-xs font-bold text-amber-700 bg-amber-50 px-3 py-2 rounded-full disabled:opacity-50">
+                        {item.active ? 'Hide' : 'Show'}
+                      </button>
+                      <button onClick={() => handleDelete(item._id)} disabled={saving} className="text-xs font-bold text-rose-700 bg-rose-50 px-3 py-2 rounded-full disabled:opacity-50">
+                        Delete
+                      </button>
+                    </div>
+                  </details>
                 </div>
               </>
             )}

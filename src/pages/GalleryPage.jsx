@@ -7,19 +7,22 @@ const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://mernpixel.onrende
   .replace(/\/api$/, '')
 
 const fallbackGalleryMedia = [
-  { id: 1, type: 'image', src: '/workshops/event-poster.png', category: 'Events' },
-  { id: 2, type: 'image', src: '/workshops/event-quantum-classroom.png', category: 'Events' },
-  { id: 3, type: 'image', src: '/workshops/event-codestorm-stage.png', category: 'Events' },
-  { id: 8, type: 'image', src: '/workshops/event-new-classroom.jpg', category: 'Events' },
-  { id: 4, type: 'video', src: '/four.mp4', category: 'Behind the Scenes' },
-  { id: 5, type: 'image', src: '/generic_service.png', category: 'Office' },
-  { id: 6, type: 'video', src: '/web_development.mp4', category: 'Events' },
-  { id: 7, type: 'video', src: '/meetings.mp4', category: 'Behind the Scenes' },
+  { id: 1, type: 'image', src: '/workshops/event-poster.png', category: 'Events', colSpan: 1, height: 340 },
+  { id: 2, type: 'image', src: '/workshops/event-quantum-classroom.png', category: 'Events', colSpan: 2, height: 300 },
+  { id: 3, type: 'image', src: '/workshops/event-codestorm-stage.png', category: 'Events', colSpan: 1, height: 460 },
+  { id: 8, type: 'image', src: '/workshops/event-new-classroom.jpg', category: 'Events', colSpan: 2, height: 360 },
+  { id: 4, type: 'video', src: '/four.mp4', category: 'Behind the Scenes', colSpan: 1, height: 320 },
+  { id: 5, type: 'image', src: '/generic_service.png', category: 'Office', colSpan: 1, height: 320 },
+  { id: 6, type: 'video', src: '/web_development.mp4', category: 'Events', colSpan: 1, height: 320 },
+  { id: 7, type: 'video', src: '/meetings.mp4', category: 'Behind the Scenes', colSpan: 1, height: 320 },
 ]
+const fallbackLayout = { mobileColumns: 1, tabletColumns: 2, desktopColumns: 3 }
 
 export default function GalleryPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [galleryMedia, setGalleryMedia] = useState(fallbackGalleryMedia)
+  const [layout, setLayout] = useState(fallbackLayout)
+  const [viewportWidth, setViewportWidth] = useState(typeof window === 'undefined' ? 1440 : window.innerWidth)
   const availableFilters = useMemo(() => {
     const categories = Array.from(
       new Set(galleryMedia.map((item) => String(item.category || '').trim()).filter(Boolean))
@@ -28,9 +31,31 @@ export default function GalleryPage() {
   }, [galleryMedia])
   const requestedFilter = searchParams.get('filter')
   const [filter, setFilter] = useState('All')
+  const activeColumns = useMemo(() => {
+    if (viewportWidth < 768) return layout.mobileColumns || 1
+    if (viewportWidth < 1024) return layout.tabletColumns || 2
+    return layout.desktopColumns || 3
+  }, [layout, viewportWidth])
 
   useEffect(() => {
     let mounted = true
+
+    fetch(`${baseUrl}/api/admin/gallery-layout`)
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to load gallery layout')
+        return res.json()
+      })
+      .then((data) => {
+        if (!mounted || !data || typeof data !== 'object') return
+        setLayout({
+          mobileColumns: Number(data.mobileColumns) || fallbackLayout.mobileColumns,
+          tabletColumns: Number(data.tabletColumns) || fallbackLayout.tabletColumns,
+          desktopColumns: Number(data.desktopColumns) || fallbackLayout.desktopColumns,
+        })
+      })
+      .catch(() => {
+        setLayout(fallbackLayout)
+      })
 
     fetch(`${baseUrl}/api/admin/gallery`)
       .then((res) => {
@@ -47,6 +72,8 @@ export default function GalleryPage() {
             type: item.type === 'video' ? 'video' : 'image',
             src: String(item.src || '').trim(),
             category: item.category || 'Events',
+            colSpan: Number(item.colSpan) || 1,
+            height: Number(item.height) || 320,
           }))
           .filter((item) => Boolean(item.src))
 
@@ -63,6 +90,12 @@ export default function GalleryPage() {
     return () => {
       mounted = false
     }
+  }, [])
+
+  useEffect(() => {
+    const onResize = () => setViewportWidth(window.innerWidth)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
   }, [])
 
   useEffect(() => {
@@ -108,20 +141,27 @@ export default function GalleryPage() {
        </section>
 
        <section className="max-w-7xl mx-auto px-6 mt-16 relative z-10">
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+          <div
+            className="grid gap-6"
+            style={{ gridTemplateColumns: `repeat(${activeColumns}, minmax(0, 1fr))` }}
+          >
              {filteredMedia.map((media) => (
                <motion.div 
                  key={media.id}
-                 className="break-inside-avoid shadow-2xl rounded-3xl overflow-hidden bg-slate-900 border border-white/10 relative group cursor-pointer"
+                 className="shadow-2xl rounded-3xl overflow-hidden bg-slate-900 border border-white/10 relative group cursor-pointer"
                  initial={{ opacity: 0, y: 20 }}
                  whileInView={{ opacity: 1, y: 0 }}
                  viewport={{ once: true }}
+                 style={{
+                   gridColumn: `span ${Math.max(1, Math.min(Number(media.colSpan) || 1, activeColumns))} / span ${Math.max(1, Math.min(Number(media.colSpan) || 1, activeColumns))}`,
+                   height: `${Math.max(120, Number(media.height) || 320)}px`,
+                 }}
                >
                  {media.type === 'image' ? (
-                   <img src={media.src} alt={media.category} className="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-700" />
+                   <img src={media.src} alt={media.category} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                  ) : (
-                   <div className="relative">
-                     <video src={media.src} className="w-full h-auto" loop muted playsInline autoPlay />
+                   <div className="relative h-full">
+                     <video src={media.src} className="w-full h-full object-cover" loop muted playsInline autoPlay />
                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
                            <div className="w-0 h-0 border-t-8 border-b-8 border-l-[12px] border-t-transparent border-b-transparent border-l-white ml-1"></div>
