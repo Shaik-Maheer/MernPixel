@@ -1,16 +1,37 @@
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 const galleryMedia = [
-  { id: 1, type: 'image', src: '/services-hero.jpg', category: 'Events' },
-  { id: 2, type: 'video', src: '/four.mp4', category: 'Behind the Scenes' },
-  { id: 3, type: 'image', src: '/generic_service.png', category: 'Office' },
-  { id: 4, type: 'video', src: '/web_development.mp4', category: 'Events' },
-  { id: 5, type: 'video', src: '/meetings.mp4', category: 'Behind the Scenes' },
+  { id: 1, type: 'image', src: '/workshops/event-poster.png', category: 'Events' },
+  { id: 2, type: 'image', src: '/workshops/event-quantum-classroom.png', category: 'Events' },
+  { id: 3, type: 'image', src: '/workshops/event-codestorm-stage.png', category: 'Events' },
+  { id: 4, type: 'video', src: '/four.mp4', category: 'Behind the Scenes' },
+  { id: 5, type: 'image', src: '/generic_service.png', category: 'Office' },
+  { id: 6, type: 'video', src: '/web_development.mp4', category: 'Events' },
+  { id: 7, type: 'video', src: '/meetings.mp4', category: 'Behind the Scenes' },
 ]
 
 export default function GalleryPage() {
-  const [filter, setFilter] = useState('All')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const availableFilters = ['All', 'Image', 'Video', 'Events', 'Office', 'Behind the Scenes']
+  const requestedFilter = searchParams.get('filter')
+  const initialFilter = availableFilters.includes(requestedFilter) ? requestedFilter : 'All'
+  const [filter, setFilter] = useState(initialFilter)
+
+  useEffect(() => {
+    const nextFilter = availableFilters.includes(requestedFilter) ? requestedFilter : 'All'
+    setFilter(nextFilter)
+  }, [requestedFilter])
+
+  const handleFilterChange = (value) => {
+    setFilter(value)
+    if (value === 'All') {
+      setSearchParams({})
+      return
+    }
+    setSearchParams({ filter: value })
+  }
   
   const filteredMedia = filter === 'All' 
     ? galleryMedia 
@@ -27,10 +48,10 @@ export default function GalleryPage() {
                  MERNpixel Gallery
                </h1>
                <div className="flex flex-wrap justify-center gap-4 mt-8">
-                  {['All', 'Image', 'Video', 'Events', 'Office', 'Behind the Scenes'].map(f => (
+                  {availableFilters.map(f => (
                     <button 
                       key={f}
-                      onClick={() => setFilter(f)}
+                      onClick={() => handleFilterChange(f)}
                       className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${filter === f ? 'bg-white text-black' : 'bg-white/5 text-white/60 hover:bg-white/10'}`}
                     >
                       {f}

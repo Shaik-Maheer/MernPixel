@@ -237,6 +237,24 @@ export const lectureEvents = [
   },
 ]
 
+export const lectureGallery = [
+  {
+    src: '/workshops/event-poster.png',
+    title: 'AI Tools Workshop Poster',
+    caption: 'Event banner used for the AI Tools and Placement Guidance session.',
+  },
+  {
+    src: '/workshops/event-quantum-classroom.png',
+    title: 'Classroom Session in Progress',
+    caption: 'Live guest lecture session with students during an events workshop.',
+  },
+  {
+    src: '/workshops/event-codestorm-stage.png',
+    title: 'CodeStorm Workshop Recognition',
+    caption: 'Stage moment from the MITS CodeStorm workshop and hackathon event.',
+  },
+]
+
 export const achievements = [
   {
     label: 'Hackathon Wins',

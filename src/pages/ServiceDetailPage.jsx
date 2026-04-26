@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Navigate, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { servicesDetailed, lectureEvents } from '../data/siteData'
+import { servicesDetailed, lectureEvents, lectureGallery } from '../data/siteData'
 import ServiceIcon from '../components/ServiceIcon'
 
 const themeMap = {
@@ -309,63 +309,59 @@ export default function ServiceDetailPage() {
          </section>
       )}
 
-      {service.id === 'guest-lectures' && lectureEvents.length > 0 && (
+      {service.id === 'guest-lectures' && (
         <section className="pb-8 md:pb-16 relative z-20">
           <div className="max-w-6xl mx-auto px-6">
             <div className="text-center mb-12">
               <span className={`inline-block text-xs font-black uppercase tracking-[0.28em] px-5 py-2 rounded-full border border-white/10 bg-white/5 bg-gradient-to-r ${theme.primary} bg-clip-text text-transparent`}>
-                Featured Workshops
+                Workshop Gallery
               </span>
               <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white mt-6">Guest Lectures in Action</h2>
               <p className="text-slate-300 text-lg mt-4 max-w-3xl mx-auto leading-relaxed">
                 Themed sessions combining AI tools, resume workflows, live coding, and placement-focused preparation.
               </p>
+              <div className="mt-6">
+                <Link
+                  to="/gallery?filter=Events"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-white/10 text-white text-sm font-bold tracking-wide hover:bg-white/20 transition-colors"
+                >
+                  View more
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {lectureEvents.map((event, idx) => (
-                <article key={`${event.date}-${event.topic}-${idx}`} className={`relative overflow-hidden bg-white/5 border border-white/10 rounded-[2rem] p-8 md:p-10 backdrop-blur-md ${theme.shadow}`}>
-                  <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${theme.primary}`}></div>
-                  <div className="flex items-center justify-between gap-4 mb-5">
-                    <p className="text-[11px] font-black tracking-[0.22em] uppercase text-slate-300">Workshop {String(idx + 1).padStart(2, '0')}</p>
-                    <p className="text-sm font-bold text-white">{event.date}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {lectureGallery.map((item, idx) => (
+                <article key={`${item.src}-${idx}`} className={`group relative overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/5 ${theme.shadow}`}>
+                  <img
+                    src={item.src}
+                    alt={item.title}
+                    loading="lazy"
+                    className="w-full h-[260px] md:h-[300px] object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <h3 className="text-lg font-bold text-white leading-tight">{item.title}</h3>
+                    <p className="text-sm text-slate-200 mt-2 leading-relaxed">{item.caption}</p>
                   </div>
-
-                  <h3 className="text-2xl md:text-3xl font-extrabold text-white leading-tight mb-3">{event.topic}</h3>
-                  {event.workshop && <p className="text-fuchsia-300 font-bold text-lg mb-6">{event.workshop}</p>}
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-                    <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-                      <p className="text-[11px] font-black tracking-[0.2em] uppercase text-slate-400 mb-2">Time</p>
-                      <p className="text-white font-semibold">{event.time || 'TBA'}</p>
-                    </div>
-                    <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-                      <p className="text-[11px] font-black tracking-[0.2em] uppercase text-slate-400 mb-2">Venue</p>
-                      <p className="text-white font-semibold">{event.venue}</p>
-                    </div>
-                    <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:col-span-2">
-                      <p className="text-[11px] font-black tracking-[0.2em] uppercase text-slate-400 mb-2">Audience</p>
-                      <p className="text-white font-semibold">{event.audience}</p>
-                    </div>
-                  </div>
-
-                  {event.speakers && event.speakers.length > 0 && (
-                    <div className="mb-6">
-                      <p className="text-[11px] font-black tracking-[0.2em] uppercase text-slate-400 mb-3">Speakers</p>
-                      <div className="flex flex-wrap gap-2">
-                        {event.speakers.map((speaker, speakerIdx) => (
-                          <span key={`${speaker}-${speakerIdx}`} className="px-3 py-1.5 text-sm font-semibold text-white rounded-full border border-white/15 bg-white/5">
-                            {speaker}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  <p className="text-slate-300 leading-relaxed">{event.highlight}</p>
                 </article>
               ))}
             </div>
+
+            {lectureEvents.length > 0 && (
+              <div className="mt-10 rounded-[1.6rem] border border-white/10 bg-white/5 p-6 md:p-8">
+                <p className="text-[11px] font-black tracking-[0.22em] uppercase text-slate-300 mb-4">Session Highlights</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  {lectureEvents.map((event, idx) => (
+                    <div key={`${event.date}-${event.topic}-${idx}`} className="rounded-xl border border-white/10 bg-white/5 p-4">
+                      <p className="text-sm font-bold text-white mb-1">{event.date}</p>
+                      <p className="text-sm text-slate-300 leading-relaxed">{event.topic}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </section>
       )}
