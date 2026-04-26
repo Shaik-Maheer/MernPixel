@@ -41,14 +41,20 @@ export default function GalleryPage() {
       })
       .then((data) => {
         if (!mounted || !Array.isArray(data)) return
-        setGalleryMedia(
-          data.map((item) => ({
+        const parsed = data
+          .map((item) => ({
             id: item._id || item.id,
             type: item.type === 'video' ? 'video' : 'image',
-            src: item.src,
+            src: String(item.src || '').trim(),
             category: item.category || 'Events',
           }))
-        )
+          .filter((item) => Boolean(item.src))
+
+        if (parsed.length > 0) {
+          setGalleryMedia(parsed)
+        } else {
+          setGalleryMedia(fallbackGalleryMedia)
+        }
       })
       .catch(() => {
         // Keep fallback data if API is unavailable.
