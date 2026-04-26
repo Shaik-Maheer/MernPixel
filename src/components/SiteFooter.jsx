@@ -20,51 +20,41 @@ export default function SiteFooter() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="bg-[#F8F9FA] pt-20 pb-10 border-t border-slate-200/60 mt-10">
+    <footer className="bg-[#F8F9FA] pt-14 pb-8 border-t border-slate-200 mt-10">
       <div className="max-w-7xl mx-auto px-6">
-        
-        {/* Top Footer Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-8 md:gap-8 lg:gap-16 mb-20">
-          
-          {/* Brand Column */}
-          <div className="col-span-2 md:col-span-5 lg:col-span-4">
-            <Link to="/" className="flex items-center gap-3 mb-6">
-              <img src="/logo.png" alt="MERNpixel Logo" className="h-24 md:h-36 w-auto object-contain scale-125 origin-left" />
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8">
+          <div className="md:col-span-5">
+            <Link to="/" className="inline-flex items-center mb-4">
+              <img src="/logo.png" alt="MERNpixel Logo" className="h-20 md:h-24 w-auto object-contain" />
             </Link>
-            
-            <p className="text-sm text-slate-600 mb-8 leading-relaxed pr-4">
+
+            <p className="text-[15px] text-slate-600 leading-relaxed max-w-md">
               Not built to impress. Built to perform. We design and engineer products that move metrics.
             </p>
-            
-            <div className="flex items-center gap-4">
+
+            <div className="flex items-center gap-3 mt-6">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:-translate-y-1 transition-transform opacity-90 hover:opacity-100 block drop-shadow-sm"
+                  className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center hover:-translate-y-1 hover:border-slate-300 transition-all"
                   aria-label={social.label}
                   title={social.label}
                 >
-                  <img src={`/pics/${social.label.toLowerCase()}_icon.svg`} className="w-5 h-5 object-contain opacity-70 hover:opacity-100 transition-all" alt={social.label} />
+                  <SocialIcon network={social.icon} className="w-5 h-5" />
                 </a>
               ))}
             </div>
           </div>
 
-          <div className="hidden md:block md:col-span-2 lg:col-span-3"></div>
-
-          {/* Explore Column */}
-          <div className="col-span-1 md:col-span-3 lg:col-span-2">
-            <h4 className="text-sm font-bold text-slate-900 mb-6">Explore</h4>
-            <ul className="flex flex-col border border-slate-200 rounded-xl overflow-hidden bg-white/70">
+          <div className="md:col-span-3">
+            <h4 className="text-sm font-extrabold text-slate-900 uppercase tracking-widest mb-4">Explore</h4>
+            <ul className="space-y-2 border-l-2 border-slate-200 pl-4">
               {quickLinks.map((link) => (
                 <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="block px-4 py-3 text-[14px] font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors border-b last:border-b-0 border-slate-200/80"
-                  >
+                  <Link to={link.path} className="text-[14px] font-semibold text-slate-600 hover:text-[#E15D2B] transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -72,51 +62,37 @@ export default function SiteFooter() {
             </ul>
           </div>
 
-          {/* Reach us Column */}
-          <div className="col-span-1 md:col-span-4 lg:col-span-3">
-            <h4 className="text-[15px] font-extrabold text-slate-900 mb-6 uppercase tracking-widest">Reach Us</h4>
-            <ul className="flex flex-col gap-5">
-              <li>
-                <a href={`mailto:${business.email}`} className="group relative text-[15px] font-bold text-slate-600 hover:text-slate-900 transition-colors flex items-center gap-3 w-fit">
-                  <img src="/pics/email_icon.svg" className="w-5 h-5 group-hover:scale-110 transition-transform" alt="Email" />
-                  <span className="relative">
-                    {business.email}
-                    <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href={`tel:${business.phone.replace(/\s+/g, '')}`} className="group relative text-[15px] font-bold text-slate-600 hover:text-slate-900 transition-colors flex items-center gap-3 w-fit">
-                  <img src="/pics/phone_icon.svg" className="w-5 h-5 group-hover:scale-110 transition-transform" alt="Phone" />
-                  <span className="relative">
-                    {business.phone}
-                    <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
-                  </span>
-                </a>
-              </li>
-            </ul>
+          <div className="md:col-span-4">
+            <h4 className="text-sm font-extrabold text-slate-900 uppercase tracking-widest mb-4">Reach Us</h4>
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 space-y-4">
+              <a href={`mailto:${business.email}`} className="group text-[15px] font-semibold text-slate-600 hover:text-slate-900 transition-colors flex items-center gap-3 w-fit">
+                <img src="/pics/email_icon.svg" className="w-5 h-5 group-hover:scale-110 transition-transform" alt="Email" />
+                <span>{business.email}</span>
+              </a>
+              <a href={`tel:${business.phone.replace(/\s+/g, '')}`} className="group text-[15px] font-semibold text-slate-600 hover:text-slate-900 transition-colors flex items-center gap-3 w-fit">
+                <img src="/pics/phone_icon.svg" className="w-5 h-5 group-hover:scale-110 transition-transform" alt="Phone" />
+                <span>{business.phone}</span>
+              </a>
+              <a href={business.whatsapp} target="_blank" rel="noreferrer" className="group text-[15px] font-semibold text-slate-600 hover:text-slate-900 transition-colors flex items-center gap-3 w-fit">
+                <img src="/pics/whatsapp_icon.svg" className="w-5 h-5 group-hover:scale-110 transition-transform" alt="WhatsApp" />
+                <span>Chat on WhatsApp</span>
+              </a>
+            </div>
           </div>
-          
         </div>
 
-        {/* Bottom Footer Line */}
-        <div className="pt-8 border-t border-slate-200/60 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs font-semibold text-slate-500">
-            © {year} MERNpixel. Crafted with intent.
-          </p>
-          <div className="flex items-center gap-4">
-            <Link to="/admin" className="text-xs font-semibold text-slate-400 hover:text-blue-500 transition-colors">
+        <div className="pt-6 mt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+          <p className="text-xs font-semibold text-slate-500">© {year} MERNpixel. Crafted with intent.</p>
+          <div className="flex items-center flex-wrap gap-4">
+            <Link to="/admin" className="text-xs font-semibold text-slate-400 hover:text-[#E15D2B] transition-colors">
               Admin
             </Link>
-            <Link to="/privacy-policy" className="text-xs font-semibold text-slate-400 hover:text-blue-500 transition-colors">
+            <Link to="/privacy-policy" className="text-xs font-semibold text-slate-400 hover:text-[#E15D2B] transition-colors">
               Privacy Policy
             </Link>
-            <p className="text-xs font-semibold text-slate-400 hidden sm:block">
-              {business.tagline}
-            </p>
+            <p className="text-xs font-semibold text-slate-400">{business.tagline}</p>
           </div>
         </div>
-
       </div>
     </footer>
   )
