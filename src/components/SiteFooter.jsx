@@ -3,11 +3,17 @@ import { SocialIcon } from './SocialIcons'
 import { business, socialLinks } from '../data/siteData'
 
 const quickLinks = [
+  { label: 'Home', path: '/' },
   { label: 'Services', path: '/services' },
   { label: 'Work', path: '/works' },
+  { label: 'Gallery', path: '/gallery' },
+  { label: 'Blog', path: '/blog' },
+  { label: 'Students', path: '/student-projects' },
   { label: 'About', path: '/about' },
   { label: 'Careers', path: '/careers' },
   { label: 'Contact', path: '/contact' },
+  { label: 'Book Session', path: '/book' },
+  { label: 'Privacy Policy', path: '/privacy-policy' },
 ]
 
 export default function SiteFooter() {
@@ -52,12 +58,14 @@ export default function SiteFooter() {
           {/* Explore Column */}
           <div className="col-span-1 md:col-span-3 lg:col-span-2">
             <h4 className="text-sm font-bold text-slate-900 mb-6">Explore</h4>
-            <ul className="flex flex-col gap-4">
+            <ul className="flex flex-col border border-slate-200 rounded-xl overflow-hidden bg-white/70">
               {quickLinks.map((link) => (
                 <li key={link.path}>
-                  <Link to={link.path} className="group relative text-[15px] font-bold text-slate-500 hover:text-slate-900 transition-colors w-fit inline-block">
-                    <span className="relative z-10">{link.label}</span>
-                    <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                  <Link
+                    to={link.path}
+                    className="block px-4 py-3 text-[14px] font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors border-b last:border-b-0 border-slate-200/80"
+                  >
+                    {link.label}
                   </Link>
                 </li>
               ))}

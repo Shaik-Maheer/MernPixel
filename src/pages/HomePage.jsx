@@ -1,47 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { servicesDetailed, caseStudies } from '../data/siteData'
 import CountUpNumber from '../components/CountUpNumber'
 import SEO from '../components/SEO'
 import ServiceModal from '../components/ServiceModal'
-
-const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://mernpixel.onrender.com').replace(/\/+$/, '').replace(/\/api$/, '')
-
-const ClientMarquee = () => {
-  const [clients, setClients] = useState([
-    { _id: '1', name: 'Client1', logoUrl: '/clients/IMG_3824.PNG', website: '' },
-    { _id: '2', name: 'Client2', logoUrl: '/clients/IMG_7487.PNG', website: '' },
-    { _id: '3', name: 'Client3', logoUrl: '/clients/IMG_7516.PNG', website: '' }
-  ])
-
-  useEffect(() => {
-    fetch(`${baseUrl}/api/admin/clients`)
-      .then(r => r.json())
-      .then(data => { if(data.length > 0) setClients(data) })
-      .catch(console.error)
-  }, [])
-
-  return (
-    <div className="max-w-7xl mx-auto px-6 w-full text-center">
-      <p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">Trusted by growing brands.</p>
-      <div className="flex flex-wrap justify-center items-center gap-10 md:gap-20">
-         {clients.map(client => (
-            <a
-              key={client._id}
-              href={client.website || undefined}
-              target={client.website ? '_blank' : undefined}
-              rel={client.website ? 'noreferrer' : undefined}
-              className={client.website ? 'transition-transform hover:-translate-y-1' : ''}
-              aria-label={client.name}
-            >
-              <img src={client.logoUrl} alt={client.name} className="h-10 md:h-12 object-contain" />
-            </a>
-         ))}
-      </div>
-    </div>
-  )
-}
+import ClientLogoMarquee from '../components/ClientLogoMarquee'
 
 const reveal = {
   hidden: { opacity: 0, y: 20 },
@@ -122,7 +86,9 @@ export default function HomePage() {
 
       {/* Clients Section */}
       <section className="relative z-10 py-12 bg-[#F8F9FA] border-y border-slate-200/50 flex flex-col items-center">
-        <ClientMarquee />
+        <div className="max-w-7xl mx-auto px-6 w-full">
+          <ClientLogoMarquee section="home" title="Clients" tagline="Trusted by growing brands." />
+        </div>
       </section>
 
       {/* Services Section */}

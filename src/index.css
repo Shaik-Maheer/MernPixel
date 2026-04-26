@@ -1412,6 +1412,75 @@ p {
   color: var(--c-highlight);
 }
 
+.mp-client-marquee {
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.mp-client-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: max-content;
+  animation: mpClientMarquee 28s linear infinite;
+  padding: 6px 0;
+}
+
+.mp-client-marquee:hover .mp-client-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes mpClientMarquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.mp-feedback-slider {
+  width: 100%;
+  overflow: hidden;
+  padding: 4px 0;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.mp-feedback-track {
+  display: flex;
+  width: max-content;
+  gap: 16px;
+  padding: 18px 0;
+  animation: mpFeedbackSlide 34s linear infinite;
+}
+
+.mp-feedback-slider:hover .mp-feedback-track {
+  animation-play-state: paused;
+}
+
+.mp-feedback-card {
+  min-width: min(360px, 88vw);
+  border-radius: 16px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  padding: 18px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+@keyframes mpFeedbackSlide {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 @media (max-width: 1080px) {
   .mp-grid-services {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1508,7 +1577,9 @@ p {
 @media (prefers-reduced-motion: reduce) {
   .mp-comments-track,
   .mp-bg-blobs span,
-  .mp-loader-bubbles span {
+  .mp-loader-bubbles span,
+  .mp-client-marquee-track,
+  .mp-feedback-track {
     animation: none !important;
   }
 

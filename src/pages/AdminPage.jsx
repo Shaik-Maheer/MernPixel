@@ -285,59 +285,250 @@ function FormsPanel({ token }) {
 
 function ClientsPanel({ token }) {
   const [clients, setClients] = useState([])
-  const [form, setForm] = useState({ name: '', logoUrl: '', website: '', active: true })
+  const [filterSection, setFilterSection] = useState('all')
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState('')
+  const [editingId, setEditingId] = useState('')
+  const [form, setForm] = useState({
+    name: '',
+    logoUrl: '',
+    website: '',
+    section: 'home',
+    sourceMode: 'upload',
+  })
+  const [editForm, setEditForm] = useState({
+    name: '',
+    logoUrl: '',
+    website: '',
+    section: 'home',
+    sourceMode: 'upload',
+  })
+
+  const sections = [
+    { value: 'home', label: 'Home Page' },
+    { value: 'services', label: 'Services Page' },
+  ]
+
+  const normalizeSection = (value) => (value === 'services' ? 'services' : 'home')
+
+  const toDataUrl = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(String(reader.result || ''))
+      reader.onerror = () => reject(new Error('Failed to read logo file.'))
+      reader.readAsDataURL(file)
+    })
 
   const fetchClients = async () => {
     const data = await adminFetch(token, '/api/admin/clients')
-    setClients(data)
+    setClients(Array.isArray(data) ? data : [])
   }
 
   useEffect(() => {
     fetchClients().catch(console.error)
   }, [token])
 
+  const visibleClients = clients.filter((client) => {
+    if (filterSection === 'all') return true
+    return normalizeSection(client.section) === filterSection
+  })
+
   const handleAdd = async (e) => {
     e.preventDefault()
-    await adminFetch(token, '/api/admin/clients', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...form, position: clients.length }),
-    })
-    setForm({ name: '', logoUrl: '', website: '', active: true })
-    fetchClients()
+    setSaving(true)
+    setError('')
+    const nextPosition =
+      visibleClients.reduce((max, client) => Math.max(max, Number(client.position) || 0), -1) + 1
+
+    try {
+      await adminFetch(token, '/api/admin/clients', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          logoUrl: form.logoUrl,
+          website: form.website.trim(),
+          section: normalizeSection(form.section),
+          active: true,
+          position: nextPosition,
+        }),
+      })
+      setForm({
+        name: '',
+        logoUrl: '',
+        website: '',
+        section: form.section,
+        sourceMode: form.sourceMode,
+      })
+      await fetchClients()
+    } catch (saveError) {
+      setError(saveError.message || 'Failed to add client logo.')
+    } finally {
+      setSaving(false)
+    }
   }
 
-  const toggleActive = async (client) => {
-    await adminFetch(token, `/api/admin/clients/${client._id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ active: !client.active }),
-    })
-    fetchClients()
+  const reorderClients = async (ids) => {
+    if (!ids.length) return
+    setSaving(true)
+    setError('')
+    try {
+      const data = await adminFetch(token, '/api/admin/clients/reorder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids }),
+      })
+      setClients(Array.isArray(data) ? data : clients)
+    } catch (reorderError) {
+      setError(reorderError.message || 'Failed to reorder clients.')
+      await fetchClients()
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const moveClient = async (index, direction) => {
+    const targetIndex = index + direction
+    if (targetIndex < 0 || targetIndex >= visibleClients.length) return
+
+    const ids = visibleClients.map((client) => client._id)
+    const swapped = [...ids]
+    const temp = swapped[index]
+    swapped[index] = swapped[targetIndex]
+    swapped[targetIndex] = temp
+
+    await reorderClients(swapped)
   }
 
   const handleDelete = async (id) => {
-    await adminFetch(token, `/api/admin/clients/${id}`, { method: 'DELETE' })
-    fetchClients()
+    setSaving(true)
+    setError('')
+    try {
+      await adminFetch(token, `/api/admin/clients/${id}`, { method: 'DELETE' })
+      await fetchClients()
+    } catch (deleteError) {
+      setError(deleteError.message || 'Failed to delete client.')
+    } finally {
+      setSaving(false)
+    }
   }
+
+  const startReplace = (client) => {
+    setEditingId(client._id)
+    setEditForm({
+      name: client.name || '',
+      logoUrl: client.logoUrl || '',
+      website: client.website || '',
+      section: normalizeSection(client.section),
+      sourceMode: 'upload',
+    })
+  }
+
+  const saveReplace = async (id) => {
+    setSaving(true)
+    setError('')
+    try {
+      await adminFetch(token, `/api/admin/clients/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: editForm.name.trim() || 'Client',
+          logoUrl: editForm.logoUrl,
+          website: editForm.website.trim(),
+          section: normalizeSection(editForm.section),
+        }),
+      })
+      setEditingId('')
+      await fetchClients()
+    } catch (updateError) {
+      setError(updateError.message || 'Failed to update client.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleMobileAction = (action, client, index) => {
+    if (!action) return
+    if (action === 'up') moveClient(index, -1).catch(console.error)
+    if (action === 'down') moveClient(index, 1).catch(console.error)
+    if (action === 'replace') startReplace(client)
+    if (action === 'delete') handleDelete(client._id).catch(console.error)
+  }
+
+  const handleSourceUpload = async (file, mode = 'create') => {
+    if (!file) return
+    try {
+      const logoUrl = await toDataUrl(file)
+      if (mode === 'edit') {
+        setEditForm((prev) => ({
+          ...prev,
+          logoUrl,
+          name: prev.name || file.name.replace(/\.[^/.]+$/, ''),
+        }))
+        return
+      }
+      setForm((prev) => ({
+        ...prev,
+        logoUrl,
+        name: prev.name || file.name.replace(/\.[^/.]+$/, ''),
+      }))
+    } catch (uploadError) {
+      setError(uploadError.message || 'Failed to read logo file.')
+    }
+  }
+
+  const getSectionLabel = (value) =>
+    sections.find((item) => item.value === normalizeSection(value))?.label || 'Home Page'
 
   return (
     <div>
-      <h2 className="text-3xl font-black text-slate-900 mb-8">Manage Clients</h2>
-      <form onSubmit={handleAdd} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-10 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <h2 className="text-3xl font-black text-slate-900 mb-3">Manage Clients</h2>
+      <p className="text-slate-600 mb-8 text-sm">Upload logos, assign page section, reorder with move up/down, replace, or delete.</p>
+
+      <form onSubmit={handleAdd} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <select
+          value={form.section}
+          onChange={(e) => setForm({ ...form, section: e.target.value })}
+          className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+        >
+          {sections.map((section) => (
+            <option key={section.value} value={section.value}>
+              {section.label}
+            </option>
+          ))}
+        </select>
+        <select
+          value={form.sourceMode}
+          onChange={(e) => setForm({ ...form, sourceMode: e.target.value })}
+          className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+        >
+          <option value="upload">Upload from device</option>
+          <option value="url">Use logo URL</option>
+        </select>
+
+        {form.sourceMode === 'upload' ? (
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => handleSourceUpload(e.target.files?.[0])}
+            className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 md:col-span-2"
+            required={!form.logoUrl}
+          />
+        ) : (
+          <input
+            value={form.logoUrl}
+            onChange={(e) => setForm({ ...form, logoUrl: e.target.value })}
+            placeholder="Logo URL"
+            className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 md:col-span-2"
+            required
+          />
+        )}
+
         <input
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
-          placeholder="Client Name"
+          placeholder="Client name (optional)"
           className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
-          required
-        />
-        <input
-          value={form.logoUrl}
-          onChange={(e) => setForm({ ...form, logoUrl: e.target.value })}
-          placeholder="Logo URL"
-          className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
-          required
         />
         <input
           value={form.website}
@@ -345,36 +536,159 @@ function ClientsPanel({ token }) {
           placeholder="Website URL (optional)"
           className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
         />
-        <label className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-slate-700">
-          <input type="checkbox" checked={form.active} onChange={(e) => setForm({ ...form, active: e.target.checked })} />
-          Active
-        </label>
-        <button type="submit" className="md:col-span-2 bg-slate-900 hover:bg-[#dc4005] text-white font-bold py-3 px-6 rounded-xl transition-colors">
-          Add Client
+
+        <button
+          type="submit"
+          disabled={saving || !form.logoUrl}
+          className="md:col-span-2 bg-slate-900 hover:bg-[#dc4005] text-white font-bold py-3 px-6 rounded-xl transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          {saving ? 'Saving...' : 'Add Client Logo'}
         </button>
       </form>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {clients.map((client) => (
-          <div key={client._id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center">
-            <img src={client.logoUrl} alt={client.name} className="h-16 object-contain mb-4" />
-            <h3 className="font-bold text-slate-900 text-center">{client.name}</h3>
-            {client.website && (
-              <a href={client.website} target="_blank" rel="noreferrer" className="text-xs text-blue-600 font-bold mt-2 break-all text-center">
-                {client.website}
-              </a>
-            )}
-            <p className={`mt-3 text-[11px] font-bold uppercase tracking-widest ${client.active ? 'text-emerald-600' : 'text-slate-400'}`}>
-              {client.active ? 'Active' : 'Inactive'}
-            </p>
-            <div className="mt-4 flex gap-2 w-full">
-              <button onClick={() => toggleActive(client)} className="flex-1 text-xs font-bold text-blue-700 bg-blue-50 px-4 py-2 rounded-full">
-                Toggle
-              </button>
-              <button onClick={() => handleDelete(client._id)} className="flex-1 text-xs font-bold text-rose-700 bg-rose-50 px-4 py-2 rounded-full">
-                Delete
-              </button>
+      <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 mb-6">
+        <label className="text-xs font-black uppercase tracking-wider text-slate-500 mb-2 block">Manage Section</label>
+        <select
+          value={filterSection}
+          onChange={(e) => setFilterSection(e.target.value)}
+          className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 w-full md:w-72"
+        >
+          <option value="all">All Sections</option>
+          {sections.map((section) => (
+            <option key={section.value} value={section.value}>
+              {section.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {error && <p className="text-sm text-rose-600 font-bold mb-4">{error}</p>}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {visibleClients.map((client, index) => (
+          <div key={client._id} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+            <div className="w-full h-24 rounded-xl bg-slate-50 border border-slate-100 mb-4 flex items-center justify-center p-3">
+              <img src={client.logoUrl} alt={client.name || 'Client logo'} className="max-h-full object-contain" />
             </div>
+
+            <h3 className="font-black text-slate-900 text-sm break-all">{client.name || 'Client'}</h3>
+            <p className="text-[11px] uppercase tracking-widest text-slate-500 mt-2">{getSectionLabel(client.section)}</p>
+            {client.website ? <p className="text-xs text-blue-700 mt-2 break-all">{client.website}</p> : null}
+
+            {editingId === client._id ? (
+              <div className="mt-4 space-y-3">
+                <select
+                  value={editForm.section}
+                  onChange={(e) => setEditForm({ ...editForm, section: e.target.value })}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm"
+                >
+                  {sections.map((section) => (
+                    <option key={section.value} value={section.value}>
+                      {section.label}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  value={editForm.sourceMode}
+                  onChange={(e) => setEditForm({ ...editForm, sourceMode: e.target.value })}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm"
+                >
+                  <option value="upload">Upload replacement logo</option>
+                  <option value="url">Replace with URL</option>
+                </select>
+                {editForm.sourceMode === 'upload' ? (
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleSourceUpload(e.target.files?.[0], 'edit')}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm"
+                  />
+                ) : (
+                  <input
+                    value={editForm.logoUrl}
+                    onChange={(e) => setEditForm({ ...editForm, logoUrl: e.target.value })}
+                    placeholder="Logo URL"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm"
+                    required
+                  />
+                )}
+                <input
+                  value={editForm.name}
+                  onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                  placeholder="Client name"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm"
+                />
+                <input
+                  value={editForm.website}
+                  onChange={(e) => setEditForm({ ...editForm, website: e.target.value })}
+                  placeholder="Website URL"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm"
+                />
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => saveReplace(client._id)}
+                    className="text-xs font-bold bg-emerald-50 text-emerald-700 px-3 py-2 rounded-full"
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setEditingId('')}
+                    className="text-xs font-bold bg-slate-100 text-slate-700 px-3 py-2 rounded-full"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="mt-4">
+                <div className="hidden sm:grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => moveClient(index, -1)}
+                    className="text-xs font-bold bg-slate-100 text-slate-700 px-3 py-2 rounded-full"
+                  >
+                    Move Up
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => moveClient(index, 1)}
+                    className="text-xs font-bold bg-slate-100 text-slate-700 px-3 py-2 rounded-full"
+                  >
+                    Move Down
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => startReplace(client)}
+                    className="text-xs font-bold bg-blue-50 text-blue-700 px-3 py-2 rounded-full"
+                  >
+                    Replace
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(client._id)}
+                    className="text-xs font-bold bg-rose-50 text-rose-700 px-3 py-2 rounded-full"
+                  >
+                    Delete
+                  </button>
+                </div>
+                <select
+                  value=""
+                  onChange={(e) => {
+                    handleMobileAction(e.target.value, client, index)
+                    e.target.value = ''
+                  }}
+                  className="sm:hidden w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm"
+                >
+                  <option value="">Actions...</option>
+                  <option value="up">Move Up</option>
+                  <option value="down">Move Down</option>
+                  <option value="replace">Replace</option>
+                  <option value="delete">Delete</option>
+                </select>
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -384,57 +698,239 @@ function ClientsPanel({ token }) {
 
 function BlogsPanel({ token }) {
   const [blogs, setBlogs] = useState([])
-  const [form, setForm] = useState({ title: '', videoUrl: '', description: '', tags: '', status: 'draft' })
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState('')
+  const [form, setForm] = useState({
+    title: '',
+    videoUrl: '',
+    description: '',
+    tags: '',
+    status: 'published',
+    sourceMode: 'upload',
+    isFeatured: false,
+    isLatest: true,
+  })
+
+  const toDataUrl = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(String(reader.result || ''))
+      reader.onerror = () => reject(new Error('Failed to read video file.'))
+      reader.readAsDataURL(file)
+    })
+
+  const isDirectVideo = (url = '') =>
+    /^data:video\//i.test(url) || /\.(mp4|webm|ogg|mov|m4v)(\?|#|$)/i.test(url)
 
   const fetchBlogs = async () => {
     const data = await adminFetch(token, '/api/admin/blogs')
-    setBlogs(data)
+    setBlogs(Array.isArray(data) ? data : [])
   }
 
   useEffect(() => {
     fetchBlogs().catch(console.error)
   }, [token])
 
+  const handleVideoUpload = async (file) => {
+    if (!file) return
+    try {
+      const videoUrl = await toDataUrl(file)
+      setForm((prev) => ({
+        ...prev,
+        videoUrl,
+        title: prev.title || file.name.replace(/\.[^/.]+$/, ''),
+      }))
+    } catch (uploadError) {
+      setError(uploadError.message || 'Failed to load video file.')
+    }
+  }
+
   const handleAdd = async (e) => {
     e.preventDefault()
-    await adminFetch(token, '/api/admin/blogs', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
-    })
-    setForm({ title: '', videoUrl: '', description: '', tags: '', status: 'draft' })
-    fetchBlogs()
+    setSaving(true)
+    setError('')
+    try {
+      const featuredCount = blogs.filter((item) => item.isFeatured).length
+      if (form.isFeatured && featuredCount >= 4) {
+        throw new Error('Only 4 featured videos are allowed. Unfeature one first.')
+      }
+
+      await adminFetch(token, '/api/admin/blogs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: form.title.trim(),
+          videoUrl: form.videoUrl,
+          description: form.description.trim(),
+          tags: form.tags,
+          status: form.status,
+          isFeatured: Boolean(form.isFeatured),
+          isLatest: Boolean(form.isLatest),
+          position: blogs.length,
+        }),
+      })
+      setForm({
+        title: '',
+        videoUrl: '',
+        description: '',
+        tags: '',
+        status: form.status,
+        sourceMode: form.sourceMode,
+        isFeatured: false,
+        isLatest: true,
+      })
+      await fetchBlogs()
+    } catch (saveError) {
+      setError(saveError.message || 'Failed to save blog video.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   const toggleStatus = async (blog) => {
-    await adminFetch(token, `/api/admin/blogs/${blog._id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: blog.status === 'published' ? 'draft' : 'published' }),
-    })
-    fetchBlogs()
+    setSaving(true)
+    setError('')
+    try {
+      await adminFetch(token, `/api/admin/blogs/${blog._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: blog.status === 'published' ? 'draft' : 'published' }),
+      })
+      await fetchBlogs()
+    } catch (statusError) {
+      setError(statusError.message || 'Failed to update publish status.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const toggleFeatured = async (blog) => {
+    setSaving(true)
+    setError('')
+    try {
+      const featuredCount = blogs.filter((item) => item.isFeatured).length
+      if (!blog.isFeatured && featuredCount >= 4) {
+        throw new Error('Only 4 featured videos are allowed.')
+      }
+      await adminFetch(token, `/api/admin/blogs/${blog._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isFeatured: !blog.isFeatured }),
+      })
+      await fetchBlogs()
+    } catch (featureError) {
+      setError(featureError.message || 'Failed to update featured status.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const toggleLatest = async (blog) => {
+    setSaving(true)
+    setError('')
+    try {
+      const currentLatest = blog.isLatest !== false
+      await adminFetch(token, `/api/admin/blogs/${blog._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isLatest: !currentLatest }),
+      })
+      await fetchBlogs()
+    } catch (latestError) {
+      setError(latestError.message || 'Failed to update latest status.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const reorderBlogs = async (ids) => {
+    if (!ids.length) return
+    setSaving(true)
+    setError('')
+    try {
+      const data = await adminFetch(token, '/api/admin/blogs/reorder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids }),
+      })
+      setBlogs(Array.isArray(data) ? data : blogs)
+    } catch (reorderError) {
+      setError(reorderError.message || 'Failed to reorder videos.')
+      await fetchBlogs()
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const moveBlog = async (index, direction) => {
+    const targetIndex = index + direction
+    if (targetIndex < 0 || targetIndex >= blogs.length) return
+    const ids = blogs.map((blog) => blog._id)
+    const swapped = [...ids]
+    const temp = swapped[index]
+    swapped[index] = swapped[targetIndex]
+    swapped[targetIndex] = temp
+    await reorderBlogs(swapped)
   }
 
   const handleDelete = async (id) => {
-    await adminFetch(token, `/api/admin/blogs/${id}`, { method: 'DELETE' })
-    fetchBlogs()
+    setSaving(true)
+    setError('')
+    try {
+      await adminFetch(token, `/api/admin/blogs/${id}`, { method: 'DELETE' })
+      await fetchBlogs()
+    } catch (deleteError) {
+      setError(deleteError.message || 'Failed to delete blog video.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
     <div>
-      <h2 className="text-3xl font-black text-slate-900 mb-8">Manage Blogs</h2>
-      <form onSubmit={handleAdd} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-10 flex flex-col gap-4">
+      <h2 className="text-3xl font-black text-slate-900 mb-3">Manage Blogs</h2>
+      <p className="text-sm text-slate-600 mb-8">Upload videos and control Featured (max 4), Latest, publish state, and order.</p>
+
+      <form onSubmit={handleAdd} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-10 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <select
+          value={form.sourceMode}
+          onChange={(e) => setForm({ ...form, sourceMode: e.target.value, videoUrl: '' })}
+          className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+        >
+          <option value="upload">Upload from device</option>
+          <option value="url">Source URL</option>
+        </select>
+        <select
+          value={form.status}
+          onChange={(e) => setForm({ ...form, status: e.target.value })}
+          className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+        >
+          <option value="published">Published</option>
+          <option value="draft">Draft</option>
+        </select>
+
+        {form.sourceMode === 'upload' ? (
+          <input
+            type="file"
+            accept="video/*"
+            onChange={(e) => handleVideoUpload(e.target.files?.[0])}
+            className="md:col-span-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+            required={!form.videoUrl}
+          />
+        ) : (
+          <input
+            value={form.videoUrl}
+            onChange={(e) => setForm({ ...form, videoUrl: e.target.value })}
+            placeholder="Video URL (mp4 or YouTube)"
+            className="md:col-span-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+            required
+          />
+        )}
+
         <input
           value={form.title}
           onChange={(e) => setForm({ ...form, title: e.target.value })}
           placeholder="Title"
-          className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
-          required
-        />
-        <input
-          value={form.videoUrl}
-          onChange={(e) => setForm({ ...form, videoUrl: e.target.value })}
-          placeholder="Video URL"
           className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
           required
         />
@@ -452,30 +948,81 @@ function BlogsPanel({ token }) {
           placeholder="Tags (comma separated)"
           className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
         />
-        <select value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })} className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
-          <option value="draft">Draft</option>
-          <option value="published">Published</option>
-        </select>
-        <button type="submit" className="bg-slate-900 hover:bg-[#dc4005] text-white font-bold py-3 px-6 rounded-xl transition-colors">
-          Save Blog
+        <label className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700">
+          <input
+            type="checkbox"
+            checked={form.isFeatured}
+            onChange={(e) => setForm({ ...form, isFeatured: e.target.checked })}
+          />
+          Featured Video
+        </label>
+        <label className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700">
+          <input
+            type="checkbox"
+            checked={form.isLatest}
+            onChange={(e) => setForm({ ...form, isLatest: e.target.checked })}
+          />
+          Show in Latest
+        </label>
+        <button
+          type="submit"
+          disabled={saving || !form.videoUrl}
+          className="md:col-span-2 bg-slate-900 hover:bg-[#dc4005] text-white font-bold py-3 px-6 rounded-xl transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          {saving ? 'Saving...' : 'Save Blog Video'}
         </button>
       </form>
 
+      {error && <p className="text-sm text-rose-600 font-bold mb-4">{error}</p>}
+      <p className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">
+        Featured selected: {blogs.filter((item) => item.isFeatured).length}/4
+      </p>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {blogs.map((blog) => (
+        {blogs.map((blog, index) => (
           <div key={blog._id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+            <div className="w-full h-44 bg-slate-100 rounded-xl overflow-hidden mb-4">
+              {isDirectVideo(blog.videoUrl) ? (
+                <video src={blog.videoUrl} controls className="w-full h-full object-cover" />
+              ) : (
+                <iframe
+                  src={String(blog.videoUrl || '').replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/')}
+                  title={blog.title}
+                  className="w-full h-full"
+                  allowFullScreen
+                />
+              )}
+            </div>
             <h3 className="font-bold text-slate-900 text-lg mb-2">{blog.title}</h3>
             <p className="text-sm text-slate-600 mb-4">{blog.description}</p>
-            <div className="flex gap-2 mb-4">
+            <div className="flex flex-wrap gap-2 mb-4">
               <span className={`text-[11px] font-bold uppercase px-3 py-1 rounded-full ${blog.status === 'published' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
                 {blog.status || 'draft'}
               </span>
+              <span className={`text-[11px] font-bold uppercase px-3 py-1 rounded-full ${blog.isFeatured ? 'bg-orange-100 text-orange-700' : 'bg-slate-100 text-slate-600'}`}>
+                {blog.isFeatured ? 'Featured' : 'Not Featured'}
+              </span>
+              <span className={`text-[11px] font-bold uppercase px-3 py-1 rounded-full ${blog.isLatest !== false ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-600'}`}>
+                {blog.isLatest !== false ? 'Latest' : 'Not Latest'}
+              </span>
             </div>
-            <div className="flex gap-2">
-              <button onClick={() => toggleStatus(blog)} className="flex-1 text-xs font-bold text-blue-700 bg-blue-50 px-4 py-2 rounded-full">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              <button onClick={() => moveBlog(index, -1)} className="text-xs font-bold text-slate-700 bg-slate-100 px-4 py-2 rounded-full">
+                Move Up
+              </button>
+              <button onClick={() => moveBlog(index, 1)} className="text-xs font-bold text-slate-700 bg-slate-100 px-4 py-2 rounded-full">
+                Move Down
+              </button>
+              <button onClick={() => toggleStatus(blog)} className="text-xs font-bold text-blue-700 bg-blue-50 px-4 py-2 rounded-full">
                 Toggle Publish
               </button>
-              <button onClick={() => handleDelete(blog._id)} className="flex-1 text-xs font-bold text-rose-700 bg-rose-50 px-4 py-2 rounded-full">
+              <button onClick={() => toggleFeatured(blog)} className="text-xs font-bold text-orange-700 bg-orange-50 px-4 py-2 rounded-full">
+                {blog.isFeatured ? 'Unfeature' : 'Feature'}
+              </button>
+              <button onClick={() => toggleLatest(blog)} className="text-xs font-bold text-indigo-700 bg-indigo-50 px-4 py-2 rounded-full">
+                {blog.isLatest !== false ? 'Remove Latest' : 'Mark Latest'}
+              </button>
+              <button onClick={() => handleDelete(blog._id)} className="text-xs font-bold text-rose-700 bg-rose-50 px-4 py-2 rounded-full">
                 Delete
               </button>
             </div>
@@ -490,9 +1037,10 @@ const emptyGalleryForm = {
   type: 'image',
   src: '',
   category: 'Events',
+  sourceMode: 'url',
+  sizeMode: 'default',
   colSpan: 1,
   height: 320,
-  active: true,
 }
 
 const defaultGallerySeed = [
@@ -510,6 +1058,10 @@ const galleryImportMarkerKey = 'mp_gallery_seed_imported_v1'
 const galleryCategories = ['Events', 'Behind the Scenes', 'Office']
 const galleryViewFilters = ['All', 'Image', 'Video', ...galleryCategories]
 const defaultGalleryLayout = { mobileColumns: 1, tabletColumns: 2, desktopColumns: 3 }
+const defaultGalleryItemSize = {
+  image: { colSpan: 1, height: 320 },
+  video: { colSpan: 1, height: 320 },
+}
 
 function GalleryPanel({ token }) {
   const [items, setItems] = useState([])
@@ -521,6 +1073,23 @@ function GalleryPanel({ token }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
+
+  const getDefaultSizeForType = (type) => defaultGalleryItemSize[type] || defaultGalleryItemSize.image
+
+  const toDataUrl = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(String(reader.result || ''))
+      reader.onerror = () => reject(new Error('Failed to read file'))
+      reader.readAsDataURL(file)
+    })
+
+  const detectTypeFromFile = (file, fallbackType) => {
+    const mime = String(file?.type || '')
+    if (mime.startsWith('video/')) return 'video'
+    if (mime.startsWith('image/')) return 'image'
+    return fallbackType
+  }
 
   const importDefaultGallery = async () => {
     const existing = await adminFetch(token, '/api/admin/gallery')
@@ -586,10 +1155,19 @@ function GalleryPanel({ token }) {
     setSaving(true)
     setError('')
     try {
+      const defaults = getDefaultSizeForType(form.type)
+      const payload = {
+        type: form.type,
+        src: form.src,
+        category: form.category,
+        active: true,
+        colSpan: form.sizeMode === 'custom' ? form.colSpan : defaults.colSpan,
+        height: form.sizeMode === 'custom' ? form.height : defaults.height,
+      }
       await adminFetch(token, '/api/admin/gallery', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       })
       setForm(emptyGalleryForm)
       await fetchGallery()
@@ -636,9 +1214,10 @@ function GalleryPanel({ token }) {
       type: item.type || 'image',
       src: item.src || '',
       category: item.category || 'Events',
+      sourceMode: 'url',
+      sizeMode: 'custom',
       colSpan: Number(item.colSpan) || 1,
       height: Number(item.height) || 320,
-      active: Boolean(item.active),
     })
   }
 
@@ -646,10 +1225,18 @@ function GalleryPanel({ token }) {
     setSaving(true)
     setError('')
     try {
+      const defaults = getDefaultSizeForType(editForm.type)
+      const payload = {
+        type: editForm.type,
+        src: editForm.src,
+        category: editForm.category,
+        colSpan: editForm.sizeMode === 'custom' ? editForm.colSpan : defaults.colSpan,
+        height: editForm.sizeMode === 'custom' ? editForm.height : defaults.height,
+      }
       await adminFetch(token, `/api/admin/gallery/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(editForm),
+        body: JSON.stringify(payload),
       })
       setEditingId('')
       setEditForm(emptyGalleryForm)
@@ -731,6 +1318,60 @@ function GalleryPanel({ token }) {
     }
   }
 
+  const handleFormTypeChange = (type) => {
+    const defaults = getDefaultSizeForType(type)
+    setForm((prev) => ({
+      ...prev,
+      type,
+      ...(prev.sizeMode === 'default' ? defaults : {}),
+    }))
+  }
+
+  const handleEditTypeChange = (type) => {
+    const defaults = getDefaultSizeForType(type)
+    setEditForm((prev) => ({
+      ...prev,
+      type,
+      ...(prev.sizeMode === 'default' ? defaults : {}),
+    }))
+  }
+
+  const handleFormFileUpload = async (event) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+    try {
+      const fileType = detectTypeFromFile(file, form.type)
+      const defaults = getDefaultSizeForType(fileType)
+      const dataUrl = await toDataUrl(file)
+      setForm((prev) => ({
+        ...prev,
+        type: fileType,
+        src: dataUrl,
+        ...(prev.sizeMode === 'default' ? defaults : {}),
+      }))
+    } catch (uploadError) {
+      setError(uploadError.message || 'Failed to process uploaded file.')
+    }
+  }
+
+  const handleEditFileUpload = async (event) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+    try {
+      const fileType = detectTypeFromFile(file, editForm.type)
+      const defaults = getDefaultSizeForType(fileType)
+      const dataUrl = await toDataUrl(file)
+      setEditForm((prev) => ({
+        ...prev,
+        type: fileType,
+        src: dataUrl,
+        ...(prev.sizeMode === 'default' ? defaults : {}),
+      }))
+    } catch (uploadError) {
+      setError(uploadError.message || 'Failed to process uploaded file.')
+    }
+  }
+
   const visibleItems = items
     .map((item, index) => ({ item, index }))
     .filter(({ item }) => {
@@ -803,7 +1444,7 @@ function GalleryPanel({ token }) {
       <form onSubmit={handleAdd} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
         <select
           value={form.type}
-          onChange={(e) => setForm({ ...form, type: e.target.value })}
+          onChange={(e) => handleFormTypeChange(e.target.value)}
           className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
         >
           <option value="image">Image</option>
@@ -820,43 +1461,84 @@ function GalleryPanel({ token }) {
             </option>
           ))}
         </select>
-        <input
-          value={form.src}
-          onChange={(e) => setForm({ ...form, src: e.target.value })}
-          placeholder="Media URL or /public path"
-          className="md:col-span-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
-          required
-        />
-        <label className="text-sm font-bold text-slate-700">
-          Width (Column Span)
-          <select
-            value={form.colSpan}
-            onChange={(e) => setForm({ ...form, colSpan: Number(e.target.value) })}
-            className="mt-2 w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
-          >
-            <option value={1}>1</option>
-            <option value={2}>2</option>
-            <option value={3}>3</option>
-            <option value={4}>4</option>
-            <option value={5}>5</option>
-            <option value={6}>6</option>
-          </select>
-        </label>
-        <label className="text-sm font-bold text-slate-700">
-          Height (px)
+        <select
+          value={form.sourceMode}
+          onChange={(e) => setForm({ ...form, sourceMode: e.target.value, src: '' })}
+          className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+        >
+          <option value="url">Source URL</option>
+          <option value="device">Upload from Device</option>
+        </select>
+        <select
+          value={form.sizeMode}
+          onChange={(e) => {
+            const nextMode = e.target.value
+            const defaults = getDefaultSizeForType(form.type)
+            setForm({
+              ...form,
+              sizeMode: nextMode,
+              ...(nextMode === 'default' ? defaults : {}),
+            })
+          }}
+          className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+        >
+          <option value="default">Default Size</option>
+          <option value="custom">Edit Size</option>
+        </select>
+        {form.sourceMode === 'url' ? (
           <input
-            type="number"
-            min={120}
-            max={1600}
-            value={form.height}
-            onChange={(e) => setForm({ ...form, height: Number(e.target.value) || 320 })}
-            className="mt-2 w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+            value={form.src}
+            onChange={(e) => setForm({ ...form, src: e.target.value })}
+            placeholder="Media URL or /public path"
+            className="md:col-span-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+            required
           />
-        </label>
-        <label className="md:col-span-2 flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-slate-700">
-          <input type="checkbox" checked={form.active} onChange={(e) => setForm({ ...form, active: e.target.checked })} />
-          Visible on website
-        </label>
+        ) : (
+          <label className="md:col-span-2 text-sm font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
+            Upload from device
+            <input
+              type="file"
+              accept="image/*,video/*"
+              onChange={handleFormFileUpload}
+              className="mt-2 block w-full text-sm font-medium text-slate-700"
+              required
+            />
+          </label>
+        )}
+        {form.sizeMode === 'custom' ? (
+          <>
+            <label className="text-sm font-bold text-slate-700">
+              Width (Column Span)
+              <select
+                value={form.colSpan}
+                onChange={(e) => setForm({ ...form, colSpan: Number(e.target.value) })}
+                className="mt-2 w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+              >
+                <option value={1}>1</option>
+                <option value={2}>2</option>
+                <option value={3}>3</option>
+                <option value={4}>4</option>
+                <option value={5}>5</option>
+                <option value={6}>6</option>
+              </select>
+            </label>
+            <label className="text-sm font-bold text-slate-700">
+              Height (px)
+              <input
+                type="number"
+                min={120}
+                max={1600}
+                value={form.height}
+                onChange={(e) => setForm({ ...form, height: Number(e.target.value) || 320 })}
+                className="mt-2 w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+              />
+            </label>
+          </>
+        ) : (
+          <p className="md:col-span-2 text-sm font-bold text-slate-600 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
+            Default size: Span {getDefaultSizeForType(form.type).colSpan}, Height {getDefaultSizeForType(form.type).height}px
+          </p>
+        )}
         <button type="submit" disabled={saving} className="md:col-span-2 bg-slate-900 hover:bg-[#dc4005] disabled:opacity-60 text-white font-bold py-3 px-6 rounded-xl transition-colors">
           Add Gallery Item
         </button>
@@ -913,7 +1595,7 @@ function GalleryPanel({ token }) {
               <div className="grid grid-cols-1 gap-3">
                 <select
                   value={editForm.type}
-                  onChange={(e) => setEditForm({ ...editForm, type: e.target.value })}
+                  onChange={(e) => handleEditTypeChange(e.target.value)}
                   className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
                 >
                   <option value="image">Image</option>
@@ -930,41 +1612,81 @@ function GalleryPanel({ token }) {
                     </option>
                   ))}
                 </select>
-                <input
-                  value={editForm.src}
-                  onChange={(e) => setEditForm({ ...editForm, src: e.target.value })}
+                <select
+                  value={editForm.sourceMode || 'url'}
+                  onChange={(e) => setEditForm({ ...editForm, sourceMode: e.target.value, src: '' })}
                   className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
-                />
-                <label className="text-sm font-bold text-slate-700">
-                  Width (Column Span)
-                  <select
-                    value={editForm.colSpan}
-                    onChange={(e) => setEditForm({ ...editForm, colSpan: Number(e.target.value) })}
-                    className="mt-2 w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
-                  >
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                    <option value={5}>5</option>
-                    <option value={6}>6</option>
-                  </select>
-                </label>
-                <label className="text-sm font-bold text-slate-700">
-                  Height (px)
+                >
+                  <option value="url">Source URL</option>
+                  <option value="device">Upload from Device</option>
+                </select>
+                {editForm.sourceMode === 'device' ? (
+                  <label className="text-sm font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
+                    Upload from device
+                    <input
+                      type="file"
+                      accept="image/*,video/*"
+                      onChange={handleEditFileUpload}
+                      className="mt-2 block w-full text-sm font-medium text-slate-700"
+                    />
+                  </label>
+                ) : (
                   <input
-                    type="number"
-                    min={120}
-                    max={1600}
-                    value={editForm.height}
-                    onChange={(e) => setEditForm({ ...editForm, height: Number(e.target.value) || 320 })}
-                    className="mt-2 w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+                    value={editForm.src}
+                    onChange={(e) => setEditForm({ ...editForm, src: e.target.value })}
+                    className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
                   />
-                </label>
-                <label className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-slate-700">
-                  <input type="checkbox" checked={editForm.active} onChange={(e) => setEditForm({ ...editForm, active: e.target.checked })} />
-                  Visible on website
-                </label>
+                )}
+                <select
+                  value={editForm.sizeMode || 'custom'}
+                  onChange={(e) => {
+                    const nextMode = e.target.value
+                    const defaults = getDefaultSizeForType(editForm.type)
+                    setEditForm({
+                      ...editForm,
+                      sizeMode: nextMode,
+                      ...(nextMode === 'default' ? defaults : {}),
+                    })
+                  }}
+                  className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+                >
+                  <option value="default">Default Size</option>
+                  <option value="custom">Edit Size</option>
+                </select>
+                {editForm.sizeMode === 'custom' ? (
+                  <>
+                    <label className="text-sm font-bold text-slate-700">
+                      Width (Column Span)
+                      <select
+                        value={editForm.colSpan}
+                        onChange={(e) => setEditForm({ ...editForm, colSpan: Number(e.target.value) })}
+                        className="mt-2 w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+                      >
+                        <option value={1}>1</option>
+                        <option value={2}>2</option>
+                        <option value={3}>3</option>
+                        <option value={4}>4</option>
+                        <option value={5}>5</option>
+                        <option value={6}>6</option>
+                      </select>
+                    </label>
+                    <label className="text-sm font-bold text-slate-700">
+                      Height (px)
+                      <input
+                        type="number"
+                        min={120}
+                        max={1600}
+                        value={editForm.height}
+                        onChange={(e) => setEditForm({ ...editForm, height: Number(e.target.value) || 320 })}
+                        className="mt-2 w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+                      />
+                    </label>
+                  </>
+                ) : (
+                  <p className="text-sm font-bold text-slate-600 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
+                    Default size: Span {getDefaultSizeForType(editForm.type).colSpan}, Height {getDefaultSizeForType(editForm.type).height}px
+                  </p>
+                )}
                 <div className="flex gap-2">
                   <button onClick={() => saveEdit(item._id)} disabled={saving} className="flex-1 text-xs font-bold text-white bg-[#dc4005] px-4 py-2 rounded-full disabled:opacity-60">
                     Save

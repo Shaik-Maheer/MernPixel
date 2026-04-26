@@ -11,6 +11,9 @@ const schema = new mongoose.Schema(
       enum: ['draft', 'published'],
       default: 'published',
     },
+    isFeatured: { type: Boolean, default: false },
+    isLatest: { type: Boolean, default: true },
+    position: { type: Number, default: 0 },
   },
   { timestamps: true }
 )

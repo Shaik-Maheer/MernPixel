@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { servicesDetailed } from '../data/siteData'
 import ServiceIcon from '../components/ServiceIcon'
+import ClientLogoMarquee from '../components/ClientLogoMarquee'
 
 const reveal = {
   hidden: { opacity: 0, y: 30 },
@@ -94,6 +95,12 @@ export default function ITServicesPage() {
                </div>
              </Link>
           ))}
+        </div>
+      </section>
+
+      <section className="max-w-[1240px] mx-auto px-4 sm:px-8 mt-24 relative z-30">
+        <div className="bg-[#F8F9FA] border border-slate-200 rounded-[2rem] px-5 py-10 md:px-10 md:py-12">
+          <ClientLogoMarquee section="services" title="Clients" tagline="Trusted by growing brands." />
         </div>
       </section>
 

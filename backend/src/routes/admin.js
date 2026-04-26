@@ -74,6 +74,13 @@ function parseCsvList(input) {
   return []
 }
 
+const clientSections = new Set(['home', 'services'])
+
+function normalizeClientSection(value, fallback = 'home') {
+  const safe = String(value || '').trim().toLowerCase()
+  return clientSections.has(safe) ? safe : fallback
+}
+
 const GALLERY_BOOTSTRAP_KEY = 'gallery_bootstrapped_v1'
 const GALLERY_LAYOUT_KEY = 'gallery_layout_v1'
 const defaultGallerySeed = [
@@ -248,6 +255,16 @@ router.get('/clients', async (req, res, next) => {
   try {
     const adminMode = isAdminRequest(req)
     const query = adminMode ? {} : { active: true }
+    const section = String(req.query?.section || '').trim().toLowerCase()
+
+    if (section === 'home') {
+      query.$or = [{ section: 'home' }, { section: { $exists: false } }, { section: null }]
+    } else if (section === 'services') {
+      query.section = 'services'
+    } else if (adminMode && clientSections.has(section)) {
+      query.section = section
+    }
+
     const clients = await Client.find(query).sort({ position: 1, createdAt: -1 })
     return res.json(clients)
   } catch (error) {
@@ -257,13 +274,18 @@ router.get('/clients', async (req, res, next) => {
 
 router.post('/clients', authMiddleware, async (req, res, next) => {
   try {
-    const { name = '', logoUrl = '', website = '', active = true, position = 0 } = req.body || {}
-    if (!name.trim() || !logoUrl.trim()) {
-      return res.status(400).json({ error: 'Client name and logo URL are required.' })
+    const { name = '', logoUrl = '', section = 'home', website = '', active = true, position = 0 } = req.body || {}
+    if (!logoUrl.trim()) {
+      return res.status(400).json({ error: 'Logo URL is required.' })
     }
+    const normalizedSection = normalizeClientSection(section, 'home')
+    const fallbackName = normalizedSection === 'services' ? 'Service Client' : 'Client'
+    const safeName = name.trim() || fallbackName
+
     const client = await Client.create({
-      name: name.trim(),
+      name: safeName,
       logoUrl: logoUrl.trim(),
+      section: normalizedSection,
       website: String(website || '').trim(),
       active: Boolean(active),
       position: Number.isFinite(Number(position)) ? Number(position) : 0,
@@ -276,9 +298,61 @@ router.post('/clients', authMiddleware, async (req, res, next) => {
 
 router.put('/clients/:id', authMiddleware, async (req, res, next) => {
   try {
-    const client = await Client.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    const updates = {}
+    const body = req.body || {}
+
+    if (body.name !== undefined) {
+      const safeName = String(body.name || '').trim()
+      if (!safeName) {
+        return res.status(400).json({ error: 'Client name cannot be empty.' })
+      }
+      updates.name = safeName
+    }
+    if (body.logoUrl !== undefined) {
+      const safeLogoUrl = String(body.logoUrl || '').trim()
+      if (!safeLogoUrl) {
+        return res.status(400).json({ error: 'Logo URL is required.' })
+      }
+      updates.logoUrl = safeLogoUrl
+    }
+    if (body.section !== undefined) {
+      updates.section = normalizeClientSection(body.section, 'home')
+    }
+    if (body.website !== undefined) {
+      updates.website = String(body.website || '').trim()
+    }
+    if (body.active !== undefined) {
+      updates.active = Boolean(body.active)
+    }
+    if (body.position !== undefined) {
+      const safePosition = Number(body.position)
+      if (!Number.isFinite(safePosition)) {
+        return res.status(400).json({ error: 'Position must be a valid number.' })
+      }
+      updates.position = safePosition
+    }
+
+    const client = await Client.findByIdAndUpdate(req.params.id, updates, { new: true })
     if (!client) return res.status(404).json({ error: 'Client not found' })
     return res.json(client)
+  } catch (error) {
+    return next(error)
+  }
+})
+
+router.post('/clients/reorder', authMiddleware, async (req, res, next) => {
+  try {
+    const ids = Array.isArray(req.body?.ids) ? req.body.ids.map((id) => String(id)) : []
+    if (ids.length === 0) {
+      return res.status(400).json({ error: 'ids array is required for reorder.' })
+    }
+
+    await Promise.all(
+      ids.map((id, index) => Client.findByIdAndUpdate(id, { position: index }, { new: false }))
+    )
+
+    const clients = await Client.find({}).sort({ position: 1, createdAt: -1 })
+    return res.json(clients)
   } catch (error) {
     return next(error)
   }
@@ -439,7 +513,7 @@ router.get('/blogs', async (req, res, next) => {
   try {
     const adminMode = isAdminRequest(req)
     const query = adminMode ? {} : { status: 'published' }
-    const blogs = await Blog.find(query).sort({ createdAt: -1 })
+    const blogs = await Blog.find(query).sort({ position: 1, createdAt: -1 })
     return res.json(blogs)
   } catch (error) {
     return next(error)
@@ -448,9 +522,24 @@ router.get('/blogs', async (req, res, next) => {
 
 router.post('/blogs', authMiddleware, async (req, res, next) => {
   try {
-    const { title = '', videoUrl = '', description = '', status = 'published', tags = [] } = req.body || {}
+    const {
+      title = '',
+      videoUrl = '',
+      description = '',
+      status = 'published',
+      tags = [],
+      isFeatured = false,
+      isLatest = true,
+      position = 0,
+    } = req.body || {}
     if (!title.trim() || !videoUrl.trim() || !description.trim()) {
       return res.status(400).json({ error: 'Title, video URL, and description are required.' })
+    }
+    if (Boolean(isFeatured)) {
+      const featuredCount = await Blog.countDocuments({ isFeatured: true })
+      if (featuredCount >= 4) {
+        return res.status(400).json({ error: 'Only 4 featured videos are allowed.' })
+      }
     }
     const blog = await Blog.create({
       title: title.trim(),
@@ -458,6 +547,9 @@ router.post('/blogs', authMiddleware, async (req, res, next) => {
       description: description.trim(),
       status: status === 'draft' ? 'draft' : 'published',
       tags: parseTags(tags),
+      isFeatured: Boolean(isFeatured),
+      isLatest: Boolean(isLatest),
+      position: Number.isFinite(Number(position)) ? Number(position) : 0,
     })
     return res.json(blog)
   } catch (error) {
@@ -467,16 +559,73 @@ router.post('/blogs', authMiddleware, async (req, res, next) => {
 
 router.put('/blogs/:id', authMiddleware, async (req, res, next) => {
   try {
-    const updates = { ...req.body }
-    if (updates.tags !== undefined) {
-      updates.tags = parseTags(updates.tags)
+    const updates = {}
+    const body = req.body || {}
+    const currentBlog = await Blog.findById(req.params.id)
+    if (!currentBlog) return res.status(404).json({ error: 'Blog not found' })
+
+    if (body.title !== undefined) {
+      const safeTitle = String(body.title || '').trim()
+      if (!safeTitle) return res.status(400).json({ error: 'Title is required.' })
+      updates.title = safeTitle
     }
-    if (updates.status !== undefined) {
-      updates.status = updates.status === 'draft' ? 'draft' : 'published'
+    if (body.videoUrl !== undefined) {
+      const safeVideoUrl = String(body.videoUrl || '').trim()
+      if (!safeVideoUrl) return res.status(400).json({ error: 'Video URL is required.' })
+      updates.videoUrl = safeVideoUrl
     }
+    if (body.description !== undefined) {
+      const safeDescription = String(body.description || '').trim()
+      if (!safeDescription) return res.status(400).json({ error: 'Description is required.' })
+      updates.description = safeDescription
+    }
+    if (body.tags !== undefined) {
+      updates.tags = parseTags(body.tags)
+    }
+    if (body.status !== undefined) {
+      updates.status = body.status === 'draft' ? 'draft' : 'published'
+    }
+    if (body.isFeatured !== undefined) {
+      const nextFeatured = Boolean(body.isFeatured)
+      if (nextFeatured && !currentBlog.isFeatured) {
+        const featuredCount = await Blog.countDocuments({ isFeatured: true, _id: { $ne: req.params.id } })
+        if (featuredCount >= 4) {
+          return res.status(400).json({ error: 'Only 4 featured videos are allowed.' })
+        }
+      }
+      updates.isFeatured = nextFeatured
+    }
+    if (body.isLatest !== undefined) {
+      updates.isLatest = Boolean(body.isLatest)
+    }
+    if (body.position !== undefined) {
+      const safePosition = Number(body.position)
+      if (!Number.isFinite(safePosition)) {
+        return res.status(400).json({ error: 'Position must be a valid number.' })
+      }
+      updates.position = safePosition
+    }
+
     const blog = await Blog.findByIdAndUpdate(req.params.id, updates, { new: true })
-    if (!blog) return res.status(404).json({ error: 'Blog not found' })
     return res.json(blog)
+  } catch (error) {
+    return next(error)
+  }
+})
+
+router.post('/blogs/reorder', authMiddleware, async (req, res, next) => {
+  try {
+    const ids = Array.isArray(req.body?.ids) ? req.body.ids.map((id) => String(id)) : []
+    if (ids.length === 0) {
+      return res.status(400).json({ error: 'ids array is required for reorder.' })
+    }
+
+    await Promise.all(
+      ids.map((id, index) => Blog.findByIdAndUpdate(id, { position: index }, { new: false }))
+    )
+
+    const blogs = await Blog.find({}).sort({ position: 1, createdAt: -1 })
+    return res.json(blogs)
   } catch (error) {
     return next(error)
   }
