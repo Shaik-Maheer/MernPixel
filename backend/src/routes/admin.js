@@ -6,6 +6,7 @@ import Client from '../models/Client.js'
 import Blog from '../models/Blog.js'
 import BookingSlot from '../models/BookingSlot.js'
 import StudentProject from '../models/StudentProject.js'
+import GalleryItem from '../models/GalleryItem.js'
 
 const router = express.Router()
 
@@ -70,6 +71,13 @@ function parseCsvList(input) {
       .filter(Boolean)
   }
   return []
+}
+
+async function getNextGalleryPosition() {
+  const lastItem = await GalleryItem.findOne().sort({ position: -1, createdAt: -1 }).select('position')
+  const current = Number(lastItem?.position)
+  if (!Number.isFinite(current)) return 0
+  return current + 1
 }
 
 router.post('/login', (req, res) => {
@@ -216,6 +224,115 @@ router.put('/clients/:id', authMiddleware, async (req, res, next) => {
 router.delete('/clients/:id', authMiddleware, async (req, res, next) => {
   try {
     await Client.findByIdAndDelete(req.params.id)
+    return res.json({ ok: true })
+  } catch (error) {
+    return next(error)
+  }
+})
+
+// GALLERY
+router.get('/gallery', async (req, res, next) => {
+  try {
+    const adminMode = isAdminRequest(req)
+    const query = adminMode ? {} : { active: true }
+    const items = await GalleryItem.find(query).sort({ position: 1, createdAt: 1 })
+    return res.json(items)
+  } catch (error) {
+    return next(error)
+  }
+})
+
+router.post('/gallery', authMiddleware, async (req, res, next) => {
+  try {
+    const { type = 'image', src = '', category = 'Events', active = true, position } = req.body || {}
+    const safeType = String(type).trim().toLowerCase()
+    const safeSrc = String(src).trim()
+
+    if (safeType !== 'image' && safeType !== 'video') {
+      return res.status(400).json({ error: 'Type must be image or video.' })
+    }
+    if (!safeSrc) {
+      return res.status(400).json({ error: 'Media URL is required.' })
+    }
+
+    const nextPosition = Number.isFinite(Number(position)) ? Number(position) : await getNextGalleryPosition()
+    const item = await GalleryItem.create({
+      type: safeType,
+      src: safeSrc,
+      category: String(category || 'Events').trim() || 'Events',
+      active: Boolean(active),
+      position: nextPosition,
+    })
+    return res.json(item)
+  } catch (error) {
+    return next(error)
+  }
+})
+
+router.put('/gallery/:id', authMiddleware, async (req, res, next) => {
+  try {
+    const updates = {}
+    const body = req.body || {}
+
+    if (body.type !== undefined) {
+      const safeType = String(body.type).trim().toLowerCase()
+      if (safeType !== 'image' && safeType !== 'video') {
+        return res.status(400).json({ error: 'Type must be image or video.' })
+      }
+      updates.type = safeType
+    }
+    if (body.src !== undefined) {
+      const safeSrc = String(body.src).trim()
+      if (!safeSrc) {
+        return res.status(400).json({ error: 'Media URL is required.' })
+      }
+      updates.src = safeSrc
+    }
+    if (body.category !== undefined) {
+      updates.category = String(body.category || '').trim() || 'Events'
+    }
+    if (body.active !== undefined) {
+      updates.active = Boolean(body.active)
+    }
+    if (body.position !== undefined) {
+      const safePosition = Number(body.position)
+      if (!Number.isFinite(safePosition)) {
+        return res.status(400).json({ error: 'Position must be a valid number.' })
+      }
+      updates.position = safePosition
+    }
+
+    const item = await GalleryItem.findByIdAndUpdate(req.params.id, updates, { new: true })
+    if (!item) return res.status(404).json({ error: 'Gallery item not found' })
+    return res.json(item)
+  } catch (error) {
+    return next(error)
+  }
+})
+
+router.post('/gallery/reorder', authMiddleware, async (req, res, next) => {
+  try {
+    const ids = Array.isArray(req.body?.ids) ? req.body.ids.map((id) => String(id)) : []
+    if (ids.length === 0) {
+      return res.status(400).json({ error: 'ids array is required for reorder.' })
+    }
+
+    await Promise.all(
+      ids.map((id, index) =>
+        GalleryItem.findByIdAndUpdate(id, { position: index }, { new: false })
+      )
+    )
+
+    const items = await GalleryItem.find({}).sort({ position: 1, createdAt: 1 })
+    return res.json(items)
+  } catch (error) {
+    return next(error)
+  }
+})
+
+router.delete('/gallery/:id', authMiddleware, async (req, res, next) => {
+  try {
+    await GalleryItem.findByIdAndDelete(req.params.id)
     return res.json({ ok: true })
   } catch (error) {
     return next(error)

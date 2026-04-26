@@ -1,11 +1,16 @@
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-const galleryMedia = [
+const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://mernpixel.onrender.com')
+  .replace(/\/+$/, '')
+  .replace(/\/api$/, '')
+
+const fallbackGalleryMedia = [
   { id: 1, type: 'image', src: '/workshops/event-poster.png', category: 'Events' },
   { id: 2, type: 'image', src: '/workshops/event-quantum-classroom.png', category: 'Events' },
   { id: 3, type: 'image', src: '/workshops/event-codestorm-stage.png', category: 'Events' },
+  { id: 8, type: 'image', src: '/workshops/event-new-classroom.jpg', category: 'Events' },
   { id: 4, type: 'video', src: '/four.mp4', category: 'Behind the Scenes' },
   { id: 5, type: 'image', src: '/generic_service.png', category: 'Office' },
   { id: 6, type: 'video', src: '/web_development.mp4', category: 'Events' },
@@ -14,15 +19,50 @@ const galleryMedia = [
 
 export default function GalleryPage() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const availableFilters = ['All', 'Image', 'Video', 'Events', 'Office', 'Behind the Scenes']
+  const [galleryMedia, setGalleryMedia] = useState(fallbackGalleryMedia)
+  const availableFilters = useMemo(() => {
+    const categories = Array.from(
+      new Set(galleryMedia.map((item) => String(item.category || '').trim()).filter(Boolean))
+    )
+    return ['All', 'Image', 'Video', ...categories]
+  }, [galleryMedia])
   const requestedFilter = searchParams.get('filter')
-  const initialFilter = availableFilters.includes(requestedFilter) ? requestedFilter : 'All'
-  const [filter, setFilter] = useState(initialFilter)
+  const [filter, setFilter] = useState('All')
+
+  useEffect(() => {
+    let mounted = true
+
+    fetch(`${baseUrl}/api/admin/gallery`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Failed to load gallery')
+        }
+        return res.json()
+      })
+      .then((data) => {
+        if (!mounted || !Array.isArray(data)) return
+        setGalleryMedia(
+          data.map((item) => ({
+            id: item._id || item.id,
+            type: item.type === 'video' ? 'video' : 'image',
+            src: item.src,
+            category: item.category || 'Events',
+          }))
+        )
+      })
+      .catch(() => {
+        // Keep fallback data if API is unavailable.
+      })
+
+    return () => {
+      mounted = false
+    }
+  }, [])
 
   useEffect(() => {
     const nextFilter = availableFilters.includes(requestedFilter) ? requestedFilter : 'All'
     setFilter(nextFilter)
-  }, [requestedFilter])
+  }, [requestedFilter, availableFilters])
 
   const handleFilterChange = (value) => {
     setFilter(value)
@@ -34,7 +74,7 @@ export default function GalleryPage() {
   }
   
   const filteredMedia = filter === 'All' 
-    ? galleryMedia 
+    ? galleryMedia
     : galleryMedia.filter(m => m.type.toLowerCase() === filter.toLowerCase() || m.category === filter)
 
   return (

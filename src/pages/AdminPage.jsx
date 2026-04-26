@@ -79,7 +79,7 @@ function AdminLogin({ setToken }) {
 function AdminDashboard({ token, setToken }) {
   const [activeTab, setActiveTab] = useState('forms')
 
-  const tabs = ['forms', 'bookings', 'clients', 'blogs', 'students']
+  const tabs = ['forms', 'bookings', 'clients', 'blogs', 'gallery', 'students']
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken')
@@ -112,6 +112,7 @@ function AdminDashboard({ token, setToken }) {
         {activeTab === 'forms' && <FormsPanel token={token} />}
         {activeTab === 'clients' && <ClientsPanel token={token} />}
         {activeTab === 'blogs' && <BlogsPanel token={token} />}
+        {activeTab === 'gallery' && <GalleryPanel token={token} />}
         {activeTab === 'bookings' && <BookingsPanel token={token} />}
         {activeTab === 'students' && <StudentsPanel token={token} />}
       </main>
@@ -431,6 +432,277 @@ function BlogsPanel({ token }) {
                 Delete
               </button>
             </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+const emptyGalleryForm = {
+  type: 'image',
+  src: '',
+  category: 'Events',
+  active: true,
+}
+
+function GalleryPanel({ token }) {
+  const [items, setItems] = useState([])
+  const [form, setForm] = useState(emptyGalleryForm)
+  const [editingId, setEditingId] = useState('')
+  const [editForm, setEditForm] = useState(emptyGalleryForm)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [saving, setSaving] = useState(false)
+
+  const fetchGallery = async () => {
+    setLoading(true)
+    setError('')
+    try {
+      const data = await adminFetch(token, '/api/admin/gallery')
+      setItems(Array.isArray(data) ? data : [])
+    } catch (fetchError) {
+      setError(fetchError.message || 'Failed to load gallery items.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchGallery().catch(console.error)
+  }, [token])
+
+  const handleAdd = async (e) => {
+    e.preventDefault()
+    setSaving(true)
+    setError('')
+    try {
+      await adminFetch(token, '/api/admin/gallery', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      setForm(emptyGalleryForm)
+      await fetchGallery()
+    } catch (saveError) {
+      setError(saveError.message || 'Failed to add gallery item.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleDelete = async (id) => {
+    setSaving(true)
+    setError('')
+    try {
+      await adminFetch(token, `/api/admin/gallery/${id}`, { method: 'DELETE' })
+      await fetchGallery()
+    } catch (deleteError) {
+      setError(deleteError.message || 'Failed to delete gallery item.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const toggleActive = async (item) => {
+    setSaving(true)
+    setError('')
+    try {
+      await adminFetch(token, `/api/admin/gallery/${item._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ active: !item.active }),
+      })
+      await fetchGallery()
+    } catch (toggleError) {
+      setError(toggleError.message || 'Failed to update visibility.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const startEdit = (item) => {
+    setEditingId(item._id)
+    setEditForm({
+      type: item.type || 'image',
+      src: item.src || '',
+      category: item.category || 'Events',
+      active: Boolean(item.active),
+    })
+  }
+
+  const saveEdit = async (id) => {
+    setSaving(true)
+    setError('')
+    try {
+      await adminFetch(token, `/api/admin/gallery/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editForm),
+      })
+      setEditingId('')
+      setEditForm(emptyGalleryForm)
+      await fetchGallery()
+    } catch (updateError) {
+      setError(updateError.message || 'Failed to update gallery item.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const reorderItems = async (orderedItems) => {
+    setSaving(true)
+    setError('')
+    try {
+      const ids = orderedItems.map((item) => item._id)
+      const data = await adminFetch(token, '/api/admin/gallery/reorder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids }),
+      })
+      setItems(Array.isArray(data) ? data : orderedItems)
+    } catch (reorderError) {
+      setError(reorderError.message || 'Failed to reorder gallery.')
+      await fetchGallery()
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const moveItem = async (index, direction) => {
+    const targetIndex = index + direction
+    if (targetIndex < 0 || targetIndex >= items.length) return
+
+    const next = [...items]
+    const temp = next[index]
+    next[index] = next[targetIndex]
+    next[targetIndex] = temp
+    setItems(next)
+    await reorderItems(next)
+  }
+
+  return (
+    <div>
+      <h2 className="text-3xl font-black text-slate-900 mb-2">Gallery Control</h2>
+      <p className="text-sm text-slate-600 font-medium mb-8">
+        Add, remove, replace, hide/show, and reorder gallery media. Order here controls what appears first on the live gallery page.
+      </p>
+
+      <form onSubmit={handleAdd} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <select
+          value={form.type}
+          onChange={(e) => setForm({ ...form, type: e.target.value })}
+          className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+        >
+          <option value="image">Image</option>
+          <option value="video">Video</option>
+        </select>
+        <input
+          value={form.category}
+          onChange={(e) => setForm({ ...form, category: e.target.value })}
+          placeholder="Category (Events / Office / Behind the Scenes)"
+          className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+          required
+        />
+        <input
+          value={form.src}
+          onChange={(e) => setForm({ ...form, src: e.target.value })}
+          placeholder="Media URL or /public path"
+          className="md:col-span-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+          required
+        />
+        <label className="md:col-span-2 flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-slate-700">
+          <input type="checkbox" checked={form.active} onChange={(e) => setForm({ ...form, active: e.target.checked })} />
+          Visible on website
+        </label>
+        <button type="submit" disabled={saving} className="md:col-span-2 bg-slate-900 hover:bg-[#dc4005] disabled:opacity-60 text-white font-bold py-3 px-6 rounded-xl transition-colors">
+          Add Gallery Item
+        </button>
+      </form>
+
+      {error && <p className="mb-4 text-sm font-bold text-rose-600">{error}</p>}
+      {loading && <p className="text-slate-500 font-bold">Loading gallery...</p>}
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {items.map((item, index) => (
+          <div key={item._id} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+            <div className="w-full h-52 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 mb-4">
+              {item.type === 'video' ? (
+                <video src={item.src} className="w-full h-full object-cover" muted loop playsInline autoPlay />
+              ) : (
+                <img src={item.src} alt={item.category || 'Gallery item'} className="w-full h-full object-cover" />
+              )}
+            </div>
+
+            <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3">
+              Position #{index + 1} • {item.type}
+            </p>
+
+            {editingId === item._id ? (
+              <div className="grid grid-cols-1 gap-3">
+                <select
+                  value={editForm.type}
+                  onChange={(e) => setEditForm({ ...editForm, type: e.target.value })}
+                  className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+                >
+                  <option value="image">Image</option>
+                  <option value="video">Video</option>
+                </select>
+                <input
+                  value={editForm.category}
+                  onChange={(e) => setEditForm({ ...editForm, category: e.target.value })}
+                  className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+                />
+                <input
+                  value={editForm.src}
+                  onChange={(e) => setEditForm({ ...editForm, src: e.target.value })}
+                  className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3"
+                />
+                <label className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-slate-700">
+                  <input type="checkbox" checked={editForm.active} onChange={(e) => setEditForm({ ...editForm, active: e.target.checked })} />
+                  Visible on website
+                </label>
+                <div className="flex gap-2">
+                  <button onClick={() => saveEdit(item._id)} disabled={saving} className="flex-1 text-xs font-bold text-white bg-[#dc4005] px-4 py-2 rounded-full disabled:opacity-60">
+                    Save
+                  </button>
+                  <button
+                    onClick={() => {
+                      setEditingId('')
+                      setEditForm(emptyGalleryForm)
+                    }}
+                    className="flex-1 text-xs font-bold text-slate-700 bg-slate-100 px-4 py-2 rounded-full"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <p className="font-bold text-slate-900 break-all">{item.src}</p>
+                <p className="text-sm font-semibold text-slate-500 mt-1">Category: {item.category || 'Events'}</p>
+                <p className={`mt-2 text-[11px] font-bold uppercase tracking-widest ${item.active ? 'text-emerald-600' : 'text-slate-400'}`}>
+                  {item.active ? 'Visible' : 'Hidden'}
+                </p>
+                <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  <button onClick={() => moveItem(index, -1)} disabled={saving || index === 0} className="text-xs font-bold text-slate-700 bg-slate-100 px-3 py-2 rounded-full disabled:opacity-50">
+                    Move Up
+                  </button>
+                  <button onClick={() => moveItem(index, 1)} disabled={saving || index === items.length - 1} className="text-xs font-bold text-slate-700 bg-slate-100 px-3 py-2 rounded-full disabled:opacity-50">
+                    Move Down
+                  </button>
+                  <button onClick={() => startEdit(item)} className="text-xs font-bold text-blue-700 bg-blue-50 px-3 py-2 rounded-full">
+                    Replace/Edit
+                  </button>
+                  <button onClick={() => toggleActive(item)} disabled={saving} className="text-xs font-bold text-amber-700 bg-amber-50 px-3 py-2 rounded-full disabled:opacity-50">
+                    {item.active ? 'Hide' : 'Show'}
+                  </button>
+                  <button onClick={() => handleDelete(item._id)} disabled={saving} className="text-xs font-bold text-rose-700 bg-rose-50 px-3 py-2 rounded-full disabled:opacity-50">
+                    Delete
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         ))}
       </div>

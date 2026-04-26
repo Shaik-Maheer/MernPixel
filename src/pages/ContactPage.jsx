@@ -136,8 +136,8 @@ export default function ContactPage() {
                       <input type="text" value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} placeholder="Optional" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
                     </div>
                     <div>
-                      <label className="block text-sm font-bold text-slate-900 mb-2">Budget</label>
-                      <input type="text" value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})} placeholder="₹50k – ₹5L+" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
+                      <label className="block text-sm font-bold text-slate-900 mb-2">Project Scope</label>
+                      <input type="text" value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})} placeholder="Starter / Growth / Custom" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium" />
                     </div>
                   </div>
 

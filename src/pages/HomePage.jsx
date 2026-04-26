@@ -55,8 +55,20 @@ const stats = [
   { value: '100%', label: 'Performance-first' },
 ]
 
+const homeServiceIds = [
+  'web-dev',
+  'portfolio',
+  'ecommerce',
+  'academic-projects',
+  'guest-lectures',
+  'app-dev',
+]
+
 export default function HomePage() {
   const [activeService, setActiveService] = useState(null)
+  const homeServices = homeServiceIds
+    .map((id) => servicesDetailed.find((service) => service.id === id))
+    .filter(Boolean)
 
   return (
     <main className="min-h-screen bg-[#FFFFFF] pb-10">
@@ -85,7 +97,7 @@ export default function HomePage() {
             </p>
             
             <div className="flex flex-wrap gap-4 text-left justify-start">
-              <Link to="/contact" className="bg-[#0F172A] text-white px-7 py-3 rounded-full font-medium hover:bg-[#D349A1] transition-all flex items-center text-[15px]">
+              <Link to="/contact" className="bg-[#0F172A] text-white px-7 py-3 rounded-full font-medium hover:bg-[#E15D2B] transition-all flex items-center text-[15px]">
                 Start a project <span className="ml-2 font-normal text-slate-400">→</span>
               </Link>
               <Link to="/works" className="bg-white text-slate-900 border border-slate-200 px-7 py-3 rounded-full font-medium hover:bg-slate-50 transition-all text-[15px]">
@@ -126,8 +138,8 @@ export default function HomePage() {
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {servicesDetailed.map((service, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {homeServices.map((service, index) => (
               <motion.article
                 onClick={() => setActiveService(service)}
                 key={service.id}

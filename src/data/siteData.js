@@ -1,6 +1,6 @@
 export const business = {
   name: 'MERNpixel',
-  tagline: 'Premium digital products engineered for business growth.',
+  tagline: 'Not built to impress. Built to perform.',
   url: 'https://mernpixeldev.com',
   email: 'mernpixeldev@gmail.com',
   phone: '+91 95150 22680',
@@ -82,16 +82,16 @@ export const servicesDetailed = [
     id: 'portfolio',
     icon: 'portfolio',
     title: 'Portfolio Websites',
-    description: 'Professional portfolio websites that clearly present your work and build trust. Starting from Rs 4,999.',
+    description: 'Professional portfolio websites that clearly present your work and build trust.',
     features: [
       'Clean one-page and multi-page portfolio structures.',
       'Project showcase with screenshots, videos, and clear case studies.',
       'Mobile-first delivery with contact forms, WhatsApp, and social links.',
     ],
     useCases: [
-      'Student and fresher portfolios (from Rs 4,999)',
-      'Freelancer and creator portfolios (from Rs 9,999)',
-      'Agency and company portfolios with advanced sections (from Rs 18,999)',
+      'Student and fresher portfolios',
+      'Freelancer and creator portfolios',
+      'Agency and company portfolios with advanced sections',
     ],
     outcome: 'Better visibility, stronger credibility, and higher chance of getting calls from clients or recruiters.',
   },
@@ -173,7 +173,7 @@ export const servicesDetailed = [
     id: 'guest-lectures',
     icon: 'lectures',
     title: 'Guest Lectures / Workshops',
-    description: 'Training students for real-world skills.',
+    description: 'Practical sessions, workshops, and guest lectures on real-world technologies and industry trends.',
     features: ['AI tools', 'Resume building', 'Live coding', 'Placement guidance'],
     useCases: ['Hands-on sessions', 'Career readiness', 'College workshop delivery'],
     outcome: 'Industry-ready confidence for students.',
@@ -283,7 +283,7 @@ export const trustPoints = [
 
 export const confidenceBoosters = [
   'Fast delivery with clear timelines',
-  'Transparent pricing',
+  'Transparent delivery process',
   'Direct founder communication',
   'No outsourcing',
 ]
@@ -291,20 +291,20 @@ export const confidenceBoosters = [
 export const pricingPlans = [
   {
     name: 'Starter',
-    price: '₹5,000 - ₹10,000',
+    focus: 'Quick Launch',
     summary: 'For fast business launch websites.',
     includes: ['Up to 5 pages', 'Responsive layout', 'Contact capture setup'],
   },
   {
     name: 'Professional',
-    price: '₹15,000 - ₹30,000',
+    focus: 'Growth Ready',
     summary: 'For growth-focused premium web presence.',
     includes: ['Advanced UI/UX', 'SEO-ready structure', 'Motion interactions'],
     featured: true,
   },
   {
     name: 'Premium',
-    price: '₹50,000+',
+    focus: 'Custom Build',
     summary: 'For custom products and scalable apps.',
     includes: ['Custom product build', 'Web app architecture', 'Priority support'],
   },
@@ -329,7 +329,7 @@ export const lectureDetail = {
     'MCA Department Seminar Hall: hands-on AI and productivity workflows.',
     'Career Development Cell: resume reviews with live coding practice.',
   ],
-  note: 'Poster-style practical sessions designed for MCA students entering real hiring rounds.',
+  note: 'We conduct practical sessions, workshops, and guest lectures to bridge theory with real-world technologies and industry trends.',
 }
 
 export const caseStudies = [

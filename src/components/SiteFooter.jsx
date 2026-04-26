@@ -14,7 +14,7 @@ export default function SiteFooter() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="bg-[#FDFDFD] pt-20 pb-10 border-t border-slate-200/60 mt-10">
+    <footer className="bg-[#F8F9FA] pt-20 pb-10 border-t border-slate-200/60 mt-10">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Top Footer Grid */}

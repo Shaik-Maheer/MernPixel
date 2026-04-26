@@ -58,7 +58,7 @@ const getFaqsByService = (id) => {
     ],
     'portfolio': [
       { q: 'Who needs a portfolio website?', a: 'Anyone who wants to showcase work clearly: students, freelancers, creators, architects, consultants, agencies, and service businesses.' },
-      { q: 'Can you make a low-budget starter portfolio?', a: 'Yes. We offer a clean starter portfolio package from Rs 4,999 and can scale it as your profile or business grows.' }
+      { q: 'Can you make a low-budget starter portfolio?', a: 'Yes. We offer a clean starter portfolio package and can scale it as your profile or business grows.' }
     ],
     'ecommerce': [
       { q: 'Do you integrate with local payment gateways?', a: 'Yes, we integrate Razorpay, Stripe, PhonePe, and PayPal seamlessly.' }
@@ -150,23 +150,38 @@ export default function ServiceDetailPage() {
     if (!mediaFile) mediaFile = '/generic_service.png';
 
     const isVideo = mediaFile.endsWith('.mp4');
+    const isEcommerce = service.id === 'ecommerce';
 
     return (
       <div className="relative w-full max-w-5xl mx-auto mb-20 z-20 mt-16 group">
         <div className={`w-full h-[450px] md:h-[600px] rounded-[2.5rem] overflow-hidden shadow-2xl ring-1 ring-white/10 relative transition-transform duration-700 hover:scale-[1.02] ${theme.shadow}`}>
           {isVideo ? (
-            <video src={mediaFile} autoPlay loop muted playsInline className="w-full h-full object-cover scale-105 opacity-80" />
+            <video src={mediaFile} autoPlay loop muted playsInline className={`w-full h-full object-cover scale-105 ${isEcommerce ? 'opacity-100' : 'opacity-80'}`} />
           ) : (
-             <img src={mediaFile} alt={service.title} className="w-full h-full object-cover opacity-80" />
+             <img src={mediaFile} alt={service.title} className={`w-full h-full object-cover ${isEcommerce ? 'opacity-100' : 'opacity-80'}`} />
           )}
-          <div className={`absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none`}></div>
-          <div className={`absolute inset-0 bg-gradient-to-tr ${theme.primary} mix-blend-overlay opacity-40 pointer-events-none`}></div>
+          <div className={`absolute inset-0 bg-gradient-to-t ${isEcommerce ? 'from-black/45 via-black/20' : 'from-black via-black/40'} to-transparent pointer-events-none`}></div>
+          {!isEcommerce && (
+            <div className={`absolute inset-0 bg-gradient-to-tr ${theme.primary} mix-blend-overlay opacity-40 pointer-events-none`}></div>
+          )}
         </div>
       </div>
     )
   }
 
   const faqs = getFaqsByService(service.id)
+  const defaultProblemCopy = 'Most teams deliver generic templates that fail to convert traffic or resolve complex technical debt, causing bloated systems.'
+  const defaultSolutionCopy = 'We engineer targeted solutions from the ground up, prioritizing extreme execution speed, scalable architecture, and tangible metrics.'
+  const problemCopy = service.id === 'web-dev'
+    ? 'Many businesses have websites that just exist but do not attract, engage, or convert users.'
+    : service.id === 'guest-lectures'
+    ? 'Many students learn theory but lack real-world skills and industry exposure.'
+    : defaultProblemCopy
+  const solutionCopy = service.id === 'web-dev'
+    ? 'We create modern websites focused on performance, user experience, and real business results.'
+    : service.id === 'guest-lectures'
+    ? 'We conduct practical sessions, workshops, and guest lectures to help students understand real-world technologies and trends.'
+    : defaultSolutionCopy
 
   return (
     <main className="min-h-screen font-sans bg-[#050505] text-white">
@@ -209,8 +224,13 @@ export default function ServiceDetailPage() {
             </div>
           ) : service.id === 'academic-projects' ? (
             <div className={`border border-white/10 bg-white/5 backdrop-blur-xl rounded-[3rem] p-12 md:p-24 text-center max-w-5xl mx-auto ring-1 ring-white/5 ${theme.shadow}`}>
-              <h3 className="text-3xl md:text-5xl font-extrabold mb-8 leading-tight tracking-tight text-white">We engineer confidence, not just code.</h3>
-              <p className="text-xl text-slate-300 leading-relaxed font-medium">We do not just build a student project blindly. We discuss exactly what's needed, lock in the optimal tech stack, build it completely, and explain the architecture to you structurally so you're unbreakable in your viva submission. <strong className="text-white">Included free:</strong> college-formatted PPTs, robust documentation, code zip, and an exclusive 1-on-1 session to run the stack directly on your system.</p>
+              <h3 className="text-3xl md:text-5xl font-extrabold mb-8 leading-tight tracking-tight text-white">You should know what you build.</h3>
+              <p className="text-xl text-slate-300 leading-relaxed font-medium">
+                We first talk with students in detail about their project requirements, then build the complete project and clearly explain each and every part. We also provide PPT and documentation in your college format.
+              </p>
+              <p className="text-xl text-slate-300 leading-relaxed font-medium mt-6">
+                We do not just hand over a project. We make sure students understand the logic, flow, and implementation so they can speak confidently in front of the panel.
+              </p>
             </div>
           ) : service.id === 'portfolio' ? (
             <div className={`border border-white/10 bg-white/5 backdrop-blur-xl rounded-[3rem] p-12 md:p-24 text-center max-w-5xl mx-auto ring-1 ring-white/5 ${theme.shadow}`}>
@@ -219,9 +239,9 @@ export default function ServiceDetailPage() {
                 In any field, a portfolio helps people trust your work faster. We build clear portfolio websites that show your projects, services, and credibility in a simple way anyone can understand.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-3">
-                <span className="px-4 py-2 text-sm font-bold rounded-full border border-white/20 bg-white/10 text-white">Starter: from Rs 4,999</span>
-                <span className="px-4 py-2 text-sm font-bold rounded-full border border-white/20 bg-white/10 text-white">Professional: from Rs 9,999</span>
-                <span className="px-4 py-2 text-sm font-bold rounded-full border border-white/20 bg-white/10 text-white">Advanced: from Rs 18,999</span>
+                <span className="px-4 py-2 text-sm font-bold rounded-full border border-white/20 bg-white/10 text-white">Starter</span>
+                <span className="px-4 py-2 text-sm font-bold rounded-full border border-white/20 bg-white/10 text-white">Professional</span>
+                <span className="px-4 py-2 text-sm font-bold rounded-full border border-white/20 bg-white/10 text-white">Advanced</span>
               </div>
             </div>
           ) : service.id === 'talent-hiring' ? (
@@ -259,7 +279,7 @@ export default function ServiceDetailPage() {
                   <span className="w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold text-xl ring-1 ring-rose-500/50">X</span>
                   <h3 className="text-sm font-black text-rose-400 uppercase tracking-widest">The Problem</h3>
                 </div>
-                <p className="text-2xl text-slate-300 leading-relaxed font-medium tracking-tight">Most teams deliver generic templates that fail to convert traffic or resolve complex technical debt, causing bloated systems.</p>
+                <p className="text-2xl text-slate-300 leading-relaxed font-medium tracking-tight">{problemCopy}</p>
               </div>
               <div className={`bg-gradient-to-br ${theme.bgGlow} border border-white/10 rounded-[2.5rem] p-12 backdrop-blur-md relative overflow-hidden`}>
                 <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl ${theme.primary} opacity-20 blur-[80px]`}></div>
@@ -272,7 +292,7 @@ export default function ServiceDetailPage() {
                     </span>
                     <h3 className="text-sm font-black text-emerald-400 uppercase tracking-widest">The Solution</h3>
                   </div>
-                  <p className="text-2xl text-white leading-relaxed font-bold tracking-tight">We engineer targeted solutions from the ground up, prioritizing extreme execution speed, scalable architecture, and tangible metrics.</p>
+                  <p className="text-2xl text-white leading-relaxed font-bold tracking-tight">{solutionCopy}</p>
                 </div>
               </div>
             </div>

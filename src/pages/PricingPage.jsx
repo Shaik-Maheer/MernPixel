@@ -14,9 +14,9 @@ export default function PricingPage() {
       <section className="mp-page-hero mp-page-hero-media">
         <HeroBackdrop video="/five.mp4" />
         <div className="mp-shell">
-          <p className="mp-kicker">Pricing</p>
+          <p className="mp-kicker">Plans</p>
           <h1>Simple plans built for execution speed.</h1>
-          <p className="mp-lead">Transparent ranges. Clear deliverables.</p>
+          <p className="mp-lead">Clear deliverables. Flexible scope.</p>
         </div>
       </section>
 
@@ -33,7 +33,7 @@ export default function PricingPage() {
               transition={{ duration: 0.42, delay: index * 0.05 }}
             >
               <p className="mp-chip">{plan.name}</p>
-              <h3>{plan.price}</h3>
+              <h3>{plan.focus}</h3>
               <p>{plan.summary}</p>
               <ul className="mp-list">
                 {plan.includes.slice(0, 3).map((item) => (
@@ -45,7 +45,7 @@ export default function PricingPage() {
           ))}
         </div>
         <div className="mp-actions mp-actions-center">
-          <p className="mp-lead">Custom pricing available</p>
+          <p className="mp-lead">Custom plans available</p>
         </div>
       </section>
     </main>

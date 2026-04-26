@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { sendChatMessage } from '../lib/chatApi'
+import { business } from '../data/siteData'
 
 const initialMessage = {
   role: 'assistant',
@@ -9,6 +10,7 @@ const initialMessage = {
 
 export default function ChatbotWidget() {
   const MotionButton = motion.button
+  const MotionAnchor = motion.a
   const [open, setOpen] = useState(false)
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -23,6 +25,7 @@ export default function ChatbotWidget() {
         .map((item) => ({ role: item.role, content: item.content })),
     [messages]
   )
+  const whatsappHref = business.whatsapp || `https://wa.me/${business.phone.replace(/\D/g, '')}`
 
   useEffect(() => {
     if (!listRef.current) {
@@ -71,10 +74,25 @@ export default function ChatbotWidget() {
   return (
     <>
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-4">
+        {/* WhatsApp Quick Chat */}
+        <MotionAnchor
+          href={whatsappHref}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Chat on WhatsApp"
+          title="Chat on WhatsApp"
+          className="flex items-center justify-center w-[56px] h-[56px] rounded-full bg-[#25D366] border border-[#1DA851] shadow-[0_8px_30px_rgba(37,211,102,0.35)] hover:bg-[#1DA851] transition-all cursor-pointer hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(37,211,102,0.35)]"
+          initial={{ opacity: 0, y: 20, scale: 0.92 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.55, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <img src="/pics/whatsapp_icon.svg" alt="" className="w-7 h-7 object-contain" />
+        </MotionAnchor>
+
         {/* AI Chatbot Launcher */}
         <MotionButton
           type="button"
-          className="flex items-center justify-center w-[56px] h-[56px] bg-slate-900 text-white rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:bg-[#D349A1] transition-all cursor-pointer hover:-translate-y-1 hover:shadow-[0_15px_40px_rgb(211,73,161,0.25)]"
+          className="flex items-center justify-center w-[56px] h-[56px] bg-slate-900 text-white rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:bg-[#E15D2B] transition-all cursor-pointer hover:-translate-y-1 hover:shadow-[0_15px_40px_rgb(225,93,43,0.25)]"
           initial={{ opacity: 0, y: 20, scale: 0.92 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.55, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
@@ -138,7 +156,7 @@ export default function ChatbotWidget() {
               maxLength={4000}
               disabled={loading}
             />
-            <button type="submit" className="w-12 h-12 rounded-xl bg-slate-900 text-white flex items-center justify-center hover:bg-[#D349A1] transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading || !input.trim()}>
+            <button type="submit" className="w-12 h-12 rounded-xl bg-slate-900 text-white flex items-center justify-center hover:bg-[#E15D2B] transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading || !input.trim()}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
             </button>
           </form>
