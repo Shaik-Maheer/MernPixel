@@ -26,7 +26,7 @@ export default function GlobalNav() {
         
         {/* Logo Section */}
         <Link to="/" className="flex items-center gap-3" aria-label="MERNpixel home">
-          <img src="/logo.png" alt="MERNpixel Logo" className="h-10 md:h-14 w-auto object-contain mt-1" />
+          <img src="/logo.png" alt="MERNpixel Logo" className="h-16 md:h-28 w-auto object-contain mt-1 scale-125 origin-left" />
         </Link>
 
         {/* Desktop Navigation */}

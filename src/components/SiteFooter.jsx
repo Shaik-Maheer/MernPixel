@@ -23,7 +23,7 @@ export default function SiteFooter() {
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-5 lg:col-span-4">
             <Link to="/" className="flex items-center gap-3 mb-6">
-              <img src="/logo.png" alt="MERNpixel Logo" className="h-16 md:h-20 w-auto object-contain" />
+              <img src="/logo.png" alt="MERNpixel Logo" className="h-24 md:h-36 w-auto object-contain scale-125 origin-left" />
             </Link>
             
             <p className="text-sm text-slate-600 mb-8 leading-relaxed pr-4">
