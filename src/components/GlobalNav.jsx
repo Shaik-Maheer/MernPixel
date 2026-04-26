@@ -25,10 +25,8 @@ export default function GlobalNav() {
       <div className="w-full max-w-[1400px] px-6 py-4 flex items-center justify-between">
         
         {/* Logo Section */}
-        <Link to="/" className="flex items-center gap-2" aria-label="MERNpixel home">
-          <span className="font-black text-[26px] md:text-[32px] tracking-tight text-slate-900 mt-1">
-            MERN<span className="text-[#D349A1]">pixel</span>
-          </span>
+        <Link to="/" className="flex items-center gap-3" aria-label="MERNpixel home">
+          <img src="/logo.png" alt="MERNpixel Logo" className="h-10 md:h-14 w-auto object-contain mt-1" />
         </Link>
 
         {/* Desktop Navigation */}

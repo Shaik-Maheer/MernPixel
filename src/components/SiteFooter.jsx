@@ -22,10 +22,8 @@ export default function SiteFooter() {
           
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-5 lg:col-span-4">
-            <Link to="/" className="flex items-center gap-2 mb-6">
-              <span className="font-black text-[32px] md:text-[42px] tracking-tight text-slate-900">
-                MERN<span className="text-[#D349A1]">pixel</span>
-              </span>
+            <Link to="/" className="flex items-center gap-3 mb-6">
+              <img src="/logo.png" alt="MERNpixel Logo" className="h-16 md:h-20 w-auto object-contain" />
             </Link>
             
             <p className="text-sm text-slate-600 mb-8 leading-relaxed pr-4">

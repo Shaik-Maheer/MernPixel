@@ -12,7 +12,7 @@ export default function ITServicesPage() {
     <main className="min-h-screen bg-[#F5F6F8] pb-32 overflow-hidden pt-[4.5rem]">
       
       {/* 1. FIRST SECTION: Custom Theme Background Dialogue/Approach */}
-      <section className="relative w-full bg-[#E378B4] pt-24 pb-20 md:pt-32 md:pb-28 overflow-hidden shadow-xl">
+      <section className="relative w-full bg-[#dc4005] pt-24 pb-20 md:pt-32 md:pb-28 overflow-hidden shadow-xl">
         {/* Soft atmospheric glows for pink theme */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-rose-600/10 rounded-full blur-[80px] pointer-events-none"></div>
