@@ -446,6 +446,19 @@ const emptyGalleryForm = {
   active: true,
 }
 
+const defaultGallerySeed = [
+  { type: 'image', src: '/workshops/event-poster.png', category: 'Events', active: true },
+  { type: 'image', src: '/workshops/event-quantum-classroom.png', category: 'Events', active: true },
+  { type: 'image', src: '/workshops/event-codestorm-stage.png', category: 'Events', active: true },
+  { type: 'image', src: '/workshops/event-new-classroom.jpg', category: 'Events', active: true },
+  { type: 'video', src: '/four.mp4', category: 'Behind the Scenes', active: true },
+  { type: 'image', src: '/generic_service.png', category: 'Office', active: true },
+  { type: 'video', src: '/web_development.mp4', category: 'Events', active: true },
+  { type: 'video', src: '/meetings.mp4', category: 'Behind the Scenes', active: true },
+]
+
+const galleryImportMarkerKey = 'mp_gallery_seed_imported_v1'
+
 function GalleryPanel({ token }) {
   const [items, setItems] = useState([])
   const [form, setForm] = useState(emptyGalleryForm)
@@ -455,12 +468,33 @@ function GalleryPanel({ token }) {
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
 
+  const importDefaultGallery = async () => {
+    for (let i = 0; i < defaultGallerySeed.length; i += 1) {
+      const item = defaultGallerySeed[i]
+      await adminFetch(token, '/api/admin/gallery', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...item, position: i }),
+      })
+    }
+    localStorage.setItem(galleryImportMarkerKey, '1')
+  }
+
   const fetchGallery = async () => {
     setLoading(true)
     setError('')
     try {
       const data = await adminFetch(token, '/api/admin/gallery')
-      setItems(Array.isArray(data) ? data : [])
+      const list = Array.isArray(data) ? data : []
+
+      if (list.length === 0 && !localStorage.getItem(galleryImportMarkerKey)) {
+        await importDefaultGallery()
+        const seeded = await adminFetch(token, '/api/admin/gallery')
+        setItems(Array.isArray(seeded) ? seeded : [])
+        return
+      }
+
+      setItems(list)
     } catch (fetchError) {
       setError(fetchError.message || 'Failed to load gallery items.')
     } finally {
@@ -581,6 +615,19 @@ function GalleryPanel({ token }) {
     await reorderItems(next)
   }
 
+  const handleImportDefaults = async () => {
+    setSaving(true)
+    setError('')
+    try {
+      await importDefaultGallery()
+      await fetchGallery()
+    } catch (importError) {
+      setError(importError.message || 'Failed to import default gallery items.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
   return (
     <div>
       <h2 className="text-3xl font-black text-slate-900 mb-2">Gallery Control</h2>
@@ -622,6 +669,20 @@ function GalleryPanel({ token }) {
 
       {error && <p className="mb-4 text-sm font-bold text-rose-600">{error}</p>}
       {loading && <p className="text-slate-500 font-bold">Loading gallery...</p>}
+      {!loading && items.length === 0 && (
+        <div className="mb-6 bg-amber-50 border border-amber-200 p-4 rounded-xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <p className="text-sm font-bold text-amber-800">
+            No gallery items found. Import existing website media to manage sort/delete/replace from admin.
+          </p>
+          <button
+            onClick={handleImportDefaults}
+            disabled={saving}
+            className="bg-amber-600 hover:bg-amber-700 disabled:opacity-60 text-white text-sm font-bold px-4 py-2 rounded-lg"
+          >
+            Import Existing Media
+          </button>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {items.map((item, index) => (
