@@ -4,6 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { servicesDetailed, lectureEvents, lectureGallery } from '../data/siteData'
 import ServiceIcon from '../components/ServiceIcon'
 
+const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://mernpixel.onrender.com')
+  .replace(/\/+$/, '')
+  .replace(/\/api$/, '')
+
 const themeMap = {
   'web-dev': { primary: 'from-cyan-400 to-blue-600', shadow: 'shadow-cyan-500/20', bgGlow: 'bg-cyan-500/10' },
   'portfolio': { primary: 'from-orange-400 to-amber-500', shadow: 'shadow-orange-500/20', bgGlow: 'bg-orange-500/10' },
@@ -83,6 +87,7 @@ const getFaqsByService = (id) => {
 export default function ServiceDetailPage() {
   const { id } = useParams()
   const service = servicesDetailed.find(s => s.id === id)
+  const [guestWorkshopMedia, setGuestWorkshopMedia] = useState(lectureGallery)
   
   if (!service) {
     return <Navigate to="/services" />
@@ -96,6 +101,56 @@ export default function ServiceDetailPage() {
       document.body.style.backgroundColor = ''
     }
   }, [])
+
+  useEffect(() => {
+    if (service?.id !== 'guest-lectures') {
+      setGuestWorkshopMedia(lectureGallery)
+      return
+    }
+
+    let mounted = true
+
+    fetch(`${baseUrl}/api/admin/gallery`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Failed to load gallery items')
+        }
+        return res.json()
+      })
+      .then((data) => {
+        if (!mounted || !Array.isArray(data)) return
+
+        const eventImages = data
+          .filter((item) => item?.type === 'image' && String(item?.category || '').trim().toLowerCase() === 'events')
+          .map((item, index) => {
+            const rawSrc = String(item?.src || '').trim()
+            const fallbackTitle = `Workshop Moment ${index + 1}`
+            const fileName = rawSrc.split('/').pop() || fallbackTitle
+            const niceTitle = fileName
+              .replace(/\.[a-z0-9]+$/i, '')
+              .replace(/[-_]+/g, ' ')
+              .replace(/\b\w/g, (char) => char.toUpperCase())
+
+            return {
+              src: rawSrc,
+              title: niceTitle || fallbackTitle,
+              caption: 'Managed from admin gallery settings.',
+            }
+          })
+          .filter((item) => Boolean(item.src))
+
+        setGuestWorkshopMedia(eventImages.length > 0 ? eventImages : lectureGallery)
+      })
+      .catch(() => {
+        if (mounted) {
+          setGuestWorkshopMedia(lectureGallery)
+        }
+      })
+
+    return () => {
+      mounted = false
+    }
+  }, [service?.id])
 
   const renderHeroVisual = () => {
     if (service.id === 'academic-projects') {
@@ -352,7 +407,7 @@ export default function ServiceDetailPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {lectureGallery.map((item, idx) => (
+              {guestWorkshopMedia.map((item, idx) => (
                 <article key={`${item.src}-${idx}`} className={`group relative overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/5 ${theme.shadow}`}>
                   <img
                     src={item.src}

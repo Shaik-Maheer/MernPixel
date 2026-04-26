@@ -253,6 +253,11 @@ export const lectureGallery = [
     title: 'CodeStorm Workshop Recognition',
     caption: 'Stage moment from the MITS CodeStorm workshop and hackathon event.',
   },
+  {
+    src: '/workshops/event-new-classroom.jpg',
+    title: 'New Classroom Workshop',
+    caption: 'Full classroom workshop session with students actively participating in live exercises.',
+  },
 ]
 
 export const achievements = [
