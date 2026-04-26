@@ -31,7 +31,7 @@ const authMiddleware = (req, res, next) => {
 // 1. LOGIN
 router.post('/login', (req, res) => {
   const { username, password } = req.body
-  if (username === 'MERNpixel@admin' && password === 'Mern@123') {
+  if (username?.trim() === 'MERNpixel@admin' && password?.trim() === 'Mern@123') {
     const token = jwt.sign({ admin: true }, JWT_SECRET, { expiresIn: '7d' })
     return res.json({ token, message: 'Login successful' })
   }

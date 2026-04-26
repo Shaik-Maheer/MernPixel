@@ -24,7 +24,7 @@ function AdminLogin({ setToken }) {
       const res = await fetch(`${baseUrl}/api/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username: username.trim(), password: password.trim() })
       })
       const data = await res.json()
       if (res.ok) {
