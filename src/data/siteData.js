@@ -132,7 +132,7 @@ export const servicesDetailed = [
   },
   {
     id: 'academic-projects',
-    icon: '🎓',
+    icon: '❖',
     title: 'Academic Projects',
     description: 'Major & minor projects with mentoring support.',
     features: ['Major projects', 'Minor projects', 'Guidance + explanation'],
@@ -141,7 +141,7 @@ export const servicesDetailed = [
   },
   {
     id: 'talent-hiring',
-    icon: '🧑‍💼',
+    icon: '⬡',
     title: 'Talent Hiring / Consulting',
     description: 'We help companies hire the right candidates.',
     features: [
@@ -154,7 +154,7 @@ export const servicesDetailed = [
   },
   {
     id: 'guest-lectures',
-    icon: '🎤',
+    icon: '✧',
     title: 'Guest Lectures / Workshops',
     description: 'Training students for real-world skills.',
     features: ['AI tools', 'Resume building', 'Live coding', 'Placement guidance'],

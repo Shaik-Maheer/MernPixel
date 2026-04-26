@@ -23,7 +23,7 @@ export default function SiteFooter() {
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-5 lg:col-span-4">
             <Link to="/" className="flex items-center gap-3 mb-6">
-              <img src="/logo.png" alt="MERNpixel Logo" className="h-14 md:h-16 w-auto object-contain" />
+              <img src="/logo.png" alt="MERNpixel Logo" className="h-20 md:h-24 w-auto object-contain" />
             </Link>
             
             <p className="text-sm text-slate-600 mb-8 leading-relaxed pr-4">
@@ -96,9 +96,14 @@ export default function SiteFooter() {
           <p className="text-xs font-semibold text-slate-500">
             © {year} MERNpixel. Crafted with intent.
           </p>
-          <p className="text-xs font-semibold text-slate-400">
-            Performance over polish. Always.
-          </p>
+          <div className="flex items-center gap-4">
+            <Link to="/admin" className="text-xs font-semibold text-slate-400 hover:text-blue-500 transition-colors">
+              Admin
+            </Link>
+            <p className="text-xs font-semibold text-slate-400">
+              Performance over polish. Always.
+            </p>
+          </div>
         </div>
 
       </div>

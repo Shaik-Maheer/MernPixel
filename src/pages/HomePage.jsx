@@ -27,7 +27,7 @@ const ClientMarquee = () => {
       <p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">Trusted by growing brands.</p>
       <div className="flex flex-wrap justify-center items-center gap-10 md:gap-20">
          {clients.map(client => (
-            <img key={client._id} src={client.logoUrl} alt={client.name} className="h-10 md:h-12 object-contain grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100" />
+            <img key={client._id} src={client.logoUrl} alt={client.name} className="h-10 md:h-12 object-contain" />
          ))}
       </div>
     </div>

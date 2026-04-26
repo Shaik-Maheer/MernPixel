@@ -266,7 +266,7 @@ p {
 }
 
 .mp-loader-logo {
-  width: clamp(140px, 24vw, 220px);
+  width: clamp(180px, 30vw, 280px);
   margin: 0 auto 16px;
   filter: drop-shadow(0 0 18px rgba(179, 4, 181, 0.36));
 }
@@ -327,7 +327,7 @@ p {
 }
 
 .mp-logo {
-  width: clamp(170px, 19vw, 230px);
+  width: clamp(200px, 24vw, 280px);
 }
 
 .mp-nav-links {
