@@ -85,11 +85,11 @@ export default function AboutPage() {
 
           <article className="bg-[#141414] border border-slate-800 rounded-3xl p-10 hover:-translate-y-2 transition-transform duration-500 shadow-2xl flex flex-col justify-between">
             <div>
-               <p className="text-xs font-bold text-emerald-500 uppercase tracking-widest mb-4">Guest Sessions</p>
-               <h3 className="text-3xl font-extrabold text-white mb-4">Sharing knowledge with future builders.</h3>
-               <p className="text-lg text-slate-400 leading-relaxed mb-8">AI tools, resume building, and raw live coding sessions for students.</p>
+               <p className="text-xs font-bold text-red-500 uppercase tracking-widest mb-4">Guest Sessions</p>
+               <h3 className="text-3xl font-extrabold text-red-100 mb-4">Sharing knowledge with future builders.</h3>
+               <p className="text-lg text-red-200/70 leading-relaxed mb-8">AI tools, resume building, and raw live coding sessions for students.</p>
             </div>
-            <Link to="/services/guest-lectures" className="text-[13px] font-black text-white uppercase tracking-widest border-b-2 border-slate-700 hover:border-emerald-500 pb-1 w-fit mx-auto transition-colors">
+            <Link to="/services/guest-lectures" className="text-[13px] font-black text-red-100 uppercase tracking-widest border-b-2 border-red-500/40 hover:border-red-400 pb-1 w-fit mx-auto transition-colors">
               View Details
             </Link>
           </article>

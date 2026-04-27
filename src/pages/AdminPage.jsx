@@ -779,6 +779,18 @@ function TeamPanel({ token }) {
     setMembers((prev) => prev.map((member, memberIndex) => (memberIndex === index ? { ...member, ...patch } : member)))
   }
 
+  const getFallbackPhoto = (index, name = '') => {
+    const defaultPhoto = defaultTeamMembers[index]?.photo
+    if (defaultPhoto) return defaultPhoto
+    const safeName = encodeURIComponent(String(name || 'Team Member').trim() || 'Team Member')
+    return `https://ui-avatars.com/api/?name=${safeName}&background=334155&color=F8FAFC&size=512&bold=true`
+  }
+
+  const triggerPhotoPicker = (index) => {
+    const input = document.getElementById(`team-photo-input-${index}`)
+    if (input) input.click()
+  }
+
   const handlePhotoUpload = async (index, file) => {
     if (!file) return
     setError('')
@@ -795,6 +807,11 @@ function TeamPanel({ token }) {
     } catch (uploadError) {
       setError(uploadError.message || 'Failed to read team image.')
     }
+  }
+
+  const handleDeletePhoto = (index) => {
+    const member = members[index] || {}
+    updateMember(index, { photo: getFallbackPhoto(index, member.name) })
   }
 
   const handleSaveTeam = async () => {
@@ -847,16 +864,36 @@ function TeamPanel({ token }) {
               placeholder="Team member name"
               className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-900 mb-3"
             />
-            <label className="block text-sm font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
-              Upload Photo
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handlePhotoUpload(index, e.target.files?.[0])}
-                className="mt-2 block w-full text-sm font-medium text-slate-700"
-              />
-            </label>
-            <p className="text-xs text-slate-500 mt-3 font-semibold">Role: {member.role}</p>
+            <input
+              value={member.role || ''}
+              onChange={(e) => updateMember(index, { role: e.target.value })}
+              placeholder="Team member role"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-900 mb-3"
+            />
+            <input
+              id={`team-photo-input-${index}`}
+              type="file"
+              accept="image/*"
+              onChange={(e) => handlePhotoUpload(index, e.target.files?.[0])}
+              className="hidden"
+            />
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => triggerPhotoPicker(index)}
+                className="text-xs font-bold bg-blue-50 text-blue-700 px-3 py-2 rounded-full"
+              >
+                Replace
+              </button>
+              <button
+                type="button"
+                onClick={() => handleDeletePhoto(index)}
+                className="text-xs font-bold bg-rose-50 text-rose-700 px-3 py-2 rounded-full"
+              >
+                Delete
+              </button>
+            </div>
+            <p className="text-xs text-slate-500 mt-3 font-semibold">Role preview: {member.role}</p>
           </div>
         ))}
       </div>
