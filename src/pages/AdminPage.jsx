@@ -80,7 +80,7 @@ function AdminDashboard({ token, setToken }) {
   const [activeTab, setActiveTab] = useState('forms')
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  const tabs = ['forms', 'bookings', 'clients', 'blogs', 'gallery', 'students']
+  const tabs = ['forms', 'bookings', 'clients', 'blogs', 'gallery']
 
   const handleTabChange = (tab) => {
     setActiveTab(tab)
@@ -161,7 +161,6 @@ function AdminDashboard({ token, setToken }) {
         {activeTab === 'blogs' && <BlogsPanel token={token} />}
         {activeTab === 'gallery' && <GalleryPanel token={token} />}
         {activeTab === 'bookings' && <BookingsPanel token={token} />}
-        {activeTab === 'students' && <StudentsPanel token={token} />}
       </main>
     </div>
   )
@@ -1075,6 +1074,7 @@ function GalleryPanel({ token }) {
   const [saving, setSaving] = useState(false)
 
   const getDefaultSizeForType = (type) => defaultGalleryItemSize[type] || defaultGalleryItemSize.image
+  const getUploadAcceptForType = (type) => (type === 'video' ? 'video/*' : 'image/*')
 
   const toDataUrl = (file) =>
     new Promise((resolve, reject) => {
@@ -1084,11 +1084,31 @@ function GalleryPanel({ token }) {
       reader.readAsDataURL(file)
     })
 
-  const detectTypeFromFile = (file, fallbackType) => {
+  const isFileTypeAllowed = (file, expectedType) => {
     const mime = String(file?.type || '')
-    if (mime.startsWith('video/')) return 'video'
-    if (mime.startsWith('image/')) return 'image'
-    return fallbackType
+    if (expectedType === 'video') {
+      return mime.startsWith('video/')
+    }
+    return mime.startsWith('image/')
+  }
+
+  const getReadableSourceLabel = (src = '') => {
+    const value = String(src || '').trim()
+    if (!value) return 'No source'
+    if (/^data:image\//i.test(value)) return 'Uploaded image file'
+    if (/^data:video\//i.test(value)) return 'Uploaded video file'
+
+    if (value.startsWith('/')) return value
+
+    try {
+      const parsed = new URL(value)
+      const fileName = parsed.pathname.split('/').filter(Boolean).pop()
+      return fileName || parsed.hostname
+    } catch {
+      const fileName = value.split('/').filter(Boolean).pop()
+      if (fileName && fileName.length <= 80) return fileName
+      return `${value.slice(0, 60)}...`
+    }
   }
 
   const importDefaultGallery = async () => {
@@ -1339,13 +1359,15 @@ function GalleryPanel({ token }) {
   const handleFormFileUpload = async (event) => {
     const file = event.target.files?.[0]
     if (!file) return
+    setError('')
     try {
-      const fileType = detectTypeFromFile(file, form.type)
-      const defaults = getDefaultSizeForType(fileType)
+      if (!isFileTypeAllowed(file, form.type)) {
+        throw new Error(`Invalid file type. Please upload only ${form.type} files.`)
+      }
+      const defaults = getDefaultSizeForType(form.type)
       const dataUrl = await toDataUrl(file)
       setForm((prev) => ({
         ...prev,
-        type: fileType,
         src: dataUrl,
         ...(prev.sizeMode === 'default' ? defaults : {}),
       }))
@@ -1357,13 +1379,15 @@ function GalleryPanel({ token }) {
   const handleEditFileUpload = async (event) => {
     const file = event.target.files?.[0]
     if (!file) return
+    setError('')
     try {
-      const fileType = detectTypeFromFile(file, editForm.type)
-      const defaults = getDefaultSizeForType(fileType)
+      if (!isFileTypeAllowed(file, editForm.type)) {
+        throw new Error(`Invalid file type. Please upload only ${editForm.type} files.`)
+      }
+      const defaults = getDefaultSizeForType(editForm.type)
       const dataUrl = await toDataUrl(file)
       setEditForm((prev) => ({
         ...prev,
-        type: fileType,
         src: dataUrl,
         ...(prev.sizeMode === 'default' ? defaults : {}),
       }))
@@ -1498,7 +1522,7 @@ function GalleryPanel({ token }) {
             Upload from device
             <input
               type="file"
-              accept="image/*,video/*"
+              accept={getUploadAcceptForType(form.type)}
               onChange={handleFormFileUpload}
               className="mt-2 block w-full text-sm font-medium text-slate-700"
               required
@@ -1625,7 +1649,7 @@ function GalleryPanel({ token }) {
                     Upload from device
                     <input
                       type="file"
-                      accept="image/*,video/*"
+                      accept={getUploadAcceptForType(editForm.type)}
                       onChange={handleEditFileUpload}
                       className="mt-2 block w-full text-sm font-medium text-slate-700"
                     />
@@ -1704,7 +1728,7 @@ function GalleryPanel({ token }) {
               </div>
             ) : (
               <>
-                <p className="font-bold text-slate-900 break-all">{item.src}</p>
+                <p className="font-bold text-slate-900">{getReadableSourceLabel(item.src)}</p>
                 <p className="text-sm font-semibold text-slate-500 mt-1">Category: {item.category || 'Events'}</p>
                 <p className={`mt-2 text-[11px] font-bold uppercase tracking-widest ${item.active ? 'text-emerald-600' : 'text-slate-400'}`}>
                   {item.active ? 'Visible' : 'Hidden'}
@@ -1859,114 +1883,6 @@ function BookingsPanel({ token }) {
                 </button>
               )}
               <button onClick={() => handleDelete(slot._id)} className="text-xs font-bold text-slate-700 bg-slate-100 px-4 py-2 rounded-full">
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-const emptyStudentForm = {
-  studentName: '',
-  college: '',
-  projectTitle: '',
-  problemStatement: '',
-  solutionDescription: '',
-  techStack: '',
-  keyLearnings: '',
-  screenshots: '',
-  documentationUrl: '',
-  pptUrl: '',
-  codeZipUrl: '',
-  videoUrl: '',
-  githubLink: '',
-  liveLink: '',
-  active: true,
-}
-
-function StudentsPanel({ token }) {
-  const [projects, setProjects] = useState([])
-  const [form, setForm] = useState(emptyStudentForm)
-
-  const fetchProjects = async () => {
-    const data = await adminFetch(token, '/api/admin/student-projects')
-    setProjects(data)
-  }
-
-  useEffect(() => {
-    fetchProjects().catch(console.error)
-  }, [token])
-
-  const handleAdd = async (e) => {
-    e.preventDefault()
-    await adminFetch(token, '/api/admin/student-projects', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
-    })
-    setForm(emptyStudentForm)
-    fetchProjects()
-  }
-
-  const toggleActive = async (project) => {
-    await adminFetch(token, `/api/admin/student-projects/${project._id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ active: !project.active }),
-    })
-    fetchProjects()
-  }
-
-  const handleDelete = async (id) => {
-    await adminFetch(token, `/api/admin/student-projects/${id}`, { method: 'DELETE' })
-    fetchProjects()
-  }
-
-  return (
-    <div>
-      <h2 className="text-3xl font-black text-slate-900 mb-8">Student Projects</h2>
-      <form onSubmit={handleAdd} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-10 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <input value={form.studentName} onChange={(e) => setForm({ ...form, studentName: e.target.value })} placeholder="Student Name" className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3" required />
-        <input value={form.college} onChange={(e) => setForm({ ...form, college: e.target.value })} placeholder="College" className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3" required />
-        <input value={form.projectTitle} onChange={(e) => setForm({ ...form, projectTitle: e.target.value })} placeholder="Project Title" className="md:col-span-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3" required />
-        <textarea value={form.problemStatement} onChange={(e) => setForm({ ...form, problemStatement: e.target.value })} placeholder="Problem Statement" className="md:col-span-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3" rows={2} />
-        <textarea value={form.solutionDescription} onChange={(e) => setForm({ ...form, solutionDescription: e.target.value })} placeholder="Solution Description" className="md:col-span-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3" rows={3} />
-        <input value={form.techStack} onChange={(e) => setForm({ ...form, techStack: e.target.value })} placeholder="Tech Stack (comma separated)" className="md:col-span-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3" />
-        <textarea value={form.keyLearnings} onChange={(e) => setForm({ ...form, keyLearnings: e.target.value })} placeholder="Key Learnings" className="md:col-span-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3" rows={2} />
-        <textarea value={form.screenshots} onChange={(e) => setForm({ ...form, screenshots: e.target.value })} placeholder="Screenshot URLs (one per line)" className="md:col-span-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3" rows={2} />
-        <input value={form.documentationUrl} onChange={(e) => setForm({ ...form, documentationUrl: e.target.value })} placeholder="Documentation URL" className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3" />
-        <input value={form.pptUrl} onChange={(e) => setForm({ ...form, pptUrl: e.target.value })} placeholder="PPT URL" className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3" />
-        <input value={form.codeZipUrl} onChange={(e) => setForm({ ...form, codeZipUrl: e.target.value })} placeholder="Code ZIP URL" className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3" />
-        <input value={form.videoUrl} onChange={(e) => setForm({ ...form, videoUrl: e.target.value })} placeholder="Video URL" className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3" />
-        <input value={form.githubLink} onChange={(e) => setForm({ ...form, githubLink: e.target.value })} placeholder="GitHub Link" className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3" />
-        <input value={form.liveLink} onChange={(e) => setForm({ ...form, liveLink: e.target.value })} placeholder="Live Link" className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3" />
-        <label className="md:col-span-2 flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-slate-700">
-          <input type="checkbox" checked={form.active} onChange={(e) => setForm({ ...form, active: e.target.checked })} />
-          Active
-        </label>
-        <button type="submit" className="md:col-span-2 bg-slate-900 hover:bg-[#dc4005] text-white font-bold py-3 px-6 rounded-xl transition-colors">
-          Save Student Project
-        </button>
-      </form>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {projects.map((project) => (
-          <div key={project._id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-            <h3 className="font-bold text-slate-900 text-lg">{project.projectTitle}</h3>
-            <p className="text-sm font-semibold text-slate-500 mt-1">
-              {project.studentName} - {project.college}
-            </p>
-            <p className={`mt-3 text-[11px] font-bold uppercase tracking-widest ${project.active ? 'text-emerald-600' : 'text-slate-400'}`}>
-              {project.active ? 'Active' : 'Inactive'}
-            </p>
-            <div className="mt-4 flex gap-2">
-              <button onClick={() => toggleActive(project)} className="flex-1 text-xs font-bold text-blue-700 bg-blue-50 px-4 py-2 rounded-full">
-                Toggle
-              </button>
-              <button onClick={() => handleDelete(project._id)} className="flex-1 text-xs font-bold text-rose-700 bg-rose-50 px-4 py-2 rounded-full">
                 Delete
               </button>
             </div>

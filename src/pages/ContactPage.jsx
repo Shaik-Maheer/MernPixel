@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { business, socialLinks } from '../data/siteData'
+import { SocialIcon } from '../components/SocialIcons'
 
 const reveal = {
   hidden: { opacity: 0, y: 20 },
@@ -100,7 +101,7 @@ export default function ContactPage() {
                 <div className="flex gap-4">
                   {socialLinks.map((link) => (
                     <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center hover:-translate-y-1 hover:shadow-md hover:bg-white hover:border-slate-300 transition-all shadow-sm" aria-label={link.label}>
-                      <img src={`/pics/${link.label.toLowerCase()}_icon.svg`} className="w-4 h-4 object-contain" alt={link.label} />
+                      <SocialIcon network={link.icon} className="w-4 h-4 object-contain" />
                     </a>
                   ))}
                 </div>

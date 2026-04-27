@@ -1,10 +1,8 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { servicesDetailed, caseStudies } from '../data/siteData'
 import CountUpNumber from '../components/CountUpNumber'
 import SEO from '../components/SEO'
-import ServiceModal from '../components/ServiceModal'
 import ClientLogoMarquee from '../components/ClientLogoMarquee'
 
 const reveal = {
@@ -29,7 +27,7 @@ const homeServiceIds = [
 ]
 
 export default function HomePage() {
-  const [activeService, setActiveService] = useState(null)
+  const MotionLink = motion(Link)
   const homeServices = homeServiceIds
     .map((id) => servicesDetailed.find((service) => service.id === id))
     .filter(Boolean)
@@ -65,7 +63,7 @@ export default function HomePage() {
                 Start a project <span className="ml-2 font-normal text-slate-400">→</span>
               </Link>
               <Link to="/works" className="bg-white text-slate-900 border border-slate-200 px-7 py-3 rounded-full font-medium hover:bg-slate-50 transition-all text-[15px]">
-                See our work
+                View Portfolio
               </Link>
             </div>
             
@@ -106,8 +104,8 @@ export default function HomePage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {homeServices.map((service, index) => (
-              <motion.article
-                onClick={() => setActiveService(service)}
+              <MotionLink
+                to="/services"
                 key={service.id}
                 className="group relative bg-white hover:bg-[#EBFDF1] border border-slate-200 hover:border-[#A7F3D0] rounded-3xl p-6 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-lg flex flex-col isolate cursor-pointer hover:-translate-y-1"
                 initial="hidden"
@@ -126,7 +124,7 @@ export default function HomePage() {
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                   </span>
                 </div>
-              </motion.article>
+              </MotionLink>
             ))}
           </div>
         </div>
@@ -137,30 +135,45 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-12">
             <h2 className="text-4xl md:text-[3.25rem] font-extrabold tracking-tight text-slate-900 leading-[1.05]">
-              Three principles. <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500">Zero<br/>compromises.</span>
+              What makes us different. <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500">Client trust.<br/>Real impact.</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <motion.div className="group bg-[#FFF9EA] border border-[#FCEBA2] rounded-[2rem] p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={reveal}>
-              <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center mb-6 shadow-md rotate-[-3deg] group-hover:rotate-0 group-hover:scale-110 transition-all duration-300">
-                <span className="text-xl drop-shadow-sm text-white font-black">S</span>
+            <motion.div className="group bg-[#ECFDF3] border border-[#BBF7D0] rounded-[2rem] p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={reveal}>
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center shadow-md rotate-[-3deg] group-hover:rotate-0 group-hover:scale-110 transition-all duration-300">
+                  <span className="text-xl drop-shadow-sm text-white font-black">C</span>
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-[0.16em] text-emerald-700 bg-white border border-emerald-200 px-3 py-1 rounded-full">
+                  98% Satisfaction
+                </span>
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">Speed</h3>
-              <p className="text-sm text-slate-500 leading-relaxed">Lighthouse-grade performance, ruthless asset budgets, fast time-to-interaction.</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-emerald-700 transition-colors">Client Satisfaction First</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">We build around your business goals and user needs, so delivery quality shows up in trust, retention, and referrals.</p>
             </motion.div>
-            <motion.div className="group bg-[#FFF9EA] border border-[#FCEBA2] rounded-[2rem] p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={reveal} transition={{ delay: 0.1 }}>
-              <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center mb-6 shadow-md rotate-[3deg] group-hover:rotate-0 group-hover:scale-110 transition-all duration-300">
-                <span className="text-xl drop-shadow-sm text-white font-black">C</span>
+            <motion.div className="group bg-[#EEF4FF] border border-[#C7D2FE] rounded-[2rem] p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={reveal} transition={{ delay: 0.1 }}>
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center shadow-md rotate-[3deg] group-hover:rotate-0 group-hover:scale-110 transition-all duration-300">
+                  <span className="text-xl drop-shadow-sm text-white font-black">I</span>
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-[0.16em] text-blue-700 bg-white border border-blue-200 px-3 py-1 rounded-full">
+                  Real-World Results
+                </span>
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">Conversion</h3>
-              <p className="text-sm text-slate-500 leading-relaxed">Every section earns its place. Hierarchy, trust and CTAs designed to convert.</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-700 transition-colors">Real-World Impact</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">Every project is designed to move live outcomes like leads, conversions, and operational clarity after launch.</p>
             </motion.div>
-            <motion.div className="group bg-[#FFF9EA] border border-[#FCEBA2] rounded-[2rem] p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={reveal} transition={{ delay: 0.2 }}>
-              <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center mb-6 shadow-md rotate-[-3deg] group-hover:rotate-0 group-hover:scale-110 transition-all duration-300">
-                <span className="text-xl drop-shadow-sm text-white font-black">S</span>
+            <motion.div className="group bg-[#FFF4E6] border border-[#FED7AA] rounded-[2rem] p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={reveal} transition={{ delay: 0.2 }}>
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center shadow-md rotate-[-3deg] group-hover:rotate-0 group-hover:scale-110 transition-all duration-300">
+                  <span className="text-xl drop-shadow-sm text-white font-black">O</span>
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-[0.16em] text-orange-700 bg-white border border-orange-200 px-3 py-1 rounded-full">
+                  No Outsourcing
+                </span>
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">Scale</h3>
-              <p className="text-sm text-slate-500 leading-relaxed">Architecture that holds up — clean code, sane patterns, easy to extend.</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-orange-700 transition-colors">Execution Ownership</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">You work directly with the core builders, with transparent updates and accountable execution from start to finish.</p>
             </motion.div>
           </div>
         </div>
@@ -228,8 +241,6 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
-
-      <ServiceModal service={activeService} onClose={() => setActiveService(null)} />
 
     </main>
   )

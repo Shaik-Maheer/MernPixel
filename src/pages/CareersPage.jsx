@@ -9,43 +9,43 @@ const reveal = {
 
 export default function CareersPage() {
   return (
-    <main className="min-h-screen bg-[#FFFFFF] pb-32">
+    <main className="relative min-h-screen bg-[#FFFFFF] overflow-hidden pb-16 md:pb-28">
       
       {/* Background Half Section */}
-      <div className="absolute top-0 inset-x-0 h-[65vh] bg-[#FAF5FF] z-0 rounded-b-[4rem]"></div>
+      <div className="absolute top-0 inset-x-0 h-[44vh] sm:h-[52vh] md:h-[65vh] bg-[#FAF5FF] z-0 rounded-b-[2.2rem] sm:rounded-b-[3rem] md:rounded-b-[4rem]"></div>
 
-      <section className="relative z-10 pt-20 md:pt-32 pb-16 flex flex-col items-center justify-center min-h-[70vh]">
-        <div className="max-w-3xl mx-auto px-6 text-center">
+      <section className="relative z-10 pt-16 sm:pt-20 md:pt-32 pb-10 sm:pb-14 md:pb-16 flex flex-col items-center justify-center min-h-[70vh] sm:min-h-[72vh]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center w-full">
           
-          <motion.div initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.5 }} className="flex flex-col items-center">
+          <motion.div initial="hidden" animate="visible" variants={reveal} transition={{ duration: 0.5 }} className="flex flex-col items-center w-full">
             
-            <div className="inline-flex bg-blue-50/80 backdrop-blur-sm rounded-full px-4 py-1.5 mb-8 items-center border border-blue-100">
+            <div className="inline-flex bg-blue-50/80 backdrop-blur-sm rounded-full px-4 py-1.5 mb-6 sm:mb-8 items-center border border-blue-100">
                <span className="text-xs font-bold text-slate-800 tracking-wide">Careers</span>
             </div>
 
-            <h1 className="text-5xl md:text-[5.5rem] font-extrabold tracking-tight text-slate-900 mb-8 leading-[1.05]">
+            <h1 className="text-[2.35rem] sm:text-5xl md:text-[5.5rem] font-extrabold tracking-tight text-slate-900 mb-6 sm:mb-8 leading-[1.05]">
               Join the <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500">team.</span>
             </h1>
 
-            <div className="bg-white border border-slate-200 rounded-[2.5rem] p-10 md:p-14 shadow-sm w-full mt-4">
-              <div className="w-16 h-16 bg-slate-100 rounded-full mx-auto flex items-center justify-center text-slate-400 mb-8">
+            <div className="bg-white border border-slate-200 rounded-3xl sm:rounded-[2.5rem] p-5 sm:p-10 md:p-14 shadow-sm w-full mt-3 sm:mt-4">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 bg-slate-100 rounded-full mx-auto flex items-center justify-center text-slate-400 mb-6 sm:mb-8">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
               </div>
               
-              <h2 className="text-2xl font-bold text-slate-900 mb-4">No open roles currently.</h2>
-              <p className="text-[17px] text-slate-600 mb-10 max-w-lg mx-auto leading-relaxed">
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-4">No open roles currently.</h2>
+              <p className="text-[15px] sm:text-[17px] text-slate-600 mb-8 sm:mb-10 max-w-lg mx-auto leading-relaxed">
                 Our core team is currently operating at full capacity. We aren't actively hiring for any positions right now, but things change quickly!
               </p>
 
-              <div className="flex flex-col items-center border-t border-slate-100 pt-8">
-                <p className="text-sm font-bold text-slate-900 mb-6 uppercase tracking-wider">Follow us for future updates</p>
-                <div className="flex gap-4">
+              <div className="flex flex-col items-center border-t border-slate-100 pt-6 sm:pt-8">
+                <p className="text-xs sm:text-sm font-bold text-slate-900 mb-5 sm:mb-6 uppercase tracking-wider">Follow us for future updates</p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full">
                   {socialLinks.slice(0,2).map((link) => (
-                    <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl px-6 py-3 text-sm font-bold text-slate-700 transition-colors">
+                    <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="w-full sm:w-auto text-center bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl px-6 py-3 text-sm font-bold text-slate-700 transition-colors">
                       {link.label}
                     </a>
                   ))}
-                  <Link to="/contact" className="bg-slate-900 hover:bg-[#E15D2B] text-white rounded-xl px-6 py-3 text-sm font-bold transition-colors">
+                  <Link to="/contact" className="w-full sm:w-auto text-center bg-slate-900 hover:bg-[#E15D2B] text-white rounded-xl px-6 py-3 text-sm font-bold transition-colors">
                     Get in touch
                   </Link>
                 </div>

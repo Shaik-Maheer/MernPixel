@@ -81,12 +81,12 @@ export default function ChatbotWidget() {
           rel="noreferrer"
           aria-label="Chat on WhatsApp"
           title="Chat on WhatsApp"
-          className="flex items-center justify-center w-[56px] h-[56px] rounded-full bg-[#25D366] border border-[#1DA851] shadow-[0_8px_30px_rgba(37,211,102,0.35)] hover:bg-[#1DA851] transition-all cursor-pointer hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(37,211,102,0.35)]"
+          className="flex items-center justify-center w-[56px] h-[56px] rounded-full transition-transform duration-200 cursor-pointer hover:-translate-y-1"
           initial={{ opacity: 0, y: 20, scale: 0.92 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.55, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
         >
-          <img src="/pics/whatsapp_icon.svg" alt="" className="w-7 h-7 object-contain" />
+          <img src="/pics/whatsapp_icon.svg" alt="WhatsApp" className="w-[56px] h-[56px] object-contain" />
         </MotionAnchor>
 
         {/* AI Chatbot Launcher */}
@@ -103,11 +103,19 @@ export default function ChatbotWidget() {
           {open ? (
              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           ) : (
-             <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-               <rect width="18" height="14" x="3" y="8" rx="2" ry="2"></rect>
-               <path d="M12 5a3 3 0 1 0-3 3"></path>
-               <path d="M9 13h.01"></path>
-               <path d="M15 13h.01"></path>
+             <svg width="31" height="31" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+               <defs>
+                 <linearGradient id="mpChatOrb" x1="6" y1="26" x2="27" y2="6" gradientUnits="userSpaceOnUse">
+                   <stop stopColor="#06B6D4" />
+                   <stop offset="0.52" stopColor="#3B82F6" />
+                   <stop offset="1" stopColor="#A855F7" />
+                 </linearGradient>
+               </defs>
+               <circle cx="16" cy="16" r="13" fill="url(#mpChatOrb)" />
+               <path d="M10.6 16.2C10.6 13.7 12.6 11.7 15.1 11.7H16.8C19.3 11.7 21.3 13.7 21.3 16.2V17.6C21.3 20.1 19.3 22.1 16.8 22.1H14.9L11.7 23.8L12.5 21.2C11.3 20.4 10.6 19 10.6 17.6V16.2Z" fill="white" fillOpacity="0.2" stroke="white" strokeWidth="1.4" />
+               <circle cx="14.7" cy="16.9" r="1.1" fill="white" />
+               <circle cx="17.2" cy="16.9" r="1.1" fill="white" />
+               <path d="M22.7 9.3L23.3 10.7L24.8 11.3L23.3 11.9L22.7 13.3L22.1 11.9L20.7 11.3L22.1 10.7L22.7 9.3Z" fill="white" />
              </svg>
           )}
         </MotionButton>

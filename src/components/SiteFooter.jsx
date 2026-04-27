@@ -6,9 +6,10 @@ const quickLinks = [
   { label: 'Home', path: '/' },
   { label: 'Services', path: '/services' },
   { label: 'Work', path: '/works' },
-  { label: 'Gallery', path: '/gallery' },
   { label: 'Blog', path: '/blog' },
   { label: 'About', path: '/about' },
+  { label: 'Gallery', path: '/gallery' },
+  { label: 'Careers', path: '/careers' },
   { label: 'Contact', path: '/contact' },
 ]
 
@@ -46,8 +47,8 @@ export default function SiteFooter() {
           </div>
 
           <div className="md:col-span-3">
-            <h4 className="text-sm font-extrabold text-slate-900 uppercase tracking-widest mb-4">Explore</h4>
-            <ul className="space-y-2 border-l-2 border-slate-200 pl-4">
+            <h4 className="text-sm font-extrabold text-slate-900 uppercase tracking-widest mb-4">Explore Us</h4>
+            <ul className="grid grid-cols-2 gap-y-2 gap-x-6 border-l-2 border-slate-200 pl-4">
               {quickLinks.map((link) => (
                 <li key={link.path}>
                   <Link to={link.path} className="text-[14px] font-semibold text-slate-600 hover:text-[#E15D2B] transition-colors">

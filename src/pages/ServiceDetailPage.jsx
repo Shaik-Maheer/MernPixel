@@ -183,13 +183,13 @@ export default function ServiceDetailPage() {
 
     if (service.id === 'marketing') {
       return (
-        <div className="relative w-full max-w-4xl mx-auto h-[400px] flex items-center justify-center mb-10 z-20">
-          <motion.div animate={{ y: [0, -15, 0] }} transition={{ repeat: Infinity, duration: 4 }} className="absolute top-10 left-10 lg:left-20 bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm">SEO Optimization</motion.div>
-          <motion.div animate={{ y: [0, 20, 0] }} transition={{ repeat: Infinity, duration: 5, delay: 1 }} className="absolute bottom-10 left-[10%] bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm">Paid Ads Clicks</motion.div>
-          <motion.div animate={{ y: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 6, delay: 2 }} className="absolute top-20 right-10 lg:right-24 bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm">Social Scaling</motion.div>
-          <motion.div animate={{ y: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 0.5 }} className="absolute bottom-20 right-[10%] bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest uppercase py-4 px-8 rounded-full shadow-2xl text-sm">Online KPI</motion.div>
-          <div className={`w-40 h-40 rounded-[2.5rem] flex items-center justify-center text-white shadow-2xl z-20 ${theme.bgGlow} border border-white/20 backdrop-blur-lg`}>
-            <ServiceIcon type={service.icon} className="w-20 h-20" strokeWidth={1.5} />
+        <div className="relative w-full max-w-5xl mx-auto mb-20 z-20 mt-16 group">
+          <div className={`w-full rounded-[2.5rem] overflow-hidden shadow-2xl ring-1 ring-white/10 relative transition-transform duration-700 hover:scale-[1.02] ${theme.shadow}`}>
+            <img
+              src="/marketing_hero.png"
+              alt="Digital marketing visual"
+              className="w-full h-auto object-cover"
+            />
           </div>
         </div>
       )
@@ -211,12 +211,14 @@ export default function ServiceDetailPage() {
       <div className="relative w-full max-w-5xl mx-auto mb-20 z-20 mt-16 group">
         <div className={`w-full h-[450px] md:h-[600px] rounded-[2.5rem] overflow-hidden shadow-2xl ring-1 ring-white/10 relative transition-transform duration-700 hover:scale-[1.02] ${theme.shadow}`}>
           {isVideo ? (
-            <video src={mediaFile} autoPlay loop muted playsInline className={`w-full h-full object-cover scale-105 ${isEcommerce ? 'opacity-100' : 'opacity-80'}`} />
+            <video src={mediaFile} autoPlay loop muted playsInline className="w-full h-full object-cover scale-105" />
           ) : (
              <img src={mediaFile} alt={service.title} className={`w-full h-full object-cover ${isEcommerce ? 'opacity-100' : 'opacity-80'}`} />
           )}
-          <div className={`absolute inset-0 bg-gradient-to-t ${isEcommerce ? 'from-black/45 via-black/20' : 'from-black via-black/40'} to-transparent pointer-events-none`}></div>
-          {!isEcommerce && (
+          {!isVideo && (
+            <div className={`absolute inset-0 bg-gradient-to-t ${isEcommerce ? 'from-black/45 via-black/20' : 'from-black via-black/40'} to-transparent pointer-events-none`}></div>
+          )}
+          {!isVideo && !isEcommerce && (
             <div className={`absolute inset-0 bg-gradient-to-tr ${theme.primary} mix-blend-overlay opacity-40 pointer-events-none`}></div>
           )}
         </div>

@@ -347,7 +347,7 @@ export const caseStudies = [
     solution: 'Redesigned information architecture with clear journey, trust blocks, and speed optimization.',
     result: '31% lower inquiry drop-off and stronger admissions conversion.',
     image: '/img2.png',
-    link: 'https://indiancricketacademy.netlify.app/',
+    link: 'https://icacricket.in/',
   },
   {
     id: 'stylistar-ecom',
@@ -412,9 +412,9 @@ export const testimonials = [
 
 export const teamMembers = [
   {
-    name: 'B. Manohar Bassapagari',
+    name: 'Manohar Bassapagari',
     role: 'Full Stack Lead',
-    photo: 'https://ui-avatars.com/api/?name=B+Manohar+Bassapagari&background=005461&color=F4F4F4&size=512&bold=true',
+    photo: 'https://ui-avatars.com/api/?name=Manohar+Bassapagari&background=005461&color=F4F4F4&size=512&bold=true',
     linkedin: 'https://www.linkedin.com/in/manohar-basappagari-398606335/',
     bio: 'Leads architecture quality and full-stack execution across all client products.',
   },
