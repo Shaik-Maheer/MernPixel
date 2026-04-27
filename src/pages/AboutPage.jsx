@@ -138,15 +138,14 @@ export default function AboutPage() {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-10 items-stretch">
             {teamMembers.map(member => (
-              <article key={member.name} className="h-full flex flex-col items-center text-center group rounded-[2rem] border border-slate-800/80 bg-[#0f1117] px-6 py-8 shadow-[0_24px_45px_rgba(0,0,0,0.3)]">
+              <article key={member.name} className="h-full flex flex-col items-center text-center rounded-[2rem] border border-slate-800/80 bg-[#0f1117] px-6 py-8 shadow-[0_24px_45px_rgba(0,0,0,0.3)]">
                  <button
                    type="button"
                    onClick={() => setActiveMemberImage({ src: member.photo, name: member.name })}
-                   className="w-40 h-40 md:w-48 md:h-48 rounded-[2rem] mb-6 overflow-hidden shadow-2xl border border-slate-800 relative group-hover:-translate-y-3 transition-transform duration-500 focus:outline-none focus:ring-2 focus:ring-white/40"
+                   className="w-40 h-40 md:w-48 md:h-48 rounded-[2rem] mb-6 overflow-hidden shadow-2xl border border-slate-800"
                    aria-label={`View ${member.name} photo`}
                  >
-                   <img src={member.photo} alt={member.name} className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-110 transition-all duration-500" />
-                   <div className="absolute inset-0 bg-blue-500/10 group-hover:bg-transparent transition-colors duration-500 pointer-events-none"></div>
+                   <img src={member.photo} alt={member.name} className="w-full h-full object-cover" />
                  </button>
                  <h4 className="text-2xl font-black text-white mb-2 min-h-[4.75rem] flex items-center justify-center leading-tight">{member.name}</h4>
                  <p className="text-[13px] font-extrabold text-[#00B7B5] tracking-widest uppercase mb-4 min-h-[2.5rem] flex items-center justify-center">{member.role}</p>
