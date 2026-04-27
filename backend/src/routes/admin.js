@@ -83,6 +83,7 @@ function normalizeClientSection(value, fallback = 'home') {
 
 const GALLERY_BOOTSTRAP_KEY = 'gallery_bootstrapped_v1'
 const GALLERY_LAYOUT_KEY = 'gallery_layout_v1'
+const TEAM_MEMBERS_KEY = 'team_members_v1'
 const defaultGallerySeed = [
   { type: 'image', src: '/workshops/event-poster.png', category: 'Events', colSpan: 1, height: 340 },
   { type: 'image', src: '/workshops/event-quantum-classroom.png', category: 'Events', colSpan: 2, height: 300 },
@@ -98,11 +99,68 @@ const defaultGalleryLayout = {
   tabletColumns: 2,
   desktopColumns: 3,
 }
+const defaultTeamMembers = [
+  {
+    name: 'Manohar Bassapagari',
+    role: 'Full Stack Lead',
+    photo: 'https://ui-avatars.com/api/?name=Manohar+Bassapagari&background=005461&color=F4F4F4&size=512&bold=true',
+    linkedin: 'https://www.linkedin.com/in/manohar-basappagari-398606335/',
+    bio: 'Leads architecture quality and full-stack execution across all client products.',
+  },
+  {
+    name: 'Shaik Maheer',
+    role: 'UI/UX & Brand Designer',
+    photo: 'https://ui-avatars.com/api/?name=Shaik+Maheer&background=018790&color=F4F4F4&size=512&bold=true',
+    linkedin: 'https://www.linkedin.com/in/shaik-maheer-66b8a5275/',
+    bio: 'Owns brand direction, interface quality, and visual identity systems.',
+  },
+  {
+    name: 'Shaik Nishar Basha',
+    role: 'Frontend Engineer',
+    photo: 'https://ui-avatars.com/api/?name=Shaik+Nishar+Basha&background=00B7B5&color=005461&size=512&bold=true',
+    linkedin: 'https://www.linkedin.com/in/shaiknisharbasha/',
+    bio: 'Builds performant, polished, and responsive frontend experiences.',
+  },
+  {
+    name: 'P. Sidda Reddy',
+    role: 'Growth & Consulting',
+    photo: 'https://ui-avatars.com/api/?name=P+Sidda+Reddy&background=005461&color=F4F4F4&size=512&bold=true',
+    linkedin: 'https://www.linkedin.com/in/sidda-reddy/',
+    bio: 'Aligns business strategy, consulting flow, and client growth priorities.',
+  },
+]
 
 function clampNumber(value, min, max, fallback) {
   const safeValue = Number(value)
   if (!Number.isFinite(safeValue)) return fallback
   return Math.max(min, Math.min(max, safeValue))
+}
+
+function normalizeTeamMember(input = {}, fallback = {}) {
+  const safeInput = input && typeof input === 'object' ? input : {}
+  return {
+    name: String(safeInput.name || '').trim() || fallback.name || 'Team Member',
+    role: String(safeInput.role || '').trim() || fallback.role || '',
+    photo: String(safeInput.photo || '').trim() || fallback.photo || '',
+    linkedin: String(safeInput.linkedin || '').trim() || fallback.linkedin || '',
+    bio: String(safeInput.bio || '').trim() || fallback.bio || '',
+  }
+}
+
+function normalizeTeamMembers(input) {
+  const members = Array.isArray(input) ? input : []
+  const normalized = defaultTeamMembers.map((fallbackMember, index) =>
+    normalizeTeamMember(members[index], fallbackMember)
+  )
+  return normalized
+}
+
+async function getTeamMembersSetting() {
+  const setting = await SiteSetting.findOne({ key: TEAM_MEMBERS_KEY }).lean()
+  if (!setting) {
+    return defaultTeamMembers
+  }
+  return normalizeTeamMembers(setting.value)
 }
 
 function normalizeGalleryLayout(input = {}) {
@@ -362,6 +420,30 @@ router.delete('/clients/:id', authMiddleware, async (req, res, next) => {
   try {
     await Client.findByIdAndDelete(req.params.id)
     return res.json({ ok: true })
+  } catch (error) {
+    return next(error)
+  }
+})
+
+// TEAM
+router.get('/team', async (req, res, next) => {
+  try {
+    const members = await getTeamMembersSetting()
+    return res.json(members)
+  } catch (error) {
+    return next(error)
+  }
+})
+
+router.put('/team', authMiddleware, async (req, res, next) => {
+  try {
+    const members = normalizeTeamMembers(req.body?.members)
+    await SiteSetting.updateOne(
+      { key: TEAM_MEMBERS_KEY },
+      { $set: { value: members } },
+      { upsert: true }
+    )
+    return res.json(members)
   } catch (error) {
     return next(error)
   }

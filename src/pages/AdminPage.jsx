@@ -4,6 +4,37 @@ const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://mernpixel.onrende
   .replace(/\/+$/, '')
   .replace(/\/api$/, '')
 
+const defaultTeamMembers = [
+  {
+    name: 'Manohar Bassapagari',
+    role: 'Full Stack Lead',
+    photo: 'https://ui-avatars.com/api/?name=Manohar+Bassapagari&background=005461&color=F4F4F4&size=512&bold=true',
+    linkedin: 'https://www.linkedin.com/in/manohar-basappagari-398606335/',
+    bio: 'Leads architecture quality and full-stack execution across all client products.',
+  },
+  {
+    name: 'Shaik Maheer',
+    role: 'UI/UX & Brand Designer',
+    photo: 'https://ui-avatars.com/api/?name=Shaik+Maheer&background=018790&color=F4F4F4&size=512&bold=true',
+    linkedin: 'https://www.linkedin.com/in/shaik-maheer-66b8a5275/',
+    bio: 'Owns brand direction, interface quality, and visual identity systems.',
+  },
+  {
+    name: 'Shaik Nishar Basha',
+    role: 'Frontend Engineer',
+    photo: 'https://ui-avatars.com/api/?name=Shaik+Nishar+Basha&background=00B7B5&color=005461&size=512&bold=true',
+    linkedin: 'https://www.linkedin.com/in/shaiknisharbasha/',
+    bio: 'Builds performant, polished, and responsive frontend experiences.',
+  },
+  {
+    name: 'P. Sidda Reddy',
+    role: 'Growth & Consulting',
+    photo: 'https://ui-avatars.com/api/?name=P+Sidda+Reddy&background=005461&color=F4F4F4&size=512&bold=true',
+    linkedin: 'https://www.linkedin.com/in/sidda-reddy/',
+    bio: 'Aligns business strategy, consulting flow, and client growth priorities.',
+  },
+]
+
 export default function AdminPage() {
   const [token, setToken] = useState(localStorage.getItem('adminToken') || '')
 
@@ -80,7 +111,7 @@ function AdminDashboard({ token, setToken }) {
   const [activeTab, setActiveTab] = useState('forms')
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  const tabs = ['forms', 'bookings', 'clients', 'blogs', 'gallery']
+  const tabs = ['forms', 'bookings', 'clients', 'team', 'blogs', 'gallery']
 
   const handleTabChange = (tab) => {
     setActiveTab(tab)
@@ -158,6 +189,7 @@ function AdminDashboard({ token, setToken }) {
         </div>
         {activeTab === 'forms' && <FormsPanel token={token} />}
         {activeTab === 'clients' && <ClientsPanel token={token} />}
+        {activeTab === 'team' && <TeamPanel token={token} />}
         {activeTab === 'blogs' && <BlogsPanel token={token} />}
         {activeTab === 'gallery' && <GalleryPanel token={token} />}
         {activeTab === 'bookings' && <BookingsPanel token={token} />}
@@ -691,6 +723,152 @@ function ClientsPanel({ token }) {
           </div>
         ))}
       </div>
+    </div>
+  )
+}
+
+function TeamPanel({ token }) {
+  const [members, setMembers] = useState(defaultTeamMembers)
+  const [loading, setLoading] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState('')
+
+  const toDataUrl = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(String(reader.result || ''))
+      reader.onerror = () => reject(new Error('Failed to read image file.'))
+      reader.readAsDataURL(file)
+    })
+
+  const normalizeTeamMember = (member = {}, index = 0) => {
+    const fallback = defaultTeamMembers[index] || defaultTeamMembers[0]
+    return {
+      ...fallback,
+      ...member,
+      name: String(member?.name || fallback.name || '').trim() || fallback.name,
+      photo: String(member?.photo || fallback.photo || '').trim() || fallback.photo,
+      role: String(member?.role || fallback.role || '').trim() || fallback.role,
+      linkedin: String(member?.linkedin || fallback.linkedin || '').trim() || fallback.linkedin,
+      bio: String(member?.bio || fallback.bio || '').trim() || fallback.bio,
+    }
+  }
+
+  const normalizeTeamMembers = (input) =>
+    defaultTeamMembers.map((fallback, index) => normalizeTeamMember(Array.isArray(input) ? input[index] : fallback, index))
+
+  const fetchTeam = async () => {
+    setLoading(true)
+    setError('')
+    try {
+      const data = await adminFetch(token, '/api/admin/team')
+      setMembers(normalizeTeamMembers(data))
+    } catch (fetchError) {
+      setError(fetchError.message || 'Failed to load team members.')
+      setMembers(defaultTeamMembers)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchTeam().catch(console.error)
+  }, [token])
+
+  const updateMember = (index, patch) => {
+    setMembers((prev) => prev.map((member, memberIndex) => (memberIndex === index ? { ...member, ...patch } : member)))
+  }
+
+  const handlePhotoUpload = async (index, file) => {
+    if (!file) return
+    setError('')
+    if (!String(file.type || '').startsWith('image/')) {
+      setError('Please upload only image files for team photos.')
+      return
+    }
+    try {
+      const photo = await toDataUrl(file)
+      updateMember(index, {
+        photo,
+        name: members[index]?.name || file.name.replace(/\.[^/.]+$/, ''),
+      })
+    } catch (uploadError) {
+      setError(uploadError.message || 'Failed to read team image.')
+    }
+  }
+
+  const handleSaveTeam = async () => {
+    setSaving(true)
+    setError('')
+    try {
+      const payload = normalizeTeamMembers(members)
+      const missingName = payload.find((member) => !String(member.name || '').trim())
+      if (missingName) {
+        throw new Error('Each team member must have a name.')
+      }
+      const missingPhoto = payload.find((member) => !String(member.photo || '').trim())
+      if (missingPhoto) {
+        throw new Error('Each team member must have a photo.')
+      }
+
+      const data = await adminFetch(token, '/api/admin/team', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ members: payload }),
+      })
+      setMembers(normalizeTeamMembers(data))
+    } catch (saveError) {
+      setError(saveError.message || 'Failed to save team members.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  return (
+    <div>
+      <h2 className="text-3xl font-black text-slate-900 mb-3">Manage Team</h2>
+      <p className="text-slate-600 mb-8 text-sm">
+        Update all 4 team member names and photos. Upload from device and save once to replace directly on the About page.
+      </p>
+
+      {error && <p className="text-sm text-rose-600 font-bold mb-4">{error}</p>}
+      {loading && <p className="text-slate-500 font-bold mb-4">Loading team members...</p>}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {members.map((member, index) => (
+          <div key={`team-member-${index}`} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+            <div className="w-28 h-28 rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 mb-4">
+              <img src={member.photo} alt={member.name || `Team Member ${index + 1}`} className="w-full h-full object-cover" />
+            </div>
+            <p className="text-xs font-black uppercase tracking-widest text-slate-500 mb-3">Member {index + 1}</p>
+            <input
+              value={member.name || ''}
+              onChange={(e) => updateMember(index, { name: e.target.value })}
+              placeholder="Team member name"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-900 mb-3"
+            />
+            <label className="block text-sm font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
+              Upload Photo
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handlePhotoUpload(index, e.target.files?.[0])}
+                className="mt-2 block w-full text-sm font-medium text-slate-700"
+              />
+            </label>
+            <p className="text-xs text-slate-500 mt-3 font-semibold">Role: {member.role}</p>
+          </div>
+        ))}
+      </div>
+
+      <button
+        type="button"
+        onClick={handleSaveTeam}
+        disabled={saving}
+        className="mt-6 bg-slate-900 hover:bg-[#dc4005] disabled:opacity-60 text-white font-bold py-3 px-6 rounded-xl transition-colors"
+      >
+        {saving ? 'Saving Team...' : 'Save Team'}
+      </button>
     </div>
   )
 }

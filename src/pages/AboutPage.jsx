@@ -1,11 +1,43 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import DetailModal from '../components/DetailModal'
-import { aboutContent, lectureDetail, storyDetail, teamMembers } from '../data/siteData'
+import { aboutContent, lectureDetail, storyDetail, teamMembers as defaultTeamMembers } from '../data/siteData'
+
+const baseUrl = (import.meta.env.VITE_API_BASE_URL || 'https://mernpixel.onrender.com')
+  .replace(/\/+$/, '')
+  .replace(/\/api$/, '')
 
 export default function AboutPage() {
   const [activeModal, setActiveModal] = useState('')
   const [activeMemberImage, setActiveMemberImage] = useState(null)
+  const [teamMembers, setTeamMembers] = useState(defaultTeamMembers)
+
+  useEffect(() => {
+    let mounted = true
+
+    fetch(`${baseUrl}/api/admin/team`)
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to load team members')
+        return res.json()
+      })
+      .then((data) => {
+        if (!mounted) return
+        if (Array.isArray(data) && data.length > 0) {
+          setTeamMembers(data)
+        } else {
+          setTeamMembers(defaultTeamMembers)
+        }
+      })
+      .catch(() => {
+        if (mounted) {
+          setTeamMembers(defaultTeamMembers)
+        }
+      })
+
+    return () => {
+      mounted = false
+    }
+  }, [])
 
   useEffect(() => {
     const handleEscape = (event) => {
@@ -135,11 +167,15 @@ export default function AboutPage() {
         >
           <button
             type="button"
-            className="absolute top-5 right-5 md:top-7 md:right-7 w-11 h-11 rounded-full bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-colors text-2xl leading-none"
+            className="absolute top-4 right-4 md:top-6 md:right-6 inline-flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-white text-slate-900 border border-white/70 hover:bg-slate-100 transition-colors font-extrabold text-sm shadow-xl"
             onClick={() => setActiveMemberImage(null)}
             aria-label="Close image preview"
           >
-            ×
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+            <span>Close</span>
           </button>
           <div className="max-w-[95vw] max-h-[92vh]" onClick={(event) => event.stopPropagation()}>
             <img

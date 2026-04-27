@@ -103,19 +103,20 @@ export default function ChatbotWidget() {
           {open ? (
              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           ) : (
-             <svg width="31" height="31" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-               <defs>
-                 <linearGradient id="mpChatOrb" x1="6" y1="26" x2="27" y2="6" gradientUnits="userSpaceOnUse">
-                   <stop stopColor="#06B6D4" />
-                   <stop offset="0.52" stopColor="#3B82F6" />
-                   <stop offset="1" stopColor="#A855F7" />
-                 </linearGradient>
-               </defs>
-               <circle cx="16" cy="16" r="13" fill="url(#mpChatOrb)" />
-               <path d="M10.6 16.2C10.6 13.7 12.6 11.7 15.1 11.7H16.8C19.3 11.7 21.3 13.7 21.3 16.2V17.6C21.3 20.1 19.3 22.1 16.8 22.1H14.9L11.7 23.8L12.5 21.2C11.3 20.4 10.6 19 10.6 17.6V16.2Z" fill="white" fillOpacity="0.2" stroke="white" strokeWidth="1.4" />
-               <circle cx="14.7" cy="16.9" r="1.1" fill="white" />
-               <circle cx="17.2" cy="16.9" r="1.1" fill="white" />
-               <path d="M22.7 9.3L23.3 10.7L24.8 11.3L23.3 11.9L22.7 13.3L22.1 11.9L20.7 11.3L22.1 10.7L22.7 9.3Z" fill="white" />
+             <svg width="29" height="29" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+               <path
+                 d="M7.5 11.2C7.5 8.74 9.5 6.75 11.95 6.75H17.85C20.31 6.75 22.3 8.74 22.3 11.2V15.2C22.3 17.66 20.31 19.65 17.85 19.65H13.35L9.3 22.65L10.2 19.65C8.66 19.04 7.5 17.47 7.5 15.7V11.2Z"
+                 stroke="currentColor"
+                 strokeWidth="2"
+                 strokeLinecap="round"
+                 strokeLinejoin="round"
+               />
+               <circle cx="13.15" cy="13.2" r="1.1" fill="currentColor" />
+               <circle cx="16.65" cy="13.2" r="1.1" fill="currentColor" />
+               <path
+                 d="M21.9 5.2L22.55 6.7L24.05 7.35L22.55 8L21.9 9.5L21.25 8L19.75 7.35L21.25 6.7L21.9 5.2Z"
+                 fill="currentColor"
+               />
              </svg>
           )}
         </MotionButton>

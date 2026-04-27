@@ -168,14 +168,55 @@ export default function ServiceDetailPage() {
     }
 
     if (service.id === 'guest-lectures') {
+      const focusAreasLeft = ['Interactive Sessions', 'Live Coding']
+      const focusAreasRight = ['Tech + Business', 'Resume Reviews']
+
       return (
-        <div className="relative w-full max-w-4xl mx-auto h-[400px] flex items-center justify-center mb-10 z-20">
-          <motion.div animate={{ y: [0, -15, 0] }} transition={{ repeat: Infinity, duration: 4 }} className="absolute top-10 left-4 lg:left-10 bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest py-4 px-8 rounded-full shadow-2xl text-sm">Interactive Sessions</motion.div>
-          <motion.div animate={{ y: [0, 20, 0] }} transition={{ repeat: Infinity, duration: 5, delay: 1 }} className="absolute bottom-10 left-[5%] bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest py-4 px-8 rounded-full shadow-2xl text-sm">Live Coding</motion.div>
-          <motion.div animate={{ y: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 6, delay: 2 }} className="absolute top-20 right-4 lg:right-10 bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest py-4 px-8 rounded-full shadow-2xl text-sm">Tech + Business</motion.div>
-          <motion.div animate={{ y: [0, 15, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 0.5 }} className="absolute bottom-20 right-[5%] bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold tracking-widest py-4 px-8 rounded-full shadow-2xl text-sm">Resume Reviews</motion.div>
-          <div className={`w-40 h-40 rounded-[2.5rem] flex items-center justify-center text-white shadow-2xl z-20 ${theme.bgGlow} border border-white/20 backdrop-blur-lg`}>
-            <ServiceIcon type={service.icon} className="w-20 h-20" strokeWidth={1.5} />
+        <div className="relative w-full max-w-5xl mx-auto mb-12 md:mb-16 z-20 mt-10 md:mt-14 px-1">
+          <div className={`relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] border border-white/10 bg-white/[0.03] backdrop-blur-sm p-5 sm:p-8 md:p-10 ${theme.shadow}`}>
+            <div className={`pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-[65%] h-44 bg-gradient-to-r ${theme.primary} opacity-25 blur-3xl`} />
+
+            <div className="relative grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-6 md:gap-10">
+              <div className="grid grid-cols-2 md:grid-cols-1 gap-3">
+                {focusAreasLeft.map((item, index) => (
+                  <motion.div
+                    key={item}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.6 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    className="text-center md:text-left text-[11px] sm:text-xs font-black tracking-[0.13em] uppercase text-slate-100 bg-white/[0.06] border border-white/15 rounded-2xl px-3 sm:px-4 py-3"
+                  >
+                    {item}
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.6 }}
+                transition={{ duration: 0.35 }}
+                className={`mx-auto w-32 h-32 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-[2rem] flex items-center justify-center text-white shadow-2xl ${theme.bgGlow} border border-white/20 backdrop-blur-lg`}
+              >
+                <ServiceIcon type={service.icon} className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20" strokeWidth={1.5} />
+              </motion.div>
+
+              <div className="grid grid-cols-2 md:grid-cols-1 gap-3">
+                {focusAreasRight.map((item, index) => (
+                  <motion.div
+                    key={item}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.6 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 + 0.08 }}
+                    className="text-center md:text-right text-[11px] sm:text-xs font-black tracking-[0.13em] uppercase text-slate-100 bg-white/[0.06] border border-white/15 rounded-2xl px-3 sm:px-4 py-3"
+                  >
+                    {item}
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       )
