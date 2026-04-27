@@ -138,7 +138,7 @@ export default function AboutPage() {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-10 items-stretch">
             {teamMembers.map(member => (
-              <article key={member.name} className="h-full flex flex-col items-center text-center rounded-[2rem] border border-slate-800/80 bg-[#0f1117] px-6 py-8 shadow-[0_24px_45px_rgba(0,0,0,0.3)]">
+              <article key={member.name} className="group h-full flex flex-col items-center text-center rounded-[2rem] border border-slate-800/80 bg-[#0f1117] px-6 py-8 shadow-[0_24px_45px_rgba(0,0,0,0.3)] transition-all duration-500 hover:-translate-y-2 hover:border-slate-700">
                  <button
                    type="button"
                    onClick={() => setActiveMemberImage({ src: member.photo, name: member.name })}
@@ -147,8 +147,8 @@ export default function AboutPage() {
                  >
                    <img src={member.photo} alt={member.name} className="w-full h-full object-cover" />
                  </button>
-                 <h4 className="text-2xl font-black text-white mb-2 min-h-[4.75rem] flex items-center justify-center leading-tight">{member.name}</h4>
-                 <p className="text-[13px] font-extrabold text-[#00B7B5] tracking-widest uppercase mb-4 min-h-[2.5rem] flex items-center justify-center">{member.role}</p>
+                 <h4 className="text-2xl font-black text-white mb-2 min-h-[4.75rem] flex items-center justify-center leading-tight transition-colors duration-500 group-hover:text-slate-100">{member.name}</h4>
+                 <p className="text-[13px] font-extrabold text-[#00B7B5] tracking-widest uppercase mb-4 min-h-[2.5rem] flex items-center justify-center transition-colors duration-500 group-hover:text-[#1fd9d7]">{member.role}</p>
                  <p className="text-[15px] text-slate-400 leading-relaxed max-w-[240px] mx-auto font-medium min-h-[7.5rem]">{member.bio}</p>
                  <a href={member.linkedin} target="_blank" rel="noreferrer" className="mt-auto pt-6 inline-flex items-center justify-center bg-slate-800/50 hover:bg-white text-slate-300 hover:text-[#0A66C2] w-12 h-12 rounded-full transition-all hover:scale-110" title="LinkedIn">
                     <img src="/pics/linkedin_icon.svg" alt="LinkedIn" className="w-6 h-6" />

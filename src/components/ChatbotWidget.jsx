@@ -92,7 +92,7 @@ export default function ChatbotWidget() {
         {/* AI Chatbot Launcher */}
         <MotionButton
           type="button"
-          className="flex items-center justify-center w-[56px] h-[56px] bg-slate-900 text-white rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:bg-[#E15D2B] transition-all cursor-pointer hover:-translate-y-1 hover:shadow-[0_15px_40px_rgb(225,93,43,0.25)]"
+          className="flex items-center justify-center w-[56px] h-[56px] rounded-full border border-slate-700 bg-gradient-to-br from-[#0f172a] to-[#1e293b] text-white shadow-[0_12px_30px_rgba(2,6,23,0.45)] transition-all cursor-pointer hover:-translate-y-1 hover:from-[#e15d2b] hover:to-[#c84e1f] hover:border-[#f08a63] hover:shadow-[0_16px_40px_rgba(225,93,43,0.32)]"
           initial={{ opacity: 0, y: 20, scale: 0.92 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.55, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
@@ -103,20 +103,14 @@ export default function ChatbotWidget() {
           {open ? (
              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           ) : (
-             <svg width="29" height="29" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-               <path
-                 d="M7.5 11.2C7.5 8.74 9.5 6.75 11.95 6.75H17.85C20.31 6.75 22.3 8.74 22.3 11.2V15.2C22.3 17.66 20.31 19.65 17.85 19.65H13.35L9.3 22.65L10.2 19.65C8.66 19.04 7.5 17.47 7.5 15.7V11.2Z"
-                 stroke="currentColor"
-                 strokeWidth="2"
-                 strokeLinecap="round"
-                 strokeLinejoin="round"
-               />
-               <circle cx="13.15" cy="13.2" r="1.1" fill="currentColor" />
-               <circle cx="16.65" cy="13.2" r="1.1" fill="currentColor" />
-               <path
-                 d="M21.9 5.2L22.55 6.7L24.05 7.35L22.55 8L21.9 9.5L21.25 8L19.75 7.35L21.25 6.7L21.9 5.2Z"
-                 fill="currentColor"
-               />
+             <svg width="30" height="30" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+               <rect x="7" y="9" width="18" height="13" rx="5" stroke="white" strokeWidth="2.2" />
+               <path d="M16 6V9" stroke="white" strokeWidth="2.2" strokeLinecap="round" />
+               <circle cx="16" cy="5" r="1.5" fill="#ffd09f" />
+               <circle cx="13" cy="15.5" r="1.4" fill="#e15d2b" />
+               <circle cx="19" cy="15.5" r="1.4" fill="#e15d2b" />
+               <path d="M12.5 19.2C13.5 20.1 14.7 20.5 16 20.5C17.3 20.5 18.5 20.1 19.5 19.2" stroke="#ffd09f" strokeWidth="2" strokeLinecap="round" />
+               <path d="M13.8 22L12.7 25L16.2 22.8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
              </svg>
           )}
         </MotionButton>
